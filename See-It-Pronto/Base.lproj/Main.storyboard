@@ -35,10 +35,10 @@
             </objects>
             <point key="canvasLocation" x="1363" y="440"/>
         </scene>
-        <!--View Controller-->
+        <!--Forgot Password View Controller-->
         <scene sceneID="4LK-Pb-uF7">
             <objects>
-                <viewController id="FRH-Nk-yqE" sceneMemberID="viewController">
+                <viewController id="FRH-Nk-yqE" customClass="ForgotPasswordViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aUb-QH-E0J"/>
                         <viewControllerLayoutGuide type="bottom" id="BRb-fp-yy0"/>
@@ -74,10 +74,10 @@
             </objects>
             <point key="canvasLocation" x="2031" y="-322"/>
         </scene>
-        <!--View Controller-->
+        <!--Select Role View Controller-->
         <scene sceneID="Cgo-bp-8M9">
             <objects>
-                <viewController id="do6-nB-HAP" sceneMemberID="viewController">
+                <viewController id="do6-nB-HAP" customClass="SelectRoleViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="V7g-2n-epU"/>
                         <viewControllerLayoutGuide type="bottom" id="lA6-mG-JqV"/>
@@ -89,6 +89,14 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="Fyd-UJ-Duk">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PXF-km-9jr">
+                                <rect key="frame" x="10" y="20" width="88" height="40"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <state key="normal" title="Back" backgroundImage="blank-back"/>
+                                <connections>
+                                    <action selector="btnBack:" destination="do6-nB-HAP" eventType="touchUpInside" id="jx2-VM-7do"/>
+                                </connections>
+                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="bkB-Z1-ypC">
                                 <rect key="frame" x="40" y="220" width="240" height="128"/>
                             </imageView>
@@ -122,10 +130,10 @@
             </objects>
             <point key="canvasLocation" x="2565" y="-319"/>
         </scene>
-        <!--View Controller-->
+        <!--Buyer Form1 View Controller-->
         <scene sceneID="B66-mj-FVe">
             <objects>
-                <viewController id="fqj-v5-JAm" sceneMemberID="viewController">
+                <viewController id="fqj-v5-JAm" customClass="BuyerForm1ViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CfV-bx-ryK"/>
                         <viewControllerLayoutGuide type="bottom" id="I1i-Do-Yo6"/>
@@ -190,18 +198,39 @@
                                     <color key="titleColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lhY-MI-K90">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cwh-98-fcK">
+                                        <rect key="frame" x="18" y="3" width="88" height="40"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="Back" backgroundImage="blank-back"/>
+                                        <connections>
+                                            <action selector="btnBack:" destination="fqj-v5-JAm" eventType="touchUpInside" id="tjM-AE-BP7"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Buyer Reg (1 of 4) #1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JmV-oN-r2y">
+                                        <rect key="frame" x="114" y="11" width="198" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.45098039220000002" green="0.66666666669999997" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4hd-4h-h2g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3188" y="-988"/>
         </scene>
-        <!--View Controller-->
+        <!--Buyer Form2 View Controller-->
         <scene sceneID="8bE-W9-BwX">
             <objects>
-                <viewController id="6VJ-KH-B8x" sceneMemberID="viewController">
+                <viewController id="6VJ-KH-B8x" customClass="BuyerForm2ViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dXu-Se-PqS"/>
                         <viewControllerLayoutGuide type="bottom" id="udF-tq-VE1"/>
@@ -263,6 +292,26 @@
                                     <color key="titleColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RaT-Yu-DFB">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9v5-sO-1hr">
+                                        <rect key="frame" x="18" y="3" width="88" height="40"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="Back" backgroundImage="blank-back"/>
+                                        <connections>
+                                            <action selector="btnBack:" destination="6VJ-KH-B8x" eventType="touchUpInside" id="zpX-is-1f1"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Buyer Reg (2 of 4) #5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47W-AK-2dK">
+                                        <rect key="frame" x="114" y="11" width="198" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.45098039220000002" green="0.66666666669999997" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -271,10 +320,10 @@
             </objects>
             <point key="canvasLocation" x="3720" y="-997"/>
         </scene>
-        <!--View Controller-->
+        <!--Buyer Form3 View Controller-->
         <scene sceneID="LBb-O3-Ghc">
             <objects>
-                <viewController id="Osu-1m-lox" sceneMemberID="viewController">
+                <viewController id="Osu-1m-lox" customClass="BuyerForm3ViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GE0-kJ-ueM"/>
                         <viewControllerLayoutGuide type="bottom" id="Hf8-dj-sTy"/>
@@ -373,6 +422,26 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cbI-Mh-473">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zSW-mZ-Oqr">
+                                        <rect key="frame" x="18" y="3" width="88" height="40"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="Back" backgroundImage="blank-back"/>
+                                        <connections>
+                                            <action selector="btnBack:" destination="Osu-1m-lox" eventType="touchUpInside" id="0hD-c3-ifk"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Buyer Reg (3 of 4) #6" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gFT-uP-JLP">
+                                        <rect key="frame" x="114" y="11" width="198" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.45098039220000002" green="0.66666666669999997" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -381,10 +450,10 @@
             </objects>
             <point key="canvasLocation" x="4244" y="-990"/>
         </scene>
-        <!--View Controller-->
+        <!--Buyer Form4 View Controller-->
         <scene sceneID="BoG-K6-vOw">
             <objects>
-                <viewController id="zHz-kd-Cl2" sceneMemberID="viewController">
+                <viewController id="zHz-kd-Cl2" customClass="BuyerForm4ViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jy5-U4-d7p"/>
                         <viewControllerLayoutGuide type="bottom" id="ejS-J2-XaJ"/>
@@ -419,6 +488,26 @@
                                 <color key="textColor" red="0.023529411764705882" green="0.48627450980392156" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q1P-j0-xxz">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lkp-s6-iv9">
+                                        <rect key="frame" x="18" y="3" width="88" height="40"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="Back" backgroundImage="blank-back"/>
+                                        <connections>
+                                            <action selector="btnBack:" destination="zHz-kd-Cl2" eventType="touchUpInside" id="meb-Ac-UL0"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Buyer Reg (4 of 4) (#7)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chP-ub-9ph">
+                                        <rect key="frame" x="114" y="11" width="198" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.45098039220000002" green="0.66666666669999997" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -427,10 +516,10 @@
             </objects>
             <point key="canvasLocation" x="4756" y="-992"/>
         </scene>
-        <!--View Controller-->
+        <!--Realtor Form1 View Controller-->
         <scene sceneID="D9n-I9-xJY">
             <objects>
-                <viewController id="n7j-92-mj8" sceneMemberID="viewController">
+                <viewController id="n7j-92-mj8" customClass="RealtorForm1ViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="e1Z-xp-k30"/>
                         <viewControllerLayoutGuide type="bottom" id="JFK-eb-qXn"/>
@@ -564,6 +653,26 @@
                                 <color key="textColor" red="0.023529411760000001" green="0.023529411760000001" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6GM-aR-GRF">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="35m-XD-b58">
+                                        <rect key="frame" x="18" y="3" width="88" height="40"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="Back" backgroundImage="blank-back"/>
+                                        <connections>
+                                            <action selector="btnBack:" destination="n7j-92-mj8" eventType="touchUpInside" id="kzI-eg-yOA"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Agent Profile (1 of 3)(#20)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="keU-Gt-w0r">
+                                        <rect key="frame" x="114" y="11" width="198" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.45098039215686275" green="0.66666666666666663" blue="0.85098039215686272" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -572,10 +681,10 @@
             </objects>
             <point key="canvasLocation" x="3347" y="-233"/>
         </scene>
-        <!--View Controller-->
+        <!--Realtor Form2 View Controller-->
         <scene sceneID="Cp8-w5-cbg">
             <objects>
-                <viewController id="zLM-Na-G3C" sceneMemberID="viewController">
+                <viewController id="zLM-Na-G3C" customClass="RealtorForm2ViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZWL-NB-6LD"/>
                         <viewControllerLayoutGuide type="bottom" id="jcg-6U-oiD"/>
@@ -636,6 +745,9 @@
                                 <state key="normal" title="Go Make Some Money">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="Ibk-bW-2PB" kind="show" id="B4G-Pe-t68"/>
+                                </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="OnD-i6-dJB">
                                 <rect key="frame" x="56" y="132" width="208" height="31"/>
@@ -646,6 +758,26 @@
                                 <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LmF-KW-B0K">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FAp-wq-xA7">
+                                        <rect key="frame" x="18" y="3" width="88" height="40"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="Back" backgroundImage="blank-back"/>
+                                        <connections>
+                                            <action selector="btnBack:" destination="zLM-Na-G3C" eventType="touchUpInside" id="DhU-mS-jZR"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Agent Rate (#21)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ct-vv-LbN">
+                                        <rect key="frame" x="114" y="11" width="198" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.45098039220000002" green="0.66666666669999997" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -711,10 +843,10 @@
             </objects>
             <point key="canvasLocation" x="2009" y="386"/>
         </scene>
-        <!--View Controller-->
+        <!--Home Map View Controller-->
         <scene sceneID="g5w-9j-Fsb">
             <objects>
-                <viewController id="Ibk-bW-2PB" sceneMemberID="viewController">
+                <viewController id="Ibk-bW-2PB" customClass="HomeMapViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3cM-rO-MIV"/>
                         <viewControllerLayoutGuide type="bottom" id="4hN-XG-15d"/>
@@ -749,22 +881,39 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZxA-5F-mdA">
-                                <rect key="frame" x="227" y="64" width="93" height="44"/>
+                                <rect key="frame" x="227" y="64" width="93" height="43"/>
                                 <color key="backgroundColor" red="0.1510149452" green="0.75504451969999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Search">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WXb-kM-vyI">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XXr-d8-24c">
+                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="Back" image="pLogo"/>
+                                        <connections>
+                                            <segue destination="mdb-ND-pPT" kind="show" id="j3b-WW-wVt"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Nearby properties(7)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bMd-S5-4yg">
+                                        <rect key="frame" x="114" y="11" width="198" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="D3i-8F-SKO">
-                        <barButtonItem key="rightBarButtonItem" title="Profile" id="Myp-JM-XVS">
-                            <connections>
-                                <segue destination="mdb-ND-pPT" kind="show" id="UjB-CZ-VhF"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Profile" id="Myp-JM-XVS"/>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                 </viewController>
@@ -772,10 +921,10 @@
             </objects>
             <point key="canvasLocation" x="2755" y="1495"/>
         </scene>
-        <!--View Controller-->
+        <!--View Property View Controller-->
         <scene sceneID="7Yk-54-eft">
             <objects>
-                <viewController id="raK-gI-tYf" sceneMemberID="viewController">
+                <viewController id="raK-gI-tYf" customClass="ViewPropertyViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="d5f-0G-gVw"/>
                         <viewControllerLayoutGuide type="bottom" id="xmN-ny-h8v"/>
@@ -855,6 +1004,26 @@ $480,000
                                     <color key="titleColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d4V-Ss-XcE">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vJ1-qB-bMb">
+                                        <rect key="frame" x="18" y="3" width="88" height="40"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="Back" backgroundImage="blank-back"/>
+                                        <connections>
+                                            <action selector="btnBack:" destination="raK-gI-tYf" eventType="touchUpInside" id="f2g-Na-OBf"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Showing Request(23)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E90-rr-NHw">
+                                        <rect key="frame" x="114" y="11" width="198" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.45098039220000002" green="0.66666666669999997" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -863,10 +1032,10 @@ $480,000
             </objects>
             <point key="canvasLocation" x="3395" y="1494"/>
         </scene>
-        <!--View Controller-->
+        <!--Realtor Profile View Controller-->
         <scene sceneID="Lco-N3-WKd">
             <objects>
-                <viewController id="mdb-ND-pPT" sceneMemberID="viewController">
+                <viewController id="mdb-ND-pPT" customClass="RealtorProfileViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Vfk-lf-o4o"/>
                         <viewControllerLayoutGuide type="bottom" id="eSO-us-2AK"/>
@@ -966,6 +1135,26 @@ $480,000
                                     <color key="titleColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rjx-Un-UVK">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IIS-Eu-1bI">
+                                        <rect key="frame" x="18" y="3" width="88" height="40"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="Back" backgroundImage="blank-back"/>
+                                        <connections>
+                                            <action selector="btnBack:" destination="mdb-ND-pPT" eventType="touchUpInside" id="QTr-bX-Whm"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My Agent Profile(24)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzY-RF-Tpv">
+                                        <rect key="frame" x="114" y="11" width="198" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.45098039220000002" green="0.66666666669999997" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -974,10 +1163,10 @@ $480,000
             </objects>
             <point key="canvasLocation" x="3607" y="2366"/>
         </scene>
-        <!--View Controller-->
+        <!--Realtor Dashboard View Controller-->
         <scene sceneID="9Vi-Zh-nCn">
             <objects>
-                <viewController id="zhH-Zi-v6w" sceneMemberID="viewController">
+                <viewController id="zhH-Zi-v6w" customClass="RealtorDashboardViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZGI-co-OnY"/>
                         <viewControllerLayoutGuide type="bottom" id="Yzm-0N-rhH"/>
@@ -1140,6 +1329,26 @@ $480,000
                                     <color key="titleColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j5X-qg-8xu">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NTj-qa-Vyz">
+                                        <rect key="frame" x="18" y="3" width="88" height="40"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="Back" backgroundImage="blank-back"/>
+                                        <connections>
+                                            <action selector="btnBack:" destination="zhH-Zi-v6w" eventType="touchUpInside" id="GmA-In-cD4"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Agent Dashboard(25)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zih-Vk-a8O">
+                                        <rect key="frame" x="114" y="11" width="198" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.45098039220000002" green="0.66666666669999997" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1148,10 +1357,10 @@ $480,000
             </objects>
             <point key="canvasLocation" x="4161" y="2374"/>
         </scene>
-        <!--View Controller-->
+        <!--List Properties View Controller-->
         <scene sceneID="GYe-j0-PlR">
             <objects>
-                <viewController id="0IW-p9-LBW" sceneMemberID="viewController">
+                <viewController id="0IW-p9-LBW" customClass="ListPropertiesViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IFL-Yn-mfa"/>
                         <viewControllerLayoutGuide type="bottom" id="cQ4-kl-hxj"/>
@@ -1172,13 +1381,6 @@ $480,000
                                 <color key="backgroundColor" red="0.81176470590000005" green="0.88235294119999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="See It Pronto!">
                                     <color key="titleColor" red="0.0" green="0.45882352939999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QDF-Rt-TCi">
-                                <rect key="frame" x="0.0" y="64" width="160" height="48"/>
-                                <color key="backgroundColor" red="0.1510149452" green="0.75504451969999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Back" image="Back">
-                                    <color key="titleColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J3k-VZ-Tc4">
@@ -1302,18 +1504,68 @@ $480,000
                                 </subviews>
                                 <color key="backgroundColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="leT-fz-mrM">
+                                <rect key="frame" x="0.0" y="19" width="320" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Wx-uN-6N4">
+                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="Back" image="pLogo"/>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My Listings(25) " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nz6-gT-Pxs">
+                                        <rect key="frame" x="114" y="11" width="198" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aGo-wA-D7m">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gEj-LW-Pk2">
+                                        <rect key="frame" x="18" y="3" width="88" height="40"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="Back" backgroundImage="blank-back"/>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Agent Dashboard(25)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iD7-mv-jbH">
+                                        <rect key="frame" x="114" y="11" width="198" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.45098039220000002" green="0.66666666669999997" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QDF-Rt-TCi">
+                                <rect key="frame" x="0.0" y="64" width="160" height="48"/>
+                                <color key="backgroundColor" red="0.1510149452" green="0.75504451969999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Back" image="Back">
+                                    <color key="titleColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnBack:" destination="0IW-p9-LBW" eventType="touchUpInside" id="pHS-m7-ExU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="aGo-wA-D7m"/>
+                            </mask>
+                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pc3-Mp-1OK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4691" y="2358"/>
         </scene>
-        <!--View Controller-->
+        <!--Beacon Store View Controller-->
         <scene sceneID="tsW-w9-H00">
             <objects>
-                <viewController id="ynD-Ue-cPa" sceneMemberID="viewController">
+                <viewController id="ynD-Ue-cPa" customClass="BeaconStoreViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rlW-pb-NsO"/>
                         <viewControllerLayoutGuide type="bottom" id="Pvl-IB-N2Z"/>
@@ -1450,6 +1702,26 @@ $480,000
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ooh-qT-2cZ">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Beacon Store" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d0I-8t-WGe">
+                                        <rect key="frame" x="114" y="11" width="198" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FIK-AX-Zs3">
+                                        <rect key="frame" x="18" y="2" width="88" height="40"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="Back" backgroundImage="blank-back"/>
+                                        <connections>
+                                            <action selector="btnBack:" destination="ynD-Ue-cPa" eventType="touchUpInside" id="YnI-nb-JfC"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.45098039220000002" green="0.66666666669999997" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1458,10 +1730,10 @@ $480,000
             </objects>
             <point key="canvasLocation" x="4651" y="3110"/>
         </scene>
-        <!--View Controller-->
+        <!--Listing Details View Controller-->
         <scene sceneID="BhE-lP-bhP">
             <objects>
-                <viewController id="tio-S6-6xc" sceneMemberID="viewController">
+                <viewController id="tio-S6-6xc" customClass="ListingDetailsViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pUP-K8-qlr"/>
                         <viewControllerLayoutGuide type="bottom" id="a1F-uf-yBn"/>
@@ -1564,6 +1836,26 @@ $480,000
                                     <color key="titleColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HzS-y2-vJ2">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qS2-Aa-50p">
+                                        <rect key="frame" x="18" y="3" width="88" height="40"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="Back" backgroundImage="blank-back"/>
+                                        <connections>
+                                            <action selector="btnBack:" destination="tio-S6-6xc" eventType="touchUpInside" id="Nd3-cn-O2D"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Listing Details (28)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="91b-Us-oyI">
+                                        <rect key="frame" x="114" y="11" width="198" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.45098039220000002" green="0.66666666669999997" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1572,10 +1864,10 @@ $480,000
             </objects>
             <point key="canvasLocation" x="5211" y="2366"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Beacon View Controller-->
         <scene sceneID="nTk-qO-HZQ">
             <objects>
-                <viewController id="wVY-wx-4oP" sceneMemberID="viewController">
+                <viewController id="wVY-wx-4oP" customClass="AddBeaconViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jRx-b7-BBD"/>
                         <viewControllerLayoutGuide type="bottom" id="0GV-h5-dPv"/>
@@ -1646,6 +1938,26 @@ $480,000
                                     <color key="titleColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ilr-5O-rvr">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add a Beacon(27)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GLq-2R-SI6">
+                                        <rect key="frame" x="114" y="11" width="198" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oxs-gz-b1B">
+                                        <rect key="frame" x="18" y="2" width="88" height="40"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="Back" backgroundImage="blank-back"/>
+                                        <connections>
+                                            <action selector="btnBack:" destination="wVY-wx-4oP" eventType="touchUpInside" id="AAj-Kb-NPd"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.45098039220000002" green="0.66666666669999997" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1657,13 +1969,13 @@ $480,000
         <!--Navigation Controller-->
         <scene sceneID="rhn-Db-HcG">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="smG-aq-mRD" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="smG-aq-mRD" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="7BF-JE-y38">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.29411764709999999" green="0.64705882349999999" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1681,12 +1993,17 @@ $480,000
         <image name="agent" width="168" height="167"/>
         <image name="background" width="664" height="1183"/>
         <image name="beacon" width="150" height="162"/>
+        <image name="blank-back" width="96" height="40"/>
         <image name="choosePicture" width="101" height="101"/>
         <image name="creditCard" width="223" height="112"/>
         <image name="house" width="640" height="480"/>
         <image name="house3" width="640" height="480"/>
         <image name="logo" width="432" height="226"/>
         <image name="map" width="786" height="948"/>
+        <image name="pLogo" width="110" height="146"/>
         <image name="rating" width="132" height="28"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="B4G-Pe-t68"/>
+    </inferredMetricsTieBreakers>
 </document>
