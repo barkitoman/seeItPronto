@@ -1,18 +1,15 @@
 //
-//  RealtorForm2ViewController.swift
+//  FullPropertyDetailsViewController.swift
 //  See-It-Pronto
 //
-//  Created by user114136 on 1/4/16.
+//  Created by user114136 on 1/5/16.
 //  Copyright © 2016 user114136. All rights reserved.
 //
 
 import UIKit
 
-class RealtorForm2ViewController: UIViewController {
+class FullPropertyDetailsViewController: UIViewController {
 
-    @IBOutlet weak var slShowingRate: UISlider!
-    @IBOutlet weak var slTravelRange: UISlider!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -33,11 +30,7 @@ class RealtorForm2ViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
-    }
-
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    }
 
+    }
 }

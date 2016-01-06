@@ -8,8 +8,11 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate  {
 
+    @IBOutlet weak var txtUsername: UITextField!
+    @IBOutlet weak var txtPassword: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -23,6 +26,15 @@ class LoginViewController: UIViewController {
         super.viewWillAppear(animated)
     }
     
+    func selfDelegate() {
+        self.txtUsername.delegate = self
+        self.txtPassword.delegate = self
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
     
     override func viewWillDisappear(animated: Bool) {
         if (navigationController?.topViewController != self) {
@@ -31,4 +43,6 @@ class LoginViewController: UIViewController {
         super.viewWillDisappear(animated)
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    }
 }

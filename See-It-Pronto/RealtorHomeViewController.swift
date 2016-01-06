@@ -1,20 +1,21 @@
 //
-//  RealtorForm2ViewController.swift
+//  RealtorHomeViewController.swift
 //  See-It-Pronto
 //
-//  Created by user114136 on 1/4/16.
+//  Created by user114136 on 1/5/16.
 //  Copyright © 2016 user114136. All rights reserved.
 //
 
 import UIKit
 
-class RealtorForm2ViewController: UIViewController {
+class RealtorHomeViewController: UIViewController {
 
-    @IBOutlet weak var slShowingRate: UISlider!
-    @IBOutlet weak var slTravelRange: UISlider!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -28,16 +29,16 @@ class RealtorForm2ViewController: UIViewController {
         }
         super.viewWillDisappear(animated)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
-    }
 
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
     }
+    */
 
 }

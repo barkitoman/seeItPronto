@@ -1,20 +1,18 @@
 //
-//  RealtorForm2ViewController.swift
+//  SearcMapBuyer3ViewController.swift
 //  See-It-Pronto
 //
-//  Created by user114136 on 1/4/16.
+//  Created by user114136 on 1/5/16.
 //  Copyright © 2016 user114136. All rights reserved.
 //
 
 import UIKit
 
-class RealtorForm2ViewController: UIViewController {
+class SearcMapBuyer3ViewController: UIViewController {
 
-    @IBOutlet weak var slShowingRate: UISlider!
-    @IBOutlet weak var slTravelRange: UISlider!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -24,20 +22,17 @@ class RealtorForm2ViewController: UIViewController {
     
     override func viewWillDisappear(animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+        navigationController?.navigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
-    }
-
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    }
 
+    }
 }

@@ -8,11 +8,17 @@
 
 import UIKit
 
-class BuyerForm1ViewController: UIViewController {
+class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate  {
 
+    
+    @IBOutlet weak var txtEmail: UITextField!
+    @IBOutlet weak var txtPhone: UITextField!
+    @IBOutlet weak var txtPassword: UITextField!
+    var animateDistance: CGFloat!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        self.selfDelegate()
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -29,21 +35,25 @@ class BuyerForm1ViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func btnBack(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func selfDelegate() {
+        self.txtEmail.delegate = self
+        self.txtPhone.delegate = self
+        self.txtPassword.delegate = self
     }
-    */
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+
+    }
 
 }

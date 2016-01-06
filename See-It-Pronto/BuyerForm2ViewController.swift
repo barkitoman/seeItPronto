@@ -8,12 +8,16 @@
 
 import UIKit
 
-class BuyerForm2ViewController: UIViewController {
+class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate  {
 
+    
+    @IBOutlet weak var txtFirstName: UITextField!
+    @IBOutlet weak var txtLastName: UITextField!
+    @IBOutlet weak var btnSelectPicture: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.selfDelegate()
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -30,21 +34,24 @@ class BuyerForm2ViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func btnBack(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func selfDelegate() {
+        self.txtFirstName.delegate = self
+        self.txtLastName.delegate = self
     }
-    */
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    }
+
 
 }

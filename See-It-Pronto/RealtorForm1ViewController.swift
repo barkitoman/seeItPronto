@@ -8,12 +8,18 @@
 
 import UIKit
 
-class RealtorForm1ViewController: UIViewController {
+class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate {
+
+    @IBOutlet weak var txtBrokerage: UITextField!
+    @IBOutlet weak var txtAgent: UITextField!
+    @IBOutlet weak var txtLisence: UITextField!
+    @IBOutlet weak var txtEmail: UITextField!
+    @IBOutlet weak var txtBankAcct: UITextField!
+    @IBOutlet weak var btnChoosePicture: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.selfDelegate()
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -30,21 +36,26 @@ class RealtorForm1ViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func btnBack(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func selfDelegate() {
+        self.txtBrokerage.delegate = self
+        self.txtAgent.delegate = self
+        self.txtLisence.delegate = self
+        self.txtEmail.delegate = self
+        self.txtBankAcct.delegate = self
     }
-    */
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    }
 
 }
