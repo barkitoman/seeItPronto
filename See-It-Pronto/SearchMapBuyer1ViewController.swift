@@ -34,4 +34,7 @@ class SearchMapBuyer1ViewController: UIViewController {
         
     }
 
+    @IBAction func btnBack(sender: AnyObject) {
+        navigationController?.popViewControllerAnimated(true)
+    }
 }

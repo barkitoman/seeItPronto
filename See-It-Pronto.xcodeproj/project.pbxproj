@@ -22,6 +22,11 @@
 		681140AD1C3AC8010068AE1C /* AddBeaconViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681140AC1C3AC8010068AE1C /* AddBeaconViewController.swift */; };
 		681140AF1C3AC8360068AE1C /* BeaconStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681140AE1C3AC8360068AE1C /* BeaconStoreViewController.swift */; };
 		681140B11C3AC8760068AE1C /* ListingDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681140B01C3AC8760068AE1C /* ListingDetailsViewController.swift */; };
+		683F7F211C3D62FA00CA0A0C /* AgentConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683F7F201C3D62FA00CA0A0C /* AgentConfirmationViewController.swift */; };
+		683F7F231C3D7CB500CA0A0C /* CongratulationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683F7F221C3D7CB500CA0A0C /* CongratulationsViewController.swift */; };
+		683F7F251C3D7D3C00CA0A0C /* FeedBack1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683F7F241C3D7D3C00CA0A0C /* FeedBack1ViewController.swift */; };
+		683F7F271C3D7E4700CA0A0C /* FeedBack2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683F7F261C3D7E4700CA0A0C /* FeedBack2ViewController.swift */; };
+		683F7F291C3D7EC100CA0A0C /* FeedBack3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683F7F281C3D7EC100CA0A0C /* FeedBack3ViewController.swift */; };
 		68598DF31C2AF44F00E104C9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68598DF21C2AF44F00E104C9 /* LoginViewController.swift */; };
 		68663D2D1C3C8CB600460D42 /* PropertyDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68663D2C1C3C8CB600460D42 /* PropertyDetailsViewController.swift */; };
 		68663D2F1C3C931B00460D42 /* FullPropertyDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68663D2E1C3C931B00460D42 /* FullPropertyDetailsViewController.swift */; };
@@ -40,6 +45,7 @@
 		68D99F821C3C4B0500A520D2 /* SearchMapBuyer1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D99F811C3C4B0500A520D2 /* SearchMapBuyer1ViewController.swift */; };
 		68D99F841C3C4B1C00A520D2 /* SearchMapBuyer2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D99F831C3C4B1C00A520D2 /* SearchMapBuyer2ViewController.swift */; };
 		68D99F861C3C501F00A520D2 /* SearcMapBuyer3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D99F851C3C501F00A520D2 /* SearcMapBuyer3ViewController.swift */; };
+		68FA964C1C3D9DD80023C292 /* SeeitLaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FA964B1C3D9DD80023C292 /* SeeitLaterViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +81,11 @@
 		681140AC1C3AC8010068AE1C /* AddBeaconViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBeaconViewController.swift; sourceTree = "<group>"; };
 		681140AE1C3AC8360068AE1C /* BeaconStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconStoreViewController.swift; sourceTree = "<group>"; };
 		681140B01C3AC8760068AE1C /* ListingDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListingDetailsViewController.swift; sourceTree = "<group>"; };
+		683F7F201C3D62FA00CA0A0C /* AgentConfirmationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgentConfirmationViewController.swift; sourceTree = "<group>"; };
+		683F7F221C3D7CB500CA0A0C /* CongratulationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CongratulationsViewController.swift; sourceTree = "<group>"; };
+		683F7F241C3D7D3C00CA0A0C /* FeedBack1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBack1ViewController.swift; sourceTree = "<group>"; };
+		683F7F261C3D7E4700CA0A0C /* FeedBack2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBack2ViewController.swift; sourceTree = "<group>"; };
+		683F7F281C3D7EC100CA0A0C /* FeedBack3ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBack3ViewController.swift; sourceTree = "<group>"; };
 		68598DF21C2AF44F00E104C9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		68663D2C1C3C8CB600460D42 /* PropertyDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyDetailsViewController.swift; sourceTree = "<group>"; };
 		68663D2E1C3C931B00460D42 /* FullPropertyDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullPropertyDetailsViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +110,7 @@
 		68D99F811C3C4B0500A520D2 /* SearchMapBuyer1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchMapBuyer1ViewController.swift; sourceTree = "<group>"; };
 		68D99F831C3C4B1C00A520D2 /* SearchMapBuyer2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchMapBuyer2ViewController.swift; sourceTree = "<group>"; };
 		68D99F851C3C501F00A520D2 /* SearcMapBuyer3ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearcMapBuyer3ViewController.swift; sourceTree = "<group>"; };
+		68FA964B1C3D9DD80023C292 /* SeeitLaterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeitLaterViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +165,12 @@
 				68663D2E1C3C931B00460D42 /* FullPropertyDetailsViewController.swift */,
 				68663D301C3C9B2700460D42 /* SeeItNowViewController.swift */,
 				681140A61C3AC7950068AE1C /* RealtorDashboardViewController.swift */,
+				683F7F201C3D62FA00CA0A0C /* AgentConfirmationViewController.swift */,
+				683F7F221C3D7CB500CA0A0C /* CongratulationsViewController.swift */,
+				683F7F241C3D7D3C00CA0A0C /* FeedBack1ViewController.swift */,
+				683F7F261C3D7E4700CA0A0C /* FeedBack2ViewController.swift */,
+				683F7F281C3D7EC100CA0A0C /* FeedBack3ViewController.swift */,
+				68FA964B1C3D9DD80023C292 /* SeeitLaterViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -364,20 +382,26 @@
 				6811409D1C3AC6830068AE1C /* RealtorForm1ViewController.swift in Sources */,
 				6897A12A1C244B5F00AB3A0A /* ViewController.swift in Sources */,
 				686E8F3F1C3C096300F5FE01 /* SwiftyJSON.swift in Sources */,
+				683F7F271C3D7E4700CA0A0C /* FeedBack2ViewController.swift in Sources */,
 				68D99F821C3C4B0500A520D2 /* SearchMapBuyer1ViewController.swift in Sources */,
 				686E8F411C3C2AF900F5FE01 /* RealtorHomeViewController.swift in Sources */,
 				68663D2D1C3C8CB600460D42 /* PropertyDetailsViewController.swift in Sources */,
 				681140971C3AC61F0068AE1C /* BuyerForm2ViewController.swift in Sources */,
+				683F7F231C3D7CB500CA0A0C /* CongratulationsViewController.swift in Sources */,
 				681140A51C3AC75C0068AE1C /* ViewPropertyViewController.swift in Sources */,
 				68663D2F1C3C931B00460D42 /* FullPropertyDetailsViewController.swift in Sources */,
 				68D99F861C3C501F00A520D2 /* SearcMapBuyer3ViewController.swift in Sources */,
 				68D99F841C3C4B1C00A520D2 /* SearchMapBuyer2ViewController.swift in Sources */,
 				681140AF1C3AC8360068AE1C /* BeaconStoreViewController.swift in Sources */,
 				681140A91C3AC7C30068AE1C /* ListPropertiesViewController.swift in Sources */,
+				683F7F291C3D7EC100CA0A0C /* FeedBack3ViewController.swift in Sources */,
+				683F7F251C3D7D3C00CA0A0C /* FeedBack1ViewController.swift in Sources */,
 				68663D311C3C9B2700460D42 /* SeeItNowViewController.swift in Sources */,
 				6897A1281C244B5F00AB3A0A /* AppDelegate.swift in Sources */,
+				68FA964C1C3D9DD80023C292 /* SeeitLaterViewController.swift in Sources */,
 				6897A1301C244B5F00AB3A0A /* See_It_Pronto.xcdatamodeld in Sources */,
 				681140A71C3AC7950068AE1C /* RealtorDashboardViewController.swift in Sources */,
+				683F7F211C3D62FA00CA0A0C /* AgentConfirmationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

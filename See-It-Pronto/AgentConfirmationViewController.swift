@@ -1,14 +1,14 @@
 //
-//  SeeItNowViewController.swift
+//  AgentConfirmationViewController.swift
 //  See-It-Pronto
 //
-//  Created by user114136 on 1/5/16.
+//  Created by user114136 on 1/6/16.
 //  Copyright © 2016 user114136. All rights reserved.
 //
 
 import UIKit
 
-class SeeItNowViewController: UIViewController {
+class AgentConfirmationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +29,9 @@ class SeeItNowViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+
     }
-    
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 
     }
@@ -38,5 +39,4 @@ class SeeItNowViewController: UIViewController {
     @IBAction func btnBack(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
     }
-    
 }

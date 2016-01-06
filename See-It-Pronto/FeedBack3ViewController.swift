@@ -1,18 +1,17 @@
 //
-//  SeeItNowViewController.swift
+//  FeedBack3ViewController.swift
 //  See-It-Pronto
 //
-//  Created by user114136 on 1/5/16.
+//  Created by user114136 on 1/6/16.
 //  Copyright © 2016 user114136. All rights reserved.
 //
 
 import UIKit
 
-class SeeItNowViewController: UIViewController {
+class FeedBack3ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -22,7 +21,7 @@ class SeeItNowViewController: UIViewController {
     
     override func viewWillDisappear(animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+        navigationController?.navigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -30,7 +29,7 @@ class SeeItNowViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 
     }
@@ -38,5 +37,4 @@ class SeeItNowViewController: UIViewController {
     @IBAction func btnBack(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
     }
-    
 }

@@ -33,6 +33,11 @@ class SearcMapBuyer3ViewController: UIViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
     }
+    
+    @IBAction func btnBack(sender: AnyObject) {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
+    
 }
