@@ -10,6 +10,8 @@ import UIKit
 
 class SeeitLaterViewController: UIViewController {
 
+    var viewData:JSON = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,7 +24,7 @@ class SeeitLaterViewController: UIViewController {
     
     override func viewWillDisappear(animated: Bool) {
         if (navigationController?.topViewController != self) {
-        navigationController?.navigationBarHidden = false
+            navigationController?.navigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }

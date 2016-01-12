@@ -14,6 +14,7 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
     @IBOutlet weak var txtExpDate: UITextField!
     @IBOutlet weak var txtCVC: UITextField!
     @IBOutlet weak var txtPromoCode: UITextField!
+    var viewData:JSON = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,9 +52,33 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
         self.view.endEditing(true)
         return false
     }
-
+    
+    func save() {
+        //create params
+        let params = "id="+self.viewData["user_id"].stringValue+"&card_number"+txtCardNumber.text!+"&exp_date="+txtExpDate.text!+"&cvc="+txtCVC.text!+"&promo_code="+txtPromoCode.text!
+        let url = Config.APP_URL+"/users/add"
+        Request().post(url, params:params,successHandler: {(response) in self.afterPost(response)});
+    }
+    
+    func afterPost(let response: NSData) {
+        let result = JSON(data: response)
+        if(result["result"].bool == true) {
+            self.viewData = result
+            Utility().displayAlert(self,title: "Success", message:"The data have been saved correctly", performSegue:"FromBuyerForm3")
+        } else {
+            var msg = "Error saving, please try later"
+            if(result["msg"].stringValue != "") {
+                msg = result["msg"].stringValue
+            }
+            Utility().displayAlert(self,title: "Success", message:msg, performSegue:"")
+        }
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
+        if (segue.identifier == "FromBuyerForm3") {
+            let view: BuyerForm4ViewController = segue.destinationViewController as! BuyerForm4ViewController
+            view.viewData  = self.viewData
+        }
     }
 
 }

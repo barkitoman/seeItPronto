@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "See-It-Pronto/ViewController.swift"
-            timestampString = "473275729.329013"
+            filePath = "See-It-Pronto/Utitity.swift"
+            timestampString = "474234531.368663"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "viewWillDisappear(_:)"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "displayAlert(_:title:message:performSegue:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

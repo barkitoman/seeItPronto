@@ -10,6 +10,8 @@ import UIKit
 
 class FeedBack1ViewController: UIViewController {
 
+    var viewData:JSON = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

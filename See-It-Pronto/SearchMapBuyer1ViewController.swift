@@ -10,6 +10,8 @@ import UIKit
 
 class SearchMapBuyer1ViewController: UIViewController {
 
+    var viewData:JSON = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -21,7 +23,7 @@ class SearchMapBuyer1ViewController: UIViewController {
     
     override func viewWillDisappear(animated: Bool) {
         if (navigationController?.topViewController != self) {
-        navigationController?.navigationBarHidden = false
+            navigationController?.navigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }

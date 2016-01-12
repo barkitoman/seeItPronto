@@ -14,7 +14,7 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPhone: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
-    var animateDistance: CGFloat!
+     var viewData:JSON = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +41,7 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
         navigationController?.popViewControllerAnimated(true)
     }
     
+    //selfDelegate, textFieldShouldReturn are functions for hide keyboard when press 'return' key
     func selfDelegate() {
         self.txtEmail.delegate = self
         self.txtPhone.delegate = self
@@ -52,8 +53,32 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
         return false
     }
     
+    func save() {
+        //create params
+        let params = "id="+self.viewData["user_id"].stringValue+"&role=buyer&email="+txtEmail.text!+"&phone="+txtPhone.text!+"&password="+txtPassword.text!
+        let url = Config.APP_URL+"/users/add"
+        Request().post(url, params:params,successHandler: {(response) in self.afterPost(response)});
+    }
+    
+    func afterPost(let response: NSData) {
+        let result = JSON(data: response)
+        if(result["result"].bool == true) {
+            self.viewData = result
+            Utility().displayAlert(self,title: "Success", message:"The data have been saved correctly", performSegue:"FromBuyerForm1")
+        } else {
+            var msg = "Error saving, please try later"
+            if(result["msg"].stringValue != "") {
+                msg = result["msg"].stringValue
+            }
+            Utility().displayAlert(self,title: "Success", message:msg, performSegue:"")
+        }
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
+        if (segue.identifier == "FromBuyerForm1") {
+            let view: BuyerForm2ViewController = segue.destinationViewController as! BuyerForm2ViewController
+            view.viewData  = self.viewData
+        }
     }
 
 }

@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import CoreData
 
 class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate  {
 
     @IBOutlet weak var txtUsername: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
+    var viewData:JSON = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,13 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
         super.viewWillAppear(animated)
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        if (navigationController?.topViewController != self) {
+            navigationController?.navigationBarHidden = false
+        }
+        super.viewWillDisappear(animated)
+    }
+    
     func selfDelegate() {
         self.txtUsername.delegate = self
         self.txtPassword.delegate = self
@@ -36,13 +45,38 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
         return false
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+    @IBAction func btnLogin(sender: AnyObject) {
+        self.login()
+    }
+    
+    func login() {
+        //create params
+        var params = "username="+txtUsername.text!+"&password="+txtPassword.text!
+        let tokenParams = "grant_type="+Config.GRANT_TYPE+"&client_id="+Config.CLIENT_ID+"&client_secret="+Config.CLIENT_SECRET
+        params += tokenParams
+        let url = Config.APP_URL+"/rest/token"
+        Request().post(url, params:params,successHandler: {(response) in self.afterLoginRequest(response)});
+    }
+    
+    func afterLoginRequest(let response: NSData) {
+        let result = JSON(data: response)
+        if(result["result"].bool == true) {
+            //is login is ok
+            User().saveIfExists(result)
+            dispatch_async(dispatch_get_main_queue()) {
+                if(result["role"] == "buyer") {
+                    self.performSegueWithIdentifier("LoginBuyer", sender: self)
+                } else {
+                    self.performSegueWithIdentifier("LoginRealtor", sender: self)
+                }
+            }
+        } else {
+            let msg = "Invalid login information, please try again"
+            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
         }
-        super.viewWillDisappear(animated)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
     }
 }

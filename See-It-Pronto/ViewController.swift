@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    private let internvalSeconds:NSTimeInterval = 5
+    private let internvalSeconds:NSTimeInterval = 4
     private var timer: NSTimer?
     
     override func viewDidLoad() {

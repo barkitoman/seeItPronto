@@ -10,6 +10,8 @@ import UIKit
 
 class SeeItNowViewController: UIViewController {
 
+    var viewData:JSON = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

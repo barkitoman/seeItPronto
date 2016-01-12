@@ -188,7 +188,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="6VJ-KH-B8x" kind="show" id="1XT-GS-ZlT"/>
+                                    <segue destination="6VJ-KH-B8x" kind="show" identifier="FromBuyerForm1" id="1XT-GS-ZlT"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Vq-Lz-k2m">
@@ -287,7 +287,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Osu-1m-lox" kind="show" id="smV-tY-0gH"/>
+                                    <segue destination="Osu-1m-lox" kind="show" identifier="FromBuyerForm2" id="smV-tY-0gH"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="By7-fQ-YIH">
@@ -458,7 +458,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="zHz-kd-Cl2" kind="show" id="cGN-Fd-EJt"/>
+                                    <segue destination="zHz-kd-Cl2" kind="show" identifier="FromBuyerForm3" id="cGN-Fd-EJt"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PLQ-at-715">
@@ -2437,7 +2437,7 @@ Range</string>
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="zLM-Na-G3C" kind="show" id="hPD-61-eTO"/>
+                                    <segue destination="zLM-Na-G3C" kind="show" identifier="RealtorForm1" id="hPD-61-eTO"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V4J-Ws-HLf">
@@ -2538,7 +2538,7 @@ Range</string>
                                 <color key="textColor" red="0.023529411760000001" green="0.023529411760000001" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="8HF-zd-dhs">
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="101" minValue="1" maxValue="200" translatesAutoresizingMaskIntoConstraints="NO" id="8HF-zd-dhs">
                                 <rect key="frame" x="56" y="286" width="208" height="31"/>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ua9-4D-7Pu">
@@ -2590,7 +2590,7 @@ Range</string>
                                 </subviews>
                                 <color key="backgroundColor" red="0.45098039220000002" green="0.66666666669999997" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="OnD-i6-dJB">
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="62" minValue="1" maxValue="99" translatesAutoresizingMaskIntoConstraints="NO" id="OnD-i6-dJB">
                                 <rect key="frame" x="56" y="132" width="208" height="31"/>
                             </slider>
                         </subviews>
@@ -2651,7 +2651,7 @@ Range</string>
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Ibk-bW-2PB" kind="show" id="LgY-E3-MdD"/>
+                                    <action selector="btnLogin:" destination="tVZ-NU-YGW" eventType="touchUpInside" id="vLh-LQ-rDM"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -2660,6 +2660,8 @@ Range</string>
                     <connections>
                         <outlet property="txtPassword" destination="ZYJ-Nn-Squ" id="GSd-eL-hIO"/>
                         <outlet property="txtUsername" destination="qii-iC-0DG" id="gK8-ME-ZqN"/>
+                        <segue destination="Ibk-bW-2PB" kind="show" identifier="LoginRealtor" id="trd-gy-tVv"/>
+                        <segue destination="PC2-Jj-2kL" kind="show" identifier="LoginBuyer" id="gRd-bz-hb9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qqg-U0-SNb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3832,7 +3834,8 @@ $480,000
         <image name="scan card" width="317" height="441"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="LgY-E3-MdD"/>
+        <segue reference="gRd-bz-hb9"/>
+        <segue reference="trd-gy-tVv"/>
         <segue reference="hsf-Lm-wDs"/>
     </inferredMetricsTieBreakers>
 </document>

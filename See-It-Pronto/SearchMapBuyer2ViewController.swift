@@ -10,6 +10,8 @@ import UIKit
 
 class SearchMapBuyer2ViewController: UIViewController {
 
+    var viewData:JSON = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }

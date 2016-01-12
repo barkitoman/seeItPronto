@@ -10,6 +10,8 @@ import UIKit
 
 class BuyerForm4ViewController: UIViewController {
 
+    var viewData:JSON = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -35,6 +37,9 @@ class BuyerForm4ViewController: UIViewController {
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "FromBuyerForm4") {
+    
+        }
     }
 
 }
