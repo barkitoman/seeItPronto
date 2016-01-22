@@ -14,7 +14,7 @@ import CoreData
 
 class UserEntity: NSManagedObject {
     
-    @NSManaged var user_id:String
+    @NSManaged var id:String
     @NSManaged var role:String
     @NSManaged var name:String
     @NSManaged var access_token:String
@@ -56,7 +56,7 @@ class User {
         let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let contxt: NSManagedObjectContext = appDel.managedObjectContext
 
-        existingItem.setValue(userData["user_id"].stringValue,      forKey: "user_id")
+        existingItem.setValue(userData["id"].stringValue,           forKey: "id")
         existingItem.setValue(userData["role"].stringValue,         forKey: "role")
         existingItem.setValue(userData["name"].stringValue,         forKey: "name")
         existingItem.setValue(userData["username"].stringValue,     forKey: "username")
@@ -79,7 +79,7 @@ class User {
         //create instance of pur data model and inicilize
         let newItem = UserEntity(entity:en!, insertIntoManagedObjectContext:contxt)
         //map our properties
-        newItem.user_id       = userData["user_id"].stringValue
+        newItem.id            = userData["id"].stringValue
         newItem.role          = userData["role"].stringValue
         newItem.name          = userData["name"].stringValue
         newItem.username      = userData["username"].stringValue

@@ -55,9 +55,9 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
     
     func save() {
         //create params
-        let params = "id="+self.viewData["user_id"].stringValue+"&card_number"+txtCardNumber.text!+"&exp_date="+txtExpDate.text!+"&cvc="+txtCVC.text!+"&promo_code="+txtPromoCode.text!
-        let url = Config.APP_URL+"/users/add"
-        Request().post(url, params:params,successHandler: {(response) in self.afterPost(response)});
+        let params = "id="+self.viewData["id"].stringValue+"&user_"+self.viewData["id"].stringValue+"&number_card"+txtCardNumber.text!+"&expiration_date="+txtExpDate.text!+"&csv="+txtCVC.text!+"&promo_code="+txtPromoCode.text!
+        let url = Config.APP_URL+"/users/"+self.viewData["id"].stringValue
+        Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
     }
     
     func afterPost(let response: NSData) {
@@ -70,7 +70,7 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
             if(result["msg"].stringValue != "") {
                 msg = result["msg"].stringValue
             }
-            Utility().displayAlert(self,title: "Success", message:msg, performSegue:"")
+            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
         }
     }
     

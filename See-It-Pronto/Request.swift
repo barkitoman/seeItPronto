@@ -27,6 +27,27 @@ class Request {
         }
         task.resume();
     }
+ 
+    
+    func put(url : String, var params : String, successHandler: (response: NSData) -> Void) {
+        let url = NSURL(string: url)
+        params+="&_method=PUT"
+        let params = String(params);
+        let request = NSMutableURLRequest(URL: url!);
+        request.HTTPMethod = "POST"
+        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+            data, response, error in
+            //in case of error
+            if error != nil {
+                print("AN ERROR HAS OCURRED!")
+                print(error); return
+            }
+            successHandler(response: data!)
+        }
+        task.resume();
+    }
     
     func get(url : String, successHandler: (response: NSData) -> Void) {
         let url = NSURL(string: url)

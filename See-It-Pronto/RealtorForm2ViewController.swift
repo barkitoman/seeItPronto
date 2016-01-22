@@ -40,9 +40,9 @@ class RealtorForm2ViewController: UIViewController {
     
     func save() {
         //create params
-        let params = "id="+self.viewData["user_id"].stringValue+"&showin_rate="+slShowingRate.value.description+"&travel_rate="+slTravelRange.value.description
-        let url = Config.APP_URL+"/users/add"
-        Request().post(url, params:params,successHandler: {(response) in self.afterPost(response)});
+        let params = "id="+self.viewData["id"].stringValue+"&showin_rate="+slShowingRate.value.description+"&travel_rate="+slTravelRange.value.description
+        let url = Config.APP_URL+"/users/"+self.viewData["id"].stringValue
+        Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
     }
     
     func afterPost(let response: NSData) {
@@ -54,7 +54,7 @@ class RealtorForm2ViewController: UIViewController {
             if(result["msg"].stringValue != "") {
                 msg = result["msg"].stringValue
             }
-            Utility().displayAlert(self,title:"Success", message:msg, performSegue:"")
+            Utility().displayAlert(self,title:"Error", message:msg, performSegue:"")
         }
     }
 

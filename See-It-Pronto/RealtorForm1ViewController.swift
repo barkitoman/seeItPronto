@@ -58,7 +58,7 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     func save() {
         //create params
-        let params = "id="+self.viewData["user_id"].stringValue+"&role=realtor&brokerage="+txtBrokerage.text!+"&agent="+txtBrokerage.text!+"&lisence="+txtLisence.text!+"&email="+txtEmail.text!+"&back_acc"+txtBankAcct.text!
+        let params = "id="+self.viewData["id"].stringValue+"&role=realtor&brokerage="+txtBrokerage.text!+"&agent="+txtBrokerage.text!+"&lisence="+txtLisence.text!+"&email="+txtEmail.text!+"&back_acc"+txtBankAcct.text!
         let url = Config.APP_URL+"/users/add"
         Request().post(url, params:params,successHandler: {(response) in self.afterPost(response)});
     }
@@ -73,7 +73,7 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
             if(result["msg"].stringValue != "") {
                 msg = result["msg"].stringValue
             }
-            Utility().displayAlert(self,title:"Success", message:msg, performSegue:"")
+            Utility().displayAlert(self,title:"Error", message:msg, performSegue:"")
         }
     }
 

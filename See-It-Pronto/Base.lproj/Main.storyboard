@@ -188,7 +188,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="6VJ-KH-B8x" kind="show" identifier="FromBuyerForm1" id="1XT-GS-ZlT"/>
+                                    <action selector="btnSave:" destination="fqj-v5-JAm" eventType="touchUpInside" id="VEq-m7-OQF"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Vq-Lz-k2m">
@@ -226,6 +226,7 @@
                         <outlet property="txtEmail" destination="uz9-wn-aAf" id="F0O-Z5-lMK"/>
                         <outlet property="txtPassword" destination="txQ-Su-DxH" id="niq-Ye-pJ3"/>
                         <outlet property="txtPhone" destination="HPo-OT-YYo" id="bd0-pi-N0l"/>
+                        <segue destination="6VJ-KH-B8x" kind="show" identifier="FromBuyerForm1" id="wT8-6C-0D2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4hd-4h-h2g" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -287,7 +288,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Osu-1m-lox" kind="show" identifier="FromBuyerForm2" id="smV-tY-0gH"/>
+                                    <action selector="btnSave:" destination="6VJ-KH-B8x" eventType="touchUpInside" id="az6-pH-fYO"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="By7-fQ-YIH">
@@ -324,6 +325,7 @@
                         <outlet property="btnSelectPicture" destination="L6J-WA-w77" id="bTP-oe-Dbd"/>
                         <outlet property="txtFirstName" destination="3kv-Lm-y5g" id="IEJ-10-mTh"/>
                         <outlet property="txtLastName" destination="Gbx-mr-qLh" id="AiF-2W-198"/>
+                        <segue destination="Osu-1m-lox" kind="show" identifier="FromBuyerForm2" id="85C-5i-bME"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dcw-XS-XRB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -399,21 +401,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z9g-E2-nvt">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="123 456 7890 12" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z9g-E2-nvt">
                                 <rect key="frame" x="132" y="81" width="164" height="30"/>
                                 <color key="backgroundColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6qA-Lk-qVv">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="05/2018" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6qA-Lk-qVv">
                                 <rect key="frame" x="132" y="120" width="149" height="30"/>
                                 <color key="backgroundColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kk2-LT-9e4">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="123" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kk2-LT-9e4">
                                 <rect key="frame" x="132" y="160" width="93" height="30"/>
                                 <color key="backgroundColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -545,9 +547,6 @@
                                 <state key="normal" title="Yes">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="PC2-Jj-2kL" kind="show" id="Gr0-Cc-hCE"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5aV-Y4-TBd">
                                 <rect key="frame" x="20" y="508" width="142" height="40"/>
@@ -591,6 +590,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="PC2-Jj-2kL" kind="show" identifier="FormBuyer4" id="Ejg-Xi-KK2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ld5-wb-2DE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3834,8 +3836,8 @@ $480,000
         <image name="scan card" width="317" height="441"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gRd-bz-hb9"/>
         <segue reference="trd-gy-tVv"/>
-        <segue reference="hsf-Lm-wDs"/>
+        <segue reference="Ejg-Xi-KK2"/>
+        <segue reference="0Gu-xL-7Tz"/>
     </inferredMetricsTieBreakers>
 </document>

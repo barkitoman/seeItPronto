@@ -51,11 +51,15 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
         return false
     }
     
+    @IBAction func btnSave(sender: AnyObject) {
+     self.save()
+    }
+    
     func save() {
         //create params
-        let params = "id="+self.viewData["user_id"].stringValue+"&first_name="+txtFirstName.text!+"&last_name="+txtLastName.text!
-        let url = Config.APP_URL+"/users/add"
-        Request().post(url, params:params,successHandler: {(response) in self.afterPost(response)});
+        let params = "id="+self.viewData["id"].stringValue+"&first_name="+txtFirstName.text!+"&last_name="+txtLastName.text!
+        let url = Config.APP_URL+"/users/"+self.viewData["id"].stringValue
+        Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
     }
 
     func afterPost(let response: NSData) {
@@ -68,7 +72,7 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
             if(result["msg"].stringValue != "") {
                 msg = result["msg"].stringValue
             }
-            Utility().displayAlert(self,title: "Success", message:msg, performSegue:"")
+            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
             
         }
     }
