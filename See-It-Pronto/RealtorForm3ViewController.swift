@@ -8,20 +8,18 @@
 
 import UIKit
 
-class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate {
-   
-    @IBOutlet weak var txtBrokerage: UITextField!
-    @IBOutlet weak var txtLisence: UITextField!
-    @IBOutlet weak var txtBankAcct: UITextField!
-    @IBOutlet weak var txtFirstName: UITextField!
-    @IBOutlet weak var txtLastName: UITextField!
-    var viewData:JSON = []
+class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate {
+
+
+    @IBOutlet weak var slShowingRate: UISlider!
+    @IBOutlet weak var slTravelRate: UISlider!
     
+    var viewData:JSON = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.selfDelegate()
     }
-    
+
     override func viewWillAppear(animated: Bool) {
         navigationController?.navigationBarHidden = true
         super.viewWillAppear(animated)
@@ -37,41 +35,24 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
     
-    func selfDelegate() {
-        self.txtBrokerage.delegate = self
-        self.txtFirstName.delegate = self
-        self.txtLisence.delegate = self
-        self.txtLastName.delegate = self
-        self.txtBankAcct.delegate = self
-    }
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return false
-    }
     
     @IBAction func btnBack(sender: AnyObject) {
-       navigationController?.popViewControllerAnimated(true)
-    }
-    
-    @IBAction func btnSave(sender: AnyObject) {
-        self.save()
+        navigationController?.popViewControllerAnimated(true)
     }
     
     func save() {
         //create params
-        let params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["user_id"].stringValue+"&role=realtor&brokerage="+txtBrokerage.text!+"&first_name="+txtFirstName.text!+"&last_name="+txtLastName.text!+"&lisence="+txtLisence.text!+"&back_acc"+txtBankAcct.text!
+        let params = "id="+self.viewData["id"].stringValue+"&realtor_id"+self.viewData["realtor_id"].stringValue+"&showing_rate="+slShowingRate.value.description+"&travel_range="+slTravelRate.value.description
         let url = Config.APP_URL+"/users/"+self.viewData["id"].stringValue
-        Request().post(url, params:params,successHandler: {(response) in self.afterPut(response)});
+        Request().post(url, params:params,successHandler: {(response) in self.afterPost(response)});
     }
     
-    func afterPut(let response: NSData) {
+    func afterPost(let response: NSData) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result
-            Utility().displayAlert(self,title:"Success", message:"The data have been saved correctly", performSegue:"RealtorForm2")
+            Utility().displayAlert(self,title:"Success", message:"The data have been saved correctly", performSegue:"RealtorForm1")
         } else {
             var msg = "Error saving, please try later"
             if(result["msg"].stringValue != "") {
@@ -80,12 +61,12 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
             Utility().displayAlert(self,title:"Error", message:msg, performSegue:"")
         }
     }
-    
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "RealtorForm1") {
             let view: RealtorForm2ViewController = segue.destinationViewController as! RealtorForm2ViewController
             view.viewData  = self.viewData
         }
     }
-    
+
 }

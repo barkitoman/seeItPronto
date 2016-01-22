@@ -14,8 +14,7 @@
 		681140971C3AC61F0068AE1C /* BuyerForm2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681140961C3AC61F0068AE1C /* BuyerForm2ViewController.swift */; };
 		681140991C3AC62F0068AE1C /* BuyerForm3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681140981C3AC62F0068AE1C /* BuyerForm3ViewController.swift */; };
 		6811409B1C3AC6440068AE1C /* BuyerForm4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6811409A1C3AC6440068AE1C /* BuyerForm4ViewController.swift */; };
-		6811409D1C3AC6830068AE1C /* RealtorForm1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6811409C1C3AC6830068AE1C /* RealtorForm1ViewController.swift */; };
-		6811409F1C3AC6940068AE1C /* RealtorForm2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6811409E1C3AC6930068AE1C /* RealtorForm2ViewController.swift */; };
+		6811409F1C3AC6940068AE1C /* RealtorForm3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6811409E1C3AC6930068AE1C /* RealtorForm3ViewController.swift */; };
 		681140A31C3AC7010068AE1C /* RealtorProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681140A21C3AC7010068AE1C /* RealtorProfileViewController.swift */; };
 		681140A51C3AC75C0068AE1C /* ViewPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681140A41C3AC75C0068AE1C /* ViewPropertyViewController.swift */; };
 		681140A71C3AC7950068AE1C /* RealtorDashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681140A61C3AC7950068AE1C /* RealtorDashboardViewController.swift */; };
@@ -24,6 +23,8 @@
 		681140AF1C3AC8360068AE1C /* BeaconStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681140AE1C3AC8360068AE1C /* BeaconStoreViewController.swift */; };
 		681140B11C3AC8760068AE1C /* ListingDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681140B01C3AC8760068AE1C /* ListingDetailsViewController.swift */; };
 		68275C0A1C40041F00696FBE /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68275C091C40041F00696FBE /* UserManager.swift */; };
+		682EF3551C5287D5007176BF /* RealtorForm2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682EF3541C5287D5007176BF /* RealtorForm2ViewController.swift */; };
+		682EF3571C528960007176BF /* RealtorForm1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682EF3561C528960007176BF /* RealtorForm1ViewController.swift */; };
 		683F7F211C3D62FA00CA0A0C /* AgentConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683F7F201C3D62FA00CA0A0C /* AgentConfirmationViewController.swift */; };
 		683F7F231C3D7CB500CA0A0C /* CongratulationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683F7F221C3D7CB500CA0A0C /* CongratulationsViewController.swift */; };
 		683F7F251C3D7D3C00CA0A0C /* FeedBack1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683F7F241C3D7D3C00CA0A0C /* FeedBack1ViewController.swift */; };
@@ -79,8 +80,7 @@
 		681140961C3AC61F0068AE1C /* BuyerForm2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyerForm2ViewController.swift; sourceTree = "<group>"; };
 		681140981C3AC62F0068AE1C /* BuyerForm3ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyerForm3ViewController.swift; sourceTree = "<group>"; };
 		6811409A1C3AC6440068AE1C /* BuyerForm4ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyerForm4ViewController.swift; sourceTree = "<group>"; };
-		6811409C1C3AC6830068AE1C /* RealtorForm1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealtorForm1ViewController.swift; sourceTree = "<group>"; };
-		6811409E1C3AC6930068AE1C /* RealtorForm2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealtorForm2ViewController.swift; sourceTree = "<group>"; };
+		6811409E1C3AC6930068AE1C /* RealtorForm3ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealtorForm3ViewController.swift; sourceTree = "<group>"; };
 		681140A21C3AC7010068AE1C /* RealtorProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealtorProfileViewController.swift; sourceTree = "<group>"; };
 		681140A41C3AC75C0068AE1C /* ViewPropertyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPropertyViewController.swift; sourceTree = "<group>"; };
 		681140A61C3AC7950068AE1C /* RealtorDashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealtorDashboardViewController.swift; sourceTree = "<group>"; };
@@ -89,6 +89,8 @@
 		681140AE1C3AC8360068AE1C /* BeaconStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconStoreViewController.swift; sourceTree = "<group>"; };
 		681140B01C3AC8760068AE1C /* ListingDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListingDetailsViewController.swift; sourceTree = "<group>"; };
 		68275C091C40041F00696FBE /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		682EF3541C5287D5007176BF /* RealtorForm2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealtorForm2ViewController.swift; sourceTree = "<group>"; };
+		682EF3561C528960007176BF /* RealtorForm1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealtorForm1ViewController.swift; sourceTree = "<group>"; };
 		683F7F201C3D62FA00CA0A0C /* AgentConfirmationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgentConfirmationViewController.swift; sourceTree = "<group>"; };
 		683F7F221C3D7CB500CA0A0C /* CongratulationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CongratulationsViewController.swift; sourceTree = "<group>"; };
 		683F7F241C3D7D3C00CA0A0C /* FeedBack1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBack1ViewController.swift; sourceTree = "<group>"; };
@@ -169,8 +171,7 @@
 				681140961C3AC61F0068AE1C /* BuyerForm2ViewController.swift */,
 				681140981C3AC62F0068AE1C /* BuyerForm3ViewController.swift */,
 				6811409A1C3AC6440068AE1C /* BuyerForm4ViewController.swift */,
-				6811409C1C3AC6830068AE1C /* RealtorForm1ViewController.swift */,
-				6811409E1C3AC6930068AE1C /* RealtorForm2ViewController.swift */,
+				6811409E1C3AC6930068AE1C /* RealtorForm3ViewController.swift */,
 				681140A21C3AC7010068AE1C /* RealtorProfileViewController.swift */,
 				681140A41C3AC75C0068AE1C /* ViewPropertyViewController.swift */,
 				681140A81C3AC7C30068AE1C /* ListPropertiesViewController.swift */,
@@ -192,6 +193,8 @@
 				683F7F261C3D7E4700CA0A0C /* FeedBack2ViewController.swift */,
 				683F7F281C3D7EC100CA0A0C /* FeedBack3ViewController.swift */,
 				68FA964B1C3D9DD80023C292 /* SeeitLaterViewController.swift */,
+				682EF3541C5287D5007176BF /* RealtorForm2ViewController.swift */,
+				682EF3561C528960007176BF /* RealtorForm1ViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				682EF3571C528960007176BF /* RealtorForm1ViewController.swift in Sources */,
 				681140B11C3AC8760068AE1C /* ListingDetailsViewController.swift in Sources */,
 				68598DF31C2AF44F00E104C9 /* LoginViewController.swift in Sources */,
 				681140991C3AC62F0068AE1C /* BuyerForm3ViewController.swift in Sources */,
@@ -415,8 +419,7 @@
 				681140951C3AC60D0068AE1C /* BuyerForm1ViewController.swift in Sources */,
 				6811408B1C3AC3280068AE1C /* SelectRoleViewController.swift in Sources */,
 				686E8F431C3C2C2300F5FE01 /* BuyerHomeViewController.swift in Sources */,
-				6811409F1C3AC6940068AE1C /* RealtorForm2ViewController.swift in Sources */,
-				6811409D1C3AC6830068AE1C /* RealtorForm1ViewController.swift in Sources */,
+				6811409F1C3AC6940068AE1C /* RealtorForm3ViewController.swift in Sources */,
 				6897A12A1C244B5F00AB3A0A /* ViewController.swift in Sources */,
 				686E8F3F1C3C096300F5FE01 /* SwiftyJSON.swift in Sources */,
 				683F7F271C3D7E4700CA0A0C /* FeedBack2ViewController.swift in Sources */,
@@ -437,6 +440,7 @@
 				683F7F251C3D7D3C00CA0A0C /* FeedBack1ViewController.swift in Sources */,
 				68663D311C3C9B2700460D42 /* SeeItNowViewController.swift in Sources */,
 				6897A1281C244B5F00AB3A0A /* AppDelegate.swift in Sources */,
+				682EF3551C5287D5007176BF /* RealtorForm2ViewController.swift in Sources */,
 				68FA964C1C3D9DD80023C292 /* SeeitLaterViewController.swift in Sources */,
 				68275C0A1C40041F00696FBE /* UserManager.swift in Sources */,
 				6897A1301C244B5F00AB3A0A /* See_It_Pronto.xcdatamodeld in Sources */,

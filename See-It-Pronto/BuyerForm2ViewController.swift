@@ -52,17 +52,17 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
     }
     
     @IBAction func btnSave(sender: AnyObject) {
-     self.save()
+        self.save()
     }
     
     func save() {
         //create params
         let params = "id="+self.viewData["id"].stringValue+"&first_name="+txtFirstName.text!+"&last_name="+txtLastName.text!
         let url = Config.APP_URL+"/users/"+self.viewData["id"].stringValue
-        Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
+        Request().put(url, params:params,successHandler: {(response) in self.afterPut(response)});
     }
 
-    func afterPost(let response: NSData) {
+    func afterPut(let response: NSData) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result

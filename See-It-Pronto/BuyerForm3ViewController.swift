@@ -55,12 +55,12 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
     
     func save() {
         //create params
-        let params = "id="+self.viewData["id"].stringValue+"&user_"+self.viewData["id"].stringValue+"&number_card"+txtCardNumber.text!+"&expiration_date="+txtExpDate.text!+"&csv="+txtCVC.text!+"&promo_code="+txtPromoCode.text!
+        let params = "id="+self.viewData["id"].stringValue+"&user_id"+self.viewData["id"].stringValue+"&number_card"+txtCardNumber.text!+"&expiration_date="+txtExpDate.text!+"&csv="+txtCVC.text!+"&promo_code="+txtPromoCode.text!
         let url = Config.APP_URL+"/users/"+self.viewData["id"].stringValue
-        Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
+        Request().put(url, params:params,successHandler: {(response) in self.afterPut(response)});
     }
     
-    func afterPost(let response: NSData) {
+    func afterPut(let response: NSData) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result
