@@ -8,12 +8,13 @@
 
 import UIKit
 
-class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate  {
+class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate   {
 
     
     @IBOutlet weak var txtFirstName: UITextField!
     @IBOutlet weak var txtLastName: UITextField!
     @IBOutlet weak var btnSelectPicture: UIButton!
+    @IBOutlet weak var previewProfilePicture: UIImageView!
     var viewData:JSON = []
     
     override func viewDidLoad() {
@@ -51,6 +52,32 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
         return false
     }
     
+    @IBAction func btnChoosePicture(sender: AnyObject) {
+        let myPickerController = UIImagePickerController()
+        myPickerController.delegate = self;
+        myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.presentViewController(myPickerController, animated: true, completion: nil)
+    }
+    
+    //display image after select
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        self.previewProfilePicture.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    //upload photo to server
+    func uploadImage() {
+        if self.previewProfilePicture.image != nil {
+            let imageData:NSData = UIImageJPEGRepresentation(self.previewProfilePicture.image!, 1)!
+            SRWebClient.POST(Config.APP_URL+"/users/"+self.viewData["id"].stringValue)
+                .data(imageData, fieldName:"image", data:["id":self.viewData["id"].stringValue,"_method":"PUT"])
+                .send({(response:AnyObject!, status:Int) -> Void in
+                    },failure:{(error:NSError!) -> Void in
+                        print("ERROR UPLOADING PHOTO")
+                })
+        }
+    }
+    
     @IBAction func btnSave(sender: AnyObject) {
         self.save()
     }
@@ -65,6 +92,7 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
     func afterPut(let response: NSData) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
+            self.uploadImage()
             self.viewData = result
             Utility().displayAlert(self,title: "Success", message:"The data have been saved correctly", performSegue:"FromBuyerForm2")
         } else {

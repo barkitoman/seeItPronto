@@ -35,9 +35,17 @@ class BuyerForm4ViewController: UIViewController {
     @IBAction func btnBack(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
     }
+    
+    @IBAction func btnYes(sender: AnyObject) {
+        self.performSegueWithIdentifier("FormBuyer4", sender: self)
+    }
+    
+    @IBAction func btnSkip(sender: AnyObject) {
+        self.performSegueWithIdentifier("FormBuyer4", sender: self)
+    }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "FromBuyerForm4") {
+        if (segue.identifier == "FormBuyer4") {
     
         }
     }

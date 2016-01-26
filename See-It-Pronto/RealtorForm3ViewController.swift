@@ -36,23 +36,26 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         super.didReceiveMemoryWarning()
     }
     
-    
     @IBAction func btnBack(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func btnMakeSomeMoney(sender: AnyObject) {
+        save()
     }
     
     func save() {
         //create params
         let params = "id="+self.viewData["id"].stringValue+"&realtor_id"+self.viewData["realtor_id"].stringValue+"&showing_rate="+slShowingRate.value.description+"&travel_range="+slTravelRate.value.description
         let url = Config.APP_URL+"/users/"+self.viewData["id"].stringValue
-        Request().post(url, params:params,successHandler: {(response) in self.afterPost(response)});
+        Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
     }
     
     func afterPost(let response: NSData) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result
-            Utility().displayAlert(self,title:"Success", message:"The data have been saved correctly", performSegue:"RealtorForm1")
+            Utility().displayAlert(self,title:"Success", message:"The data have been saved correctly", performSegue:"RealtorForm3")
         } else {
             var msg = "Error saving, please try later"
             if(result["msg"].stringValue != "") {

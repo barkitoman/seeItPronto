@@ -28,7 +28,6 @@ class Request {
         task.resume();
     }
  
-    
     func put(url : String, var params : String, successHandler: (response: NSData) -> Void) {
         let url = NSURL(string: url)
         params+="&_method=PUT"
@@ -65,5 +64,4 @@ class Request {
         }
         task.resume();
     }
-
 }

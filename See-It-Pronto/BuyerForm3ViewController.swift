@@ -53,6 +53,10 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
         return false
     }
     
+    @IBAction func btnSave(sender: AnyObject) {
+        save()
+    }
+    
     func save() {
         //create params
         let params = "id="+self.viewData["id"].stringValue+"&user_id"+self.viewData["id"].stringValue+"&number_card"+txtCardNumber.text!+"&expiration_date="+txtExpDate.text!+"&csv="+txtCVC.text!+"&promo_code="+txtPromoCode.text!

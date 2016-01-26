@@ -379,10 +379,6 @@
                                 <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L6J-WA-w77">
-                                <rect key="frame" x="126" y="225" width="100" height="100"/>
-                                <state key="normal" backgroundImage="choosePicture"/>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="abG-32-tA8">
                                 <rect key="frame" x="158" y="508" width="142" height="40"/>
                                 <color key="backgroundColor" red="0.1510149452" green="0.75504451969999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -420,11 +416,25 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.45098039220000002" green="0.66666666669999997" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFi-nL-er5">
+                                <rect key="frame" x="171" y="223" width="129" height="37"/>
+                                <color key="backgroundColor" red="0.12549019610000001" green="0.75686274509999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Choose Picture">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnChoosePicture:" destination="6VJ-KH-B8x" eventType="touchUpInside" id="qu3-Nr-8P0"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NgF-v1-5Js">
+                                <rect key="frame" x="126" y="223" width="37" height="37"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="btnSelectPicture" destination="L6J-WA-w77" id="bTP-oe-Dbd"/>
+                        <outlet property="previewProfilePicture" destination="NgF-v1-5Js" id="mHu-Os-8H3"/>
                         <outlet property="txtFirstName" destination="3kv-Lm-y5g" id="IEJ-10-mTh"/>
                         <outlet property="txtLastName" destination="Gbx-mr-qLh" id="AiF-2W-198"/>
                         <segue destination="Osu-1m-lox" kind="show" identifier="FromBuyerForm2" id="85C-5i-bME"/>
@@ -433,63 +443,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dcw-XS-XRB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3720" y="-997"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="QNa-lw-dTZ">
-            <objects>
-                <viewController id="OVa-e1-bTt" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="xZZ-yf-rl1"/>
-                        <viewControllerLayoutGuide type="bottom" id="34O-Hn-9dT"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="g6d-mb-K5H">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jgd-CI-64e">
-                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eXz-KG-nDt">
-                                        <rect key="frame" x="18" y="3" width="88" height="40"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                        <state key="normal" title="Back" backgroundImage="blank-back"/>
-                                        <connections>
-                                            <action selector="btnBack:" destination="Osu-1m-lox" eventType="touchUpInside" id="LKB-yP-sNf"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Buyer Reg (3 of 4) #6" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Npf-hC-ArL">
-                                        <rect key="frame" x="114" y="11" width="198" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.45098039220000002" green="0.66666666669999997" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="scan card" translatesAutoresizingMaskIntoConstraints="NO" id="9Ei-pl-W7Y">
-                                <rect key="frame" x="0.0" y="65" width="320" height="503"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2VC-bR-Syy">
-                                <rect key="frame" x="158" y="508" width="142" height="40"/>
-                                <color key="backgroundColor" red="0.1510149452" green="0.75504451969999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Next">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D5H-T2-pvX">
-                                <rect key="frame" x="20" y="508" width="142" height="40"/>
-                                <color key="backgroundColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Previous">
-                                    <color key="titleColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="T6a-ke-2Ni" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4251" y="-1700"/>
         </scene>
         <!--Buyer Form3 View Controller-->
         <scene sceneID="LBb-O3-Ghc">
@@ -562,7 +515,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="zHz-kd-Cl2" kind="show" identifier="FromBuyerForm3" id="cGN-Fd-EJt"/>
+                                    <action selector="btnSave:" destination="Osu-1m-lox" eventType="touchUpInside" id="r3T-2n-0Rw"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PLQ-at-715">
@@ -610,13 +563,6 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.45098039220000002" green="0.66666666669999997" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DCo-vk-khJ">
-                                <rect key="frame" x="20" y="243" width="280" height="113"/>
-                                <state key="normal" backgroundImage="creditCard"/>
-                                <connections>
-                                    <segue destination="OVa-e1-bTt" kind="show" id="G9O-uU-elI"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -625,6 +571,7 @@
                         <outlet property="txtCardNumber" destination="Z9g-E2-nvt" id="q47-MF-bso"/>
                         <outlet property="txtExpDate" destination="6qA-Lk-qVv" id="ekf-n3-Rvd"/>
                         <outlet property="txtPromoCode" destination="e9s-tP-87N" id="LXg-nx-voa"/>
+                        <segue destination="zHz-kd-Cl2" kind="show" identifier="FromBuyerForm3" id="d4I-Nt-mzY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ri-RZ-d13" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -649,6 +596,9 @@
                                 <state key="normal" title="Yes">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="btnYes:" destination="zHz-kd-Cl2" eventType="touchUpInside" id="MNR-Qh-FfW"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5aV-Y4-TBd">
                                 <rect key="frame" x="20" y="508" width="142" height="40"/>
@@ -656,6 +606,9 @@
                                 <state key="normal" title="Skip">
                                     <color key="titleColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="btnSkip:" destination="zHz-kd-Cl2" eventType="touchUpInside" id="PTG-D1-BbV"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Do you want to customize your Profile?" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yqw-82-MJv">
                                 <rect key="frame" x="29" y="177" width="271" height="62"/>
@@ -2535,7 +2488,6 @@ Range</string>
                                 </state>
                                 <connections>
                                     <action selector="btnSave:" destination="n7j-92-mj8" eventType="touchUpInside" id="G5h-Tn-qN4"/>
-                                    <segue destination="zLM-Na-G3C" kind="show" identifier="RealtorForm2" id="hPD-61-eTO"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V4J-Ws-HLf">
@@ -2571,13 +2523,6 @@ Range</string>
                                 </subviews>
                                 <color key="backgroundColor" red="0.45098039215686275" green="0.66666666666666663" blue="0.85098039215686272" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BQj-Cg-eT3">
-                                <rect key="frame" x="122" y="275" width="178" height="30"/>
-                                <color key="backgroundColor" red="0.12549019610000001" green="0.75686274509999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Choose Picture">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fdp-ah-u4X">
                                 <rect key="frame" x="122" y="237" width="178" height="30"/>
                                 <color key="backgroundColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -2585,15 +2530,40 @@ Range</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OAC-nR-KN2">
+                                <rect key="frame" x="122" y="275" width="37" height="37"/>
+                                <state key="normal" backgroundImage="choosePicture"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="klX-dc-5BV">
+                                <rect key="frame" x="167" y="275" width="129" height="37"/>
+                                <color key="backgroundColor" red="0.12549019610000001" green="0.75686274509999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Choose Picture">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnchoosePicture:" destination="n7j-92-mj8" eventType="touchUpInside" id="IMI-WA-eR8"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iUA-2F-wqe">
+                                <rect key="frame" x="122" y="275" width="37" height="37"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="OAC-nR-KN2"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
+                        <outlet property="previewProfilePicture" destination="iUA-2F-wqe" id="GZv-mp-Mky"/>
                         <outlet property="txtBankAcct" destination="fdp-ah-u4X" id="aS5-aG-b7r"/>
                         <outlet property="txtBrokerage" destination="7As-gb-MwV" id="BO2-Z5-MtO"/>
                         <outlet property="txtFirstName" destination="po4-Hz-8Bc" id="VjF-li-1nY"/>
                         <outlet property="txtLastName" destination="Yup-Wt-j3A" id="Pjc-tC-78w"/>
                         <outlet property="txtLisence" destination="K3r-yD-ly2" id="Iho-al-4JH"/>
+                        <segue destination="zLM-Na-G3C" kind="show" identifier="RealtorForm2" id="vKa-Vg-lpb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uQQ-EZ-1IM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2665,7 +2635,7 @@ Range</string>
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Ibk-bW-2PB" kind="show" id="B4G-Pe-t68"/>
+                                    <action selector="btnMakeSomeMoney:" destination="zLM-Na-G3C" eventType="touchUpInside" id="4Dz-Ke-QmR"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="200" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ftv-NA-51N">
@@ -2703,6 +2673,7 @@ Range</string>
                     <connections>
                         <outlet property="slShowingRate" destination="OnD-i6-dJB" id="bsX-av-Gqi"/>
                         <outlet property="slTravelRate" destination="8HF-zd-dhs" id="Jbp-Mt-XHE"/>
+                        <segue destination="Ibk-bW-2PB" kind="show" identifier="RealtorForm3" id="vxA-X1-U6d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jDg-0t-j1O" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3925,7 +3896,6 @@ $480,000
         <image name="blank-back" width="96" height="40"/>
         <image name="calendar" width="165" height="119"/>
         <image name="choosePicture" width="101" height="101"/>
-        <image name="creditCard" width="223" height="112"/>
         <image name="house" width="640" height="480"/>
         <image name="house3" width="640" height="480"/>
         <image name="logo" width="432" height="226"/>
@@ -3935,11 +3905,10 @@ $480,000
         <image name="realtor1" width="79" height="79"/>
         <image name="realtor2" width="84" height="80"/>
         <image name="realtor3" width="84" height="80"/>
-        <image name="scan card" width="317" height="441"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gRd-bz-hb9"/>
+        <segue reference="Ejg-Xi-KK2"/>
+        <segue reference="vxA-X1-U6d"/>
         <segue reference="0Gu-xL-7Tz"/>
-        <segue reference="B4G-Pe-t68"/>
     </inferredMetricsTieBreakers>
 </document>
