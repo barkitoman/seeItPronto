@@ -11,9 +11,11 @@ import UIKit
 class RealtorHomeViewController: UIViewController {
 
     var viewData:JSON = []
+    @IBOutlet weak var mapContent: UIWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadMap()
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,8 +34,14 @@ class RealtorHomeViewController: UIViewController {
         super.viewWillDisappear(animated)
     }
     
+    func loadMap() {
+        let url = NSURL (string: Config.APP_URL+"/real_state_property_basics/map/"+self.viewData["id"].stringValue);
+        let requestObj = NSURLRequest(URL: url!);
+        self.mapContent.loadRequest(requestObj);
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 
     }
-
+    
 }

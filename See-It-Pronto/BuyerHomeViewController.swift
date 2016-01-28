@@ -11,10 +11,11 @@ import UIKit
 class BuyerHomeViewController: UIViewController {
 
     var viewData:JSON = []
+    @IBOutlet weak var mapContent: UIWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        loadMap()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -31,7 +32,12 @@ class BuyerHomeViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-
+    }
+    
+    func loadMap() {
+        let url = NSURL (string: Config.APP_URL+"/real_state_property_basics/map/"+self.viewData["id"].stringValue);
+        let requestObj = NSURLRequest(URL: url!);
+        self.mapContent.loadRequest(requestObj);
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

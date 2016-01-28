@@ -59,7 +59,7 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
     
     func save() {
         //create params
-        let params = "id="+self.viewData["id"].stringValue+"&user_id"+self.viewData["id"].stringValue+"&number_card"+txtCardNumber.text!+"&expiration_date="+txtExpDate.text!+"&csv="+txtCVC.text!+"&promo_code="+txtPromoCode.text!
+        let params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["id"].stringValue+"&number_card="+txtCardNumber.text!+"&expiration_date="+txtExpDate.text!+"&csv="+txtCVC.text!+"&promo_code="+txtPromoCode.text!
         let url = Config.APP_URL+"/users/"+self.viewData["id"].stringValue
         Request().put(url, params:params,successHandler: {(response) in self.afterPut(response)});
     }
