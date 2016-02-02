@@ -17,6 +17,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.selfDelegate()
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,17 +52,15 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
     
     func login() {
         //create params
-        var params = "username="+txtUsername.text!+"&password="+txtPassword.text!
-        let tokenParams = "&grant_type="+Config.GRANT_TYPE+"&client_id="+Config.CLIENT_ID+"&client_secret="+Config.CLIENT_SECRET
-        params += tokenParams
-        let url = Config.APP_URL+"/rest/token"
+        let params = "client_id="+txtUsername.text!+"&client_secret="+txtPassword.text!+"&grant_type="+Config.GRANT_TYPE
+        let url = Config.APP_URL+"/phone_login"
         Request().post(url, params:params,successHandler: {(response) in self.afterLoginRequest(response)});
     }
     
     func afterLoginRequest(let response: NSData) {
         let result = JSON(data: response)
-        if(result["result"].bool == true) {
-            //is login is ok
+        if(result["user"]["result"].bool == true) {
+            //is login is ok, store the user data
             User().saveIfExists(result)
             dispatch_async(dispatch_get_main_queue()) {
                 if(result["role"] == "buyer") {
@@ -77,6 +76,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
+        if (segue.identifier == "bu1") {
+
+        }
     }
 }

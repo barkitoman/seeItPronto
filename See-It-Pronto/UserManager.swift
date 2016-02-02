@@ -13,7 +13,6 @@ import CoreData
 @objc(UserEntity)
 
 class UserEntity: NSManagedObject {
-    
     @NSManaged var id:String
     @NSManaged var role:String
     @NSManaged var name:String
@@ -21,7 +20,7 @@ class UserEntity: NSManagedObject {
     @NSManaged var expires_in:String
     @NSManaged var token_type:String
     @NSManaged var scope:String
-    @NSManaged var username:String
+    @NSManaged var email:String
     @NSManaged var password:String
  
 }
@@ -56,15 +55,15 @@ class User {
         let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let contxt: NSManagedObjectContext = appDel.managedObjectContext
 
-        existingItem.setValue(userData["id"].stringValue,           forKey: "id")
-        existingItem.setValue(userData["role"].stringValue,         forKey: "role")
-        existingItem.setValue(userData["name"].stringValue,         forKey: "name")
-        existingItem.setValue(userData["username"].stringValue,     forKey: "username")
-        existingItem.setValue(userData["password"].stringValue,     forKey: "password")
-        existingItem.setValue(userData["expires_in"].stringValue,   forKey: "expires_in")
-        existingItem.setValue(userData["access_token"].stringValue, forKey: "access_token")
-        existingItem.setValue(userData["scope"].stringValue,        forKey: "scope")
-        existingItem.setValue(userData["token_type"].stringValue,   forKey: "token_type")
+        existingItem.setValue(userData["user"]["id"].stringValue,       forKey: "id")
+        existingItem.setValue(userData["user"]["role"].stringValue,     forKey: "role")
+        existingItem.setValue(userData["user"]["name"].stringValue,     forKey: "name")
+        existingItem.setValue(userData["user"]["email"].stringValue,    forKey: "email")
+        existingItem.setValue(userData["user"]["password"].stringValue, forKey: "password")
+        existingItem.setValue(userData["expires_in"].stringValue,       forKey: "expires_in")
+        existingItem.setValue(userData["access_token"].stringValue,     forKey: "access_token")
+        existingItem.setValue(userData["scope"].stringValue,            forKey: "scope")
+        existingItem.setValue(userData["token_type"].stringValue,       forKey: "token_type")
         do {
             try contxt.save()
         } catch let error as NSError {
@@ -79,11 +78,11 @@ class User {
         //create instance of pur data model and inicilize
         let newItem = UserEntity(entity:en!, insertIntoManagedObjectContext:contxt)
         //map our properties
-        newItem.id            = userData["id"].stringValue
-        newItem.role          = userData["role"].stringValue
-        newItem.name          = userData["name"].stringValue
-        newItem.username      = userData["username"].stringValue
-        newItem.password      = userData["password"].stringValue
+        newItem.id            = userData["user"]["id"].stringValue
+        newItem.role          = userData["user"]["role"].stringValue
+        newItem.name          = userData["user"]["name"].stringValue
+        newItem.email         = userData["user"]["email"].stringValue
+        newItem.password      = userData["user"]["password"].stringValue
         newItem.expires_in    = userData["expires_in"].stringValue
         newItem.access_token  = userData["access_token"].stringValue
         newItem.scope         = userData["scope"].stringValue

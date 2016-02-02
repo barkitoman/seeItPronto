@@ -42,6 +42,5 @@ struct Notification {
         reminder.category  = "CATEGORY_ID"
 
         UIApplication.sharedApplication().scheduleLocalNotification(reminder)
-        print("Firing at \(now.hour):\(now.minute+1)")
     }
 }

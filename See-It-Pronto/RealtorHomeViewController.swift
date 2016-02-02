@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
 
 class RealtorHomeViewController: UIViewController {
 
     var viewData:JSON = []
-    @IBOutlet weak var mapContent: UIWebView!
+    @IBOutlet weak var Map: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,9 +37,17 @@ class RealtorHomeViewController: UIViewController {
     }
     
     func loadMap() {
-        let url = NSURL (string: Config.APP_URL+"/real_state_property_basics/map/"+self.viewData["id"].stringValue);
-        let requestObj = NSURLRequest(URL: url!);
-        self.mapContent.loadRequest(requestObj);
+        let location = CLLocationCoordinate2DMake(41.878, -87.629)
+        
+        let span = MKCoordinateSpanMake(0.2, 0.2)
+        let region = MKCoordinateRegion(center: location, span: span)
+        Map.setRegion(region, animated: true)
+        
+        let anotation = MKPointAnnotation()
+        anotation.coordinate = location
+        anotation.title = "Pizza"
+        anotation.subtitle = "good job"
+        Map.addAnnotation(anotation)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

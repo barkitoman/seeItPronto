@@ -17,7 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        Notification.askPermission()
         return true
+    }
+    
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
+        var userInfo = [NSObject: AnyObject]()
+        userInfo["text"] = responseInfo[UIUserNotificationActionResponseTypedTextKey]
+        NSNotificationCenter.defaultCenter().postNotificationName("text", object: nil, userInfo: userInfo)
+        completionHandler()
     }
 
     func applicationWillResignActive(application: UIApplication) {

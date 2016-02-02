@@ -12,8 +12,7 @@ struct Config {
     
     static var APP_URL        = "http://oauthtest-nyxent.rhcloud.com"
     static var GRANT_TYPE     = "client_credentials"
-    static var CLIENT_ID      = "client"
-    static var CLIENT_SECRET  = "pass"
+
     
 }
 

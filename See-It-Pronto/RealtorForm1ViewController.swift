@@ -19,6 +19,7 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
+        self.findUserInfo()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -58,9 +59,16 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     func save() {
         //create params
-        let params = "id="+self.viewData["id"].stringValue+"&role=realtor&email="+txtEmail.text!+"&phone="+txtPhone.text!+"&password="+txtPassword.text!
-        let url = Config.APP_URL+"/users"
-        Request().post(url, params:params,successHandler: {(response) in self.afterPost(response)});
+        var params = "role=realtor&email="+txtEmail.text!+"&phone="+txtPhone.text!+"&password="+txtPassword.text!
+        var url = Config.APP_URL+"/users"
+        if(self.viewData["id"].stringValue != "") {
+            params = params+"&id="+self.viewData["id"].stringValue
+            url = Config.APP_URL+"/users/"+self.viewData["id"].stringValue
+            Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
+        } else {
+            Request().post(url, params:params,successHandler: {(response) in self.afterPost(response)});
+        }
+        
     }
     
     func afterPost(let response: NSData) {
@@ -74,6 +82,21 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
                 msg = result["msg"].stringValue
             }
             Utility().displayAlert(self,title:"Error", message:msg, performSegue:"")
+        }
+    }
+    
+    func findUserInfo() {
+        if(self.viewData["id"].stringValue != "") {
+            let url = Config.APP_URL+"/user_info/"+self.viewData["id"].stringValue
+            Request().get(url, successHandler: {(response) in self.loadDataToEdit(response)})
+        }
+    }
+    
+    func loadDataToEdit(let response: NSData) {
+        dispatch_async(dispatch_get_main_queue()) {
+            let result = JSON(data: response)
+            self.txtEmail.text = result["email"].stringValue
+            self.txtPhone.text = result["phone"].stringValue
         }
     }
     

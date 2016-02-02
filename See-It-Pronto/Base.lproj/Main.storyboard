@@ -719,15 +719,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="70u-4n-qi1">
-                                <rect key="frame" x="-1" y="106" width="321" height="397"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
-                            </webView>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="F8i-Lo-Ucr">
+                                <rect key="frame" x="0.0" y="106" width="321" height="397"/>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="mapContent" destination="70u-4n-qi1" id="Fp0-kV-70E"/>
+                        <outlet property="Map" destination="F8i-Lo-Ucr" id="bQs-jg-urR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tsj-Gs-Edg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2704,7 +2703,7 @@ Range</string>
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qii-iC-0DG">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qii-iC-0DG">
                                 <rect key="frame" x="40" y="146" width="240" height="35"/>
                                 <color key="backgroundColor" red="0.9137254901960784" green="0.9137254901960784" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -2728,7 +2727,7 @@ Range</string>
                                 <rect key="frame" x="40" y="198" width="240" height="35"/>
                                 <color key="backgroundColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HaB-yj-vVk">
                                 <rect key="frame" x="40" y="249" width="240" height="39"/>
@@ -2817,10 +2816,9 @@ Range</string>
                                 </subviews>
                                 <color key="backgroundColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gVE-Ht-66T">
-                                <rect key="frame" x="0.0" y="107" width="321" height="396"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
-                            </webView>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Mb0-Ip-Zt2">
+                                <rect key="frame" x="0.0" y="104" width="321" height="399"/>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -2830,7 +2828,7 @@ Range</string>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="mapContent" destination="gVE-Ht-66T" id="pj3-go-Ceb"/>
+                        <outlet property="Map" destination="Mb0-Ip-Zt2" id="hLQ-Np-z0k"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ySX-bN-fhi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3922,8 +3920,8 @@ $480,000
         <image name="realtor3" width="84" height="80"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0Gu-xL-7Tz"/>
         <segue reference="gRd-bz-hb9"/>
         <segue reference="trd-gy-tVv"/>
+        <segue reference="0Gu-xL-7Tz"/>
     </inferredMetricsTieBreakers>
 </document>
