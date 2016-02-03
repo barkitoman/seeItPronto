@@ -34,6 +34,20 @@ class CongratulationsViewController: UIViewController {
 
     }
     
+    @IBAction func btnCallAgent(sender: AnyObject) {
+        //let  phoneNumber = txtPhoneNumber.text
+        //callNumber(phoneNumber!)
+    }
+    
+    private func callNumber(phoneNumber:String) {
+        if let phoneCallURL:NSURL = NSURL(string: "tel://\(phoneNumber)") {
+            let application:UIApplication = UIApplication.sharedApplication()
+            if (application.canOpenURL(phoneCallURL)) {
+                application.openURL(phoneCallURL);
+            }
+        }
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 
     }

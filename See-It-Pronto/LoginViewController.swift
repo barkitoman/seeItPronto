@@ -63,7 +63,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
             //is login is ok, store the user data
             User().saveIfExists(result)
             dispatch_async(dispatch_get_main_queue()) {
-                if(result["role"] == "buyer") {
+                if(result["user"]["role"] == "buyer") {
                     self.performSegueWithIdentifier("LoginBuyer", sender: self)
                 } else {
                     self.performSegueWithIdentifier("LoginRealtor", sender: self)
@@ -76,8 +76,13 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "bu1") {
-
+        if (segue.identifier == "LoginBuyer") {
+            let view: BuyerHomeViewController = segue.destinationViewController as! BuyerHomeViewController
+            view.viewData  = self.viewData
+            
+        }else if(segue.identifier == "LoginRealtor") {
+            let view: RealtorHomeViewController = segue.destinationViewController as! RealtorHomeViewController
+            view.viewData  = self.viewData
         }
     }
 }

@@ -13,11 +13,59 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    let NotificationTimeoutInSeconds:NSTimeInterval = 10
+    var NotificationTimer: NSTimer?
+    var userId:String = ""
+    
+    //interval for get new notifications
+    func intervalNotifications() {
+        /*
+        self.NotificationTimer = NSTimer.scheduledTimerWithTimeInterval(NotificationTimeoutInSeconds,
+            target:self,
+            selector:Selector("findNotifications"),
+            userInfo:nil,
+            repeats:true
+        )
+        */
+    }
+    
+    func stopIntervalNotifications() {
+        if(self.NotificationTimer != nil) {
+            self.NotificationTimer!.invalidate()
+        }
+    }
+    
+    func findNotifications() {
+        print("WAS HERE")
+        if(!self.userId.isEmpty) {
+            self.stopIntervalNotifications()
+            let url = Config.APP_URL+"/get_notifications/"+self.userId
+            print(url)
+            Request().get(url, successHandler: {(response) in
+               /*
+                let notifications = JSON(data: response)
+                for (_,subJson):(String, JSON) in notifications {
+                     Notification.scheduleNotification(subJson["description"].stringValue)
+                }
+                self.intervalNotifications()
+                */
+            })
+        }
+    }
+    
+    func getUserId() {
+        if(self.userId.isEmpty) {
+            let user = User().find()
+            let obj  = user[0] as! NSManagedObject
+            self.userId = obj.valueForKey("id") as! String
+        }
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         Notification.askPermission()
+        //self.getUserId()
+        //self.intervalNotifications()
         return true
     }
     

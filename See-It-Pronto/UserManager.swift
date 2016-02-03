@@ -22,6 +22,7 @@ class UserEntity: NSManagedObject {
     @NSManaged var scope:String
     @NSManaged var email:String
     @NSManaged var password:String
+    @NSManaged var realtor_id:String
  
 }
 
@@ -64,6 +65,7 @@ class User {
         existingItem.setValue(userData["access_token"].stringValue,     forKey: "access_token")
         existingItem.setValue(userData["scope"].stringValue,            forKey: "scope")
         existingItem.setValue(userData["token_type"].stringValue,       forKey: "token_type")
+        existingItem.setValue(userData["realtor_id"].stringValue,       forKey: "realtor_id")
         do {
             try contxt.save()
         } catch let error as NSError {
@@ -87,6 +89,7 @@ class User {
         newItem.access_token  = userData["access_token"].stringValue
         newItem.scope         = userData["scope"].stringValue
         newItem.token_type    = userData["token_type"].stringValue
+        newItem.realtor_id    = userData["realtor_id"].stringValue
         do {
             try contxt.save()
         } catch let error as NSError {

@@ -7,16 +7,16 @@
 //
 
 import UIKit
-import MapKit
-import CoreLocation
 
-class RealtorHomeViewController: UIViewController {
+class RealtorHomeViewController: UIViewController,UIWebViewDelegate {
 
     var viewData:JSON = []
-    @IBOutlet weak var Map: MKMapView!
+    @IBOutlet weak var webView: UIWebView!
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.webView.delegate = self;
         loadMap()
     }
 
@@ -37,17 +37,16 @@ class RealtorHomeViewController: UIViewController {
     }
     
     func loadMap() {
-        let location = CLLocationCoordinate2DMake(41.878, -87.629)
-        
-        let span = MKCoordinateSpanMake(0.2, 0.2)
-        let region = MKCoordinateRegion(center: location, span: span)
-        Map.setRegion(region, animated: true)
-        
-        let anotation = MKPointAnnotation()
-        anotation.coordinate = location
-        anotation.title = "Pizza"
-        anotation.subtitle = "good job"
-        Map.addAnnotation(anotation)
+        let requestURL = NSURL(string:Config.APP_URL+"/real_state_property_basics/map/"+self.viewData["id"].stringValue)
+        let request = NSURLRequest(URL: requestURL!)
+        self.webView.loadRequest(request)
+    }
+    
+    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if navigationType == UIWebViewNavigationType.LinkClicked {
+            return false
+        }
+        return true
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
