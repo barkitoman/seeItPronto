@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController {
 
@@ -37,7 +38,26 @@ class ViewController: UIViewController {
     
     func goToLogin() {
         if self.timer != nil { self.stopInterval()}
+        automaticLogin()
         self.performSegueWithIdentifier("ShowLogin", sender: self)
+    }
+    
+    func automaticLogin() {
+        let user   = User().find()
+        let obj    = user[0] as! NSManagedObject
+        let userId = obj.valueForKey("id") as! String
+        let role   = obj.valueForKey("role") as! String
+        if(!userId.isEmpty && !role.isEmpty) {
+            if(role == "realtor") {
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("RealtorHomeViewController") as UIViewController
+                self.presentViewController(vc, animated: true, completion: nil)
+            }else if (role == "buyer") {
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as UIViewController
+                self.presentViewController(vc, animated: true, completion: nil)
+            }
+        }
     }
     
     func startSetInterval() {

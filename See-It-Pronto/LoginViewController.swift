@@ -27,6 +27,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
     override func viewWillAppear(animated: Bool) {
         navigationController?.navigationBarHidden = true
         super.viewWillAppear(animated)
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -62,16 +63,20 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
         if(result["user"]["result"].bool == true) {
             //is login is ok, store the user data
             User().saveIfExists(result)
-            dispatch_async(dispatch_get_main_queue()) {
-                if(result["user"]["role"] == "buyer") {
-                    self.performSegueWithIdentifier("LoginBuyer", sender: self)
-                } else {
-                    self.performSegueWithIdentifier("LoginRealtor", sender: self)
-                }
-            }
+            self.goHomeView(result["user"]["role"].stringValue)
         } else {
             let msg = "Invalid login information, please try again"
             Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
+        }
+    }
+    
+    func goHomeView(role:String) {
+        dispatch_async(dispatch_get_main_queue()) {
+            if(role == "realtor") {
+                self.performSegueWithIdentifier("LoginRealtor", sender: self)
+            } else {
+                self.performSegueWithIdentifier("LoginBuyer", sender: self)
+            }
         }
     }
     

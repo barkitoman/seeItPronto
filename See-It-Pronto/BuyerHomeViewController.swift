@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BuyerHomeViewController: UIViewController,UIWebViewDelegate {
+class BuyerHomeViewController: BaseViewController, UIWebViewDelegate {
 
     var viewData:JSON = []
     @IBOutlet weak var webView: UIWebView!
@@ -16,6 +16,7 @@ class BuyerHomeViewController: UIViewController,UIWebViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.webView.delegate = self;
+        self.addSlideMenuButton()
         loadMap()
     }
     
@@ -47,6 +48,10 @@ class BuyerHomeViewController: UIViewController,UIWebViewDelegate {
             return false
         }
         return true
+    }
+    
+    @IBAction func btnMenu(sender: AnyObject) {
+        onSlideMenuButtonPressed(sender as! UIButton)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

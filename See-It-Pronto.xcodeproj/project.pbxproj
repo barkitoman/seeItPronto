@@ -48,6 +48,7 @@
 		6897A1351C244B5F00AB3A0A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6897A1331C244B5F00AB3A0A /* LaunchScreen.storyboard */; };
 		6897A1401C244B6000AB3A0A /* See_It_ProntoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6897A13F1C244B6000AB3A0A /* See_It_ProntoTests.swift */; };
 		6897A14B1C244B6000AB3A0A /* See_It_ProntoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6897A14A1C244B6000AB3A0A /* See_It_ProntoUITests.swift */; };
+		68C293331C63E69D0031C41A /* SlideMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C293321C63E69C0031C41A /* SlideMenuController.swift */; };
 		68D64C561C443DF5006CBE2F /* Utitity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D64C551C443DF5006CBE2F /* Utitity.swift */; };
 		68D99F821C3C4B0500A520D2 /* SearchMapBuyer1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D99F811C3C4B0500A520D2 /* SearchMapBuyer1ViewController.swift */; };
 		68D99F841C3C4B1C00A520D2 /* SearchMapBuyer2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D99F831C3C4B1C00A520D2 /* SearchMapBuyer2ViewController.swift */; };
@@ -120,6 +121,7 @@
 		6897A1461C244B6000AB3A0A /* See-It-ProntoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "See-It-ProntoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6897A14A1C244B6000AB3A0A /* See_It_ProntoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = See_It_ProntoUITests.swift; sourceTree = "<group>"; };
 		6897A14C1C244B6000AB3A0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		68C293321C63E69C0031C41A /* SlideMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenuController.swift; sourceTree = "<group>"; };
 		68D64C551C443DF5006CBE2F /* Utitity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utitity.swift; sourceTree = "<group>"; };
 		68D99F811C3C4B0500A520D2 /* SearchMapBuyer1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchMapBuyer1ViewController.swift; sourceTree = "<group>"; };
 		68D99F831C3C4B1C00A520D2 /* SearchMapBuyer2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchMapBuyer2ViewController.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 		6897A1261C244B5F00AB3A0A /* See-It-Pronto */ = {
 			isa = PBXGroup;
 			children = (
+				68C2932D1C63C6C70031C41A /* Menu */,
 				680842DF1C3EAC5E00AF7F8E /* Model */,
 				686E8F3D1C3C089F00F5FE01 /* Lib */,
 				689A300B1C456D8200D39DE6 /* Helper */,
@@ -272,6 +275,14 @@
 				68587EF91C456F44002696C3 /* Notification.swift */,
 			);
 			name = Helper;
+			sourceTree = "<group>";
+		};
+		68C2932D1C63C6C70031C41A /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				68C293321C63E69C0031C41A /* SlideMenuController.swift */,
+			);
+			name = Menu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -427,6 +438,7 @@
 				686E8F411C3C2AF900F5FE01 /* RealtorHomeViewController.swift in Sources */,
 				680842E31C3EB0C700AF7F8E /* Config.swift in Sources */,
 				68663D2D1C3C8CB600460D42 /* PropertyDetailsViewController.swift in Sources */,
+				68C293331C63E69D0031C41A /* SlideMenuController.swift in Sources */,
 				681140971C3AC61F0068AE1C /* BuyerForm2ViewController.swift in Sources */,
 				683F7F231C3D7CB500CA0A0C /* CongratulationsViewController.swift in Sources */,
 				681140A51C3AC75C0068AE1C /* ViewPropertyViewController.swift in Sources */,

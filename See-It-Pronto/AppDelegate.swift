@@ -19,14 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //interval for get new notifications
     func intervalNotifications() {
-        /*
         self.NotificationTimer = NSTimer.scheduledTimerWithTimeInterval(NotificationTimeoutInSeconds,
             target:self,
             selector:Selector("findNotifications"),
             userInfo:nil,
             repeats:true
         )
-        */
     }
     
     func stopIntervalNotifications() {
@@ -42,13 +40,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let url = Config.APP_URL+"/get_notifications/"+self.userId
             print(url)
             Request().get(url, successHandler: {(response) in
-               /*
                 let notifications = JSON(data: response)
                 for (_,subJson):(String, JSON) in notifications {
                      Notification.scheduleNotification(subJson["description"].stringValue)
                 }
                 self.intervalNotifications()
-                */
             })
         }
     }
