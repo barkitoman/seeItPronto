@@ -42,7 +42,17 @@ class User {
         return out
     }
     
-  func saveIfExists(userData:JSON) {
+    func getField(fieldName:String)->String{
+        let user = User().find()
+        var out:String = ""
+        if(user.count >= 1 && user[0] != nil) {
+            let obj  = user[0] as! NSManagedObject
+             out = obj.valueForKey(fieldName) as! String
+        }
+        return out
+    }
+    
+    func saveIfExists(userData:JSON) {
         //check if item exists
         if (self.find().count >= 1) {
             //Remove if exists
@@ -109,19 +119,19 @@ class User {
     }
     
     func deleteAllData() {
-        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let contxt: NSManagedObjectContext = appDel.managedObjectContext
+        let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
+        let context = appDel.managedObjectContext
+        let coord = appDel.persistentStoreCoordinator
+        
         let fetchRequest = NSFetchRequest(entityName: "User")
-        fetchRequest.returnsObjectsAsFaults = false
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
         do {
-            let results = try contxt.executeFetchRequest(fetchRequest)
-            for managedObject in results {
-                let managedObjectData:NSManagedObject = managedObject as! NSManagedObject
-                contxt.deleteObject(managedObjectData)
-            }
+            try coord.executeRequest(deleteRequest, withContext: context)
         } catch let error as NSError {
-            print("Error deleting all data in User. error : \(error) \(error.userInfo)")
+            debugPrint(error)
         }
     }
-}
+    }
+
 

@@ -34,6 +34,10 @@ class SeeitLaterViewController: UIViewController {
 
     }
     
+    @IBAction func btnBack(sender: AnyObject) {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 
     }

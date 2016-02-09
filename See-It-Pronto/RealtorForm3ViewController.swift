@@ -21,6 +21,7 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.findUserInfo()
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -70,15 +71,43 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         }
     }
     
-    
     @IBAction func editShowingRate(sender: AnyObject) {
         let showingRate = Int(roundf(slShowingRate.value))
-        lblShowingRate.text = "Your Rate: $\(showingRate) per showing"
+        self.showRates(String(showingRate), traveRange: "")
     }
     
     @IBAction func editTravelRate(sender: AnyObject) {
-        let travelRate = Int(roundf(slTravelRate.value))
-        lblTravelRate.text = "You are willing to travel up to \(travelRate) miles to show a property"
+        let travelRange = Int(roundf(slTravelRate.value))
+        self.showRates("", traveRange: String(travelRange))
+    }
+    
+    func findUserInfo() {
+        let userId = User().getField("id")
+        if(!userId.isEmpty) {
+            self.viewData["id"] = JSON(userId)
+            let url = Config.APP_URL+"/user_info/"+userId
+            Request().get(url, successHandler: {(response) in self.loadDataToEdit(response)})
+        }
+    }
+    
+    func loadDataToEdit(let response: NSData) {
+        dispatch_async(dispatch_get_main_queue()) {
+            let result = JSON(data: response)
+            self.slShowingRate.value = Float(result["showing_rate"].stringValue)!
+            self.slShowingRate.value = Float(result["travel_range"].stringValue)!
+            self.slShowingRate.addTarget(self, action: "sliderValueChanged:", forControlEvents: UIControlEvents.ValueChanged)
+            self.slShowingRate.addTarget(self, action: "sliderValueChanged:", forControlEvents: UIControlEvents.ValueChanged)
+            self.showRates(result["showing_rate"].stringValue, traveRange: result["travel_range"].stringValue)
+        }
+    }
+    
+    func showRates(showingRate:String,traveRange:String) {
+        if(!showingRate.isEmpty){
+            self.lblShowingRate.text = "Your Rate: $\(showingRate) per showing"
+        }
+        if(!traveRange.isEmpty){
+            self.lblTravelRate.text  = "You are willing to travel up to \(traveRange) miles to show a property"
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

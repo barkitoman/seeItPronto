@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewPropertyViewController: UIViewController {
+class ViewPropertyViewController: BaseViewController {
 
     var viewData:JSON = []
     

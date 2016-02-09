@@ -20,6 +20,7 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
+        self.findUserInfo()
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -102,6 +103,24 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
             }
             Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
             
+        }
+    }
+    
+    func findUserInfo() {
+        let userId = User().getField("id")
+        if(!userId.isEmpty) {
+            self.viewData["id"] = JSON(userId)
+            let url = Config.APP_URL+"/user_info/"+userId
+            Request().get(url, successHandler: {(response) in self.loadDataToEdit(response)})
+        }
+    }
+    
+    func loadDataToEdit(let response: NSData) {
+        let result = JSON(data: response)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.txtFirstName.text = result["last_name"].stringValue
+            self.txtLastName.text = result["first_name"].stringValue
+            //Utility().showPhoto(self.previewProfilePicture, imgPath: result["url_image"].stringValue)
         }
     }
     

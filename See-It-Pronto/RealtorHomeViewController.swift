@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RealtorHomeViewController: UIViewController,UIWebViewDelegate {
+class RealtorHomeViewController: BaseViewController,UIWebViewDelegate {
 
     var viewData:JSON = []
     @IBOutlet weak var webView: UIWebView!
@@ -44,15 +44,21 @@ class RealtorHomeViewController: UIViewController,UIWebViewDelegate {
     
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if navigationType == UIWebViewNavigationType.LinkClicked {
+            self.performSegueWithIdentifier("RealtorHomeShowingRequest", sender: self)
             return false
         }
         return true
     }
     
-    
+    @IBAction func btnMenu(sender: AnyObject) {
+        self.onSlideMenuButtonPressed(sender as! UIButton)
+    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "RealtorHomeShowingRequest") {
 
+            
+        }
     }
     
 }

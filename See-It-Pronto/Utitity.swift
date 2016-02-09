@@ -26,6 +26,20 @@ class Utility {
         }
     }
     
+    func showPhoto(img:UIImageView, imgPath:String){
+        let url = NSURL(string: Config.APP_URL+"/files/UsersPhotos/"+imgPath)
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) { (data, response, error) -> Void in
+            if error != nil {
+                print("thers an error in the log")
+            } else {
+                dispatch_async(dispatch_get_main_queue()) {
+                    img.image = UIImage(data: data!)
+                }
+            }
+        }
+        task.resume()
+    }
+    
     func defaultMenuImage() -> UIImage {
         var defaultMenuImage = UIImage()
         struct Static {

@@ -14,6 +14,7 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPhone: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
+    @IBOutlet weak var btnBack: UIButton!
      var viewData:JSON = []
     
     override func viewDidLoad() {
@@ -60,11 +61,12 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
     
     func save() {
         //create params
+         let userId = User().getField("id")
         var params = "role=buyer&email="+txtEmail.text!+"&phone="+txtPhone.text!+"&password="+txtPassword.text!
         var url = Config.APP_URL+"/users"
-        if(self.viewData["id"].stringValue != "") {
-            params = params+"&id="+self.viewData["id"].stringValue
-            url = Config.APP_URL+"/users/"+self.viewData["id"].stringValue
+        if(!userId.isEmpty) {
+            params = params+"&id="+userId
+            url = Config.APP_URL+"/users/"+userId
             Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
         } else {
             Request().post(url, params:params,successHandler: {(response) in self.afterPost(response)});
@@ -87,8 +89,10 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
     }
     
     func findUserInfo() {
-        if(self.viewData["id"].stringValue != "") {
-            let url = Config.APP_URL+"/user_info/"+self.viewData["id"].stringValue
+        let userId = User().getField("id")
+        if(!userId.isEmpty) {
+            self.viewData["id"] = JSON(userId)
+            let url = Config.APP_URL+"/user_info/"+userId
             Request().get(url, successHandler: {(response) in self.loadDataToEdit(response)})
         }
     }

@@ -1,19 +1,18 @@
 //
-//  PropertyDetailsViewController.swift
+//  ListRealtorsViewController.swift
 //  See-It-Pronto
 //
-//  Created by user114136 on 1/5/16.
+//  Created by user114136 on 2/9/16.
 //  Copyright © 2016 user114136. All rights reserved.
 //
 
 import UIKit
 
-class PropertyDetailsViewController: UIViewController {
+class ListRealtorsViewController: UIViewController {
 
-    var viewData:JSON = []
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -30,14 +29,15 @@ class PropertyDetailsViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+
     }
-    
     
     @IBAction func btnBack(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+
     }
 
 }

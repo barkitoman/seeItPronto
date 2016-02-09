@@ -7,42 +7,97 @@
 //
 
 import UIKit
+import CoreData
 
 class BaseViewController: UIViewController, SlideMenuDelegate {
     
     var tabOfChildViewController: [UIViewController] = []
     var tabOfChildViewControllerName: [String] = []
     var tabOfChildViewControllerIconName: [String] = []
-    
     var menuToReturn = [Dictionary<String,String>]()
-    
-    var imageNameHeaderMenu: String = "background"
+    var imageNameHeaderMenu: String = "background_menu"
     
     var objMenu : TableViewMenuController!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.createMenu()
         //Create containerView that contain child view
         createContainerView()
-        
-        //Show the SlideMenu and it's button
-        self.addSlideMenuButton()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    func createMenu(){
+        let userId = User().getField("id")
+        let role   = User().getField("role")
+        if(!userId.isEmpty && !role.isEmpty) {
+            if(role == "realtor") {
+                self.menuRealtor()
+            }else if (role == "buyer") {
+                self.menuBuyer()
+            }
+        }
+    }
+    
+    func menuRealtor() {
+        addChildView("RealtorHomeViewController",     titleOfChildren: "Home",         iconName: "home")
+        addChildView("RealtorProfileViewController",  titleOfChildren: "My Profile",   iconName: "my_profile")
+        addChildView("RealtorForm1ViewController",    titleOfChildren: "Edit Profile", iconName: "edit_profile")
+        addChildView("LoginViewController",           titleOfChildren: "Log out",      iconName: "logout")
+    }
+    
+    func menuBuyer(){
+        addChildView("RealtorHomeViewController",  titleOfChildren: "Home",         iconName: "home")
+        addChildView("ListRealtorsViewController", titleOfChildren: "Agents",       iconName: "realtor")
+        addChildView("BuyerForm1ViewController",   titleOfChildren: "Edit Profile", iconName: "edit_profile")
+        addChildView("LoginViewController",        titleOfChildren: "Log out",      iconName: "logout")
+    }
+    
+    //MARK: Functions for Container
+    func transitionBetweenTwoViews(subViewNew: UIViewController){
+        let viewIdentifier = subViewNew.restorationIdentifier
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        var viewController : UIViewController = UIViewController()
+        if(viewIdentifier == "BuyerForm1ViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerForm1ViewController") as! BuyerForm1ViewController
+            
+        } else if (viewIdentifier == "RealtorForm1ViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("RealtorForm1ViewController") as! RealtorForm1ViewController
+            
+        } else if (viewIdentifier == "RealtorHomeViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("RealtorHomeViewController") as! RealtorHomeViewController
+            
+        } else if (viewIdentifier == "BuyerHomeViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as! BuyerHomeViewController
+            
+        } else if (viewIdentifier == "LoginViewController") {
+            User().deleteAllData()
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+            
+        } else if (viewIdentifier == "ListRealtorsViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("ListRealtorsViewController") as! ListRealtorsViewController
+        }
+        else if (viewIdentifier == "RealtorProfileViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("RealtorProfileViewController") as! RealtorProfileViewController
+        }
+        
+        if(viewIdentifier != nil && viewIdentifier!.isEmpty) {
+            self.navigationController?.pushViewController(viewController, animated: true)
+        } else {
+            self.navigationController?.showViewController(viewController, sender: nil)
+        }
+    }
+    
     func slideMenuItemSelectedAtIndex(index: Int32) {
-        if (index>=0) {
+        if (index >= 0) {
             self.title=tabOfChildViewControllerName[Int(index)]
             transitionBetweenTwoViews(tabOfChildViewController[Int(index)])
         }
     }
     
     func addSlideMenuButton(){
-        
         let navigationBarHeight: CGFloat = self.navigationController!.navigationBar.frame.height
         let btnShowMenu = ZFRippleButton()
         btnShowMenu.alpha = 0
@@ -56,23 +111,18 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     
     func defaultMenuImage() -> UIImage {
         var defaultMenuImage = UIImage()
-        
         UIGraphicsBeginImageContextWithOptions(CGSizeMake(27, 22), false, 0.0)
         UIColor.whiteColor().setFill()
         UIBezierPath(rect: CGRectMake(0, 3, 27, 2)).fill()
         UIBezierPath(rect: CGRectMake(0, 10, 27, 2)).fill()
         UIBezierPath(rect: CGRectMake(0, 17, 27, 2)).fill()
-        
         defaultMenuImage = UIGraphicsGetImageFromCurrentImageContext()
-        
         UIGraphicsEndImageContext()
-        
         return defaultMenuImage;
     }
     
     func onSlideMenuButtonPressed(sender : UIButton){
-        if (sender.tag == 10)
-        {
+        if (sender.tag == 10){
             // Menu is already displayed, no need to display it twice, otherwise we hide the menu
             sender.tag = 0;
             
@@ -99,28 +149,6 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         objMenu.animateWhenViewAppear()
     }
     
-    //MARK: Functions for Container
-    func transitionBetweenTwoViews(subViewNew: UIViewController){
-        
-        //Add new view
-        addChildViewController(subViewNew)
-        subViewNew.view.frame = (self.parentViewController?.view.frame)!
-        view.addSubview(subViewNew.view)
-        subViewNew.didMoveToParentViewController(self)
-        
-        //Remove old view
-        if self.childViewControllers.count > 1 {
-            
-            //Remove old view
-            let oldViewController: UIViewController = self.childViewControllers.first!
-            oldViewController.willMoveToParentViewController(nil)
-            oldViewController.view.removeFromSuperview()
-            oldViewController.removeFromParentViewController()
-        }
-        
-        print("After Remove: \(self.childViewControllers.description)")
-    }
-    
     func createContainerView(){
         //Create View
         let containerViews = UIView()
@@ -139,15 +167,12 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     }
     
     //MARK: Methods helping users to customise Menu Slider
-    
     //Add New Screen to Menu Slider
     func addChildView(storyBoardID: String, titleOfChildren: String, iconName: String) {
-        
         let childViewToAdd: UIViewController = storyboard!.instantiateViewControllerWithIdentifier(storyBoardID)
         tabOfChildViewController += [childViewToAdd]
         tabOfChildViewControllerName += [titleOfChildren]
         tabOfChildViewControllerIconName += [iconName]
-        
         menuToReturn.append(["title":titleOfChildren, "icon":iconName])
     }
     

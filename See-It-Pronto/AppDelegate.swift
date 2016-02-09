@@ -34,11 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func findNotifications() {
-        print("WAS HERE")
         if(!self.userId.isEmpty) {
             self.stopIntervalNotifications()
             let url = Config.APP_URL+"/get_notifications/"+self.userId
-            print(url)
             Request().get(url, successHandler: {(response) in
                 let notifications = JSON(data: response)
                 for (_,subJson):(String, JSON) in notifications {
@@ -52,8 +50,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func getUserId() {
         if(self.userId.isEmpty) {
             let user = User().find()
-            let obj  = user[0] as! NSManagedObject
-            self.userId = obj.valueForKey("id") as! String
+            if(user.count >= 1 && user[0] != nil) {
+                let obj  = user[0] as! NSManagedObject
+                self.userId = obj.valueForKey("id") as! String
+            }
         }
     }
 

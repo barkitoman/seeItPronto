@@ -16,7 +16,6 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.webView.delegate = self;
-        self.addSlideMenuButton()
         loadMap()
     }
     
@@ -51,7 +50,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate {
     }
     
     @IBAction func btnMenu(sender: AnyObject) {
-        onSlideMenuButtonPressed(sender as! UIButton)
+        self.onSlideMenuButtonPressed(sender as! UIButton)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

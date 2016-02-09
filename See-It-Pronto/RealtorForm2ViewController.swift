@@ -21,6 +21,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
+        self.findUserInfo()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -88,7 +89,10 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     func save() {
         //create params
-        let params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["id"].stringValue+"&role=realtor&brokerage="+txtBrokerage.text!+"&first_name="+txtFirstName.text!+"&last_name="+txtLastName.text!+"&lisence="+txtLisence.text!+"&back_acc="+txtBankAcct.text!
+        var params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["id"].stringValue+"&role=realtor&brokerage="+txtBrokerage.text!+"&first_name="+txtFirstName.text!+"&last_name="+txtLastName.text!+"&lisence="+txtLisence.text!+"&back_acc="+txtBankAcct.text!
+        if(!self.viewData["realtor_id"].stringValue.isEmpty){
+            params = params+"&realtor_id="+self.viewData["realtor_id"].stringValue
+        }
         let url = Config.APP_URL+"/users/"+self.viewData["id"].stringValue
         Request().put(url, params:params,successHandler: {(response) in self.afterPut(response)});
     }
@@ -105,6 +109,26 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
                 msg = result["msg"].stringValue
             }
             Utility().displayAlert(self,title:"Error", message:msg, performSegue:"")
+        }
+    }
+    
+    func findUserInfo() {
+        let userId = User().getField("id")
+        if(!userId.isEmpty) {
+            self.viewData["id"] = JSON(userId)
+            let url = Config.APP_URL+"/user_info/"+userId
+            Request().get(url, successHandler: {(response) in self.loadDataToEdit(response)})
+        }
+    }
+    
+    func loadDataToEdit(let response: NSData) {
+        dispatch_async(dispatch_get_main_queue()) {
+            let result = JSON(data: response)
+            self.txtFirstName.text = result["first_name"].stringValue
+            self.txtLastName.text  = result["last_name"].stringValue
+            self.txtBrokerage.text = result["brokerage"].stringValue
+            self.txtBankAcct.text  = result["bank_acct"].stringValue
+            self.txtLisence.text   = result["license"].stringValue
         }
     }
     
