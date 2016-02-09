@@ -102,7 +102,6 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
                 msg = result["msg"].stringValue
             }
             Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
-            
         }
     }
     

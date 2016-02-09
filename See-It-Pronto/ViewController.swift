@@ -46,14 +46,14 @@ class ViewController: UIViewController {
         if (login == false) {
             self.performSegueWithIdentifier("ShowLogin", sender: self)
         }
-        
     }
     
     func automaticLogin()->Bool {
         let userId = User().getField("id")
         let role   = User().getField("role")
+        let accessToken = User().getField("access_token")
         var out = false
-        if(!userId.isEmpty && !role.isEmpty) {
+        if(!userId.isEmpty && !role.isEmpty && !accessToken.isEmpty) {
             if(role == "realtor") {
                 let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                 let viewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("RealtorHomeViewController") as UIViewController
@@ -65,6 +65,9 @@ class ViewController: UIViewController {
                 self.navigationController?.showViewController(viewController, sender: nil)
                 out = true
             }
+        }
+        if(!userId.isEmpty && !role.isEmpty && accessToken.isEmpty) {
+            User().deleteAllData()
         }
         return out
     }

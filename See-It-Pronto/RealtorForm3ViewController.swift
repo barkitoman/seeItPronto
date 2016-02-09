@@ -93,11 +93,16 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
     func loadDataToEdit(let response: NSData) {
         dispatch_async(dispatch_get_main_queue()) {
             let result = JSON(data: response)
-            self.slShowingRate.value = Float(result["showing_rate"].stringValue)!
-            self.slShowingRate.value = Float(result["travel_range"].stringValue)!
-            self.slShowingRate.addTarget(self, action: "sliderValueChanged:", forControlEvents: UIControlEvents.ValueChanged)
-            self.slShowingRate.addTarget(self, action: "sliderValueChanged:", forControlEvents: UIControlEvents.ValueChanged)
-            self.showRates(result["showing_rate"].stringValue, traveRange: result["travel_range"].stringValue)
+            if(!result["showing_rate"].stringValue.isEmpty) {
+                self.slShowingRate.value = Float(result["showing_rate"].stringValue)!
+                //self.slShowingRate.addTarget(self, action: "sliderValueChanged:", forControlEvents: UIControlEvents.ValueChanged)
+                self.showRates(result["showing_rate"].stringValue, traveRange: "")
+            }
+            if(!result["travel_range"].stringValue.isEmpty) {
+                self.slTravelRate.value = Float(result["travel_range"].stringValue)!
+                //self.slTravelRate.addTarget(self, action: "sliderValueChanged:", forControlEvents: UIControlEvents.ValueChanged)
+                self.showRates("", traveRange: result["travel_range"].stringValue)
+            }
         }
     }
     

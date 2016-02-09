@@ -38,7 +38,6 @@ class RealtorProfileViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-
     }
     
     @IBAction func btnBack(sender: AnyObject) {

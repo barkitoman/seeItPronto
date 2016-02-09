@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate  {
 
@@ -78,6 +79,8 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result
+            let user = JSON(["user":result])
+            User().saveIfExists(user)
             Utility().displayAlert(self,title: "Success", message:"The data have been saved correctly", performSegue:"FromBuyerForm1")
         } else {
             var msg = "Error saving, please try later"
