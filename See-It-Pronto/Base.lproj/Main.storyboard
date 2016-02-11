@@ -3158,9 +3158,6 @@ $480,000
                                 <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="choosePicture" translatesAutoresizingMaskIntoConstraints="NO" id="59f-7X-DJg">
-                                <rect key="frame" x="122" y="312" width="178" height="178"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="axo-kM-vA1">
                                 <rect key="frame" x="158" y="508" width="142" height="40"/>
                                 <color key="backgroundColor" red="0.1510149452" green="0.75504451969999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -3246,6 +3243,9 @@ $480,000
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="choosePicture" translatesAutoresizingMaskIntoConstraints="NO" id="59f-7X-DJg">
+                                <rect key="frame" x="122" y="312" width="178" height="178"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -3257,6 +3257,7 @@ $480,000
                         <outlet property="lblFirstName" destination="xcn-Co-ZlT" id="8tt-t3-ufO"/>
                         <outlet property="lblLastName" destination="aJ9-WF-AWK" id="wbC-aM-J0E"/>
                         <outlet property="lblLisence" destination="vwK-OI-KHN" id="IcM-ut-494"/>
+                        <outlet property="previewPhoto" destination="59f-7X-DJg" id="bvg-iA-uT3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tf6-Mk-RfA" userLabel="First Responder" sceneMemberID="firstResponder"/>

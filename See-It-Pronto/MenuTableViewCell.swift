@@ -25,7 +25,7 @@ class MenuTableViewCell: UITableViewCell {
     func initViews() {
         
         var newFrameForLabel: CGRect = (self.frame)
-        newFrameForLabel.size.height = self.frame.height*0.5
+        newFrameForLabel.size.height = self.frame.height*0.1
         newFrameForLabel.size.width = self.frame.width*0.8
         
         label.frame = newFrameForLabel

@@ -27,7 +27,7 @@ class Utility {
     }
     
     func showPhoto(img:UIImageView, imgPath:String){
-        let url = NSURL(string: Config.APP_URL+"/files/UsersPhotos/"+imgPath)
+        let url = NSURL(string: Config.APP_URL+"/"+imgPath)
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) { (data, response, error) -> Void in
             if error != nil {
                 print("thers an error in the log")

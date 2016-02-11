@@ -61,15 +61,17 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
     }
     
     func save() {
-        //create params
-         let userId = User().getField("id")
-        var params = "role=buyer&email="+txtEmail.text!+"&phone="+txtPhone.text!+"&password="+txtPassword.text!
+        let userId = User().getField("id")
         var url = Config.APP_URL+"/users"
         if(!userId.isEmpty) {
+            //if user is editing
+            var params = "role=buyer&email="+txtEmail.text!+"&phone="+txtPhone.text!+"&password="+txtPassword.text!
             params = params+"&id="+userId
             url = Config.APP_URL+"/users/"+userId
             Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
         } else {
+            //if user is registering
+            let params = "role=buyer&client_id="+txtEmail.text!+"&phone="+txtPhone.text!+"&client_secret="+txtPassword.text!+"&grant_type="+Config.GRANT_TYPE
             Request().post(url, params:params,successHandler: {(response) in self.afterPost(response)});
         }
         
@@ -77,10 +79,16 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
     
     func afterPost(let response: NSData) {
         let result = JSON(data: response)
-        if(result["result"].bool == true) {
-            self.viewData = result
-            let user = JSON(["user":result])
-            User().saveIfExists(user)
+        if(result["user"]["result"].bool == true || result["result"].bool == true ) {
+            let userId = User().getField("id")
+            //if user is editing
+            if(!userId.isEmpty) {
+                self.viewData = result
+            } else {
+                //if user is registering
+                self.viewData = result["user"]
+                User().saveIfExists(result)
+            }
             Utility().displayAlert(self,title: "Success", message:"The data have been saved correctly", performSegue:"FromBuyerForm1")
         } else {
             var msg = "Error saving, please try later"

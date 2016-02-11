@@ -15,6 +15,7 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
     @IBOutlet weak var txtLastName: UITextField!
     @IBOutlet weak var btnSelectPicture: UIButton!
     @IBOutlet weak var previewProfilePicture: UIImageView!
+    var haveImage:Bool = false
     var viewData:JSON = []
     
     override func viewDidLoad() {
@@ -63,12 +64,13 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
     //display image after select
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         self.previewProfilePicture.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        self.haveImage = true
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     //upload photo to server
     func uploadImage() {
-        if self.previewProfilePicture.image != nil {
+        if (self.previewProfilePicture.image != nil && self.haveImage == true) {
             let imageData:NSData = UIImageJPEGRepresentation(self.previewProfilePicture.image!, 1)!
             SRWebClient.POST(Config.APP_URL+"/users/"+self.viewData["id"].stringValue)
                 .data(imageData, fieldName:"image", data:["id":self.viewData["id"].stringValue,"_method":"PUT"])
@@ -119,7 +121,9 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
         dispatch_async(dispatch_get_main_queue()) {
             self.txtFirstName.text = result["last_name"].stringValue
             self.txtLastName.text = result["first_name"].stringValue
-            //Utility().showPhoto(self.previewProfilePicture, imgPath: result["url_image"].stringValue)
+            if(!result["url_image"].stringValue.isEmpty) {
+                Utility().showPhoto(self.previewProfilePicture, imgPath: result["url_image"].stringValue)
+            }
         }
     }
     

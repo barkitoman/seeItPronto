@@ -16,6 +16,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     @IBOutlet weak var txtFirstName: UITextField!
     @IBOutlet weak var txtLastName: UITextField!
     @IBOutlet weak var previewProfilePicture: UIImageView!
+    var haveImage:Bool = false
     var viewData:JSON = []
     
     override func viewDidLoad() {
@@ -63,12 +64,13 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     //display image after select
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         self.previewProfilePicture.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        self.haveImage = true
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     //upload photo to server
     func uploadImage() {
-        if self.previewProfilePicture.image != nil {
+        if (self.previewProfilePicture.image != nil && self.haveImage == true) {
             let imageData:NSData = UIImageJPEGRepresentation(self.previewProfilePicture.image!, 1)!
             SRWebClient.POST(Config.APP_URL+"/users/"+self.viewData["id"].stringValue)
                 .data(imageData, fieldName:"image", data:["id":self.viewData["id"].stringValue,"_method":"PUT"])
@@ -129,6 +131,9 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
             self.txtBrokerage.text = result["brokerage"].stringValue
             self.txtBankAcct.text  = result["bank_acct"].stringValue
             self.txtLisence.text   = result["license"].stringValue
+            if(!result["url_image"].stringValue.isEmpty) {
+                Utility().showPhoto(self.previewProfilePicture, imgPath: result["url_image"].stringValue)
+            }
         }
     }
     

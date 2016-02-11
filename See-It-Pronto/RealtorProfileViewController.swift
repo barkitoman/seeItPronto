@@ -13,11 +13,13 @@ class RealtorProfileViewController: UIViewController {
     var viewData:JSON = []
     
     @IBOutlet weak var lblFirstName: UILabel!
+    
     @IBOutlet weak var lblLastName: UILabel!
     @IBOutlet weak var lblBrokerage: UILabel!
     @IBOutlet weak var lblLisence: UILabel!
     @IBOutlet weak var lblEmail: UILabel!
     @IBOutlet weak var lblBankAcct: UILabel!
+    @IBOutlet weak var previewPhoto: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +64,9 @@ class RealtorProfileViewController: UIViewController {
             self.lblBankAcct.text  = result["bank_acct"].stringValue
             self.lblLisence.text   = result["license"].stringValue
             self.lblEmail.text     = result["email"].stringValue
+            if(!result["url_image"].stringValue.isEmpty) {
+                Utility().showPhoto(self.previewPhoto, imgPath: result["url_image"].stringValue)
+            }
         }
     }
     

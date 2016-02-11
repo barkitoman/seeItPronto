@@ -73,10 +73,16 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     func afterPost(let response: NSData) {
         let result = JSON(data: response)
-        if(result["result"].bool == true) {
-            self.viewData = result
-            let user = JSON(["user":result])
-            User().saveIfExists(user)
+        if(result["user"]["result"].bool == true || result["result"].bool == true ) {
+            let userId = User().getField("id")
+            //if user is editing
+            if(!userId.isEmpty) {
+                self.viewData = result
+            } else {
+                //if user is registering
+                self.viewData = result["user"]
+                User().saveIfExists(result)
+            }
             Utility().displayAlert(self,title:"Success", message:"The data have been saved correctly", performSegue:"RealtorForm1")
         } else {
             var msg = "Error saving, please try later"
