@@ -18,6 +18,8 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     var imageNameHeaderMenu: String = "background_menu"
     
     var objMenu : TableViewMenuController!
+    var objSearch : UIViewController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createMenu()
@@ -73,6 +75,11 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as! BuyerHomeViewController
             
         } else if (viewIdentifier == "LoginViewController") {
+            //LOGOUT
+            var url   = Config.APP_URL+"/phone_login"
+            let token = User().getField("access_token")
+            url = url+"/"+token
+            Request().get(url, successHandler: {(response) in })
             User().deleteAllData()
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
             
@@ -149,6 +156,12 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         objMenu.animateWhenViewAppear()
     }
     
+    func onSlideSearchButtonPressed(sender : UIButton){
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController: SearchViewController = storyboard.instantiateViewControllerWithIdentifier("SearchViewController") as! SearchViewController
+        self.navigationController?.showViewController(viewController, sender: nil)
+    }
+    
     func createContainerView(){
         //Create View
         let containerViews = UIView()
@@ -162,8 +175,6 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         
         self.view.addConstraint(widthConstraint)
         self.view.addConstraint(heightConstraint)
-        
-        
     }
     
     //MARK: Methods helping users to customise Menu Slider

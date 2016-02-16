@@ -53,6 +53,10 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate {
         self.onSlideMenuButtonPressed(sender as! UIButton)
     }
     
+    @IBAction func btnSearchMenu(sender: AnyObject) {
+        self.onSlideSearchButtonPressed(sender as! UIButton)
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "ViewBuyerHouse") {
             

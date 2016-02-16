@@ -1,5 +1,5 @@
 //
-//  SearcMapBuyer3ViewController.swift
+//  SearchMapBuyer2ViewController.swift
 //  See-It-Pronto
 //
 //  Created by user114136 on 1/5/16.
@@ -8,13 +8,12 @@
 
 import UIKit
 
-class SearcMapBuyer3ViewController: UIViewController {
+class SearchMap2ViewController: UIViewController {
 
     var viewData:JSON = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -31,15 +30,13 @@ class SearcMapBuyer3ViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
     }
-    
+
     @IBAction func btnBack(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
     }
-    
-    
 }

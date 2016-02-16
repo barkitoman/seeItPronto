@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchMapBuyer1ViewController: UIViewController {
+class SearchMap1ViewController: UIViewController {
 
     var viewData:JSON = []
     

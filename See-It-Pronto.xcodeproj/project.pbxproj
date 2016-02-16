@@ -45,6 +45,7 @@
 		686E8F3F1C3C096300F5FE01 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686E8F3E1C3C096300F5FE01 /* SwiftyJSON.swift */; };
 		686E8F411C3C2AF900F5FE01 /* RealtorHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686E8F401C3C2AF900F5FE01 /* RealtorHomeViewController.swift */; };
 		686E8F431C3C2C2300F5FE01 /* BuyerHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686E8F421C3C2C2300F5FE01 /* BuyerHomeViewController.swift */; };
+		68794E021C73AF6500937A60 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68794E011C73AF6500937A60 /* SearchViewController.swift */; };
 		6885E5F11C57021200CCCA19 /* SRWebClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6885E5F01C57021200CCCA19 /* SRWebClient.swift */; };
 		6897A1281C244B5F00AB3A0A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6897A1271C244B5F00AB3A0A /* AppDelegate.swift */; };
 		6897A12A1C244B5F00AB3A0A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6897A1291C244B5F00AB3A0A /* ViewController.swift */; };
@@ -55,9 +56,8 @@
 		6897A1401C244B6000AB3A0A /* See_It_ProntoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6897A13F1C244B6000AB3A0A /* See_It_ProntoTests.swift */; };
 		6897A14B1C244B6000AB3A0A /* See_It_ProntoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6897A14A1C244B6000AB3A0A /* See_It_ProntoUITests.swift */; };
 		68D64C561C443DF5006CBE2F /* Utitity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D64C551C443DF5006CBE2F /* Utitity.swift */; };
-		68D99F821C3C4B0500A520D2 /* SearchMapBuyer1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D99F811C3C4B0500A520D2 /* SearchMapBuyer1ViewController.swift */; };
-		68D99F841C3C4B1C00A520D2 /* SearchMapBuyer2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D99F831C3C4B1C00A520D2 /* SearchMapBuyer2ViewController.swift */; };
-		68D99F861C3C501F00A520D2 /* SearcMapBuyer3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D99F851C3C501F00A520D2 /* SearcMapBuyer3ViewController.swift */; };
+		68D99F821C3C4B0500A520D2 /* SearchMap1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D99F811C3C4B0500A520D2 /* SearchMap1ViewController.swift */; };
+		68D99F841C3C4B1C00A520D2 /* SearchMap2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D99F831C3C4B1C00A520D2 /* SearchMap2ViewController.swift */; };
 		68FA964C1C3D9DD80023C292 /* SeeitLaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FA964B1C3D9DD80023C292 /* SeeitLaterViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -117,6 +117,7 @@
 		686E8F3E1C3C096300F5FE01 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		686E8F401C3C2AF900F5FE01 /* RealtorHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealtorHomeViewController.swift; sourceTree = "<group>"; };
 		686E8F421C3C2C2300F5FE01 /* BuyerHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyerHomeViewController.swift; sourceTree = "<group>"; };
+		68794E011C73AF6500937A60 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		6885E5F01C57021200CCCA19 /* SRWebClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRWebClient.swift; sourceTree = "<group>"; };
 		6897A1241C244B5F00AB3A0A /* See-It-Pronto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "See-It-Pronto.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6897A1271C244B5F00AB3A0A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -133,9 +134,8 @@
 		6897A14A1C244B6000AB3A0A /* See_It_ProntoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = See_It_ProntoUITests.swift; sourceTree = "<group>"; };
 		6897A14C1C244B6000AB3A0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68D64C551C443DF5006CBE2F /* Utitity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utitity.swift; sourceTree = "<group>"; };
-		68D99F811C3C4B0500A520D2 /* SearchMapBuyer1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchMapBuyer1ViewController.swift; sourceTree = "<group>"; };
-		68D99F831C3C4B1C00A520D2 /* SearchMapBuyer2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchMapBuyer2ViewController.swift; sourceTree = "<group>"; };
-		68D99F851C3C501F00A520D2 /* SearcMapBuyer3ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearcMapBuyer3ViewController.swift; sourceTree = "<group>"; };
+		68D99F811C3C4B0500A520D2 /* SearchMap1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchMap1ViewController.swift; sourceTree = "<group>"; };
+		68D99F831C3C4B1C00A520D2 /* SearchMap2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchMap2ViewController.swift; sourceTree = "<group>"; };
 		68FA964B1C3D9DD80023C292 /* SeeitLaterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeitLaterViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -194,9 +194,8 @@
 				681140AC1C3AC8010068AE1C /* AddBeaconViewController.swift */,
 				681140AE1C3AC8360068AE1C /* BeaconStoreViewController.swift */,
 				681140B01C3AC8760068AE1C /* ListingDetailsViewController.swift */,
-				68D99F811C3C4B0500A520D2 /* SearchMapBuyer1ViewController.swift */,
-				68D99F831C3C4B1C00A520D2 /* SearchMapBuyer2ViewController.swift */,
-				68D99F851C3C501F00A520D2 /* SearcMapBuyer3ViewController.swift */,
+				68D99F811C3C4B0500A520D2 /* SearchMap1ViewController.swift */,
+				68D99F831C3C4B1C00A520D2 /* SearchMap2ViewController.swift */,
 				68663D2C1C3C8CB600460D42 /* PropertyDetailsViewController.swift */,
 				68663D2E1C3C931B00460D42 /* FullPropertyDetailsViewController.swift */,
 				68663D301C3C9B2700460D42 /* SeeItNowViewController.swift */,
@@ -296,6 +295,7 @@
 				684D08421C6534B900BF086E /* ChildViewController.swift */,
 				684D08431C6534B900BF086E /* MenuTableViewCell.swift */,
 				684D08441C6534B900BF086E /* ZFRippleButton.swift */,
+				68794E011C73AF6500937A60 /* SearchViewController.swift */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -439,6 +439,7 @@
 				681140891C3AC2360068AE1C /* ForgotPasswordViewController.swift in Sources */,
 				684D08451C6534B900BF086E /* BaseViewController.swift in Sources */,
 				681140AD1C3AC8010068AE1C /* AddBeaconViewController.swift in Sources */,
+				68794E021C73AF6500937A60 /* SearchViewController.swift in Sources */,
 				6811409B1C3AC6440068AE1C /* BuyerForm4ViewController.swift in Sources */,
 				68587EFA1C456F44002696C3 /* Notification.swift in Sources */,
 				68D64C561C443DF5006CBE2F /* Utitity.swift in Sources */,
@@ -454,7 +455,7 @@
 				6897A12A1C244B5F00AB3A0A /* ViewController.swift in Sources */,
 				686E8F3F1C3C096300F5FE01 /* SwiftyJSON.swift in Sources */,
 				683F7F271C3D7E4700CA0A0C /* FeedBack2ViewController.swift in Sources */,
-				68D99F821C3C4B0500A520D2 /* SearchMapBuyer1ViewController.swift in Sources */,
+				68D99F821C3C4B0500A520D2 /* SearchMap1ViewController.swift in Sources */,
 				686E8F411C3C2AF900F5FE01 /* RealtorHomeViewController.swift in Sources */,
 				680842E31C3EB0C700AF7F8E /* Config.swift in Sources */,
 				68663D2D1C3C8CB600460D42 /* PropertyDetailsViewController.swift in Sources */,
@@ -464,8 +465,7 @@
 				681140A51C3AC75C0068AE1C /* ViewPropertyViewController.swift in Sources */,
 				68663D2F1C3C931B00460D42 /* FullPropertyDetailsViewController.swift in Sources */,
 				685E527F1C402B100022718B /* Request.swift in Sources */,
-				68D99F861C3C501F00A520D2 /* SearcMapBuyer3ViewController.swift in Sources */,
-				68D99F841C3C4B1C00A520D2 /* SearchMapBuyer2ViewController.swift in Sources */,
+				68D99F841C3C4B1C00A520D2 /* SearchMap2ViewController.swift in Sources */,
 				681140AF1C3AC8360068AE1C /* BeaconStoreViewController.swift in Sources */,
 				681140A91C3AC7C30068AE1C /* ListPropertiesViewController.swift in Sources */,
 				683F7F291C3D7EC100CA0A0C /* FeedBack3ViewController.swift in Sources */,
