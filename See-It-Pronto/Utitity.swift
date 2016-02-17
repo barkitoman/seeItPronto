@@ -30,7 +30,7 @@ class Utility {
         let url = NSURL(string: Config.APP_URL+"/"+imgPath)
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) { (data, response, error) -> Void in
             if error != nil {
-                print("thers an error in the log")
+                print("ERROR SHOWING IMAGE "+imgPath)
             } else {
                 dispatch_async(dispatch_get_main_queue()) {
                     img.image = UIImage(data: data!)

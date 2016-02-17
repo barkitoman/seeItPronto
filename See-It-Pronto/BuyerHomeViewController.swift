@@ -8,14 +8,16 @@
 
 import UIKit
 
-class BuyerHomeViewController: BaseViewController, UIWebViewDelegate {
+class BuyerHomeViewController: BaseViewController, UIWebViewDelegate,UITextFieldDelegate, UITextViewDelegate  {
 
     var viewData:JSON = []
     @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var txtSearch: UITextField!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.webView.delegate = self;
+        self.selfDelegate()
         loadMap()
     }
     
@@ -33,6 +35,16 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func selfDelegate() {
+        self.webView.delegate = self;
+        self.txtSearch.delegate = self
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     func loadMap() {

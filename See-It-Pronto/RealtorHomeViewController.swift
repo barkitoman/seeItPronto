@@ -8,15 +8,16 @@
 
 import UIKit
 
-class RealtorHomeViewController: BaseViewController,UIWebViewDelegate {
+class RealtorHomeViewController: BaseViewController,UIWebViewDelegate,UITextFieldDelegate, UITextViewDelegate{
 
     var viewData:JSON = []
     @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var txtSearch: UITextField!
    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.webView.delegate = self;
+        self.selfDelegate()
         loadMap()
     }
 
@@ -36,6 +37,17 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate {
         super.viewWillDisappear(animated)
     }
     
+    //selfDelegate, textFieldShouldReturn are functions for hide keyboard when press 'return' key
+    func selfDelegate() {
+        self.webView.delegate = self
+        self.txtSearch.delegate = self
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
     func loadMap() {
         let requestURL = NSURL(string:Config.APP_URL+"/real_state_property_basics/map/"+self.viewData["id"].stringValue)
         let request = NSURLRequest(URL: requestURL!)
@@ -52,6 +64,9 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate {
     
     @IBAction func btnMenu(sender: AnyObject) {
         self.onSlideMenuButtonPressed(sender as! UIButton)
+    }
+    
+    @IBAction func btnSearch(sender: AnyObject) {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
