@@ -22,8 +22,7 @@ class Utility {
                 }
             }
             alertController.addAction(okAction)
-            //controller.presentViewController(alertController, animated: true, completion: nil)
-            controller.showViewController(alertController, sender: nil)
+            controller.presentViewController(alertController, animated: true, completion: nil)
         }
     }
     
