@@ -64,7 +64,7 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
         if(!self.viewData["card_id"].stringValue.isEmpty) {
             params = params+"&card_id="+self.viewData["card_id"].stringValue
         }
-        let url = Config.APP_URL+"/users/"+self.viewData["id"].stringValue
+        let url = AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue
         print(url)
         Request().put(url, params:params,successHandler: {(response) in self.afterPut(response)});
     }
@@ -87,7 +87,7 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
         let userId = User().getField("id")
         if(!userId.isEmpty) {
             self.viewData["id"] = JSON(userId)
-            let url = Config.APP_URL+"/user_info/"+userId
+            let url = AppConfig.APP_URL+"/user_info/"+userId
             Request().get(url, successHandler: {(response) in self.loadDataToEdit(response)})
         }
     }

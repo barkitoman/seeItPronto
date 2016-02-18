@@ -62,16 +62,16 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
     
     func save() {
         let userId = User().getField("id")
-        var url = Config.APP_URL+"/users"
+        var url = AppConfig.APP_URL+"/users"
         if(!userId.isEmpty) {
             //if user is editing
             var params = "role=buyer&email="+txtEmail.text!+"&phone="+txtPhone.text!+"&password="+txtPassword.text!
             params = params+"&id="+userId
-            url = Config.APP_URL+"/users/"+userId
+            url = AppConfig.APP_URL+"/users/"+userId
             Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
         } else {
             //if user is registering
-            let params = "role=buyer&client_id="+txtEmail.text!+"&phone="+txtPhone.text!+"&client_secret="+txtPassword.text!+"&grant_type="+Config.GRANT_TYPE
+            let params = "role=buyer&client_id="+txtEmail.text!+"&phone="+txtPhone.text!+"&client_secret="+txtPassword.text!+"&grant_type="+AppConfig.GRANT_TYPE
             Request().post(url, params:params,successHandler: {(response) in self.afterPost(response)});
         }
         
@@ -103,7 +103,7 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
         let userId = User().getField("id")
         if(!userId.isEmpty) {
             self.viewData["id"] = JSON(userId)
-            let url = Config.APP_URL+"/user_info/"+userId
+            let url = AppConfig.APP_URL+"/user_info/"+userId
             Request().get(url, successHandler: {(response) in self.loadDataToEdit(response)})
         }
     }

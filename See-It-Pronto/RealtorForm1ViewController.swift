@@ -61,10 +61,10 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
         //create params
         let userId = User().getField("id")
         var params = "role=realtor&email="+txtEmail.text!+"&phone="+txtPhone.text!+"&password="+txtPassword.text!
-        var url = Config.APP_URL+"/users"
+        var url = AppConfig.APP_URL+"/users"
         if(!userId.isEmpty) {
             params = params+"&id="+userId
-            url = Config.APP_URL+"/users/"+userId
+            url = AppConfig.APP_URL+"/users/"+userId
             Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
         } else {
             Request().post(url, params:params,successHandler: {(response) in self.afterPost(response)});
@@ -97,7 +97,7 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
         let userId = User().getField("id")
         if(!userId.isEmpty) {
             self.viewData["id"] = JSON(userId)
-            let url = Config.APP_URL+"/user_info/"+userId
+            let url = AppConfig.APP_URL+"/user_info/"+userId
             Request().get(url, successHandler: {(response) in self.loadDataToEdit(response)})
         }
     }

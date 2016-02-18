@@ -76,7 +76,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             
         } else if (viewIdentifier == "LoginViewController") {
             //LOGOUT
-            var url   = Config.APP_URL+"/phone_login"
+            var url   = AppConfig.APP_URL+"/phone_login"
             let token = User().getField("access_token")
             url = url+"/"+token
             Request().get(url, successHandler: {(response) in })

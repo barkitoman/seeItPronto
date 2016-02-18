@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F1509" minimumToolsVersion="Automatic">
+    <entity name="SearchConfig" syncable="YES">
+        <attribute name="area" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="baths" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="beds" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="like_pre_qualification" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pool" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pre_qualification_letter" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pre_qualified" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price_range_higher" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price_range_less" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type_property" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_id" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="User" syncable="YES">
         <attribute name="access_token" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
@@ -14,5 +28,6 @@
     </entity>
     <elements>
         <element name="User" positionX="-63" positionY="-18" width="128" height="195"/>
+        <element name="SearchConfig" positionX="-63" positionY="54" width="128" height="225"/>
     </elements>
 </model>

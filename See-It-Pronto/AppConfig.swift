@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Config {
+struct AppConfig {
     
     static var APP_URL        = "http://oauthtest-nyxent.rhcloud.com"
     static var GRANT_TYPE     = "client_credentials"

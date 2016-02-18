@@ -81,7 +81,7 @@ class ListRealtorsViewController: UIViewController {
     }
 
     func findRealtors() {
-        let url = Config.APP_URL+"/list_realtors/"+String(self.stepPage)+"/?page="+String(self.countPage + 1)
+        let url = AppConfig.APP_URL+"/list_realtors/"+String(self.stepPage)+"/?page="+String(self.countPage + 1)
         Request().get(url, successHandler: {(response) in self.loadRealtors(response)})
     }
     

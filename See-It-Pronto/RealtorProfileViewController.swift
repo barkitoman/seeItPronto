@@ -50,7 +50,7 @@ class RealtorProfileViewController: UIViewController {
         let userId = User().getField("id")
         if(!userId.isEmpty) {
             self.viewData["id"] = JSON(userId)
-            let url = Config.APP_URL+"/user_info/"+userId
+            let url = AppConfig.APP_URL+"/user_info/"+userId
             Request().get(url, successHandler: {(response) in self.loadDataToEdit(response)})
         }
     }

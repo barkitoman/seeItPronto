@@ -8,6 +8,7 @@
 
 import Foundation
 class Request {
+    var debug:Bool = false
 
     func post(url : String, params : String, successHandler: (response: NSData) -> Void) {
         let url = NSURL(string: url)
@@ -22,6 +23,10 @@ class Request {
             if error != nil {
                 print("AN ERROR HAS OCURRED!")
                 print(error); return
+            }
+            if(self.debug == true) {
+                let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
+                print(responseString)
             }
             successHandler(response: data!)
         }
@@ -43,6 +48,10 @@ class Request {
                 print("AN ERROR HAS OCURRED!")
                 print(error); return
             }
+            if(self.debug == true) {
+                let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
+                print(responseString)
+            }
             successHandler(response: data!)
         }
         task.resume();
@@ -59,6 +68,10 @@ class Request {
             if error != nil {
                 print("AN ERROR HAS OCURRED!")
                 print(error); return
+            }
+            if(self.debug == true) {
+                let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
+                print(responseString)
             }
             successHandler(response: data!)
         }

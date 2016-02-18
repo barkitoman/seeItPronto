@@ -72,7 +72,7 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
     func uploadImage() {
         if (self.previewProfilePicture.image != nil && self.haveImage == true) {
             let imageData:NSData = UIImageJPEGRepresentation(self.previewProfilePicture.image!, 1)!
-            SRWebClient.POST(Config.APP_URL+"/users/"+self.viewData["id"].stringValue)
+            SRWebClient.POST(AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue)
                 .data(imageData, fieldName:"image", data:["id":self.viewData["id"].stringValue,"_method":"PUT"])
                 .send({(response:AnyObject!, status:Int) -> Void in
                     },failure:{(error:NSError!) -> Void in
@@ -88,7 +88,7 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
     func save() {
         //create params
         let params = "id="+self.viewData["id"].stringValue+"&first_name="+txtFirstName.text!+"&last_name="+txtLastName.text!
-        let url = Config.APP_URL+"/users/"+self.viewData["id"].stringValue
+        let url = AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue
         Request().put(url, params:params,successHandler: {(response) in self.afterPut(response)});
     }
 
@@ -111,7 +111,7 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
         let userId = User().getField("id")
         if(!userId.isEmpty) {
             self.viewData["id"] = JSON(userId)
-            let url = Config.APP_URL+"/user_info/"+userId
+            let url = AppConfig.APP_URL+"/user_info/"+userId
             Request().get(url, successHandler: {(response) in self.loadDataToEdit(response)})
         }
     }

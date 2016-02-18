@@ -809,7 +809,7 @@
                                 <rect key="frame" x="-1" y="54" width="322" height="776"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lFj-jE-Kwe">
-                                        <rect key="frame" x="183" y="458" width="56" height="21"/>
+                                        <rect key="frame" x="52" y="453" width="35" height="33"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -844,8 +844,11 @@
                                         <color key="textColor" red="0.2496722784" green="0.30139411999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="xO6-Zj-dkh">
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="3000000" minValue="100000" maxValue="5000000" translatesAutoresizingMaskIntoConstraints="NO" id="xO6-Zj-dkh">
                                         <rect key="frame" x="134" y="333" width="98" height="31"/>
+                                        <connections>
+                                            <action selector="selectPriceRange:" destination="k73-JC-gI7" eventType="valueChanged" id="a6R-vM-dwn"/>
+                                        </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your Preference: 3 Baths" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dX8-MC-2Jf">
                                         <rect key="frame" x="97" y="234" width="205" height="21"/>
@@ -853,8 +856,11 @@
                                         <color key="textColor" red="0.2496722784" green="0.30139411999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="I0x-GC-ZNP">
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="3" minValue="1" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="I0x-GC-ZNP">
                                         <rect key="frame" x="113" y="135" width="161" height="31"/>
+                                        <connections>
+                                            <action selector="selectBeds:" destination="k73-JC-gI7" eventType="valueChanged" id="T5E-Db-W4I"/>
+                                        </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your Preference: 3 Beds" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DvP-eR-DGu">
                                         <rect key="frame" x="85" y="167" width="217" height="21"/>
@@ -877,8 +883,11 @@
                                         <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="sPx-3c-ZMk">
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="3" minValue="1" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="sPx-3c-ZMk">
                                         <rect key="frame" x="113" y="208" width="161" height="31"/>
+                                        <connections>
+                                            <action selector="selectBaths:" destination="k73-JC-gI7" eventType="valueChanged" id="3Wh-Gz-6T5"/>
+                                        </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="100,000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I2F-v0-QCY">
                                         <rect key="frame" x="83" y="337" width="55" height="21"/>
@@ -904,7 +913,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tSi-4c-LsS">
-                                        <rect key="frame" x="183" y="654" width="56" height="21"/>
+                                        <rect key="frame" x="52" y="652" width="35" height="26"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -921,8 +930,8 @@
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HnN-Ls-hFQ">
                                         <rect key="frame" x="167" y="20" width="51" height="31"/>
                                     </switch>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Rental" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4IW-c6-1ii">
-                                        <rect key="frame" x="244" y="282" width="56" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4IW-c6-1ii">
+                                        <rect key="frame" x="115" y="282" width="33" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -930,12 +939,6 @@
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pyv-2D-pbY">
                                         <rect key="frame" x="106" y="649" width="51" height="31"/>
                                     </switch>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Yes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kZy-zC-LZu">
-                                        <rect key="frame" x="22" y="654" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Would you like to be?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PTL-6a-1eJ">
                                         <rect key="frame" x="22" y="612" width="280" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -956,8 +959,8 @@ Range</string>
                                         <color key="textColor" red="0.2496722784" green="0.30139411999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sale" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LuR-vL-OL0">
-                                        <rect key="frame" x="83" y="282" width="42" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Yes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LuR-vL-OL0">
+                                        <rect key="frame" x="241" y="282" width="33" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -976,7 +979,7 @@ Range</string>
                                         </state>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Yes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b9l-yT-rli">
-                                        <rect key="frame" x="22" y="458" width="42" height="21"/>
+                                        <rect key="frame" x="188" y="452" width="42" height="33"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1011,7 +1014,16 @@ Range</string>
                                         <state key="normal" title="Search">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="btnSearch:" destination="k73-JC-gI7" eventType="touchUpInside" id="TpW-1r-3QF"/>
+                                        </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Yes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kZy-zC-LZu">
+                                        <rect key="frame" x="182" y="654" width="34" height="26"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </scrollView>
                         </subviews>
@@ -1020,7 +1032,19 @@ Range</string>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="850"/>
                     <connections>
+                        <outlet property="btnScan" destination="PZc-aX-Vv8" id="IeQ-2z-QJm"/>
+                        <outlet property="lblBaths" destination="dX8-MC-2Jf" id="LG6-s5-AkO"/>
+                        <outlet property="lblBeds" destination="DvP-eR-DGu" id="w06-aF-dG8"/>
+                        <outlet property="lblPriceRange" destination="sJ0-dF-PzH" id="2I6-gr-AHS"/>
                         <outlet property="scrollView" destination="6YK-Wz-elU" id="qs5-1H-1eJ"/>
+                        <outlet property="slBaths" destination="sPx-3c-ZMk" id="5h8-Lb-4TE"/>
+                        <outlet property="slBeds" destination="I0x-GC-ZNP" id="8hd-IA-h7b"/>
+                        <outlet property="slPriceRange" destination="xO6-Zj-dkh" id="N1V-MJ-bek"/>
+                        <outlet property="swLikeToBe" destination="pyv-2D-pbY" id="Axl-eq-M7D"/>
+                        <outlet property="swPool" destination="UD4-EA-wNe" id="Xro-Fa-fHq"/>
+                        <outlet property="swPreQualified" destination="UaE-mX-ao0" id="DKc-IG-f8v"/>
+                        <outlet property="swType" destination="HnN-Ls-hFQ" id="Iic-y1-tHW"/>
+                        <outlet property="txtArea" destination="sKe-wG-jTH" id="cuW-w0-psJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gwb-I6-H29" userLabel="First Responder" sceneMemberID="firstResponder"/>

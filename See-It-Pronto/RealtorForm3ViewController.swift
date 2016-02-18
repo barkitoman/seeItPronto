@@ -50,10 +50,10 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     func save() {
         //create params
-        let showingRate = String(Int(roundf(slShowingRate.value)))
-        let travelRate = String(Int(roundf(slTravelRate.value)))
+        let showingRate = Utility().sliderValue(self.slShowingRate)
+        let travelRate  = Utility().sliderValue(self.slTravelRate)
         let params = "id="+self.viewData["id"].stringValue+"&realtor_id="+self.viewData["realtor_id"].stringValue+"&showing_rate="+showingRate+"&travel_range="+travelRate
-        let url = Config.APP_URL+"/users/"+self.viewData["id"].stringValue
+        let url = AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue
         Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
     }
     
@@ -85,7 +85,7 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         let userId = User().getField("id")
         if(!userId.isEmpty) {
             self.viewData["id"] = JSON(userId)
-            let url = Config.APP_URL+"/user_info/"+userId
+            let url = AppConfig.APP_URL+"/user_info/"+userId
             Request().get(url, successHandler: {(response) in self.loadDataToEdit(response)})
         }
     }

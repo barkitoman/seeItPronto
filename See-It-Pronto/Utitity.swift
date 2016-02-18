@@ -22,12 +22,13 @@ class Utility {
                 }
             }
             alertController.addAction(okAction)
-            controller.presentViewController(alertController, animated: true, completion: nil)
+            //controller.presentViewController(alertController, animated: true, completion: nil)
+            controller.showViewController(alertController, sender: nil)
         }
     }
     
     func showPhoto(img:UIImageView, imgPath:String){
-        let url = NSURL(string: Config.APP_URL+"/"+imgPath)
+        let url = NSURL(string: AppConfig.APP_URL+"/"+imgPath)
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) { (data, response, error) -> Void in
             if error != nil {
                 print("ERROR SHOWING IMAGE "+imgPath)
@@ -38,6 +39,16 @@ class Utility {
             }
         }
         task.resume()
+    }
+    
+    func formatCurrency(var currentString : String)->String  {
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
+        formatter.locale = NSLocale(localeIdentifier: "en_US")
+        let numberFromField = (NSString(string: currentString ).doubleValue)
+        currentString  = formatter.stringFromNumber(numberFromField)!
+        print("format \(currentString )")
+        return currentString
     }
     
     func defaultMenuImage() -> UIImage {
@@ -64,5 +75,17 @@ class Utility {
             UIGraphicsEndImageContext()
         })
         return defaultMenuImage;
+    }
+    
+    func switchValue(sw:UISwitch,onValue:String,offValue:String)->String{
+        if(sw.on) {
+            return onValue
+        }
+        return offValue
+    }
+    
+    
+    func sliderValue(sl:UISlider)->String{
+        return String(Int(roundf(sl.value)))
     }
 }

@@ -48,7 +48,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate,UITextField
     }
     
     func loadMap() {
-        let requestURL = NSURL(string:Config.APP_URL+"/real_state_property_basics/map/"+self.viewData["id"].stringValue)
+        let requestURL = NSURL(string:AppConfig.APP_URL+"/real_state_property_basics/map/"+self.viewData["id"].stringValue)
         let request = NSURLRequest(URL: requestURL!)
         self.webView.loadRequest(request)
     }
