@@ -62,6 +62,9 @@ class ListRealtorsViewController: UIViewController {
         if(!realtor["url_image"].stringValue.isEmpty) {
             Utility().showPhoto(cell.photo, imgPath: realtor["url_image"].stringValue)
         }
+        if(!realtor["rating"].stringValue.isEmpty) {
+            cell.ratingImage.image = UIImage(named: realtor["rating"].stringValue+"stars")
+        }
         return cell
     }
     

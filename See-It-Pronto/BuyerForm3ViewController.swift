@@ -65,7 +65,6 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
             params = params+"&card_id="+self.viewData["card_id"].stringValue
         }
         let url = AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue
-        print(url)
         Request().put(url, params:params,successHandler: {(response) in self.afterPut(response)});
     }
     

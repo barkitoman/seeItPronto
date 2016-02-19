@@ -18,12 +18,16 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     @IBOutlet weak var swPool: UISwitch!
     @IBOutlet weak var slPriceRange: UISlider!
     @IBOutlet weak var swPreQualified: UISwitch!
-    @IBOutlet weak var btnScan: UIButton!
     @IBOutlet weak var swLikeToBe: UISwitch!
 
     @IBOutlet weak var lblBeds: UILabel!
     @IBOutlet weak var lblBaths: UILabel!
     @IBOutlet weak var lblPriceRange: UILabel!
+    
+    @IBOutlet weak var btnScan: UIButton!
+    @IBOutlet weak var lblLikeTobe: UILabel!
+    @IBOutlet weak var lblNoLikeTobe: UILabel!
+    @IBOutlet weak var lblYesLikeTobe: UILabel!
     
     var priceRangeLess:String = "100000"
     
@@ -60,7 +64,6 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         return false
     }
     
-    
     @IBAction func selectBeds(sender: AnyObject) {
         let beds = String(Int(roundf(slBeds.value)))
         self.showSlidersValues(beds,baths: "",priceRange: "")
@@ -74,6 +77,10 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     @IBAction func selectPriceRange(sender: AnyObject) {
         let priceRange = String(Int(roundf(slPriceRange.value)))
         self.showSlidersValues("",baths: "",priceRange: priceRange)
+    }
+    
+    @IBAction func swPrequalification(sender: AnyObject) {
+        self.preQualificationFields(!self.swPreQualified.on)
     }
     
     @IBAction func btnBack(sender: AnyObject) {
@@ -148,7 +155,13 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
             }
             
             let preQualified = SearchConfig().getField("pre_qualified")
-            if(preQualified == "1"){self.swPreQualified.on = true}else{self.swPreQualified.on = false}
+            if(preQualified == "1") {
+                self.swPreQualified.on = true
+                self.preQualificationFields(false)
+            }else{
+                self.swPreQualified.on = false
+                self.preQualificationFields(true)
+            }
             
             let likeToBe = SearchConfig().getField("like_pre_qualification")
             if(likeToBe == "1"){self.swLikeToBe.on = true}else{self.swLikeToBe.on = false}
@@ -165,6 +178,22 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         if(!priceRange.isEmpty){
             priceRange = Utility().formatCurrency(priceRange)
             self.lblPriceRange.text  = "Your Preference: \(priceRange)"
+        }
+    }
+    
+    func preQualificationFields(preQuealificationIsEnabled:Bool){
+        if(preQuealificationIsEnabled == true) {
+            self.btnScan.enabled       = true
+            self.lblLikeTobe.hidden    = true
+            self.lblYesLikeTobe.hidden = true
+            self.lblNoLikeTobe.hidden  = true
+            self.swLikeToBe.hidden     = true
+        } else {
+            self.btnScan.enabled       = false
+            self.lblLikeTobe.hidden    = false
+            self.lblYesLikeTobe.hidden = false
+            self.lblNoLikeTobe.hidden  = false
+            self.swLikeToBe.hidden     = false
         }
     }
     

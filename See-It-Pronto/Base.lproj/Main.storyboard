@@ -709,7 +709,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rating" translatesAutoresizingMaskIntoConstraints="NO" id="6kh-PE-awh">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="0stars" translatesAutoresizingMaskIntoConstraints="NO" id="6kh-PE-awh">
                                                     <rect key="frame" x="106" y="59" width="120" height="21"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="4.1 out 5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y3L-Rd-vfX">
@@ -752,6 +752,7 @@
                                             <outlet property="lblStaring" destination="Y3L-Rd-vfX" id="gqa-DD-REm"/>
                                             <outlet property="lblTravelRange" destination="mzR-CN-3HD" id="pM1-Sq-jkj"/>
                                             <outlet property="photo" destination="Iqs-Ia-SRt" id="8Zm-H8-idx"/>
+                                            <outlet property="ratingImage" destination="6kh-PE-awh" id="kCl-Mb-9ZS"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -920,6 +921,9 @@
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UaE-mX-ao0">
                                         <rect key="frame" x="106" y="453" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="swPrequalification:" destination="k73-JC-gI7" eventType="valueChanged" id="IwE-2d-iJa"/>
+                                        </connections>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Baths" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4lj-q3-eCp">
                                         <rect key="frame" x="20" y="210" width="55" height="21"/>
@@ -1035,7 +1039,10 @@ Range</string>
                         <outlet property="btnScan" destination="PZc-aX-Vv8" id="IeQ-2z-QJm"/>
                         <outlet property="lblBaths" destination="dX8-MC-2Jf" id="LG6-s5-AkO"/>
                         <outlet property="lblBeds" destination="DvP-eR-DGu" id="w06-aF-dG8"/>
+                        <outlet property="lblLikeTobe" destination="PTL-6a-1eJ" id="Wgk-JL-ked"/>
+                        <outlet property="lblNoLikeTobe" destination="tSi-4c-LsS" id="t5q-wa-zzz"/>
                         <outlet property="lblPriceRange" destination="sJ0-dF-PzH" id="2I6-gr-AHS"/>
+                        <outlet property="lblYesLikeTobe" destination="kZy-zC-LZu" id="52k-ob-aLR"/>
                         <outlet property="scrollView" destination="6YK-Wz-elU" id="qs5-1H-1eJ"/>
                         <outlet property="slBaths" destination="sPx-3c-ZMk" id="5h8-Lb-4TE"/>
                         <outlet property="slBeds" destination="I0x-GC-ZNP" id="8hd-IA-h7b"/>
@@ -3956,6 +3963,7 @@ $480,000
         </scene>
     </scenes>
     <resources>
+        <image name="0stars" width="132" height="28"/>
         <image name="Back" width="25" height="25"/>
         <image name="Circled Chevron Right" width="26" height="26"/>
         <image name="background" width="664" height="1183"/>
