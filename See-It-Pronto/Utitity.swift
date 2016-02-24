@@ -32,8 +32,12 @@ class Utility {
             if error != nil {
                 print("ERROR SHOWING IMAGE "+imgPath)
             } else {
-                dispatch_async(dispatch_get_main_queue()) {
-                    img.image = UIImage(data: data!)
+                if let httpResponse = response as? NSHTTPURLResponse {
+                    if(httpResponse.statusCode == 200) {
+                        dispatch_async(dispatch_get_main_queue()) {
+                            img.image = UIImage(data: data!)
+                        }
+                    }
                 }
             }
         }
@@ -46,7 +50,6 @@ class Utility {
         formatter.locale = NSLocale(localeIdentifier: "en_US")
         let numberFromField = (NSString(string: currentString ).doubleValue)
         currentString  = formatter.stringFromNumber(numberFromField)!
-        print("format \(currentString )")
         return currentString
     }
     

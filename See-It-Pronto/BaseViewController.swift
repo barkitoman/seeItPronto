@@ -45,8 +45,10 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     
     func menuRealtor() {
         addChildView("RealtorHomeViewController",     titleOfChildren: "Home",         iconName: "home")
+        addChildView("ListBuyersViewController",      titleOfChildren: "Buyers",       iconName: "buyer")
         addChildView("RealtorProfileViewController",  titleOfChildren: "My Profile",   iconName: "my_profile")
         addChildView("RealtorForm1ViewController",    titleOfChildren: "Edit Profile", iconName: "edit_profile")
+        addChildView("NotificationsViewController",   titleOfChildren: "Notifications", iconName: "notification")
         addChildView("LoginViewController",           titleOfChildren: "Log out",      iconName: "logout")
     }
     
@@ -54,6 +56,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         addChildView("RealtorHomeViewController",  titleOfChildren: "Home",         iconName: "home")
         addChildView("ListRealtorsViewController", titleOfChildren: "Agents",       iconName: "realtor")
         addChildView("BuyerForm1ViewController",   titleOfChildren: "Edit Profile", iconName: "edit_profile")
+        addChildView("NotificationsViewController",titleOfChildren: "Notifications", iconName: "notification")
         addChildView("LoginViewController",        titleOfChildren: "Log out",      iconName: "logout")
     }
     
@@ -76,7 +79,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             
         } else if (viewIdentifier == "LoginViewController") {
             //LOGOUT
-            var url   = AppConfig.APP_URL+"/phone_login"
+            var url   = AppConfig.APP_URL+"/destroy_token"
             let token = User().getField("access_token")
             url = url+"/"+token
             Request().get(url, successHandler: {(response) in })
@@ -85,9 +88,15 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             
         } else if (viewIdentifier == "ListRealtorsViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("ListRealtorsViewController") as! ListRealtorsViewController
-        }
-        else if (viewIdentifier == "RealtorProfileViewController") {
+            
+        } else if (viewIdentifier == "ListBuyersViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("ListBuyersViewController") as! ListBuyersViewController
+            
+        } else if (viewIdentifier == "RealtorProfileViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("RealtorProfileViewController") as! RealtorProfileViewController
+        
+        } else if (viewIdentifier == "NotificationsViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("NotificationsViewController") as! NotificationsViewController
         }
         
         if(viewIdentifier != nil && viewIdentifier!.isEmpty) {

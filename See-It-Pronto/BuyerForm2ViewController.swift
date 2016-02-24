@@ -44,6 +44,10 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
         navigationController?.popViewControllerAnimated(true)
     }
     
+    @IBAction func btnPrevious(sender: AnyObject) {
+        navigationController?.popViewControllerAnimated(true)   
+    }
+    
     func selfDelegate() {
         self.txtFirstName.delegate = self
         self.txtLastName.delegate = self

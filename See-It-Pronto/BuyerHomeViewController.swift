@@ -8,12 +8,16 @@
 
 import UIKit
 
-class BuyerHomeViewController: BaseViewController, UIWebViewDelegate,UITextFieldDelegate, UITextViewDelegate  {
+class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,UITextViewDelegate {
 
     var viewData:JSON = []
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var txtSearch: UITextField!
     
+    private let baseURLString = "http://oauthtest-nyxent.rhcloud.com/real_state_property_basics/find_by_address"
+    let autocompleteTableView = UITableView(frame: CGRectMake(0,70,320,120), style: UITableViewStyle.Plain)
+    var pastUrls = ["Men", "Women", "Cats", "Dogs", "Children"]
+    var autocompleteUrls = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +44,13 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate,UITextField
     func selfDelegate() {
         self.webView.delegate = self;
         self.txtSearch.delegate = self
+            
+        //autocomplete tableview configuration
+        autocompleteTableView.delegate = self
+        autocompleteTableView.dataSource = self
+        autocompleteTableView.scrollEnabled = true
+        autocompleteTableView.hidden = true
+        self.view.addSubview(autocompleteTableView)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -69,10 +80,51 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate,UITextField
         self.onSlideSearchButtonPressed(sender as! UIButton)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "ViewBuyerHouse") {
-            
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
+        autocompleteTableView.hidden = false
+        let substring = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
+        //searchAutocompleteEntriesWithSubstring(substring)
+        self.findproperties(substring)
+        return true
+    }
+    
+    func findproperties(substring:String) {
+        let url = baseURLString
+        Request().get(url, successHandler: {(response) in self.loadProperties(response)})
+    }
+    
+    func loadProperties(let response: NSData) {
+        autocompleteUrls.removeAll(keepCapacity: false)
+        dispatch_async(dispatch_get_main_queue()) {
+            let properties = JSON(data: response)
+            for (_,subJson):(String, JSON) in properties {
+                let descripcion = subJson["description"].stringValue
+                self.autocompleteUrls.append(descripcion)
+            }
+            self.autocompleteTableView.reloadData()
         }
     }
+        
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return autocompleteUrls.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: UITableViewCellStyle.Default , reuseIdentifier: "Cell")
+        let index = indexPath.row as Int
+        cell.textLabel!.text = autocompleteUrls[index]
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let selectedCell : UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+        self.txtSearch.text = selectedCell.textLabel!.text
+        self.autocompleteTableView.hidden = true
+    }
+   
 
 }

@@ -44,6 +44,10 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
         navigationController?.popViewControllerAnimated(true)
     }
     
+    @IBAction func btnPrevious(sender: AnyObject) {
+        navigationController?.popViewControllerAnimated(true)  
+    }
+    
     //selfDelegate, textFieldShouldReturn are functions for hide keyboard when press 'return' key
     func selfDelegate() {
         self.txtEmail.delegate = self

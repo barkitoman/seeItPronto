@@ -42,6 +42,10 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
         navigationController?.popViewControllerAnimated(true)
     }
     
+    @IBAction func btnPrevious(sender: AnyObject) {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
     func selfDelegate() {
         self.txtEmail.delegate = self
         self.txtPhone.delegate = self

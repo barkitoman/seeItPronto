@@ -42,6 +42,10 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
         navigationController?.popViewControllerAnimated(true)
     }
     
+    @IBAction func btnPrevious(sender: AnyObject) {
+         navigationController?.popViewControllerAnimated(true)     
+    }
+    
     func selfDelegate() {
         self.txtCardNumber.delegate = self
         self.txtExpDate.delegate = self

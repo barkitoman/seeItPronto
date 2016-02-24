@@ -85,6 +85,10 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
        navigationController?.popViewControllerAnimated(true)
     }
     
+    @IBAction func btnPrevious(sender: AnyObject) {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
     @IBAction func btnSave(sender: AnyObject) {
         self.save()
     }
