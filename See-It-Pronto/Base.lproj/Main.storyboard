@@ -4164,8 +4164,8 @@ $480,000
         <image name="search" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="vxA-X1-U6d"/>
+        <segue reference="0Gu-xL-7Tz"/>
         <segue reference="Ejg-Xi-KK2"/>
-        <segue reference="hsf-Lm-wDs"/>
+        <segue reference="vxA-X1-U6d"/>
     </inferredMetricsTieBreakers>
 </document>

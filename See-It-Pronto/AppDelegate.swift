@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func findNotifications() {
         if(!self.userId.isEmpty) {
             self.stopIntervalNotifications()
-            let url = AppConfig.APP_URL+"/get_notifications/"+self.userId
+            let url = AppConfig.APP_URL+"/push_notifications/"+self.userId
             Request().get(url, successHandler: {(response) in
                 let notifications = JSON(data: response)
                 for (_,subJson):(String, JSON) in notifications {
