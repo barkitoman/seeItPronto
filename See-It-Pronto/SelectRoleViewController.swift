@@ -38,8 +38,4 @@ class SelectRoleViewController: UIViewController {
         navigationController?.popViewControllerAnimated(true)
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
-    }
-
 }

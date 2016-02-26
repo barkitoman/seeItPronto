@@ -11,6 +11,7 @@ import UIKit
 class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,UITextViewDelegate {
 
     var viewData:JSON = []
+    var propertyId:String = ""
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var txtSearch: UITextField!
     
@@ -66,7 +67,13 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if navigationType == UIWebViewNavigationType.LinkClicked {
-            self.performSegueWithIdentifier("ViewBuyerHouse", sender: self)
+            let url:String = request.URL!.absoluteString
+            if(url.containsString(AppConfig.APP_URL)) {
+                let id = Utility().getIdFromUrl(url)
+                let saveData: JSON =  ["id":id]
+                Property().saveIfExists(saveData)
+                self.performSegueWithIdentifier("ViewBuyerHouse", sender: self)
+            }
             return false
         }
         return true
@@ -125,6 +132,4 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
         self.txtSearch.text = selectedCell.textLabel!.text
         self.autocompleteTableView.hidden = true
     }
-   
-
 }

@@ -27,7 +27,10 @@ class Utility {
     }
     
     func showPhoto(img:UIImageView, imgPath:String){
-        let url = NSURL(string: AppConfig.APP_URL+"/"+imgPath)
+        var url = NSURL(string: AppConfig.APP_URL+"/"+imgPath)
+        if imgPath.rangeOfString("http://") != nil{
+            url = NSURL(string: imgPath)
+        }
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) { (data, response, error) -> Void in
             if error != nil {
                 print("ERROR SHOWING IMAGE "+imgPath)
@@ -86,8 +89,17 @@ class Utility {
         return offValue
     }
     
-    
     func sliderValue(sl:UISlider)->String{
         return String(Int(roundf(sl.value)))
+    }
+    
+    func getIdFromUrl(url:String)->String{
+        var id = url.stringByReplacingOccurrencesOfString(AppConfig.APP_URL, withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        id     = id.stringByReplacingOccurrencesOfString("http:",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        id     = id.stringByReplacingOccurrencesOfString("/",      withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        id     = id.stringByReplacingOccurrencesOfString("#",      withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        id     = id.stringByReplacingOccurrencesOfString("?",      withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        id     = id.stringByReplacingOccurrencesOfString(" ",      withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        return id
     }
 }

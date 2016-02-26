@@ -14,7 +14,6 @@ class ForgotPasswordViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -31,10 +30,6 @@ class ForgotPasswordViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 
     }
 

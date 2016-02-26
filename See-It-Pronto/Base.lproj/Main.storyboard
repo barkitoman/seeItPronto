@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -1467,6 +1467,17 @@ Range</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="lblAddress" destination="dFN-fi-OTH" id="PJt-Qc-VT4"/>
+                        <outlet property="lblBathrooms" destination="8qi-pA-uyf" id="BRi-e0-qL3"/>
+                        <outlet property="lblBedrooms" destination="Ybr-k3-H15" id="Mfs-NA-f8p"/>
+                        <outlet property="lblLotSize" destination="fCD-zC-XFd" id="jJd-6v-C2y"/>
+                        <outlet property="lblPrice" destination="uBB-ab-rrH" id="qKo-km-z72"/>
+                        <outlet property="lblSquareFeed" destination="cGG-Sv-9ft" id="xBr-6g-uYB"/>
+                        <outlet property="lblType" destination="qd5-hr-feM" id="CNw-B5-I3y"/>
+                        <outlet property="lblYearBuilt" destination="nlB-3q-mAT" id="UlX-v3-wKx"/>
+                        <outlet property="photo" destination="ApJ-2m-pcP" id="EZE-1n-dV8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TOr-sT-WFb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1618,7 +1629,7 @@ Range</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="house3" translatesAutoresizingMaskIntoConstraints="NO" id="Ov0-1f-Aio">
-                                <rect key="frame" x="58" y="72" width="204" height="140"/>
+                                <rect key="frame" x="58" y="73" width="204" height="140"/>
                             </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Oo-YA-W9D">
                                 <rect key="frame" x="90" y="0.0" width="230" height="56"/>
@@ -1662,7 +1673,7 @@ Range</string>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Single Family" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zFx-yJ-fLE">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zFx-yJ-fLE">
                                 <rect key="frame" x="185" y="269" width="115" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1674,7 +1685,7 @@ Range</string>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="7980" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6rm-GI-jjv">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6rm-GI-jjv">
                                 <rect key="frame" x="185" y="295" width="115" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1686,9 +1697,9 @@ Range</string>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="25.000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QLM-57-48H">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Single Family" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QLM-57-48H">
                                 <rect key="frame" x="185" y="321" width="115" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1722,12 +1733,6 @@ Range</string>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Single Family" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5X-bW-O3a">
-                                <rect key="frame" x="185" y="392" width="115" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Location:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S0h-5w-Uif">
                                 <rect key="frame" x="20" y="418" width="115" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1748,7 +1753,7 @@ Range</string>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="25.000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGu-0q-pgg">
                                 <rect key="frame" x="185" y="444" width="115" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1797,9 +1802,29 @@ Range</string>
                                     <color key="titleColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2012" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5X-bW-O3a">
+                                <rect key="frame" x="185" y="392" width="115" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="lblAddedOn" destination="Yic-18-Zc2" id="J6k-hp-izM"/>
+                        <outlet property="lblBathrooms" destination="6rm-GI-jjv" id="9ua-hk-xNu"/>
+                        <outlet property="lblBedrooms" destination="zFx-yJ-fLE" id="HWD-fX-iPL"/>
+                        <outlet property="lblEstPayment" destination="ad2-HB-OlX" id="IXX-2k-Upb"/>
+                        <outlet property="lblLocation" destination="KV8-wj-nuq" id="3n9-E2-zKO"/>
+                        <outlet property="lblLot" destination="mAl-xZ-4LR" id="whh-DY-lud"/>
+                        <outlet property="lblNeighborhood" destination="PGu-0q-pgg" id="Av5-aZ-bkL"/>
+                        <outlet property="lblSize" destination="BQY-38-C0u" id="jBr-ri-cx2"/>
+                        <outlet property="lblType" destination="QLM-57-48H" id="96D-Ne-BWo"/>
+                        <outlet property="lblYearBuilt" destination="F5X-bW-O3a" id="yIL-j5-OWQ"/>
+                        <outlet property="lblYourCredits" destination="r0d-8D-N4o" id="kef-3G-yBc"/>
+                        <outlet property="photo" destination="Ov0-1f-Aio" id="xSB-WQ-W6g"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WNB-ie-NoC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -4164,8 +4189,8 @@ $480,000
         <image name="search" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0Gu-xL-7Tz"/>
-        <segue reference="Ejg-Xi-KK2"/>
         <segue reference="vxA-X1-U6d"/>
+        <segue reference="Ejg-Xi-KK2"/>
+        <segue reference="hsf-Lm-wDs"/>
     </inferredMetricsTieBreakers>
 </document>

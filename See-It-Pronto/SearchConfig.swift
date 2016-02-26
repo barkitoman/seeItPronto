@@ -45,10 +45,10 @@ class SearchConfig {
     
     func getField(fieldName:String)->String{
         let searchConfig = SearchConfig().find()
-        var out:String = ""
+        var out:String   = ""
         if(searchConfig.count >= 1 && searchConfig[0] != nil) {
             let obj  = searchConfig[0] as! NSManagedObject
-            out = obj.valueForKey(fieldName) as! String
+            out      = obj.valueForKey(fieldName) as! String
         }
         return out
     }
@@ -90,11 +90,10 @@ class SearchConfig {
     }
     
     func deleteAllData() {
-        let appDel  = UIApplication.sharedApplication().delegate as! AppDelegate
-        let context = appDel.managedObjectContext
-        let coord   = appDel.persistentStoreCoordinator
-        
-        let fetchRequest = NSFetchRequest(entityName: "SearchConfig")
+        let appDel        = UIApplication.sharedApplication().delegate as! AppDelegate
+        let context       = appDel.managedObjectContext
+        let coord         = appDel.persistentStoreCoordinator
+        let fetchRequest  = NSFetchRequest(entityName: "SearchConfig")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         
         do {

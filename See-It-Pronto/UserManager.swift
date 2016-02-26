@@ -43,11 +43,11 @@ class User {
     }
     
     func getField(fieldName:String)->String{
-        let user = User().find()
+        let user       = User().find()
         var out:String = ""
         if(user.count >= 1 && user[0] != nil) {
             let obj  = user[0] as! NSManagedObject
-             out = obj.valueForKey(fieldName) as! String
+             out     = obj.valueForKey(fieldName) as! String
         }
         return out
     }
@@ -119,11 +119,10 @@ class User {
     }
     
     func deleteAllData() {
-        let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
-        let context = appDel.managedObjectContext
-        let coord = appDel.persistentStoreCoordinator
-        
-        let fetchRequest = NSFetchRequest(entityName: "User")
+        let appDel        = UIApplication.sharedApplication().delegate as! AppDelegate
+        let context       = appDel.managedObjectContext
+        let coord         = appDel.persistentStoreCoordinator
+        let fetchRequest  = NSFetchRequest(entityName: "User")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         
         do {
@@ -132,6 +131,6 @@ class User {
             debugPrint(error)
         }
     }
-    }
+}
 
 
