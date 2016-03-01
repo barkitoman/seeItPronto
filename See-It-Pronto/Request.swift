@@ -2,8 +2,8 @@
 //  Request.swift
 //  See-It-Pronto
 //
-//  Created by user114136 on 1/8/16.
-//  Copyright © 2016 user114136. All rights reserved.
+//  Created by Deyson on 1/8/16.
+//  Copyright © 2016 Deyson. All rights reserved.
 //
 
 import Foundation
@@ -21,7 +21,7 @@ class Request {
             data, response, error in
             //in case of error
             if error != nil {
-                print("AN ERROR HAS OCURRED!")
+                print("AN ERROR HAS OCURRED SENDING POST REQUEST!")
                 print(error); return
             }
             if(self.debug == true) {
@@ -45,7 +45,7 @@ class Request {
             data, response, error in
             //in case of error
             if error != nil {
-                print("AN ERROR HAS OCURRED!")
+                print("AN ERROR HAS OCURRED SENDING PUT REQUEST!")
                 print(error); return
             }
             if(self.debug == true) {
@@ -66,7 +66,7 @@ class Request {
             data, response, error in
             //in case of error
             if error != nil {
-                print("AN ERROR HAS OCURRED!")
+                print("AN ERROR HAS OCURRED SENDING GET REQUEST!")
                 print(error); return
             }
             if(self.debug == true) {

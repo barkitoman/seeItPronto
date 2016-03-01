@@ -2,8 +2,8 @@
 //  RealtorHomeViewController.swift
 //  See-It-Pronto
 //
-//  Created by user114136 on 1/5/16.
-//  Copyright © 2016 user114136. All rights reserved.
+//  Created by Deyson on 1/5/16.
+//  Copyright © 2016 Deyson. All rights reserved.
 //
 
 import UIKit
@@ -67,7 +67,7 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if navigationType == UIWebViewNavigationType.LinkClicked {
-            self.performSegueWithIdentifier("RealtorHomeShowingRequest", sender: self)
+            //self.performSegueWithIdentifier("RealtorHomeShowingRequest", sender: self)
             return false
         }
         return true

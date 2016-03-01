@@ -2,8 +2,8 @@
 //  RealtorForm1ViewController.swift
 //  See-It-Pronto
 //
-//  Created by user114136 on 1/4/16.
-//  Copyright © 2016 user114136. All rights reserved.
+//  Created by Deyson on 1/4/16.
+//  Copyright © 2016 Deyson. All rights reserved.
 //
 
 import UIKit
@@ -64,7 +64,7 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
     func save() {
         //create params
         let userId = User().getField("id")
-        var params = "role=realtor&email="+txtEmail.text!+"&phone="+txtPhone.text!+"&password="+txtPassword.text!
+        var params = "role=realtor&client_id="+txtEmail.text!+"&phone="+txtPhone.text!+"&client_secret="+txtPassword.text!+"&grant_type="+AppConfig.GRANT_TYPE
         var url = AppConfig.APP_URL+"/users"
         if(!userId.isEmpty) {
             params = params+"&id="+userId

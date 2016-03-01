@@ -2,8 +2,8 @@
 //  PropertyManager.swift
 //  See-It-Pronto
 //
-//  Created by user114136 on 2/18/16.
-//  Copyright © 2016 user114136. All rights reserved.
+//  Created by Deyson on 2/18/16.
+//  Copyright © 2016 Deyson. All rights reserved.
 //
 
 
@@ -17,6 +17,18 @@ class PropertyEntity: NSManagedObject {
     @NSManaged var id:String
     @NSManaged var image:String
     @NSManaged var price:String
+    @NSManaged var est_payments:String
+    @NSManaged var your_credits:String
+    @NSManaged var bedrooms:String
+    @NSManaged var bathrooms:String
+    @NSManaged var property_type:String
+    @NSManaged var size:String
+    @NSManaged var lot:String
+    @NSManaged var year_built:String
+    @NSManaged var neighborhood:String
+    @NSManaged var added_on:String
+    @NSManaged var square_feed:String
+    @NSManaged var lot_size:String
 
 }
 
@@ -41,7 +53,9 @@ class Property {
         var out:String = ""
         if(property.count >= 1 && property[0] != nil) {
             let obj  = property[0] as! NSManagedObject
-            out = obj.valueForKey(fieldName) as! String
+            if(obj.valueForKey(fieldName) != nil) {
+                out = obj.valueForKey(fieldName) as! String
+            }
         }
         return out
     }
@@ -62,10 +76,24 @@ class Property {
         //create instance of pur data model and inicilize
         let newItem = PropertyEntity(entity:en!, insertIntoManagedObjectContext:contxt)
         //map our properties
-        newItem.address = propertyData["address"].stringValue
-        newItem.id      = propertyData["id"].stringValue
-        newItem.image   = propertyData["image"][0].stringValue
-        newItem.price   = propertyData["price"].stringValue
+        newItem.address       = propertyData["address"].stringValue
+        newItem.id            = propertyData["id"].stringValue
+        newItem.image         = propertyData["images"][0].stringValue
+        newItem.price         = propertyData["price"].stringValue
+        newItem.est_payments  = propertyData["est_payments"].stringValue
+        newItem.your_credits  = propertyData["your_credits"].stringValue
+        newItem.bedrooms      = propertyData["bedrooms"].stringValue
+        newItem.bathrooms     = propertyData["bathrooms"].stringValue
+        newItem.property_type = propertyData["property_type"].stringValue
+        newItem.size          = propertyData["size"].stringValue
+        newItem.lot           = propertyData["lot"].stringValue
+        newItem.lot_size      = propertyData["lot_size"].stringValue
+        newItem.year_built    = propertyData["year_built"].stringValue
+        newItem.neighborhood  = propertyData["neighborhood"].stringValue
+        newItem.added_on      = propertyData["added_on"].stringValue
+        newItem.square_feed   = propertyData["square_feed"].stringValue
+        newItem.square_feed   = propertyData["square_feed"].stringValue
+        
         do {
             try contxt.save()
         } catch let error as NSError {

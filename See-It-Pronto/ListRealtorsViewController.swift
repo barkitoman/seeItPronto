@@ -2,8 +2,8 @@
 //  ListRealtorsViewController.swift
 //  See-It-Pronto
 //
-//  Created by user114136 on 2/9/16.
-//  Copyright © 2016 user114136. All rights reserved.
+//  Created by Deyson on 2/9/16.
+//  Copyright © 2016 Deyson. All rights reserved.
 //
 
 import UIKit
@@ -59,6 +59,7 @@ class ListRealtorsViewController: UIViewController {
         cell.lblName.text = name
         cell.lblShowingRate.text = (!realtor["showing_rate"].stringValue.isEmpty) ? "$"+realtor["showing_rate"].stringValue  : ""
         cell.lblTravelRange.text = (!realtor["travel_range"].stringValue.isEmpty) ? realtor["travel_range"].stringValue+"mi" : ""
+        cell.lblStaring.text     = (!realtor["rating"].stringValue.isEmpty) ? realtor["rating"].stringValue+" of 5" : ""
         if(!realtor["url_image"].stringValue.isEmpty) {
             Utility().showPhoto(cell.photo, imgPath: realtor["url_image"].stringValue)
         }

@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		107A40331C848C1A001C96A8 /* SeeitNowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107A40321C848C1A001C96A8 /* SeeitNowTableViewCell.swift */; };
+		107A40351C84C31A001C96A8 /* PropertyRealtorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107A40341C84C31A001C96A8 /* PropertyRealtorManager.swift */; };
 		109E6A481C80A95A00AD46EE /* PropertyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109E6A471C80A95A00AD46EE /* PropertyManager.swift */; };
+		109FF84A1C860A1000E20FC2 /* PropertyActionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109FF8491C860A1000E20FC2 /* PropertyActionManager.swift */; };
+		109FF84C1C861B1A00E20FC2 /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109FF84B1C861B1A00E20FC2 /* DatePickerDialog.swift */; };
 		680842E31C3EB0C700AF7F8E /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680842E21C3EB0C700AF7F8E /* AppConfig.swift */; };
 		680C41B01C6A6BF800194728 /* ListRealtorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680C41AF1C6A6BF800194728 /* ListRealtorsViewController.swift */; };
 		681140891C3AC2360068AE1C /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681140881C3AC2360068AE1C /* ForgotPasswordViewController.swift */; };
@@ -42,7 +46,6 @@
 		685982681C762ECD00DF7478 /* SearchConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685982671C762ECD00DF7478 /* SearchConfig.swift */; };
 		68598DF31C2AF44F00E104C9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68598DF21C2AF44F00E104C9 /* LoginViewController.swift */; };
 		685E527F1C402B100022718B /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685E527E1C402B100022718B /* Request.swift */; };
-		686124981C7CD31300F17670 /* AutoCompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686124971C7CD31300F17670 /* AutoCompleteTextField.swift */; };
 		6861249E1C7D019900F17670 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6861249D1C7D019900F17670 /* NotificationsViewController.swift */; };
 		68663D2D1C3C8CB600460D42 /* PropertyDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68663D2C1C3C8CB600460D42 /* PropertyDetailsViewController.swift */; };
 		68663D2F1C3C931B00460D42 /* FullPropertyDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68663D2E1C3C931B00460D42 /* FullPropertyDetailsViewController.swift */; };
@@ -84,7 +87,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		107A40321C848C1A001C96A8 /* SeeitNowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeitNowTableViewCell.swift; sourceTree = "<group>"; };
+		107A40341C84C31A001C96A8 /* PropertyRealtorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyRealtorManager.swift; sourceTree = "<group>"; };
 		109E6A471C80A95A00AD46EE /* PropertyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyManager.swift; sourceTree = "<group>"; };
+		109FF8491C860A1000E20FC2 /* PropertyActionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyActionManager.swift; sourceTree = "<group>"; };
+		109FF84B1C861B1A00E20FC2 /* DatePickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerDialog.swift; sourceTree = "<group>"; };
 		680842E21C3EB0C700AF7F8E /* AppConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		680C41AF1C6A6BF800194728 /* ListRealtorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListRealtorsViewController.swift; sourceTree = "<group>"; };
 		681140881C3AC2360068AE1C /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
@@ -119,7 +126,6 @@
 		685982671C762ECD00DF7478 /* SearchConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchConfig.swift; sourceTree = "<group>"; };
 		68598DF21C2AF44F00E104C9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		685E527E1C402B100022718B /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
-		686124971C7CD31300F17670 /* AutoCompleteTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteTextField.swift; sourceTree = "<group>"; };
 		6861249D1C7D019900F17670 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		68663D2C1C3C8CB600460D42 /* PropertyDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyDetailsViewController.swift; sourceTree = "<group>"; };
 		68663D2E1C3C931B00460D42 /* FullPropertyDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullPropertyDetailsViewController.swift; sourceTree = "<group>"; };
@@ -181,6 +187,8 @@
 				68275C091C40041F00696FBE /* UserManager.swift */,
 				685982671C762ECD00DF7478 /* SearchConfig.swift */,
 				109E6A471C80A95A00AD46EE /* PropertyManager.swift */,
+				107A40341C84C31A001C96A8 /* PropertyRealtorManager.swift */,
+				109FF8491C860A1000E20FC2 /* PropertyActionManager.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -190,6 +198,7 @@
 			children = (
 				683983201C74BCE900129EA5 /* ListRealtorsTableViewCell.swift */,
 				68C265851C7B5AC5006ADF61 /* ListBuyersTableViewCell.swift */,
+				107A40321C848C1A001C96A8 /* SeeitNowTableViewCell.swift */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -236,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				6885E5F01C57021200CCCA19 /* SRWebClient.swift */,
+				109FF84B1C861B1A00E20FC2 /* DatePickerDialog.swift */,
 				686E8F3E1C3C096300F5FE01 /* SwiftyJSON.swift */,
 			);
 			name = Lib;
@@ -304,7 +314,6 @@
 			children = (
 				685E527E1C402B100022718B /* Request.swift */,
 				68D64C551C443DF5006CBE2F /* Utitity.swift */,
-				686124971C7CD31300F17670 /* AutoCompleteTextField.swift */,
 				68587EF91C456F44002696C3 /* Notification.swift */,
 			);
 			name = Helper;
@@ -458,6 +467,7 @@
 				682EF3571C528960007176BF /* RealtorForm1ViewController.swift in Sources */,
 				681140B11C3AC8760068AE1C /* ListingDetailsViewController.swift in Sources */,
 				68598DF31C2AF44F00E104C9 /* LoginViewController.swift in Sources */,
+				109FF84C1C861B1A00E20FC2 /* DatePickerDialog.swift in Sources */,
 				681140991C3AC62F0068AE1C /* BuyerForm3ViewController.swift in Sources */,
 				684D08461C6534B900BF086E /* TableViewMenuController.swift in Sources */,
 				681140891C3AC2360068AE1C /* ForgotPasswordViewController.swift in Sources */,
@@ -468,8 +478,10 @@
 				68794E021C73AF6500937A60 /* SearchViewController.swift in Sources */,
 				6811409B1C3AC6440068AE1C /* BuyerForm4ViewController.swift in Sources */,
 				68587EFA1C456F44002696C3 /* Notification.swift in Sources */,
+				107A40351C84C31A001C96A8 /* PropertyRealtorManager.swift in Sources */,
 				68D64C561C443DF5006CBE2F /* Utitity.swift in Sources */,
 				684D08471C6534B900BF086E /* ChildViewController.swift in Sources */,
+				109FF84A1C860A1000E20FC2 /* PropertyActionManager.swift in Sources */,
 				68C265861C7B5AC5006ADF61 /* ListBuyersTableViewCell.swift in Sources */,
 				681140A31C3AC7010068AE1C /* RealtorProfileViewController.swift in Sources */,
 				681140951C3AC60D0068AE1C /* BuyerForm1ViewController.swift in Sources */,
@@ -497,8 +509,8 @@
 				683F7F291C3D7EC100CA0A0C /* FeedBack3ViewController.swift in Sources */,
 				683F7F251C3D7D3C00CA0A0C /* FeedBack1ViewController.swift in Sources */,
 				68663D311C3C9B2700460D42 /* SeeItNowViewController.swift in Sources */,
-				686124981C7CD31300F17670 /* AutoCompleteTextField.swift in Sources */,
 				6897A1281C244B5F00AB3A0A /* AppDelegate.swift in Sources */,
+				107A40331C848C1A001C96A8 /* SeeitNowTableViewCell.swift in Sources */,
 				682EF3551C5287D5007176BF /* RealtorForm2ViewController.swift in Sources */,
 				68FA964C1C3D9DD80023C292 /* SeeitLaterViewController.swift in Sources */,
 				68275C0A1C40041F00696FBE /* UserManager.swift in Sources */,

@@ -8,8 +8,8 @@
 
 import Foundation
 
-public class SRWebClient : NSObject
-{
+public class SRWebClient : NSObject{
+    
     public typealias Headers = Dictionary<String, String>
     public typealias RequestData = Dictionary<String,AnyObject>
     public typealias SuccessHandler = (AnyObject!, Int) -> Void

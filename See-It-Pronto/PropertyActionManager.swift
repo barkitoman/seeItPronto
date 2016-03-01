@@ -1,38 +1,28 @@
 //
-//  User.swift
+//  ActionManager.swift
 //  See-It-Pronto
 //
-//  Created by Deyson on 1/8/16.
+//  Created by Deyson on 3/1/16.
 //  Copyright © 2016 Deyson. All rights reserved.
 //
-
 
 import Foundation
 import UIKit
 import CoreData
-@objc(UserEntity)
+@objc(PropertyActionEntity)
 
-class UserEntity: NSManagedObject {
-    @NSManaged var id:String
-    @NSManaged var role:String
-    @NSManaged var name:String
-    @NSManaged var access_token:String
-    @NSManaged var expires_in:String
-    @NSManaged var token_type:String
-    @NSManaged var scope:String
-    @NSManaged var email:String
-    @NSManaged var password:String
-    @NSManaged var realtor_id:String
- 
+class PropertyActionEntity: NSManagedObject {
+    @NSManaged var type:String
+    
 }
 
-class User {
+class PropertyAction {
     var existingItem : NSManagedObject!
     
     func find()->AnyObject{
         let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let contxt: NSManagedObjectContext = appDel.managedObjectContext
-        let freq = NSFetchRequest(entityName:"User")
+        let freq = NSFetchRequest(entityName:"PropertyAction")
         var out:Array<AnyObject> = []
         do {
             try out = contxt.executeFetchRequest(freq)
@@ -43,10 +33,10 @@ class User {
     }
     
     func getField(fieldName:String)->String{
-        let user       = User().find()
+        let propertyAction = PropertyAction().find()
         var out:String = ""
-        if(user.count >= 1 && user[0] != nil) {
-            let obj  = user[0] as! NSManagedObject
+        if(propertyAction.count >= 1 && propertyAction[0] != nil) {
+            let obj  = propertyAction[0] as! NSManagedObject
             if(obj.valueForKey(fieldName) != nil) {
                 out = obj.valueForKey(fieldName) as! String
             }
@@ -54,37 +44,27 @@ class User {
         return out
     }
     
-    func saveIfExists(userData:JSON) {
+    func saveIfExists(actionData:JSON) {
         //check if item exists
         if (self.find().count >= 1) {
             //Remove if exists
             self.deleteAllData()
         }
-        self.save(userData)
-
+        self.save(actionData)
     }
     
-    func save(userData:JSON) {
+    func save(actionData:JSON) {
         let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let contxt: NSManagedObjectContext = appDel.managedObjectContext
-        let en = NSEntityDescription.entityForName("User", inManagedObjectContext: contxt)
+        let en = NSEntityDescription.entityForName("PropertyAction", inManagedObjectContext: contxt)
         //create instance of pur data model and inicilize
-        let newItem = UserEntity(entity:en!, insertIntoManagedObjectContext:contxt)
+        let newItem = PropertyActionEntity(entity:en!, insertIntoManagedObjectContext:contxt)
         //map our properties
-        newItem.id            = userData["user"]["id"].stringValue
-        newItem.role          = userData["user"]["role"].stringValue
-        newItem.name          = userData["user"]["name"].stringValue
-        newItem.email         = userData["user"]["email"].stringValue
-        newItem.password      = userData["user"]["password"].stringValue
-        newItem.expires_in    = userData["expires_in"].stringValue
-        newItem.access_token  = userData["access_token"].stringValue
-        newItem.scope         = userData["scope"].stringValue
-        newItem.token_type    = userData["token_type"].stringValue
-        newItem.realtor_id    = userData["realtor_id"].stringValue
+        newItem.type = actionData["type"].stringValue
         do {
             try contxt.save()
         } catch let error as NSError {
-            print("Error when save user. error : \(error) \(error.userInfo)")
+            print("Error when save property action. error : \(error) \(error.userInfo)")
         }
     }
     
@@ -92,7 +72,7 @@ class User {
         let appDel        = UIApplication.sharedApplication().delegate as! AppDelegate
         let context       = appDel.managedObjectContext
         let coord         = appDel.persistentStoreCoordinator
-        let fetchRequest  = NSFetchRequest(entityName: "User")
+        let fetchRequest  = NSFetchRequest(entityName: "PropertyAction")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         
         do {

@@ -2,8 +2,8 @@
 //  LoginViewController.swift
 //  See-It-Pronto
 //
-//  Created by user114136 on 12/23/15.
-//  Copyright © 2015 user114136. All rights reserved.
+//  Created by Deyson on 12/23/15.
+//  Copyright © 2015 Deyson. All rights reserved.
 //
 
 import UIKit

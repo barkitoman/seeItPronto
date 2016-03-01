@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  See-It-Pronto
 //
-//  Created by user114136 on 12/18/15.
+//  Created by Deyson on 12/18/15.
 //  Copyright © 2015 user114136. All rights reserved.
 //
 

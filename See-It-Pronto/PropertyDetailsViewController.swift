@@ -2,8 +2,8 @@
 //  PropertyDetailsViewController.swift
 //  See-It-Pronto
 //
-//  Created by user114136 on 1/5/16.
-//  Copyright © 2016 user114136. All rights reserved.
+//  Created by Deyson on 1/5/16.
+//  Copyright © 2016 Deyson. All rights reserved.
 //
 
 import UIKit
@@ -46,6 +46,18 @@ class PropertyDetailsViewController: UIViewController {
         navigationController?.popViewControllerAnimated(true)
     }
     
+    @IBAction func btnSeeItPronto(sender: AnyObject) {
+        let propertyActionData: JSON =  ["type":"see_it_pronto"]
+        PropertyAction().saveIfExists(propertyActionData)
+        self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+    }
+    
+    @IBAction func btnSeeItLater(sender: AnyObject) {
+        let propertyActionData: JSON =  ["type":"see_it_later"]
+        PropertyAction().saveIfExists(propertyActionData)
+        self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+    }
+    
     func findPropertyDetails(){
         let propertyId = Property().getField("id")
         let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/"+propertyId
@@ -66,6 +78,7 @@ class PropertyDetailsViewController: UIViewController {
             self.lblSquareFeed.text = result["square_feed"].stringValue
             self.lblLotSize.text    = result["lot_size"].stringValue
             self.lblYearBuilt.text  = result["year_built"].stringValue
+            Property().saveIfExists(result)
         }
     }
 }

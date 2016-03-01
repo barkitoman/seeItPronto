@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Automatic">
     <entity name="Property" syncable="YES">
+        <attribute name="added_on" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bathrooms" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bedrooms" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="est_payments" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lot" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lot_size" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="neighborhood" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="property_type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="size" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="square_feed" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="year_built" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="your_credits" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="PropertyAction" syncable="YES">
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="PropertyRealtor" syncable="YES">
+        <attribute name="brokeragent" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="distance" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="first_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="last_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rating" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="showing_rate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="travel_range" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url_image" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="SearchConfig" syncable="YES">
         <attribute name="area" optional="YES" attributeType="String" syncable="YES"/>
@@ -33,8 +61,10 @@
         <attribute name="token_type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Property" positionX="-54" positionY="117" width="128" height="105"/>
+        <element name="Property" positionX="-54" positionY="117" width="128" height="285"/>
+        <element name="PropertyRealtor" positionX="-54" positionY="108" width="128" height="210"/>
         <element name="SearchConfig" positionX="-63" positionY="54" width="128" height="225"/>
         <element name="User" positionX="-63" positionY="-18" width="128" height="195"/>
+        <element name="PropertyAction" positionX="-54" positionY="135" width="128" height="60"/>
     </elements>
 </model>

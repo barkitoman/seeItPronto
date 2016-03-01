@@ -2,8 +2,8 @@
 //  SearchConfig.swift
 //  See-It-Pronto
 //
-//  Created by user114136 on 2/18/16.
-//  Copyright © 2016 user114136. All rights reserved.
+//  Created by Deyson on 2/18/16.
+//  Copyright © 2016 Deyson. All rights reserved.
 //
 
 
@@ -48,7 +48,9 @@ class SearchConfig {
         var out:String   = ""
         if(searchConfig.count >= 1 && searchConfig[0] != nil) {
             let obj  = searchConfig[0] as! NSManagedObject
-            out      = obj.valueForKey(fieldName) as! String
+            if(obj.valueForKey(fieldName) != nil) {
+                out = obj.valueForKey(fieldName) as! String
+            }
         }
         return out
     }

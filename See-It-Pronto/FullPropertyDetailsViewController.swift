@@ -2,8 +2,8 @@
 //  FullPropertyDetailsViewController.swift
 //  See-It-Pronto
 //
-//  Created by user114136 on 1/5/16.
-//  Copyright © 2016 user114136. All rights reserved.
+//  Created by Deyson on 1/5/16.
+//  Copyright © 2016 Deyson. All rights reserved.
 //
 
 import UIKit
@@ -27,7 +27,7 @@ class FullPropertyDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.findPropertyDetails()
+        self.showPropertydetails()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -54,29 +54,34 @@ class FullPropertyDetailsViewController: UIViewController {
         navigationController?.popViewControllerAnimated(true)
     }
     
-    func findPropertyDetails(){
-        let propertyId = Property().getField("id")
-        let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/"+propertyId
-        Request().get(url, successHandler: {(response) in self.showPropertydetails(response)})
+    @IBAction func btnSeeitPronto(sender: AnyObject) {
+        let propertyActionData: JSON =  ["type":"see_it_pronto"]
+        PropertyAction().saveIfExists(propertyActionData)
+        self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
     }
     
-    func showPropertydetails(let response: NSData) {
-        let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
-            if(!result["images"][0].stringValue.isEmpty) {
-                Utility().showPhoto(self.photo, imgPath: result["images"][0].stringValue)
-            }
-            self.lblEstPayment.text   = result["est_payments"].stringValue
-            self.lblYourCredits.text  = result["your_credits"].stringValue
-            self.lblBedrooms.text     = result["bedrooms"].stringValue
-            self.lblBathrooms.text    = result["bathrooms"].stringValue
-            self.lblType.text         = result["property_type"].stringValue
-            self.lblSize.text         = result["size"].stringValue
-            self.lblLot.text          = result["lot"].stringValue
-            self.lblYearBuilt.text    = result["year_built"].stringValue
-            self.lblNeighborhood.text = result["neighborhood"].stringValue
-            self.lblAddedOn.text      = result["added_on"].stringValue
+    @IBAction func btnSeeItLater(sender: AnyObject) {
+        let propertyActionData: JSON =  ["type":"see_it_later"]
+        PropertyAction().saveIfExists(propertyActionData)
+        self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+    }
+    
+    
+    func showPropertydetails() {
+        let image = Property().getField("image")
+        if(!image.isEmpty) {
+            Utility().showPhoto(self.photo, imgPath: image)
         }
+        self.lblEstPayment.text   = Property().getField("est_payments")
+        self.lblYourCredits.text  = Property().getField("your_credits")
+        self.lblBedrooms.text     = Property().getField("bedrooms")
+        self.lblBathrooms.text    = Property().getField("bathrooms")
+        self.lblType.text         = Property().getField("property_type")
+        self.lblSize.text         = Property().getField("size")
+        self.lblLot.text          = Property().getField("lot")
+        self.lblYearBuilt.text    = Property().getField("year_built")
+        self.lblNeighborhood.text = Property().getField("neighborhood")
+        self.lblAddedOn.text      = Property().getField("added_on")
     }
     
 }

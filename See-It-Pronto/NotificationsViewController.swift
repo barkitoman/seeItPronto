@@ -2,8 +2,8 @@
 //  NotificationsViewController.swift
 //  See-It-Pronto
 //
-//  Created by user114136 on 2/23/16.
-//  Copyright © 2016 user114136. All rights reserved.
+//  Created by Deyson on 2/23/16.
+//  Copyright © 2016 Deyson. All rights reserved.
 //
 
 import UIKit
