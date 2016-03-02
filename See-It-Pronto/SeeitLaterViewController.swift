@@ -57,9 +57,6 @@ class SeeitLaterViewController: UIViewController {
     @IBAction func btnMyListing(sender: AnyObject) {
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    }
-    
     func showPropertydetails() {
         let image = Property().getField("image")
         if(!image.isEmpty) {
@@ -91,5 +88,45 @@ class SeeitLaterViewController: UIViewController {
             Utility().showPhoto(self.agentPhoto, imgPath: image)
         }
     }
-
+    
+    @IBAction func btnSearchAgain(sender: AnyObject) {
+        Utility().goHome(self)
+    }
+    
+    @IBAction func btnSubmit(sender: AnyObject) {
+        self.sendRequest()
+    }
+    
+    func sendRequest() {
+        //create params
+        var params = "buyer_id="+User().getField("id")+"&realtor_id="+PropertyRealtor().getField("id")+"&property_id="+Property().getField("id")
+        params     = params+"&type="+PropertyAction().getField("type")+"&date="+self.txtDate.text!
+        let url    = AppConfig.APP_URL+"/users"
+        Request().post(url, params:params,successHandler: {(response) in self.afterPostRequest(response)});
+        
+    }
+        
+    func afterPostRequest(let response: NSData) {
+        let result = JSON(data: response)
+        if(1 == 1) {
+        //if(result["result"].bool == true) {
+            self.viewData = result
+            dispatch_async(dispatch_get_main_queue()) {
+                let alertController = UIAlertController(title:"Success", message: "The request has been sent, Please wait for the agent confirmation", preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                    Utility().goHome(self)
+                }
+                alertController.addAction(okAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
+        } else {
+            var msg = "Error sending your request, please try later"
+            if(result["msg"].stringValue != "") {
+                msg = result["msg"].stringValue
+            }
+            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
+        }
+    }
+    
 }

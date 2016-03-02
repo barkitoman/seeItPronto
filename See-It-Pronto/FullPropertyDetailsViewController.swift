@@ -54,6 +54,11 @@ class FullPropertyDetailsViewController: UIViewController {
         navigationController?.popViewControllerAnimated(true)
     }
     
+    @IBAction func btnSearchAgain(sender: AnyObject) {
+        Utility().goHome(self)
+    }
+    
+    
     @IBAction func btnSeeitPronto(sender: AnyObject) {
         let propertyActionData: JSON =  ["type":"see_it_pronto"]
         PropertyAction().saveIfExists(propertyActionData)

@@ -45,20 +45,41 @@ class AgentConfirmationViewController: UIViewController {
 
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
-    }
-
     @IBAction func btnBack(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func btnSeeItLater(sender: AnyObject) {
-        
+    @IBAction func btnSearchAgain(sender: AnyObject) {
+        Utility().goHome(self)
     }
     
-    @IBAction func btnSeeItNow(sender: AnyObject) {
-        
+    @IBAction func btnSendRequest(sender: AnyObject) {
+        self.sendRequest()
+    }
+    
+    func sendRequest() {
+        //create params
+        var params = "buyer_id="+User().getField("id")+"&realtor_id="+PropertyRealtor().getField("id")+"&property_id="+Property().getField("id")
+        params     = params+"&type="+PropertyAction().getField("type")+"&coupon_code="+self.txtCouponCode.text!+"&date="+Utility().getCurrentDate("-")
+        let url    = AppConfig.APP_URL+"/users"
+        Request().post(url, params:params,successHandler: {(response) in self.afterPostRequest(response)});
+    }
+    
+    func afterPostRequest(let response: NSData) {
+        let result = JSON(data: response)
+        if(1 == 1) {
+        //if(result["result"].bool == true) {
+            self.viewData = result
+            dispatch_async(dispatch_get_main_queue()) {
+                self.performSegueWithIdentifier("showCongratulationView", sender: self)
+            }
+        } else {
+            var msg = "Error sending your request, please try later"
+            if(result["msg"].stringValue != "") {
+                msg = result["msg"].stringValue
+            }
+            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
+        }
     }
     
     func loadPropertyData(){

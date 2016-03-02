@@ -102,4 +102,38 @@ class Utility {
         id     = id.stringByReplacingOccurrencesOfString(" ",      withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         return id
     }
+    
+    func getCurrentDate(separator:String)->String {
+        let date       = NSDate()
+        let calendar   = NSCalendar.currentCalendar()
+        let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+        
+        let year  = components.year
+        let month = components.month
+        let day   = components.day
+        var stringMonth = String(month)
+        var stringDay   = String(day)
+        if(month <= 9) {
+            stringMonth = "0"+String(month)
+        }
+        if(day <= 9) {
+            stringDay = "0"+String(day)
+        }
+        
+        let out   = String(year)+separator+stringMonth+separator+stringDay
+        return out
+    }
+    
+    func goHome(controller:UIViewController){
+        let role   = User().getField("role")
+        if(role == "realtor") {
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let viewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("RealtorHomeViewController") as UIViewController
+            controller.navigationController?.showViewController(viewController, sender: nil)
+        } else if (role == "buyer") {
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let viewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as UIViewController
+            controller.navigationController?.showViewController(viewController, sender: nil)
+        }
+    }
 }

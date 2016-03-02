@@ -67,7 +67,7 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if navigationType == UIWebViewNavigationType.LinkClicked {
-            //self.performSegueWithIdentifier("RealtorHomeShowingRequest", sender: self)
+            self.performSegueWithIdentifier("RealtorHomeShowingRequest", sender: self)
             return false
         }
         return true

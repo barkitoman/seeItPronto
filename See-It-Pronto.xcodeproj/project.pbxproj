@@ -22,7 +22,7 @@
 		6811409B1C3AC6440068AE1C /* BuyerForm4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6811409A1C3AC6440068AE1C /* BuyerForm4ViewController.swift */; };
 		6811409F1C3AC6940068AE1C /* RealtorForm3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6811409E1C3AC6930068AE1C /* RealtorForm3ViewController.swift */; };
 		681140A31C3AC7010068AE1C /* RealtorProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681140A21C3AC7010068AE1C /* RealtorProfileViewController.swift */; };
-		681140A51C3AC75C0068AE1C /* ViewPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681140A41C3AC75C0068AE1C /* ViewPropertyViewController.swift */; };
+		681140A51C3AC75C0068AE1C /* ShowingRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681140A41C3AC75C0068AE1C /* ShowingRequestViewController.swift */; };
 		681140A71C3AC7950068AE1C /* RealtorDashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681140A61C3AC7950068AE1C /* RealtorDashboardViewController.swift */; };
 		681140A91C3AC7C30068AE1C /* ListPropertiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681140A81C3AC7C30068AE1C /* ListPropertiesViewController.swift */; };
 		681140AD1C3AC8010068AE1C /* AddBeaconViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681140AC1C3AC8010068AE1C /* AddBeaconViewController.swift */; };
@@ -102,7 +102,7 @@
 		6811409A1C3AC6440068AE1C /* BuyerForm4ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyerForm4ViewController.swift; sourceTree = "<group>"; };
 		6811409E1C3AC6930068AE1C /* RealtorForm3ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealtorForm3ViewController.swift; sourceTree = "<group>"; };
 		681140A21C3AC7010068AE1C /* RealtorProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealtorProfileViewController.swift; sourceTree = "<group>"; };
-		681140A41C3AC75C0068AE1C /* ViewPropertyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPropertyViewController.swift; sourceTree = "<group>"; };
+		681140A41C3AC75C0068AE1C /* ShowingRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowingRequestViewController.swift; sourceTree = "<group>"; };
 		681140A61C3AC7950068AE1C /* RealtorDashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealtorDashboardViewController.swift; sourceTree = "<group>"; };
 		681140A81C3AC7C30068AE1C /* ListPropertiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPropertiesViewController.swift; sourceTree = "<group>"; };
 		681140AC1C3AC8010068AE1C /* AddBeaconViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBeaconViewController.swift; sourceTree = "<group>"; };
@@ -219,7 +219,7 @@
 				6811409E1C3AC6930068AE1C /* RealtorForm3ViewController.swift */,
 				681140A21C3AC7010068AE1C /* RealtorProfileViewController.swift */,
 				686E8F401C3C2AF900F5FE01 /* RealtorHomeViewController.swift */,
-				681140A41C3AC75C0068AE1C /* ViewPropertyViewController.swift */,
+				681140A41C3AC75C0068AE1C /* ShowingRequestViewController.swift */,
 				681140A81C3AC7C30068AE1C /* ListPropertiesViewController.swift */,
 				681140AC1C3AC8010068AE1C /* AddBeaconViewController.swift */,
 				681140AE1C3AC8360068AE1C /* BeaconStoreViewController.swift */,
@@ -501,7 +501,7 @@
 				681140971C3AC61F0068AE1C /* BuyerForm2ViewController.swift in Sources */,
 				680C41B01C6A6BF800194728 /* ListRealtorsViewController.swift in Sources */,
 				683F7F231C3D7CB500CA0A0C /* CongratulationsViewController.swift in Sources */,
-				681140A51C3AC75C0068AE1C /* ViewPropertyViewController.swift in Sources */,
+				681140A51C3AC75C0068AE1C /* ShowingRequestViewController.swift in Sources */,
 				68663D2F1C3C931B00460D42 /* FullPropertyDetailsViewController.swift in Sources */,
 				685E527F1C402B100022718B /* Request.swift in Sources */,
 				681140AF1C3AC8360068AE1C /* BeaconStoreViewController.swift in Sources */,

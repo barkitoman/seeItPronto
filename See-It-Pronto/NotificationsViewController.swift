@@ -10,7 +10,6 @@ import UIKit
 
 class NotificationsViewController: UIViewController {
 
-    
     @IBOutlet weak var tableView: UITableView!
     var countPage = 0    //number of current page
     var stepPage  = 20   //number of records by page
@@ -25,7 +24,6 @@ class NotificationsViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -58,7 +56,15 @@ class NotificationsViewController: UIViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let notification = JSON(self.notifications[indexPath.row])
-         Utility().displayAlert(self,title: "Notification", message:notification["description"].stringValue, performSegue:"")
+        let role   = User().getField("role")
+        if(role == "realtor" && notification["type"] == "see_it_later" || notification["type"] == "see_it_pronto") {
+        //if(1 == 1) {
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let viewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ShowingRequestViewController") as! ShowingRequestViewController
+            self.navigationController?.showViewController(viewController, sender: nil)
+        } else {
+            Utility().displayAlert(self,title: "Notification", message:notification["description"].stringValue, performSegue:"")
+        }
     }
     
     //Pagination
