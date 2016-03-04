@@ -57,8 +57,8 @@ class NotificationsViewController: UIViewController {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let notification = JSON(self.notifications[indexPath.row])
         let role   = User().getField("role")
-        if(role == "realtor" && notification["type"] == "see_it_later" || notification["type"] == "see_it_pronto") {
-        //if(1 == 1) {
+        //if(role == "realtor" && notification["type"] == "see_it_later" || notification["type"] == "see_it_pronto") {
+        if(role == "realtor") {
             let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             let viewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ShowingRequestViewController") as! ShowingRequestViewController
             self.navigationController?.showViewController(viewController, sender: nil)
