@@ -43,10 +43,6 @@ class SeeItNowViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
-    }
 
     @IBAction func btnBack(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)

@@ -20,7 +20,6 @@ class CongratulationsViewController: UIViewController {
     private var congratutationSecondsCount:Int = 60
     private var congratulationTimer: NSTimer?
     @IBOutlet weak var waitingForAgentConfirmationLabel: UILabel!
-    var showingId:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,10 +44,13 @@ class CongratulationsViewController: UIViewController {
     }
     
     @IBAction func btnCancel(sender: AnyObject) {
+        cancelRequest()
+    }
+    
+    func cancelRequest() {
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         var params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status="+AppConfig.SHOWING_CANCELED_STATUS
         params     = self.canceledNotificationParams(params)
-        print(params)
         Request().put(url, params:params,successHandler: {(response) in self.afterCancelRequest(response)});
     }
     
@@ -57,21 +59,20 @@ class CongratulationsViewController: UIViewController {
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+self.viewData["showing"]["realtor_id"].stringValue
         params = params+"&title=Showing Request Cancelled"
         params = params+"&description=User \(fullUsername) cancelled the showing request"
-        params = params+"&parend_id="+self.viewData["showing"]["id"].stringValue+"&type=showing_cancelled&parent_type=showings"
+        params = params+"&parent_id="+self.viewData["showing"]["id"].stringValue+"&type=showing_cancelled&parent_type=showings"
         return params
     }
     
     func afterCancelRequest(let response: NSData) {
         let result = JSON(data: response)
-        print(result)
         if(result["result"].bool == true ) {
             dispatch_async(dispatch_get_main_queue()) {
                 let alertController = UIAlertController(title:"Success", message: "The request has been canceled", preferredStyle: .Alert)
-                let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default) {
+                let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
                     UIAlertAction in
                     Utility().goHome(self)
                 }
-                alertController.addAction(okAction)
+                alertController.addAction(homeAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
             }
         } else {
@@ -84,9 +85,13 @@ class CongratulationsViewController: UIViewController {
     }
     
     @IBAction func btnCallAgent(sender: AnyObject) {
+        self.callAgent()
+    }
+    
+    func callAgent() {
         let phoneNumber = PropertyRealtor().getField("phone")
         if(phoneNumber.isEmpty) {
-            Utility().displayAlert(self,title: "Message", message:"The call can't be made at this time, because the agent hasn't confirmed his /her phone number.", performSegue:"")
+            Utility().displayAlert(self,title: "Message", message:"The call can't be made at this time, because the agent hasn't confirmed his/her phone number.", performSegue:"")
         } else {
             callNumber(phoneNumber)
         }
@@ -155,10 +160,80 @@ class CongratulationsViewController: UIViewController {
             self.waitingForAgentConfirmationLabel.text = "Waiting for agent confirmation... "+String(congratutationSecondsCount)
         } else {
             if self.congratulationTimer != nil { self.stopCongratulationTimer()}
+            self.findShowingInfo()
         }
-        
     }
     
+    func findShowingInfo() {
+        let url = AppConfig.APP_URL+"/get_showing_info/"+self.viewData["showing"]["id"].stringValue
+        Request().get(url, successHandler: {(response) in self.loadShowingData(response)})
+    }
     
-   
+    func loadShowingData(let response: NSData){
+        let result = JSON(data: response)
+        dispatch_async(dispatch_get_main_queue()) {
+            if(result["showing_status"].int == 0) {
+                self.noResponse()
+            } else if(result["showing_status"].int == 1) {
+                Utility().displayAlert(self,title: "Success", message:"The agent has accepted your request", performSegue:"CongratulationsToFeedBack1")
+            } else if(result["showing_status"].int == 2) {
+                self.requestRejected()
+            }
+        }
+    }
+    
+    func noResponse() {
+        let alertController = UIAlertController(title:"Message", message: "The agent has not responded to the request", preferredStyle: .Alert)
+        let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            Utility().goHome(self)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel Request", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            self.cancelRequest()
+        }
+        
+        let waitAction = UIAlertAction(title: "Wait", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            self.congratutationSecondsCount = 60
+            self.startCongratulationTimer()
+        }
+        
+        let callAction = UIAlertAction(title: "Call Agent", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            self.callAgent()
+        }
+        alertController.addAction(homeAction)
+        alertController.addAction(cancelAction)
+        alertController.addAction(waitAction)
+        alertController.addAction(callAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func requestRejected() {
+        let alertController = UIAlertController(title:"Message", message: "The agent is not available at this time. Please choose another", preferredStyle: .Alert)
+        let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            Utility().goHome(self)
+        }
+        let selectAgentAction = UIAlertAction(title: "Select another", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let viewController : SeeItNowViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SeeItNowViewController") as! SeeItNowViewController
+            self.navigationController?.showViewController(viewController, sender: nil)
+        }
+        alertController.addAction(homeAction)
+        alertController.addAction(selectAgentAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "CongratulationsToFeedBack1") {
+            let view: FeedBack1ViewController = segue.destinationViewController as! FeedBack1ViewController
+            view.showStartMessage  = true
+        }
+    }
+    
 }

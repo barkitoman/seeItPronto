@@ -11,9 +11,17 @@ import UIKit
 class FeedBack1ViewController: UIViewController {
 
     var viewData:JSON = []
+    var showStartMessage:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if(showStartMessage == true) {
+         self.showIndications()
+        }
+    }
+    
+    func showIndications() {
+     Utility().displayAlert(self, title: "Message", message: "The agent is on their way. When agent finishes show you the property, please complete the following feedback", performSegue: "")
     }
     
     override func viewWillAppear(animated: Bool) {

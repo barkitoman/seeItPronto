@@ -1834,7 +1834,7 @@ Range</string>
         <!--See It Now View Controller-->
         <scene sceneID="wNJ-Ps-vN2">
             <objects>
-                <viewController id="DN6-Yg-czW" customClass="SeeItNowViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="SeeItNowViewController" storyboardIdentifier="SeeItNowViewController" id="DN6-Yg-czW" customClass="SeeItNowViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0uy-rL-maQ"/>
                         <viewControllerLayoutGuide type="bottom" id="XTe-M3-YQD"/>
@@ -1846,7 +1846,7 @@ Range</string>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bfy-2y-dv4">
                                 <rect key="frame" x="90" y="0.0" width="230" height="56"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Select agent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O9d-D6-Kw0">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Choose Agent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O9d-D6-Kw0">
                                         <rect key="frame" x="39" y="17" width="153" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2187,9 +2187,6 @@ Range</string>
                                         <state key="normal" title="Congratulations!">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <segue destination="0Wd-D8-bDI" kind="show" id="PyS-Pq-pB3"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -2263,6 +2260,7 @@ Range</string>
                         <outlet property="lblPrice" destination="aNU-Gu-XWT" id="Ey1-rO-bro"/>
                         <outlet property="photo" destination="Oa5-F2-GpG" id="1Si-XF-ZhE"/>
                         <outlet property="waitingForAgentConfirmationLabel" destination="YQm-6c-Ak8" id="vmi-0u-AD7"/>
+                        <segue destination="0Wd-D8-bDI" kind="show" identifier="CongratulationsToFeedBack1" id="DJR-bZ-L3O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7qM-J6-33B" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2282,10 +2280,10 @@ Range</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EIn-Or-SN4">
-                                <rect key="frame" x="90" y="0.0" width="230" height="56"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Agent  Feedback (1 of 3) " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OaQ-AK-QVG">
-                                        <rect key="frame" x="39" y="17" width="183" height="21"/>
+                                        <rect key="frame" x="69" y="17" width="183" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -2362,15 +2360,6 @@ Range</string>
                                 <state key="normal" title="Previous">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VlI-LO-dlF">
-                                <rect key="frame" x="0.0" y="0.0" width="90" height="56"/>
-                                <color key="backgroundColor" red="0.66666666669999997" green="0.66274509800000003" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                <state key="normal" title="&lt; Back"/>
-                                <connections>
-                                    <action selector="btnBack:" destination="0Wd-D8-bDI" eventType="touchUpInside" id="9y3-IZ-hIa"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cyt-hM-0yY">
                                 <rect key="frame" x="160" y="508" width="160" height="60"/>
@@ -3124,12 +3113,6 @@ $480,000
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yaM-VF-biO">
                                 <rect key="frame" x="20" y="71" width="80" height="80"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User Mary Rowley  wants to see it on:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjx-RH-VYj">
-                                <rect key="frame" x="120" y="71" width="180" height="80"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.1510149452" green="0.75504451969999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nup-tL-Yle">
                                 <rect key="frame" x="0.0" y="168" width="320" height="5"/>
                                 <color key="backgroundColor" red="0.023529411760000001" green="0.023529411760000001" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -3153,14 +3136,20 @@ $480,000
                                     <action selector="btnNo:" destination="raK-gI-tYf" eventType="touchUpInside" id="peR-Ab-9dv"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User Mary Rowley  wants to see it on:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjx-RH-VYj">
+                                <rect key="frame" x="120" y="71" width="180" height="80"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.1510149452" green="0.75504451969999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="buyerName" destination="yjx-RH-VYj" id="Jcb-CT-tqa"/>
                         <outlet property="buyerPhoto" destination="yaM-VF-biO" id="YsD-EE-CuF"/>
-                        <outlet property="propertyDescription" destination="EAF-YQ-mUP" id="iE9-Vk-Mti"/>
+                        <outlet property="lblBuyerName" destination="yjx-RH-VYj" id="Hur-LZ-DXy"/>
+                        <outlet property="lblPropertyDescription" destination="EAF-YQ-mUP" id="7G0-k3-zRx"/>
                         <outlet property="propertyPhoto" destination="Rzf-WM-oxa" id="WLZ-0r-7AL"/>
                         <outlet property="showingInstructions" destination="ke3-cF-rwr" id="dud-S8-eVX"/>
                     </connections>
