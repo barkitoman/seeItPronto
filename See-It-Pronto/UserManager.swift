@@ -15,7 +15,8 @@ import CoreData
 class UserEntity: NSManagedObject {
     @NSManaged var id:String
     @NSManaged var role:String
-    @NSManaged var name:String
+    @NSManaged var first_name:String
+    @NSManaged var last_name:String
     @NSManaged var access_token:String
     @NSManaged var expires_in:String
     @NSManaged var token_type:String
@@ -73,7 +74,8 @@ class User {
         //map our properties
         newItem.id            = userData["user"]["id"].stringValue
         newItem.role          = userData["user"]["role"].stringValue
-        newItem.name          = userData["user"]["name"].stringValue
+        newItem.first_name    = userData["user"]["first_name"].stringValue
+        newItem.last_name     = userData["user"]["last_name"].stringValue
         newItem.email         = userData["user"]["email"].stringValue
         newItem.password      = userData["user"]["password"].stringValue
         newItem.expires_in    = userData["expires_in"].stringValue

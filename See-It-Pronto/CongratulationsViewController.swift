@@ -16,11 +16,16 @@ class CongratulationsViewController: UIViewController {
     @IBOutlet weak var lblPrice: UILabel!
     @IBOutlet weak var lblAddress: UILabel!
     @IBOutlet weak var lblDescription: UILabel!
-    
+    private let congratutationSeconds:NSTimeInterval = 1
+    private var congratutationSecondsCount:Int = 60
+    private var congratulationTimer: NSTimer?
+    @IBOutlet weak var waitingForAgentConfirmationLabel: UILabel!
+    var showingId:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.showPropertydetails()
+        self.startCongratulationTimer()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -37,12 +42,54 @@ class CongratulationsViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-
+    }
+    
+    @IBAction func btnCancel(sender: AnyObject) {
+        let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
+        var params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status="+AppConfig.SHOWING_CANCELED_STATUS
+        params     = self.canceledNotificationParams(params)
+        print(params)
+        Request().put(url, params:params,successHandler: {(response) in self.afterCancelRequest(response)});
+    }
+    
+    func canceledNotificationParams(var params:String)->String {
+        let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
+        params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+self.viewData["showing"]["realtor_id"].stringValue
+        params = params+"&title=Showing Request Cancelled"
+        params = params+"&description=User \(fullUsername) cancelled the showing request"
+        params = params+"&parend_id="+self.viewData["showing"]["id"].stringValue+"&type=showing_cancelled&parent_type=showings"
+        return params
+    }
+    
+    func afterCancelRequest(let response: NSData) {
+        let result = JSON(data: response)
+        print(result)
+        if(result["result"].bool == true ) {
+            dispatch_async(dispatch_get_main_queue()) {
+                let alertController = UIAlertController(title:"Success", message: "The request has been canceled", preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                    Utility().goHome(self)
+                }
+                alertController.addAction(okAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
+        } else {
+            var msg = "Failed to cancel the request, please try later"
+            if(result["msg"].stringValue != "") {
+                msg = result["msg"].stringValue
+            }
+            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
+        }
     }
     
     @IBAction func btnCallAgent(sender: AnyObject) {
-        //let  phoneNumber = txtPhoneNumber.text
-        //callNumber(phoneNumber!)
+        let phoneNumber = PropertyRealtor().getField("phone")
+        if(phoneNumber.isEmpty) {
+            Utility().displayAlert(self,title: "Message", message:"The call can't be made at this time, because the agent hasn't confirmed his /her phone number.", performSegue:"")
+        } else {
+            callNumber(phoneNumber)
+        }
     }
     
     private func callNumber(phoneNumber:String) {
@@ -52,10 +99,6 @@ class CongratulationsViewController: UIViewController {
                 application.openURL(phoneCallURL);
             }
         }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
     }
 
     @IBAction func btnHome(sender: AnyObject) {
@@ -87,6 +130,33 @@ class CongratulationsViewController: UIViewController {
             description += Property().getField("lot_size")
         }
         self.lblDescription.text = description
+    }
+    
+    func startCongratulationTimer() {
+        if(self.congratutationSecondsCount > 0) {
+            if self.congratulationTimer != nil { self.stopCongratulationTimer()}
+            self.congratulationTimer = NSTimer.scheduledTimerWithTimeInterval(self.congratutationSeconds,
+                target:self,
+                selector:Selector("showWaitingForAgentConfirmation"),
+                userInfo:nil,
+                repeats:true)
+        } else {
+            if self.congratulationTimer != nil { self.stopCongratulationTimer()}
+        }
+    }
+    
+    func stopCongratulationTimer() {
+        self.congratulationTimer!.invalidate()
+    }
+    
+    func showWaitingForAgentConfirmation(){
+        if(self.congratutationSecondsCount > 0) {
+            self.congratutationSecondsCount-=1
+            self.waitingForAgentConfirmationLabel.text = "Waiting for agent confirmation... "+String(congratutationSecondsCount)
+        } else {
+            if self.congratulationTimer != nil { self.stopCongratulationTimer()}
+        }
+        
     }
     
     

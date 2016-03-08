@@ -10,14 +10,12 @@ import UIKit
 
 class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,UITextViewDelegate {
 
-    var viewData:JSON = []
+    var viewData:JSON     = []
     var propertyId:String = ""
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var txtSearch: UITextField!
     
-    private let baseURLString = "http://oauthtest-nyxent.rhcloud.com/real_state_property_basics/find_by_address"
     let autocompleteTableView = UITableView(frame: CGRectMake(0,70,320,120), style: UITableViewStyle.Plain)
-    var pastUrls = ["Men", "Women", "Cats", "Dogs", "Children"]
     var autocompleteUrls = [String]()
     
     override func viewDidLoad() {
@@ -60,7 +58,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     }
     
     func loadMap() {
-        let requestURL = NSURL(string:AppConfig.APP_URL+"/real_state_property_basics/map/"+self.viewData["id"].stringValue)
+        let requestURL = NSURL(string:AppConfig.APP_URL+"/map/"+self.viewData["id"].stringValue)
         let request = NSURLRequest(URL: requestURL!)
         self.webView.loadRequest(request)
     }
@@ -88,15 +86,20 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
-        autocompleteTableView.hidden = false
         let substring = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
         //searchAutocompleteEntriesWithSubstring(substring)
-        self.findproperties(substring)
+        let search = textField.text! as String
+        if(search.isEmpty) {
+            autocompleteTableView.hidden = false
+            self.findproperties(substring)
+        }else {
+            autocompleteTableView.hidden = true
+        }
         return true
     }
     
     func findproperties(substring:String) {
-        let url = baseURLString
+        let url = AppConfig.APP_URL+"/real_state_property_basics/find_by_address"
         Request().get(url, successHandler: {(response) in self.loadProperties(response)})
     }
     

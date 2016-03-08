@@ -12,6 +12,7 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
 
     @IBOutlet weak var searchTextField: UITextField!
     var viewData:JSON = []
+    var showingId:String = ""
     @IBOutlet weak var webView: UIWebView!
     
      private let baseURLString = "http://oauthtest-nyxent.rhcloud.com/real_state_property_basics/find_by_address"
@@ -60,14 +61,18 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     }
     
     func loadMap() {
-        let requestURL = NSURL(string:AppConfig.APP_URL+"/real_state_property_basics/map/"+self.viewData["id"].stringValue)
+        let requestURL = NSURL(string:AppConfig.APP_URL+"/map/"+self.viewData["id"].stringValue)
         let request = NSURLRequest(URL: requestURL!)
         self.webView.loadRequest(request)
     }
     
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if navigationType == UIWebViewNavigationType.LinkClicked {
-            self.performSegueWithIdentifier("RealtorHomeShowingRequest", sender: self)
+            let url:String = request.URL!.absoluteString
+            if(url.containsString(AppConfig.APP_URL)) {
+                self.showingId = Utility().getIdFromUrl(url)
+                self.performSegueWithIdentifier("RealtorHomeShowingRequest", sender: self)
+            }
             return false
         }
         return true
@@ -86,6 +91,13 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         let substring = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
         //searchAutocompleteEntriesWithSubstring(substring)
         self.findproperties(substring)
+        let search = textField.text! as String
+        if(search.isEmpty) {
+            autocompleteTableView.hidden = false
+            self.findproperties(substring)
+        }else {
+            autocompleteTableView.hidden = true
+        }
         return true
     }
     
@@ -125,6 +137,13 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         let selectedCell : UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         self.searchTextField.text = selectedCell.textLabel!.text
         self.autocompleteTableView.hidden = true
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "RealtorHomeShowingRequest") {
+            let view: ShowingRequestViewController = segue.destinationViewController as! ShowingRequestViewController
+            view.showingId  = self.showingId
+        }
     }
     
 }

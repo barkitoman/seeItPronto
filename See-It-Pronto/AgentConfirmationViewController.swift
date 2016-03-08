@@ -61,14 +61,13 @@ class AgentConfirmationViewController: UIViewController {
         //create params
         var params = "buyer_id="+User().getField("id")+"&realtor_id="+PropertyRealtor().getField("id")+"&property_id="+Property().getField("id")
         params     = params+"&type="+PropertyAction().getField("type")+"&coupon_code="+self.txtCouponCode.text!+"&date="+Utility().getCurrentDate("-")
-        let url    = AppConfig.APP_URL+"/users"
+        let url    = AppConfig.APP_URL+"/seeitpronto"
         Request().post(url, params:params,successHandler: {(response) in self.afterPostRequest(response)});
     }
     
     func afterPostRequest(let response: NSData) {
         let result = JSON(data: response)
-        if(1 == 1) {
-        //if(result["result"].bool == true) {
+        if(result["result"].bool == true) {
             self.viewData = result
             dispatch_async(dispatch_get_main_queue()) {
                 self.performSegueWithIdentifier("showCongratulationView", sender: self)
@@ -107,6 +106,13 @@ class AgentConfirmationViewController: UIViewController {
         }
         if(!rating.isEmpty) {
             ratingImage.image = UIImage(named: rating+"stars")
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "showCongratulationView") {
+            let view: CongratulationsViewController = segue.destinationViewController as! CongratulationsViewController
+            view.viewData  = self.viewData
         }
     }
     

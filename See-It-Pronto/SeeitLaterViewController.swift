@@ -22,6 +22,7 @@ class SeeitLaterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.showPropertydetails()
+        self.showRealtorData()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -108,8 +109,7 @@ class SeeitLaterViewController: UIViewController {
         
     func afterPostRequest(let response: NSData) {
         let result = JSON(data: response)
-        if(1 == 1) {
-        //if(result["result"].bool == true) {
+        if(result["result"].bool == true) {
             self.viewData = result
             dispatch_async(dispatch_get_main_queue()) {
                 let alertController = UIAlertController(title:"Success", message: "The request has been sent, Please wait for the agent confirmation", preferredStyle: .Alert)

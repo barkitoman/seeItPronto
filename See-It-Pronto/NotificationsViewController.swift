@@ -51,19 +51,26 @@ class NotificationsViewController: UIViewController {
         let notification = JSON(self.notifications[indexPath.row])
         cell.detailTextLabel?.text = notification["created_at_nice"].stringValue
         cell.textLabel!.text = notification["description"].stringValue
+        if(notification["type"] == "see_it_later" || notification["type"] == "see_it_pronto") {
+            cell.textLabel!.text = notification["title"].stringValue
+        }
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let notification = JSON(self.notifications[indexPath.row])
         let role   = User().getField("role")
-        //if(role == "realtor" && notification["type"] == "see_it_later" || notification["type"] == "see_it_pronto") {
-        if(role == "realtor") {
+        if(role == "realtor" && (notification["type"] == "see_it_later" || notification["type"] == "see_it_pronto")) {
             let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            let viewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ShowingRequestViewController") as! ShowingRequestViewController
+            let viewController : ShowingRequestViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ShowingRequestViewController") as! ShowingRequestViewController
+            viewController.showingId = notification["parent_id"].stringValue
             self.navigationController?.showViewController(viewController, sender: nil)
         } else {
-            Utility().displayAlert(self,title: "Notification", message:notification["description"].stringValue, performSegue:"")
+            var title = "Notificacion"
+            if(!notification["description"].stringValue.isEmpty) {
+                title = notification["title"].stringValue
+            }
+            Utility().displayAlert(self,title: title, message:notification["description"].stringValue, performSegue:"")
         }
     }
     

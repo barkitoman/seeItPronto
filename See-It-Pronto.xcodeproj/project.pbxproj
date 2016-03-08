@@ -113,7 +113,7 @@
 		682EF3561C528960007176BF /* RealtorForm1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealtorForm1ViewController.swift; sourceTree = "<group>"; };
 		683983201C74BCE900129EA5 /* ListRealtorsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListRealtorsTableViewCell.swift; sourceTree = "<group>"; };
 		683F7F201C3D62FA00CA0A0C /* AgentConfirmationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgentConfirmationViewController.swift; sourceTree = "<group>"; };
-		683F7F221C3D7CB500CA0A0C /* CongratulationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CongratulationsViewController.swift; sourceTree = "<group>"; };
+		683F7F221C3D7CB500CA0A0C /* CongratulationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CongratulationsViewController.swift; sourceTree = "<group>"; };
 		683F7F241C3D7D3C00CA0A0C /* FeedBack1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBack1ViewController.swift; sourceTree = "<group>"; };
 		683F7F261C3D7E4700CA0A0C /* FeedBack2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBack2ViewController.swift; sourceTree = "<group>"; };
 		683F7F281C3D7EC100CA0A0C /* FeedBack3ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBack3ViewController.swift; sourceTree = "<group>"; };

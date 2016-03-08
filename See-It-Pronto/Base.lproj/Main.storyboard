@@ -1924,7 +1924,7 @@ Range</string>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UCr-K4-igp">
                                                     <rect key="frame" x="204" y="13" width="105" height="26"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <state key="normal" title="View details" image="Circled Chevron Right">
+                                                    <state key="normal" title="Select" image="Circled Chevron Right">
                                                         <color key="titleColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
                                                 </button>
@@ -2241,12 +2241,19 @@ Range</string>
                                     <action selector="btnCallAgent:" destination="3J7-X2-T2n" eventType="touchUpInside" id="GbU-of-Fh9"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="wait for the agent confirmation..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YQm-6c-Ak8">
-                                <rect key="frame" x="61" y="376" width="213" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="waiting for the agent confirmation..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YQm-6c-Ak8">
+                                <rect key="frame" x="57" y="376" width="217" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ifa-aU-XfZ">
+                                <rect key="frame" x="131" y="417" width="56" height="30"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="btnCancel:" destination="3J7-X2-T2n" eventType="touchUpInside" id="WLA-BC-0xL"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -2255,6 +2262,7 @@ Range</string>
                         <outlet property="lblDescription" destination="vCZ-cq-WAX" id="3UQ-U5-Gcg"/>
                         <outlet property="lblPrice" destination="aNU-Gu-XWT" id="Ey1-rO-bro"/>
                         <outlet property="photo" destination="Oa5-F2-GpG" id="1Si-XF-ZhE"/>
+                        <outlet property="waitingForAgentConfirmationLabel" destination="YQm-6c-Ak8" id="vmi-0u-AD7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7qM-J6-33B" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3097,6 +3105,9 @@ $480,000
                                 <state key="normal" title="Yes">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="btnYes:" destination="raK-gI-tYf" eventType="touchUpInside" id="rbZ-m0-o3Y"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d4V-Ss-XcE">
                                 <rect key="frame" x="90" y="0.0" width="230" height="56"/>
@@ -3110,13 +3121,6 @@ $480,000
                                 </subviews>
                                 <color key="backgroundColor" red="0.56862745100000001" green="0.56078431370000004" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qi9-ZA-bIa">
-                                <rect key="frame" x="160" y="508" width="160" height="60"/>
-                                <color key="backgroundColor" red="0.0039215686269999999" green="0.45882352939999999" blue="0.79215686269999996" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="No">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yaM-VF-biO">
                                 <rect key="frame" x="20" y="71" width="80" height="80"/>
                             </imageView>
@@ -3137,6 +3141,16 @@ $480,000
                                 <state key="normal" title="&lt; Back"/>
                                 <connections>
                                     <action selector="btnBack:" destination="raK-gI-tYf" eventType="touchUpInside" id="f2g-Na-OBf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qi9-ZA-bIa">
+                                <rect key="frame" x="160" y="508" width="160" height="60"/>
+                                <color key="backgroundColor" red="0.0039215686269999999" green="0.45882352939999999" blue="0.79215686269999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="No">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnNo:" destination="raK-gI-tYf" eventType="touchUpInside" id="peR-Ab-9dv"/>
                                 </connections>
                             </button>
                         </subviews>
