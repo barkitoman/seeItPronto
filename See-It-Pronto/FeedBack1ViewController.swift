@@ -13,6 +13,15 @@ class FeedBack1ViewController: UIViewController {
     var viewData:JSON = []
     var showStartMessage:Bool = false
     
+    @IBOutlet weak var showRate1: UIButton!
+    
+    
+    
+    
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if(showStartMessage == true) {

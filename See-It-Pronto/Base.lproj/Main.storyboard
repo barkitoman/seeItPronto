@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -4157,8 +4157,8 @@ $480,000
         <image name="search" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="trd-gy-tVv"/>
+        <segue reference="gRd-bz-hb9"/>
         <segue reference="U05-Ui-KM7"/>
-        <segue reference="Ejg-Xi-KK2"/>
-        <segue reference="vxA-X1-U6d"/>
     </inferredMetricsTieBreakers>
 </document>

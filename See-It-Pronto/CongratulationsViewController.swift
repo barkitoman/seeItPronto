@@ -17,12 +17,13 @@ class CongratulationsViewController: UIViewController {
     @IBOutlet weak var lblAddress: UILabel!
     @IBOutlet weak var lblDescription: UILabel!
     private let congratutationSeconds:NSTimeInterval = 1
-    private var congratutationSecondsCount:Int = 60
+    private var congratutationSecondsCount:Int = 30
     private var congratulationTimer: NSTimer?
     @IBOutlet weak var waitingForAgentConfirmationLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.congratutationSecondsCount = AppConfig.SHOWING_WAIT_SECONDS
         self.showPropertydetails()
         self.startCongratulationTimer()
     }
@@ -196,7 +197,7 @@ class CongratulationsViewController: UIViewController {
         
         let waitAction = UIAlertAction(title: "Wait", style: UIAlertActionStyle.Default) {
             UIAlertAction in
-            self.congratutationSecondsCount = 60
+            self.congratutationSecondsCount = AppConfig.SHOWING_WAIT_SECONDS
             self.startCongratulationTimer()
         }
         
@@ -233,6 +234,7 @@ class CongratulationsViewController: UIViewController {
         if (segue.identifier == "CongratulationsToFeedBack1") {
             let view: FeedBack1ViewController = segue.destinationViewController as! FeedBack1ViewController
             view.showStartMessage  = true
+            view.viewData = self.viewData
         }
     }
     

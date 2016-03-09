@@ -18,6 +18,9 @@ class ShowingRequestViewController: UIViewController {
     @IBOutlet weak var showingInstructions: UILabel!
     var showingId:String = ""
     
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.findShowing()
