@@ -87,16 +87,12 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
-        autocompleteTableView.hidden = false
         let substring = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
-        //searchAutocompleteEntriesWithSubstring(substring)
-        self.findproperties(substring)
-        let search = textField.text! as String
-        if(search.isEmpty) {
+        if(substring.isEmpty) {
+            autocompleteTableView.hidden = true
+        }else {
             autocompleteTableView.hidden = false
             self.findproperties(substring)
-        }else {
-            autocompleteTableView.hidden = true
         }
         return true
     }

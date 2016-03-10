@@ -15,7 +15,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var txtSearch: UITextField!
     
-    let autocompleteTableView = UITableView(frame: CGRectMake(0,70,320,120), style: UITableViewStyle.Plain)
+    let autocompleteTableView = UITableView(frame: CGRectMake(0,110,320,120), style: UITableViewStyle.Plain)
     var autocompleteUrls = [String]()
     
     override func viewDidLoad() {
@@ -87,13 +87,11 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
         let substring = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
-        //searchAutocompleteEntriesWithSubstring(substring)
-        let search = textField.text! as String
-        if(search.isEmpty) {
+        if(substring.isEmpty) {
+            autocompleteTableView.hidden = true
+        }else {
             autocompleteTableView.hidden = false
             self.findproperties(substring)
-        }else {
-            autocompleteTableView.hidden = true
         }
         return true
     }

@@ -71,22 +71,23 @@ class FullPropertyDetailsViewController: UIViewController {
         self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
     }
     
-    
     func showPropertydetails() {
-        let image = Property().getField("image")
-        if(!image.isEmpty) {
-            Utility().showPhoto(self.photo, imgPath: image)
+        dispatch_async(dispatch_get_main_queue()) {
+            let image = Property().getField("image")
+            if(!image.isEmpty) {
+                Utility().showPhoto(self.photo, imgPath: image)
+            }
+            self.lblEstPayment.text   = Property().getField("est_payments")
+            self.lblYourCredits.text  = Property().getField("your_credits")
+            self.lblBedrooms.text     = Property().getField("bedrooms")
+            self.lblBathrooms.text    = Property().getField("bathrooms")
+            self.lblType.text         = Property().getField("property_type")
+            self.lblSize.text         = Property().getField("size")
+            self.lblLot.text          = Property().getField("lot")
+            self.lblYearBuilt.text    = Property().getField("year_built")
+            self.lblNeighborhood.text = Property().getField("neighborhood")
+            self.lblAddedOn.text      = Property().getField("added_on")
         }
-        self.lblEstPayment.text   = Property().getField("est_payments")
-        self.lblYourCredits.text  = Property().getField("your_credits")
-        self.lblBedrooms.text     = Property().getField("bedrooms")
-        self.lblBathrooms.text    = Property().getField("bathrooms")
-        self.lblType.text         = Property().getField("property_type")
-        self.lblSize.text         = Property().getField("size")
-        self.lblLot.text          = Property().getField("lot")
-        self.lblYearBuilt.text    = Property().getField("year_built")
-        self.lblNeighborhood.text = Property().getField("neighborhood")
-        self.lblAddedOn.text      = Property().getField("added_on")
     }
     
 }

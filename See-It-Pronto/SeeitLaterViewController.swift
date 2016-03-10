@@ -59,34 +59,38 @@ class SeeitLaterViewController: UIViewController {
     }
     
     func showPropertydetails() {
-        let image = Property().getField("image")
-        if(!image.isEmpty) {
-            Utility().showPhoto(self.photo, imgPath: image)
+        dispatch_async(dispatch_get_main_queue()) {
+            let image = Property().getField("image")
+            if(!image.isEmpty) {
+                Utility().showPhoto(self.photo, imgPath: image)
+            }
+            self.lblPrice.text   = Property().getField("price")
+            self.lblAddress.text  = Property().getField("address")
+            var description = ""
+            if(!Property().getField("bedrooms").isEmpty) {
+                description += "Bed "+Property().getField("bedrooms")+"/"
+            }
+            if(!Property().getField("bathrooms").isEmpty) {
+                description += "Bath "+Property().getField("bathrooms")+"/"
+            }
+            if(!Property().getField("property_type").isEmpty) {
+                description += Property().getField("property_type")+"/"
+            }
+            if(!Property().getField("lot_size").isEmpty) {
+                description += Property().getField("lot_size")
+            }
+            self.lblDescription.text = description
         }
-        self.lblPrice.text   = Property().getField("price")
-        self.lblAddress.text  = Property().getField("address")
-        var description = ""
-        if(!Property().getField("bedrooms").isEmpty) {
-            description += "Bed "+Property().getField("bedrooms")+"/"
-        }
-        if(!Property().getField("bathrooms").isEmpty) {
-            description += "Bath "+Property().getField("bathrooms")+"/"
-        }
-        if(!Property().getField("property_type").isEmpty) {
-            description += Property().getField("property_type")+"/"
-        }
-        if(!Property().getField("lot_size").isEmpty) {
-            description += Property().getField("lot_size")
-        }
-        self.lblDescription.text = description
     }
     
     func showRealtorData() {
-        let name            = PropertyRealtor().getField("first_name")+" "+PropertyRealtor().getField("last_name")
-        self.agentName.text = name
-        let image           = PropertyRealtor().getField("url_image")
-        if(!image.isEmpty) {
-            Utility().showPhoto(self.agentPhoto, imgPath: image)
+        dispatch_async(dispatch_get_main_queue()) {
+            let name            = PropertyRealtor().getField("first_name")+" "+PropertyRealtor().getField("last_name")
+            self.agentName.text = name
+            let image           = PropertyRealtor().getField("url_image")
+            if(!image.isEmpty) {
+                Utility().showPhoto(self.agentPhoto, imgPath: image)
+            }
         }
     }
     

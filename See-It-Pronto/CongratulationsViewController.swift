@@ -49,6 +49,7 @@ class CongratulationsViewController: UIViewController {
     }
     
     func cancelRequest() {
+        if self.congratulationTimer != nil { self.stopCongratulationTimer()}
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         var params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status="+AppConfig.SHOWING_CANCELED_STATUS
         params     = self.canceledNotificationParams(params)

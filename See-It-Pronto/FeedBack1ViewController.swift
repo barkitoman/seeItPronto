@@ -16,6 +16,7 @@ class FeedBack1ViewController: UIViewController {
     var homeRating:String     = ""
     var userRating:String     = ""
     
+    @IBOutlet weak var showingComments: UITextView!
     @IBOutlet weak var showingRate1: UIButton!
     @IBOutlet weak var showingRate2: UIButton!
     @IBOutlet weak var showingRate3: UIButton!
@@ -67,9 +68,48 @@ class FeedBack1ViewController: UIViewController {
     }
     
     @IBAction func btnSkip(sender: AnyObject) {
+        let params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3"
+        let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
+        Request().put(url, params:params,successHandler: {(response) in self.afterSkipRequest(response)});
+    }
+    
+    func afterSkipRequest(let response: NSData) {
+        let result = JSON(data: response)
+        if(result["result"].bool == true) {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.performSegueWithIdentifier("FeedBack1ViewController", sender: self)
+            }
+        } else {
+            Utility().displayAlert(self,title: "Error", message:"Error skipping, please try later", performSegue:"")
+        }
     }
     
     @IBAction func btnNext(sender: AnyObject) {
+        var params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3&feedback_showing_comment="+self.showingComments.text!
+        params     = params+"&showing_rating_value="+self.showingRating+"&user_rating_value="+self.userRating+"&home_rating_value="+self.homeRating
+        params     = params+"&user_id="+User().getField("id")+"&realtor_id="+self.viewData["showing"]["realtor_id"].stringValue+"&property_id="+self.viewData["showing"]["property_id"].stringValue
+        let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
+        Request().put(url, params:params,successHandler: {(response) in self.afterNextRequest(response)});
+    }
+    
+    func afterNextRequest(let response: NSData) {
+        let result = JSON(data: response)
+        if(result["result"].bool == true) {
+            Utility().displayAlert(self,title: "Success", message:"The data have been saved correctly", performSegue:"FeedBack1ViewController")
+        } else {
+            var msg = "Error saving, please try later"
+            if(result["msg"].stringValue != "") {
+                msg = result["msg"].stringValue
+            }
+            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "FeedBack1ViewController") {
+            let view: FeedBack2ViewController = segue.destinationViewController as! FeedBack2ViewController
+            view.viewData  = self.viewData
+        }
     }
     
     func addRatingTarget() {
