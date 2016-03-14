@@ -57,6 +57,7 @@ class ListRealtorsViewController: UIViewController {
         let realtor = JSON(self.realtors[indexPath.row])
         let name    = realtor["first_name"].stringValue+" "+realtor["last_name"].stringValue
         cell.lblName.text = name
+        cell.lblBrokerage.text   = realtor["brokerage"].stringValue
         cell.lblShowingRate.text = (!realtor["showing_rate"].stringValue.isEmpty) ? "$"+realtor["showing_rate"].stringValue  : ""
         cell.lblTravelRange.text = (!realtor["travel_range"].stringValue.isEmpty) ? realtor["travel_range"].stringValue+"mi" : ""
         cell.lblStaring.text     = (!realtor["rating"].stringValue.isEmpty) ? realtor["rating"].stringValue+" of 5" : ""
@@ -98,10 +99,6 @@ class ListRealtorsViewController: UIViewController {
             }
             self.tableView.reloadData()
         }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
     }
 
 }

@@ -17,7 +17,7 @@ class ListRealtorsTableViewCell: UITableViewCell {
     @IBOutlet weak var lblTravelRange: UILabel!
     @IBOutlet weak var lblShowingRate: UILabel!
     @IBOutlet weak var ratingImage: UIImageView!
-    
+    @IBOutlet weak var lblBrokerage: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -68,7 +68,8 @@ class SeeItNowViewController: UIViewController {
         let cell    = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! SeeitNowTableViewCell
         let realtor = JSON(self.realtors[indexPath.row])
         let name    = realtor["first_name"].stringValue+" "+realtor["last_name"].stringValue
-        cell.lblName.text = name
+        cell.lblCompany.text     = realtor["brokerage"].stringValue
+        cell.lblName.text        = name
         cell.lblShowingRate.text = (!realtor["showing_rate"].stringValue.isEmpty) ? "$"+realtor["showing_rate"].stringValue  : ""
         cell.lblDistance.text    = (!realtor["travel_range"].stringValue.isEmpty) ? realtor["travel_range"].stringValue+"mi" : ""
         cell.lblRating.text      = (!realtor["rating"].stringValue.isEmpty) ? realtor["rating"].stringValue+" of 5" : ""
