@@ -76,7 +76,6 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     
     func loadMap() {
         let url = AppConfig.APP_URL+"/map/\(User().getField("id"))?lat=\(self.latitude)&lon=\(self.longintude)&role=\(User().getField("role"))"
-        print(url)
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         self.webView.loadRequest(request)
