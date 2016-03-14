@@ -44,12 +44,13 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     }
     
     func menuRealtor() {
-        addChildView("RealtorHomeViewController",     titleOfChildren: "Home",         iconName: "home")
-        addChildView("ListBuyersViewController",      titleOfChildren: "Buyers",       iconName: "buyer")
-        addChildView("RealtorProfileViewController",  titleOfChildren: "My Profile",   iconName: "my_profile")
-        addChildView("RealtorForm1ViewController",    titleOfChildren: "Edit Profile", iconName: "edit_profile")
+        addChildView("RealtorHomeViewController",     titleOfChildren: "Home",          iconName: "home")
+        addChildView("ListBuyersViewController",      titleOfChildren: "Appointments",  iconName: "buyer")
+        addChildView("ListBuyersViewController",      titleOfChildren: "Buyers",        iconName: "buyer")
+        addChildView("RealtorProfileViewController",  titleOfChildren: "My Profile",    iconName: "my_profile")
+        addChildView("RealtorForm1ViewController",    titleOfChildren: "Edit Profile",  iconName: "edit_profile")
         addChildView("NotificationsViewController",   titleOfChildren: "Notifications", iconName: "notification")
-        addChildView("LoginViewController",           titleOfChildren: "Log out",      iconName: "logout")
+        addChildView("LoginViewController",           titleOfChildren: "Log out",       iconName: "logout")
     }
     
     func menuBuyer(){

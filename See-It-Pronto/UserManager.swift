@@ -24,6 +24,7 @@ class UserEntity: NSManagedObject {
     @NSManaged var email:String
     @NSManaged var password:String
     @NSManaged var realtor_id:String
+    @NSManaged var mls_id:String
  
 }
 
@@ -83,6 +84,7 @@ class User {
         newItem.scope         = userData["scope"].stringValue
         newItem.token_type    = userData["token_type"].stringValue
         newItem.realtor_id    = userData["realtor_id"].stringValue
+        newItem.mls_id        = userData["mls_id"].stringValue
         do {
             try contxt.save()
         } catch let error as NSError {
