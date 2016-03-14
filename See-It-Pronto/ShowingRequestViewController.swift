@@ -136,8 +136,7 @@ class ShowingRequestViewController: UIViewController {
         }else if(self.viewData["showings"]["status"].int == 2) {
             message = "This showing request has been accepted"
         }
-        
-        if(self.viewData["showings"]["status"].int != 0) {
+        if(self.viewData["showings"]["status"].int != nil && self.viewData["showings"]["status"].int != 0) {
             let alertController = UIAlertController(title:"Message", message: message, preferredStyle: .Alert)
             let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
                 UIAlertAction in

@@ -10,20 +10,35 @@ import UIKit
 
 class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate {
 
+    var manager: OneShotLocationManager?
+    var latitude   = "0"
+    var longintude = "0"
+    
     @IBOutlet weak var searchTextField: UITextField!
-    var viewData:JSON = []
+    var viewData:JSON    = []
     var showingId:String = ""
     @IBOutlet weak var webView: UIWebView!
     
-     private let baseURLString = "http://oauthtest-nyxent.rhcloud.com/real_state_property_basics/find_by_address"
     let autocompleteTableView = UITableView(frame: CGRectMake(0,70,320,120), style: UITableViewStyle.Plain)
-    var pastUrls = []
     var autocompleteUrls = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
-        loadMap()
+        manager = OneShotLocationManager()
+        manager!.fetchWithCompletion {location, error in
+            // fetch location or an error
+            if let loc = location {
+                self.latitude   = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.latitude)" : "27.6648274"
+                self.longintude = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.longitude)": "-81.5157535"
+                self.loadMap()
+            } else if let _ = error {
+                print("ERROR GETTING LOCATION")
+                self.loadMap()
+            }
+            // destroy the object immediately to save memory
+            self.manager = nil
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,7 +76,9 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     }
     
     func loadMap() {
-        let requestURL = NSURL(string:AppConfig.APP_URL+"/map/"+self.viewData["id"].stringValue)
+        let url = AppConfig.APP_URL+"/map/\(User().getField("id"))?lat=\(self.latitude)&lon=\(self.longintude)&role=\(User().getField("role"))"
+        print(url)
+        let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         self.webView.loadRequest(request)
     }
@@ -86,6 +103,7 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         self.onSlideSearchButtonPressed(sender as! UIButton)
     }
     
+    //MARK autocomplete text
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
         let substring = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
         if(substring.isEmpty) {
@@ -98,7 +116,7 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     }
     
     func findproperties(substring:String) {
-        let url = baseURLString
+        let url = AppConfig.APP_URL+"/real_state_property_basics/find_by_address"
         Request().get(url, successHandler: {(response) in self.loadProperties(response)})
     }
     

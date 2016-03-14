@@ -13,7 +13,7 @@ class RealtorProfileViewController: UIViewController {
     var viewData:JSON = []
     
     @IBOutlet weak var lblFirstName: UILabel!
-    
+    @IBOutlet weak var rating: UIImageView!
     @IBOutlet weak var lblLastName: UILabel!
     @IBOutlet weak var lblBrokerage: UILabel!
     @IBOutlet weak var lblLisence: UILabel!
@@ -66,6 +66,9 @@ class RealtorProfileViewController: UIViewController {
             self.lblEmail.text     = result["email"].stringValue
             if(!result["url_image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.previewPhoto, imgPath: result["url_image"].stringValue)
+            }
+            if(!result["rating"].stringValue.isEmpty) {
+                self.rating.image = UIImage(named: result["rating"].stringValue+"stars")
             }
         }
     }

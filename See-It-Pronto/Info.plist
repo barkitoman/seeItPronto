@@ -28,6 +28,8 @@
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
+		<string>gps</string>
+		<string>location-services</string>
 		<string>armv7</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
@@ -53,5 +55,7 @@
 		<string>tel</string>
 		<string>telprompt</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Give us permission to use your device&apos;s location</string>
 </dict>
 </plist>

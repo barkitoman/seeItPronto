@@ -10,6 +10,10 @@ import UIKit
 
 class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,UITextViewDelegate {
 
+    var manager: OneShotLocationManager?
+    var latitude   = "0"
+    var longintude = "0"
+    
     var viewData:JSON     = []
     var propertyId:String = ""
     @IBOutlet weak var webView: UIWebView!
@@ -21,7 +25,20 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
-        loadMap()
+        manager = OneShotLocationManager()
+        manager!.fetchWithCompletion {location, error in
+            // fetch location or an error
+            if let loc = location {
+                self.latitude   = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.latitude)" : "27.6648274"
+                self.longintude = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.longitude)": "-81.5157535"
+                self.loadMap()
+            } else if let _ = error {
+                print("ERROR GETTING LOCATION")
+                self.loadMap()
+            }
+            // destroy the object immediately to save memory
+            self.manager = nil
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -58,7 +75,9 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     }
     
     func loadMap() {
-        let requestURL = NSURL(string:AppConfig.APP_URL+"/map/"+self.viewData["id"].stringValue)
+        let url = AppConfig.APP_URL+"/map/\(User().getField("id"))?lat=\(self.latitude)&lon=\(self.longintude)&role=\(User().getField("role"))"
+        print(url)
+        let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         self.webView.loadRequest(request)
     }
