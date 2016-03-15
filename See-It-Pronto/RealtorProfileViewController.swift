@@ -46,6 +46,10 @@ class RealtorProfileViewController: UIViewController {
         navigationController?.popViewControllerAnimated(true)
     }
     
+    @IBAction func btnPrevious(sender: AnyObject) {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
     func findUserInfo() {
         let userId = User().getField("id")
         if(!userId.isEmpty) {

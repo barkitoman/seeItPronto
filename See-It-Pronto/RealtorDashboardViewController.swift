@@ -38,8 +38,8 @@ class RealtorDashboardViewController: UIViewController {
         navigationController?.popViewControllerAnimated(true)
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
+    @IBAction func btnPrevious(sender: AnyObject) {
+        navigationController?.popViewControllerAnimated(true)
     }
 
 }

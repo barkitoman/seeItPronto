@@ -45,9 +45,11 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     
     func menuRealtor() {
         addChildView("RealtorHomeViewController",     titleOfChildren: "Home",          iconName: "home")
-        addChildView("ListBuyersViewController",      titleOfChildren: "Appointments",  iconName: "buyer")
-        addChildView("ListBuyersViewController",      titleOfChildren: "Buyers",        iconName: "buyer")
+        addChildView("AppointmentsViewController",    titleOfChildren: "Appointments",  iconName: "appoiments")
+        addChildView("RealtorDashboardViewController",titleOfChildren: "Dashboard",     iconName: "dashboard")
+        addChildView("MyListingsViewController",      titleOfChildren: "My Listings",   iconName: "my_listings")
         addChildView("RealtorProfileViewController",  titleOfChildren: "My Profile",    iconName: "my_profile")
+        addChildView("ListBuyersViewController",      titleOfChildren: "Buyers",        iconName: "buyer")
         addChildView("RealtorForm1ViewController",    titleOfChildren: "Edit Profile",  iconName: "edit_profile")
         addChildView("NotificationsViewController",   titleOfChildren: "Notifications", iconName: "notification")
         addChildView("LoginViewController",           titleOfChildren: "Log out",       iconName: "logout")
@@ -79,7 +81,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as! BuyerHomeViewController
             
         } else if (viewIdentifier == "LoginViewController") {
-            //LOGOUT
+            //LOGOUT ========================================
             var url   = AppConfig.APP_URL+"/destroy_token"
             let token = User().getField("access_token")
             url = url+"/"+token
@@ -98,8 +100,17 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         
         } else if (viewIdentifier == "NotificationsViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("NotificationsViewController") as! NotificationsViewController
+            
+        } else if (viewIdentifier == "AppointmentsViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("AppointmentsViewController") as! AppointmentsViewController
+            
+        }else if (viewIdentifier == "RealtorDashboardViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("RealtorDashboardViewController") as! RealtorDashboardViewController
+            
+        }else if (viewIdentifier == "MyListingsViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("MyListingsViewController") as! MyListingsViewController
         }
-        
+    
         if(viewIdentifier != nil && viewIdentifier!.isEmpty) {
             self.navigationController?.pushViewController(viewController, animated: true)
         } else {
