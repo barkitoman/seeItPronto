@@ -17,6 +17,7 @@ class MyListingsViewController: UIViewController {
     var maxPage   = 0    //maximum page
     var myListings:NSMutableArray! = NSMutableArray()
     var viewData:JSON = []
+    var propertyId:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,15 +54,53 @@ class MyListingsViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell    = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MyListingsTableViewCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MyListingsTableViewCell
         let listing = JSON(self.myListings[indexPath.row])
-        var description     = listing["address"].stringValue+" $"+listing["price"].stringValue
-        description         = description+" "+listing["bedrooms"].stringValue+"Br / "+listing["bathrooms"].stringValue+"Ba"
+        var description = listing["address"].stringValue+" $"+listing["price"].stringValue
+        description = description+" "+listing["bedrooms"].stringValue+"Br / "+listing["bathrooms"].stringValue+"Ba"
         cell.lblInformation.text = description
         if(!listing["image"].stringValue.isEmpty) {
             Utility().showPhoto(cell.PropertyImage, imgPath: listing["image"].stringValue)
         }
+        cell.btnBeacon.tag = Int(listing["id"].stringValue)!
+        cell.btnBeacon.addTarget(self, action: "openBeaconView:", forControlEvents: .TouchUpInside)
+        
+        cell.btnEdit.tag = Int(listing["id"].stringValue)!
+        cell.btnEdit.addTarget(self, action: "openEditView:", forControlEvents: .TouchUpInside)
+        
+        cell.swBeacon.tag = Int(listing["id"].stringValue)!
+        cell.swBeacon.addTarget(self, action: "turnBeaconOnOff:", forControlEvents: .TouchUpInside)
         return cell
+    }
+    
+    @IBAction func openBeaconView(sender:UIButton) {
+        self.propertyId = String(sender.tag)
+        self.performSegueWithIdentifier("MyListingToAddBeacon", sender: self)
+    }
+    
+    @IBAction func openEditView(sender:UIButton) {
+        self.propertyId = String(sender.tag)
+        self.performSegueWithIdentifier("MyListingToEditListng", sender: self)
+    }
+    
+    @IBAction func turnBeaconOnOff(sender:UISwitch) {
+        self.propertyId = String(sender.tag)
+        let url = AppConfig.APP_URL+"/turn_on_off_beacon/"+self.propertyId+"/"+Utility().switchValue(sender, onValue: "1", offValue: "0")
+        Request().get(url, successHandler: {(response) in self.afterTurnOnOffBeacon(response, sw: sender)})
+    }
+    
+    func afterTurnOnOffBeacon(let response: NSData, sw:UISwitch) {
+        let result = JSON(data: response)
+        if(result["result"].bool == false ) {
+            var msg = "Error saving, please try later"
+            if(result["msg"].stringValue != "") {
+                dispatch_async(dispatch_get_main_queue()) {
+                    sw.on = false
+                }
+                msg = result["msg"].stringValue
+            }
+            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
+        }
     }
     
     //Pagination
@@ -92,6 +131,17 @@ class MyListingsViewController: UIViewController {
                 self.myListings.addObject(jsonObject)
             }
             self.tableView.reloadData()
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "MyListingToAddBeacon") {
+            let view: AddBeaconViewController = segue.destinationViewController as! AddBeaconViewController
+            view.propertyId = self.propertyId
+            
+        }else if (segue.identifier == "MyListingToEditListng") {
+            let IVC: ListingDetailsViewController = segue.destinationViewController as! ListingDetailsViewController
+            IVC.propertyId = self.propertyId
         }
     }
 

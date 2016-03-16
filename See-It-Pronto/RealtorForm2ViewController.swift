@@ -97,8 +97,8 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     func save() {
         //create params
         var params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["id"].stringValue+"&mls_id="+self.txtmlsid.text!
-        params     = params+"&role=realtor&brokerage="+txtBrokerage.text!+"&first_name="+txtFirstName.text!
-        params     = params+"&last_name="+txtLastName.text!+"&lisence="+txtLisence.text!+"&back_acc="+txtBankAcct.text!
+        params = params+"&role=realtor&brokerage="+txtBrokerage.text!+"&first_name="+txtFirstName.text!
+        params = params+"&last_name="+txtLastName.text!+"&lisence="+txtLisence.text!+"&back_acc="+txtBankAcct.text!
         if(!self.viewData["realtor_id"].stringValue.isEmpty){
             params = params+"&realtor_id="+self.viewData["realtor_id"].stringValue
         }
@@ -109,8 +109,8 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     func afterPut(let response: NSData) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
-            self.uploadImage()
             self.viewData = result
+            self.uploadImage()
             Utility().displayAlert(self,title:"Success", message:"The data have been saved correctly", performSegue:"RealtorForm2")
         } else {
             var msg = "Error saving, please try later"

@@ -10,6 +10,8 @@ import UIKit
 
 class MyListingsTableViewCell: UITableViewCell {
 
+  
+    @IBOutlet weak var btnBeacon: UIButton!
     @IBOutlet weak var btnEdit: UIButton!
     @IBOutlet weak var PropertyImage: UIImageView!
     @IBOutlet weak var lblInformation: UILabel!

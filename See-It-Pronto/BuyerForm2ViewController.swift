@@ -99,8 +99,8 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
     func afterPut(let response: NSData) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
-            self.uploadImage()
             self.viewData = result
+            self.uploadImage()
             Utility().displayAlert(self,title: "Success", message:"The data have been saved correctly", performSegue:"FromBuyerForm2")
         } else {
             var msg = "Error saving, please try later"

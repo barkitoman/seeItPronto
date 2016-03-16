@@ -78,7 +78,6 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
             let params = "role=buyer&client_id="+txtEmail.text!+"&phone="+txtPhone.text!+"&client_secret="+txtPassword.text!+"&grant_type="+AppConfig.GRANT_TYPE
             Request().post(url, params:params,successHandler: {(response) in self.afterPost(response)});
         }
-        
     }
     
     func afterPost(let response: NSData) {
