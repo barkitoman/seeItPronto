@@ -87,6 +87,7 @@ class FullPropertyDetailsViewController: UIViewController {
             self.lblYearBuilt.text    = Property().getField("year_built")
             self.lblNeighborhood.text = Property().getField("neighborhood")
             self.lblAddedOn.text      = Property().getField("added_on")
+            self.lblLocation.text     = Property().getField("location")
         }
     }
     

@@ -41,7 +41,6 @@ class AppointmentsViewController: UIViewController {
         navigationController?.popViewControllerAnimated(true)
     }
     
-    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -52,8 +51,9 @@ class AppointmentsViewController: UIViewController {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! AppointmentsTableViewCell
-        let _ = JSON(self.appoiments[indexPath.row])
-
+        let appoiment = JSON(self.appoiments[indexPath.row])
+        cell.address.text  = appoiment["property"]["address"].stringValue
+        cell.niceDate.text = appoiment["nice_date"].stringValue
         return cell
     }
     
@@ -74,7 +74,9 @@ class AppointmentsViewController: UIViewController {
     
     func findAppoiments() {
         let userId = User().getField("id")
-        let url = AppConfig.APP_URL+"/list_notifications/"+userId+"/"+String(self.stepPage)+"/?page="+String(self.countPage + 1)
+        let role   = User().getField("id")
+        let url = AppConfig.APP_URL+"/list_appoiments/\(userId)/\(role)/"+String(self.stepPage)+"/?page="+String(self.countPage + 1)
+        print(url)
         Request().get(url, successHandler: {(response) in self.loadAppoiments(response)})
     }
     

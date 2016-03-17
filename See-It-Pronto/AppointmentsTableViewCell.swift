@@ -10,6 +10,11 @@ import UIKit
 
 class AppointmentsTableViewCell: UITableViewCell {
 
+    
+    @IBOutlet weak var address: UILabel!
+    @IBOutlet weak var niceDate: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
   

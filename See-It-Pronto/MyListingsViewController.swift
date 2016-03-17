@@ -55,7 +55,7 @@ class MyListingsViewController: UIViewController {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MyListingsTableViewCell
-        let listing = JSON(self.myListings[indexPath.row])
+        var listing = JSON(self.myListings[indexPath.row])
         var description = listing["address"].stringValue+" $"+listing["price"].stringValue
         description = description+" "+listing["bedrooms"].stringValue+"Br / "+listing["bathrooms"].stringValue+"Ba"
         cell.lblInformation.text = description
@@ -67,7 +67,9 @@ class MyListingsViewController: UIViewController {
         
         cell.btnEdit.tag = Int(listing["id"].stringValue)!
         cell.btnEdit.addTarget(self, action: "openEditView:", forControlEvents: .TouchUpInside)
-        
+        if(listing["state_beacon"].int == 1) {
+            cell.swBeacon.on = true
+        }
         cell.swBeacon.tag = Int(listing["id"].stringValue)!
         cell.swBeacon.addTarget(self, action: "turnBeaconOnOff:", forControlEvents: .TouchUpInside)
         return cell
@@ -85,7 +87,7 @@ class MyListingsViewController: UIViewController {
     
     @IBAction func turnBeaconOnOff(sender:UISwitch) {
         self.propertyId = String(sender.tag)
-        let url = AppConfig.APP_URL+"/turn_on_off_beacon/"+self.propertyId+"/"+Utility().switchValue(sender, onValue: "1", offValue: "0")
+        let url = AppConfig.APP_URL+"/turn_beacon_on_off/"+User().getField("id")+"/"+self.propertyId+"/"+Utility().switchValue(sender, onValue: "1", offValue: "0")
         Request().get(url, successHandler: {(response) in self.afterTurnOnOffBeacon(response, sw: sender)})
     }
     
@@ -140,8 +142,8 @@ class MyListingsViewController: UIViewController {
             view.propertyId = self.propertyId
             
         }else if (segue.identifier == "MyListingToEditListng") {
-            let IVC: ListingDetailsViewController = segue.destinationViewController as! ListingDetailsViewController
-            IVC.propertyId = self.propertyId
+            let view: ListingDetailsViewController = segue.destinationViewController as! ListingDetailsViewController
+            view.propertyId = self.propertyId
         }
     }
 

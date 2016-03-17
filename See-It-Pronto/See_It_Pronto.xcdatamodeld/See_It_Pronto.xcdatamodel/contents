@@ -8,6 +8,7 @@
         <attribute name="est_payments" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lot" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lot_size" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="neighborhood" optional="YES" attributeType="String" syncable="YES"/>
@@ -63,7 +64,7 @@
         <attribute name="token_type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Property" positionX="-54" positionY="117" width="128" height="285"/>
+        <element name="Property" positionX="-54" positionY="117" width="128" height="300"/>
         <element name="PropertyAction" positionX="-54" positionY="135" width="128" height="60"/>
         <element name="PropertyRealtor" positionX="-54" positionY="108" width="128" height="210"/>
         <element name="SearchConfig" positionX="-63" positionY="54" width="128" height="225"/>

@@ -96,6 +96,7 @@ class Utility {
     func getIdFromUrl(url:String)->String{
         var id = url.stringByReplacingOccurrencesOfString(AppConfig.APP_URL, withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         id     = id.stringByReplacingOccurrencesOfString("http:",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        id     = id.stringByReplacingOccurrencesOfString("map",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         id     = id.stringByReplacingOccurrencesOfString("/",      withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         id     = id.stringByReplacingOccurrencesOfString("#",      withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         id     = id.stringByReplacingOccurrencesOfString("?",      withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)

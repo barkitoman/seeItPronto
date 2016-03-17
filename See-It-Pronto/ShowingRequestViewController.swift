@@ -99,7 +99,7 @@ class ShowingRequestViewController: UIViewController {
     }
     
     func findShowing() {
-        let url = AppConfig.APP_URL+"/get_showing_details/"+self.showingId
+        let url = AppConfig.APP_URL+"/get_showing_details/"+self.showingId+"/"+User().getField("id")
         Request().get(url, successHandler: {(response) in self.loadShowingData(response)})
     }
     

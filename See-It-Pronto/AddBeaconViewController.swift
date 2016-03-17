@@ -20,6 +20,7 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.selfDelegate()
         self.findPropertyBeacon()
     }
     
@@ -39,6 +40,18 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
         super.didReceiveMemoryWarning()
     }
     
+    //selfDelegate, textFieldShouldReturn are functions for hide keyboard when press 'return' key
+    func selfDelegate() {
+        self.txtBeaconId.delegate = self
+        self.txtBrand.delegate = self
+        self.txtLocation.delegate = self
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
     @IBAction func btnBack(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
     }
@@ -53,7 +66,8 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     
     func save() {
         var url = AppConfig.APP_URL+"/beacons"
-        var params = "brand="+self.txtBrand.text!+"&beacon_id="+self.txtBeaconId.text!+"&location="+self.txtLocation.text!+"&state_beacon=0&property_id="+self.propertyId
+        var params = "brand="+self.txtBrand.text!+"&beacon_id="+self.txtBeaconId.text!+"&location="+self.txtLocation.text!
+        params     = params+"&state_beacon=0&property_id="+self.propertyId+"&user_id="+User().getField("id")
         if(!self.viewData["id"].stringValue.isEmpty) {
             //if user is editing a beacon
             params = params+"&id="+self.viewData["id"].stringValue
@@ -110,7 +124,7 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     }
     
     func findPropertyBeacon() {
-        let url = AppConfig.APP_URL+"/get_property_beacons/"+self.propertyId
+        let url = AppConfig.APP_URL+"/get_property_beacons/"+User().getField("id")+"/"+self.propertyId
         print(url)
         Request().get(url, successHandler: {(response) in self.loadDataToEdit(response)})
     }

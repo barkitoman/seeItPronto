@@ -60,7 +60,7 @@ class PropertyDetailsViewController: UIViewController {
     
     func findPropertyDetails(){
         let propertyId = Property().getField("id")
-        let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/"+propertyId
+        let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/"+propertyId+"/"+User().getField("id")
         Request().get(url, successHandler: {(response) in self.showPropertydetails(response)})
     }
     

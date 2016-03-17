@@ -4038,7 +4038,7 @@ $480,000
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Efa-cG-eVf">
-                                                    <rect key="frame" x="102" y="8" width="210" height="39"/>
+                                                    <rect key="frame" x="8" y="8" width="304" height="39"/>
                                                     <string key="text">1234 Main Street
 Anytown, FL, 33123
 $480,000
@@ -4047,17 +4047,18 @@ $480,000
                                                     <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="We5-uW-6P1">
-                                                    <rect key="frame" x="8" y="8" width="60" height="60"/>
-                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Aug 15 15:30" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0T-9m-grF">
-                                                    <rect key="frame" x="102" y="55" width="210" height="21"/>
+                                                    <rect key="frame" x="8" y="55" width="210" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="address" destination="Efa-cG-eVf" id="udV-R3-EzE"/>
+                                            <outlet property="niceDate" destination="Q0T-9m-grF" id="y3I-dc-3wj"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -4704,7 +4705,7 @@ $480,000
                                 <rect key="frame" x="2" y="223" width="320" height="4"/>
                                 <color key="backgroundColor" red="0.023529411760000001" green="0.023529411760000001" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="house3" translatesAutoresizingMaskIntoConstraints="NO" id="9oH-Rx-phU">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9oH-Rx-phU">
                                 <rect key="frame" x="20" y="117" width="142" height="98"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kIn-TO-cuw">
@@ -4731,6 +4732,9 @@ $480,000
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="gwa-yt-Dgg">
                                 <rect key="frame" x="20" y="359" width="51" height="31"/>
+                                <connections>
+                                    <action selector="swBeaconState:" destination="tio-S6-6xc" eventType="valueChanged" id="ZAS-eL-QUc"/>
+                                </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Owner's Contact Info:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1jO-LR-uWR">
                                 <rect key="frame" x="20" y="398" width="280" height="21"/>
@@ -4981,7 +4985,6 @@ $480,000
         <image name="blank-back" width="96" height="40"/>
         <image name="calendar" width="165" height="119"/>
         <image name="choosePicture" width="101" height="101"/>
-        <image name="house3" width="640" height="480"/>
         <image name="logo" width="432" height="226"/>
         <image name="pLogo" width="110" height="146"/>
         <image name="rating" width="132" height="28"/>

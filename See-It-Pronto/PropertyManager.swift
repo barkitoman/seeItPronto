@@ -29,6 +29,7 @@ class PropertyEntity: NSManagedObject {
     @NSManaged var added_on:String
     @NSManaged var square_feed:String
     @NSManaged var lot_size:String
+    @NSManaged var location:String
 
 }
 
@@ -93,6 +94,7 @@ class Property {
         newItem.added_on      = propertyData["added_on"].stringValue
         newItem.square_feed   = propertyData["square_feed"].stringValue
         newItem.square_feed   = propertyData["square_feed"].stringValue
+        newItem.square_feed   = propertyData["location"].stringValue
         
         do {
             try contxt.save()

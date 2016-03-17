@@ -106,7 +106,9 @@ class SeeitLaterViewController: UIViewController {
         //create params
         var params = "buyer_id="+User().getField("id")+"&realtor_id="+PropertyRealtor().getField("id")+"&property_id="+Property().getField("id")
         params     = params+"&type="+PropertyAction().getField("type")+"&date="+self.txtDate.text!
-        let url    = AppConfig.APP_URL+"/users"
+        let url    = AppConfig.APP_URL+"/seeitpronto"
+        print(url)
+        print(params)
         Request().post(url, params:params,successHandler: {(response) in self.afterPostRequest(response)});
         
     }

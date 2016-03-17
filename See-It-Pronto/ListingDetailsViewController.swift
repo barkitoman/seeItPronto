@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ListingDetailsViewController: UIViewController {
+class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate {
 
     var viewData:JSON = []
     var propertyId:String = ""
@@ -23,6 +23,7 @@ class ListingDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.selfDelegate()
         self.findPropertyDetails()
         self.findPropertyListing()
     }
@@ -42,6 +43,18 @@ class ListingDetailsViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
 
+    }
+    
+    //selfDelegate, textFieldShouldReturn are functions for hide keyboard when press 'return' key
+    func selfDelegate() {
+        self.txtShowingInstructions.delegate = self
+        self.txtEmail.delegate = self
+        self.txtPhone.delegate = self
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     @IBAction func btnBack(sender: AnyObject) {
@@ -86,7 +99,7 @@ class ListingDetailsViewController: UIViewController {
     }
     
     func findPropertyDetails(){
-        let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/"+self.propertyId
+        let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/"+self.propertyId+"/"+User().getField("id")
         Request().get(url, successHandler: {(response) in self.loadPropertyDetails(response)})
     }
     
@@ -102,9 +115,28 @@ class ListingDetailsViewController: UIViewController {
             }
         }
     }
+    @IBAction func swBeaconState(sender: AnyObject) {
+        let url = AppConfig.APP_URL+"/turn_beacon_on_off/"+User().getField("id")+"/"+self.propertyId+"/"+Utility().switchValue(self.swBeacon, onValue: "1", offValue: "0")
+        Request().get(url, successHandler: {(response) in self.afterTurnOnOffBeacon(response)})
+    }
+    
+    func afterTurnOnOffBeacon(let response: NSData) {
+        let result = JSON(data: response)
+        if(result["result"].bool == false ) {
+            var msg = "Error saving, please try later"
+            if(result["msg"].stringValue != "") {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.swBeacon.on = false
+                }
+                msg = result["msg"].stringValue
+            }
+            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
+        }
+    }
     
     func findPropertyListing(){
-        let url = AppConfig.APP_URL+"/realtor_property_listing/"+self.propertyId
+        let url = AppConfig.APP_URL+"/realtor_property_listing/"+User().getField("id")+"/"+self.propertyId
+        print(url)
         Request().get(url, successHandler: {(response) in self.loadPropertyListing(response)})
     }
     
@@ -115,6 +147,9 @@ class ListingDetailsViewController: UIViewController {
             self.txtShowingInstructions.text = result["showing_instruction"].stringValue
             self.txtEmail.text = result["owner_email"].stringValue
             self.txtPhone.text = result["owner_phone"].stringValue
+            if(result["state_beacon"].int == 1) {
+                self.swBeacon.on = true
+            }
         }
     }
     
