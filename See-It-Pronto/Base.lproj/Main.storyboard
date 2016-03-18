@@ -3807,7 +3807,7 @@ Range</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R4T-im-YZs">
-                                <rect key="frame" x="90" y="0.0" width="230" height="56"/>
+                                <rect key="frame" x="90" y="28" width="230" height="56"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Agent  Feedback (2 of 3)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BET-pY-lDc">
                                         <rect key="frame" x="39" y="17" width="175" height="21"/>
@@ -3874,15 +3874,6 @@ Range</string>
                                     <action selector="bntSkip:" destination="mJO-cQ-VAe" eventType="touchUpInside" id="E7p-wJ-OX6"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jyf-oa-XxE">
-                                <rect key="frame" x="0.0" y="0.0" width="90" height="56"/>
-                                <color key="backgroundColor" red="0.66666666669999997" green="0.66274509800000003" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                <state key="normal" title="&lt; Back"/>
-                                <connections>
-                                    <action selector="btnBack:" destination="mJO-cQ-VAe" eventType="touchUpInside" id="NZU-3a-Aag"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xUW-GB-BzG">
                                 <rect key="frame" x="0.0" y="508" width="105" height="60"/>
                                 <color key="backgroundColor" red="0.81568627449999997" green="0.87843137250000003" blue="0.0039215686269999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -3899,6 +3890,15 @@ Range</string>
                                 </state>
                                 <connections>
                                     <action selector="btnNext:" destination="mJO-cQ-VAe" eventType="touchUpInside" id="Ofa-KX-0re"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jyf-oa-XxE">
+                                <rect key="frame" x="0.0" y="28" width="90" height="56"/>
+                                <color key="backgroundColor" red="0.66666666669999997" green="0.66274509800000003" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <state key="normal" title="&lt; Back"/>
+                                <connections>
+                                    <action selector="btnBack:" destination="mJO-cQ-VAe" eventType="touchUpInside" id="NZU-3a-Aag"/>
                                 </connections>
                             </button>
                         </subviews>
