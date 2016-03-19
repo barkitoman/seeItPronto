@@ -115,7 +115,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     }
     
     func findproperties(substring:String) {
-        let url = AppConfig.APP_URL+"/real_state_property_basics/find_by_address"
+        let url = AppConfig.APP_URL+"/real_state_property_basics/find_by_address/"+substring
         Request().get(url, successHandler: {(response) in self.loadProperties(response)})
     }
     
