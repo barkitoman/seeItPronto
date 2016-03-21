@@ -20,10 +20,21 @@ class PropertyDetailsViewController: UIViewController {
     @IBOutlet weak var lblSquareFeed: UILabel!
     @IBOutlet weak var lblLotSize: UILabel!
     @IBOutlet weak var lblYearBuilt: UILabel!
+    @IBOutlet weak var btnSeeItPronto: UIButton!
+    @IBOutlet weak var btnSeeItLater: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.findPropertyDetails()
+        self.showHideButtons()
+    }
+    
+    func showHideButtons() {
+        let role = User().getField("role")
+        if(role == "realtor") {
+            btnSeeItPronto.hidden = true
+            btnSeeItLater.hidden  = true
+        }
     }
     
     override func viewWillAppear(animated: Bool) {

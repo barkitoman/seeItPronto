@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyListingsTableViewCell: UITableViewCell {
+class MyListingsRealtorTableViewCell: UITableViewCell {
 
   
     @IBOutlet weak var btnBeacon: UIButton!

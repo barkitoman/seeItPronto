@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyListingsViewController: UIViewController {
+class MyListingsRealtorViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     var countPage = 0    //number of current page
@@ -45,6 +45,11 @@ class MyListingsViewController: UIViewController {
         navigationController?.popViewControllerAnimated(true)
     }
     
+    @IBAction func btnSearchAgain(sender: AnyObject) {
+        Utility().goHome(self)
+    }
+    
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -54,7 +59,7 @@ class MyListingsViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MyListingsTableViewCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MyListingsRealtorTableViewCell
         var listing = JSON(self.myListings[indexPath.row])
         var description = listing["address"].stringValue+" $"+listing["price"].stringValue
         description = description+" "+listing["bedrooms"].stringValue+"Br / "+listing["bathrooms"].stringValue+"Ba"
