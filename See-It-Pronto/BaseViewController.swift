@@ -47,7 +47,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         addChildView("RealtorHomeViewController",     titleOfChildren: "Home",          iconName: "home")
         addChildView("AppointmentsViewController",    titleOfChildren: "Appointments",  iconName: "appoiments")
         addChildView("RealtorDashboardViewController",titleOfChildren: "Dashboard",     iconName: "dashboard")
-        addChildView("MyListingsViewController",      titleOfChildren: "My Listings",   iconName: "my_listings")
+        addChildView("MyListingsRealtorViewController",titleOfChildren: "My Listings",  iconName: "my_listings")
         addChildView("RealtorProfileViewController",  titleOfChildren: "My Profile",    iconName: "my_profile")
         addChildView("ListBuyersViewController",      titleOfChildren: "Buyers",        iconName: "buyer")
         addChildView("RealtorForm1ViewController",    titleOfChildren: "Edit Profile",  iconName: "edit_profile")
@@ -56,11 +56,12 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     }
     
     func menuBuyer(){
-        addChildView("RealtorHomeViewController",  titleOfChildren: "Home",         iconName: "home")
-        addChildView("ListRealtorsViewController", titleOfChildren: "Agents",       iconName: "realtor")
-        addChildView("BuyerForm1ViewController",   titleOfChildren: "Edit Profile", iconName: "edit_profile")
-        addChildView("NotificationsViewController",titleOfChildren: "Notifications", iconName: "notification")
-        addChildView("LoginViewController",        titleOfChildren: "Log out",      iconName: "logout")
+        addChildView("RealtorHomeViewController",    titleOfChildren: "Home",         iconName: "home")
+        addChildView("ListRealtorsViewController",   titleOfChildren: "Agents",       iconName: "realtor")
+        addChildView("MyListingsBuyerViewController",titleOfChildren: "My Listings",  iconName: "my_listings")
+        addChildView("BuyerForm1ViewController",     titleOfChildren: "Edit Profile", iconName: "edit_profile")
+        addChildView("NotificationsViewController",  titleOfChildren: "Notifications",iconName: "notification")
+        addChildView("LoginViewController",          titleOfChildren: "Log out",      iconName: "logout")
     }
     
     //MARK: Functions for Container
@@ -107,8 +108,10 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         }else if (viewIdentifier == "RealtorDashboardViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("RealtorDashboardViewController") as! RealtorDashboardViewController
             
-        }else if (viewIdentifier == "MyListingsViewController") {
-            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("MyListingsViewController") as! MyListingsViewController
+        }else if (viewIdentifier == "MyListingsRealtorViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("MyListingsRealtorViewController") as! MyListingsRealtorViewController
+        }else if (viewIdentifier == "MyListingsBuyerViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("MyListingsBuyerViewController") as! MyListingsBuyerViewController
         }
     
         if(viewIdentifier != nil && viewIdentifier!.isEmpty) {

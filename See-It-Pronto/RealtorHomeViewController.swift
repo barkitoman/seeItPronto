@@ -86,8 +86,10 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         if navigationType == UIWebViewNavigationType.LinkClicked {
             let url:String = request.URL!.absoluteString
             if(url.containsString(AppConfig.APP_URL)) {
-                self.showingId = Utility().getIdFromUrl(url)
-                self.performSegueWithIdentifier("RealtorHomeShowingRequest", sender: self)
+                let id = Utility().getIdFromUrl(url)
+                let saveData: JSON =  ["id":id]
+                Property().saveIfExists(saveData)
+                self.performSegueWithIdentifier("RealtorHomePropertyDetails", sender: self)
             }
             return false
         }
@@ -115,7 +117,7 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     }
     
     func findproperties(substring:String) {
-        let url = AppConfig.APP_URL+"/real_state_property_basics/find_by_address"
+        let url = AppConfig.APP_URL+"/real_state_property_basics/find_by_address/"+substring
         Request().get(url, successHandler: {(response) in self.loadProperties(response)})
     }
     
@@ -150,13 +152,6 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         let selectedCell : UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         self.searchTextField.text = selectedCell.textLabel!.text
         self.autocompleteTableView.hidden = true
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "RealtorHomeShowingRequest") {
-            let view: ShowingRequestViewController = segue.destinationViewController as! ShowingRequestViewController
-            view.showingId  = self.showingId
-        }
     }
     
 }

@@ -25,9 +25,23 @@ class FullPropertyDetailsViewController: UIViewController {
     @IBOutlet weak var lblNeighborhood: UILabel!
     @IBOutlet weak var lblAddedOn: UILabel!
     
+    @IBOutlet weak var btnSeeItNow: UIButton!
+    @IBOutlet weak var btnSeeItLater: UIButton!
+    @IBOutlet weak var btnSearchAgain: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.showPropertydetails()
+        self.showHideButtons()
+    }
+    
+    func showHideButtons() {
+        let role = User().getField("role")
+        if(role == "realtor") {
+            btnSearchAgain.hidden = true
+            btnSeeItLater.hidden  = true
+            btnSeeItNow.hidden    = true
+        }
     }
     
     override func viewWillAppear(animated: Bool) {

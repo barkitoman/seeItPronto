@@ -136,7 +136,6 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
     
     func findPropertyListing(){
         let url = AppConfig.APP_URL+"/realtor_property_listing/"+User().getField("id")+"/"+self.propertyId
-        print(url)
         Request().get(url, successHandler: {(response) in self.loadPropertyListing(response)})
     }
     

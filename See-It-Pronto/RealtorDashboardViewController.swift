@@ -31,7 +31,6 @@ class RealtorDashboardViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-
     }
     
     @IBAction func btnBack(sender: AnyObject) {
@@ -41,5 +40,30 @@ class RealtorDashboardViewController: UIViewController {
     @IBAction func btnPrevious(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
     }
+    
+    @IBAction func btnNext(sender: AnyObject) {
+        self.performSegueWithIdentifier("AgentDashBoardMyListings", sender: self)  
+    }
+    
+    @IBAction func btnBuyers(sender: AnyObject) {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let viewController = mainStoryboard.instantiateViewControllerWithIdentifier("ListBuyersViewController") as! ListBuyersViewController
+        self.navigationController?.showViewController(viewController, sender: nil)
+    }
+    
+    @IBAction func btnLog(sender: AnyObject) {
+    }
+    
+    @IBAction func btnForms(sender: AnyObject) {
+    }
+    
+    @IBAction func btnListing(sender: AnyObject) {
+        self.performSegueWithIdentifier("AgentDashBoardMyListings", sender: self)
+    }
+    
+    @IBAction func btnFeedBack(sender: AnyObject) {
+    }
+    
+    
 
 }

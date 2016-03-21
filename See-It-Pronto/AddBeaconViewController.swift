@@ -125,7 +125,6 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     
     func findPropertyBeacon() {
         let url = AppConfig.APP_URL+"/get_property_beacons/"+User().getField("id")+"/"+self.propertyId
-        print(url)
         Request().get(url, successHandler: {(response) in self.loadDataToEdit(response)})
     }
     

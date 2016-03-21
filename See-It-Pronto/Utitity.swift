@@ -28,7 +28,7 @@ class Utility {
     
     func showPhoto(img:UIImageView, imgPath:String){
         var url = NSURL(string: AppConfig.APP_URL+"/"+imgPath)
-        if imgPath.rangeOfString("http://") != nil{
+        if (imgPath.rangeOfString("http://") != nil || imgPath.rangeOfString("https://") != nil ){
             url = NSURL(string: imgPath)
         }
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) { (data, response, error) -> Void in
