@@ -8,15 +8,19 @@
 
 import UIKit
 
-class BuyerForm5ViewController: UIViewController {
+class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     var viewData:JSON = []
     @IBOutlet weak var swPreQualified: UISwitch!
     @IBOutlet weak var swLikeToBe: UISwitch!
-    @IBOutlet weak var btnScan: UIButton!
     @IBOutlet weak var lblLikeTobe: UILabel!
     @IBOutlet weak var lblNoLikeTobe: UILabel!
     @IBOutlet weak var lblYesLikeTobe: UILabel!
+    @IBOutlet weak var btnScan: UIButton!
+    @IBOutlet weak var lblIfYesText: UILabel!
+    let imagePicker: UIImagePickerController! = UIImagePickerController()
+    @IBOutlet weak var currentImage: UIImageView!
+    var haveImage:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,10 +51,60 @@ class BuyerForm5ViewController: UIViewController {
         navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func btnNext(sender: AnyObject) {
+    @IBAction func btnTakePicture(sender: AnyObject) {
+        if (UIImagePickerController.isSourceTypeAvailable(.Camera)) {
+            if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
+                imagePicker.allowsEditing = false
+                imagePicker.sourceType = .Camera
+                imagePicker.cameraCaptureMode = .Photo
+                presentViewController(imagePicker, animated: true, completion: {})
+            } else {
+                Utility().displayAlert(self, title: "Rear camera doesn't exist", message:  "Application cannot access the camera.", performSegue: "")
+            }
+        } else {
+            Utility().displayAlert(self, title: "Camera inaccessable", message: "Application cannot access the camera.", performSegue: "")
+        }
     }
     
-    @IBAction func btnSearch(sender: AnyObject) {
+    func documentPicker(controller: UIDocumentPickerViewController, didPickDocumentAtURL url: NSURL) {
+        if controller.documentPickerMode == UIDocumentPickerMode.Import {
+            // This is what it should be
+            print(url.path)
+            //self.newNoteBody.text = String(contentsOfFile: url.path!)
+        }
+    }
+
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        print("Got an image")
+        if let pickedImage:UIImage = (info[UIImagePickerControllerOriginalImage]) as? UIImage {
+            let selectorToCall = Selector("imageWasSavedSuccessfully:didFinishSavingWithError:context:")
+            UIImageWriteToSavedPhotosAlbum(pickedImage, self, selectorToCall, nil)
+        }
+        imagePicker.dismissViewControllerAnimated(true, completion: {
+            // Anything you want to happen when the user saves an image
+        })
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        print("User canceled image")
+        dismissViewControllerAnimated(true, completion: {
+            // Anything you want to happen when the user selects cancel
+        })
+    }
+    
+    func imageWasSavedSuccessfully(image: UIImage, didFinishSavingWithError error: NSError!, context: UnsafeMutablePointer<()>){
+        print("Image saved")
+        if let theError = error {
+            print("An error happened while saving the image = \(theError)")
+        } else {
+            print("Displaying")
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.currentImage.image = image
+            })
+        }
+    }
+    
+    @IBAction func btnNext(sender: AnyObject) {
         var params = "id="+User().getField("id")
         params     = params+"&pre_qualified="+Utility().switchValue(self.swPreQualified, onValue: "1", offValue: "0")
         params     = params+"&like_pre_qualification="+Utility().switchValue(self.swLikeToBe, onValue: "1", offValue: "0")
@@ -58,10 +112,26 @@ class BuyerForm5ViewController: UIViewController {
         Request().put(url, params:params,successHandler: {(response) in self.afterPut(response)});
     }
     
+    //upload photo to server
+    func uploadImage() {
+        dispatch_async(dispatch_get_main_queue()) {
+         if (self.currentImage.image != nil && self.haveImage == true && !self.swPreQualified.on) {
+            let imageData:NSData = UIImageJPEGRepresentation(self.currentImage.image!, 1)!
+            SRWebClient.POST(AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue)
+                .data(imageData, fieldName:"pre_qualification_letter_image", data:["id":self.viewData["id"].stringValue,"_method":"PUT"])
+                .send({(response:AnyObject!, status:Int) -> Void in
+                    },failure:{(error:NSError!) -> Void in
+                        print("ERROR UPLOADING PHOTO")
+                })
+         }
+        }
+    }
+    
     func afterPut(let response: NSData) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result
+            self.uploadImage()
             Utility().displayAlert(self,title: "Success", message:"The data have been saved correctly", performSegue:"FromBuyerForm5")
         } else {
             var msg = "Error saving, please try later"
@@ -73,7 +143,9 @@ class BuyerForm5ViewController: UIViewController {
     }
     
     @IBAction func swPrequalification(sender: AnyObject) {
-        self.preQualificationFields(!self.swPreQualified.on)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.preQualificationFields(!self.swPreQualified.on)
+        }
     }
     
     func findUserInfo() {
@@ -102,18 +174,22 @@ class BuyerForm5ViewController: UIViewController {
     }
     
     func preQualificationFields(preQuealificationIsEnabled:Bool){
-        if(preQuealificationIsEnabled == true) {
-            self.btnScan.enabled       = true
+        if(preQuealificationIsEnabled == false) {
+            self.btnScan.hidden        = false
+            self.currentImage.hidden   = false
             self.lblLikeTobe.hidden    = true
             self.lblYesLikeTobe.hidden = true
             self.lblNoLikeTobe.hidden  = true
             self.swLikeToBe.hidden     = true
+            self.lblIfYesText.hidden   = false
         } else {
-            self.btnScan.enabled       = false
+            self.btnScan.hidden        = true
+            self.currentImage.hidden   = true
             self.lblLikeTobe.hidden    = false
             self.lblYesLikeTobe.hidden = false
             self.lblNoLikeTobe.hidden  = false
             self.swLikeToBe.hidden     = false
+            self.lblIfYesText.hidden   = true
         }
     }
 }

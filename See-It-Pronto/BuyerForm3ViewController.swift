@@ -14,7 +14,7 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
     @IBOutlet weak var txtExpDate: UITextField!
     @IBOutlet weak var txtCVC: UITextField!
     @IBOutlet weak var txtPromoCode: UITextField!
-    var viewData:JSON = []
+    var viewData:JSON  = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,7 +108,7 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "FromBuyerForm3") {
-            let view: BuyerForm4ViewController = segue.destinationViewController as! BuyerForm4ViewController
+            let view: BuyerForm5ViewController = segue.destinationViewController as! BuyerForm5ViewController
             view.viewData  = self.viewData
         }
     }
