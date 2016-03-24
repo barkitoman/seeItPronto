@@ -16,11 +16,11 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     
     @IBOutlet weak var searchTextField: UITextField!
     var viewData:JSON    = []
-    var showingId:String = ""
+    var propertyId:String = ""
     @IBOutlet weak var webView: UIWebView!
     
     let autocompleteTableView = UITableView(frame: CGRectMake(0,70,320,120), style: UITableViewStyle.Plain)
-    var autocompleteUrls = [String]()
+    var autocompleteUrls:NSMutableArray! = NSMutableArray()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +29,8 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         manager!.fetchWithCompletion {location, error in
             // fetch location or an error
             if let loc = location {
-                self.latitude   = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.latitude)" : "27.6648274"
-                self.longintude = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.longitude)": "-81.5157535"
+                self.latitude   = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.latitude)" : "26.187858"
+                self.longintude = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.longitude)": "-80.169112"
                 self.loadMap()
             } else if let _ = error {
                 print("ERROR GETTING LOCATION")
@@ -76,7 +76,8 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     }
     
     func loadMap() {
-        let url = AppConfig.APP_URL+"/map/\(User().getField("id"))?lat=\(self.latitude)&lon=\(self.longintude)&role=\(User().getField("role"))"
+        let url = AppConfig.APP_URL+"/map/\(User().getField("id"))?lat=\(self.latitude)&lon=\(self.longintude)&role=\(User().getField("role"))&property=\(self.propertyId)"
+        self.propertyId = ""
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         self.webView.loadRequest(request)
@@ -117,17 +118,18 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     }
     
     func findproperties(substring:String) {
-        let url = AppConfig.APP_URL+"/real_state_property_basics/find_by_address/"+substring
-        Request().get(url, successHandler: {(response) in self.loadProperties(response)})
+        let urlString = "\(AppConfig.APP_URL)/real_state_property_basics/find_by_address/\(substring)"
+        let url = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        Request().get(url!, successHandler: {(response) in self.loadProperties(response)})
     }
     
     func loadProperties(let response: NSData) {
-        autocompleteUrls.removeAll(keepCapacity: false)
+        autocompleteUrls = NSMutableArray()
         dispatch_async(dispatch_get_main_queue()) {
             let properties = JSON(data: response)
             for (_,subJson):(String, JSON) in properties {
-                let descripcion = subJson["description"].stringValue
-                self.autocompleteUrls.append(descripcion)
+                let jsonObject: AnyObject = subJson.object
+                self.autocompleteUrls.addObject(jsonObject)
             }
             self.autocompleteTableView.reloadData()
         }
@@ -143,8 +145,8 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCellStyle.Default , reuseIdentifier: "Cell")
-        let index = indexPath.row as Int
-        cell.textLabel!.text = autocompleteUrls[index]
+        let item = JSON(self.autocompleteUrls[indexPath.row])
+        cell.textLabel!.text = item["description"].stringValue
         return cell
     }
     
@@ -152,6 +154,9 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         let selectedCell : UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         self.searchTextField.text = selectedCell.textLabel!.text
         self.autocompleteTableView.hidden = true
+        let item = JSON(self.autocompleteUrls[indexPath.row])
+        self.propertyId = item["id"].stringValue
+        self.loadMap()
     }
     
 }

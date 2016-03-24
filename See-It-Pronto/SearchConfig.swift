@@ -18,12 +18,9 @@ class SearchConfigEntity: NSManagedObject {
     @NSManaged var price_range_higher:String
     @NSManaged var price_range_less:String
     @NSManaged var pool:String
-    @NSManaged var like_pre_qualification:String
     @NSManaged var id:String
-    @NSManaged var pre_qualified:String
     @NSManaged var beds:String
     @NSManaged var baths:String
-    @NSManaged var pre_qualification_letter:String
     @NSManaged var area:String
 }
 
@@ -72,18 +69,15 @@ class SearchConfig {
         //create instance of pur data model and inicilize
         let newItem = SearchConfigEntity(entity:en!, insertIntoManagedObjectContext:contxt)
         //map our properties
-        newItem.type_property            = searchConfigData["type_property"].stringValue
-        newItem.price_range_higher       = searchConfigData["price_range_higher"].stringValue
-        newItem.price_range_less         = searchConfigData["price_range_less"].stringValue
-        newItem.pool                     = searchConfigData["pool"].stringValue
-        newItem.like_pre_qualification   = searchConfigData["like_pre_qualification"].stringValue
-        newItem.user_id                  = searchConfigData["user_id"].stringValue
-        newItem.id                       = searchConfigData["id"].stringValue
-        newItem.pre_qualified            = searchConfigData["pre_qualified"].stringValue
-        newItem.beds                     = searchConfigData["beds"].stringValue
-        newItem.baths                    = searchConfigData["baths"].stringValue
-        newItem.pre_qualification_letter = searchConfigData["pre_qualification_letter"].stringValue
-        newItem.area                     = searchConfigData["area"].stringValue
+        newItem.type_property       = searchConfigData["type_property"].stringValue
+        newItem.price_range_higher  = searchConfigData["price_range_higher"].stringValue
+        newItem.price_range_less    = searchConfigData["price_range_less"].stringValue
+        newItem.pool                = searchConfigData["pool"].stringValue
+        newItem.user_id             = searchConfigData["user_id"].stringValue
+        newItem.id                  = searchConfigData["id"].stringValue
+        newItem.beds                = searchConfigData["beds"].stringValue
+        newItem.baths               = searchConfigData["baths"].stringValue
+        newItem.area                = searchConfigData["area"].stringValue
         do {
             try contxt.save()
         } catch let error as NSError {
