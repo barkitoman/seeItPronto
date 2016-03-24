@@ -1060,7 +1060,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dqn-Zt-zn4">
-                                <rect key="frame" x="43" y="338" width="44" height="26"/>
+                                <rect key="frame" x="43" y="231" width="44" height="26"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1072,21 +1072,14 @@
                                 </connections>
                             </switch>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k8B-I7-Xwb">
-                                <rect key="frame" x="106" y="335" width="51" height="31"/>
+                                <rect key="frame" x="106" y="228" width="51" height="31"/>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Would you like to be?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8GT-Xg-ctl">
-                                <rect key="frame" x="13" y="298" width="295" height="21"/>
+                                <rect key="frame" x="13" y="191" width="295" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.2496722784" green="0.30139411999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U23-bp-S15">
-                                <rect key="frame" x="13" y="238" width="74" height="44"/>
-                                <color key="backgroundColor" red="0.0039215686269999999" green="0.45882352939999999" blue="0.79215686269999996" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Scan">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Yes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f4R-oS-u83">
                                 <rect key="frame" x="193" y="138" width="43" height="33"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1094,23 +1087,38 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="If Yes, scan Pre-Qualification letter." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uoj-Ii-BrA">
-                                <rect key="frame" x="13" y="195" width="295" height="21"/>
+                                <rect key="frame" x="13" y="274" width="295" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.2496722784" green="0.30139411999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Yes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eTg-Jq-JBg">
-                                <rect key="frame" x="182" y="340" width="33" height="26"/>
+                                <rect key="frame" x="182" y="233" width="33" height="26"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zlu-2e-XWL">
+                                <rect key="frame" x="13" y="322" width="142" height="30"/>
+                                <color key="backgroundColor" red="0.27058823529999998" green="0.70980392160000005" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Take Picture">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnTakePicture:" destination="mKG-ad-rWV" eventType="touchUpInside" id="uTA-Bu-pie"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="choosePicture" translatesAutoresizingMaskIntoConstraints="NO" id="jS6-XJ-dgk">
+                                <rect key="frame" x="13" y="360" width="142" height="111"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.8862745098" green="0.88235294119999996" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="btnScan" destination="U23-bp-S15" id="hPP-RI-djA"/>
+                        <outlet property="btnScan" destination="Zlu-2e-XWL" id="Lek-AD-ZYQ"/>
+                        <outlet property="currentImage" destination="jS6-XJ-dgk" id="eXs-ow-yhC"/>
+                        <outlet property="lblIfYesText" destination="Uoj-Ii-BrA" id="sam-84-Nh9"/>
                         <outlet property="lblLikeTobe" destination="8GT-Xg-ctl" id="VvW-Tg-Zgx"/>
                         <outlet property="lblNoLikeTobe" destination="Dqn-Zt-zn4" id="THk-eT-skt"/>
                         <outlet property="lblYesLikeTobe" destination="eTg-Jq-JBg" id="VcW-w2-cJ0"/>
