@@ -19,6 +19,7 @@ class AppointmentsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.findAppoiments()
     }
 
     override func didReceiveMemoryWarning() {

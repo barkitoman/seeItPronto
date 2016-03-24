@@ -17,17 +17,10 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     @IBOutlet weak var slBaths: UISlider!
     @IBOutlet weak var swPool: UISwitch!
     @IBOutlet weak var slPriceRange: UISlider!
-    @IBOutlet weak var swPreQualified: UISwitch!
-    @IBOutlet weak var swLikeToBe: UISwitch!
 
     @IBOutlet weak var lblBeds: UILabel!
     @IBOutlet weak var lblBaths: UILabel!
     @IBOutlet weak var lblPriceRange: UILabel!
-    
-    @IBOutlet weak var btnScan: UIButton!
-    @IBOutlet weak var lblLikeTobe: UILabel!
-    @IBOutlet weak var lblNoLikeTobe: UILabel!
-    @IBOutlet weak var lblYesLikeTobe: UILabel!
     
     var priceRangeLess:String = "100000"
     
@@ -79,10 +72,6 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         self.showSlidersValues("",baths: "",priceRange: priceRange)
     }
     
-    @IBAction func swPrequalification(sender: AnyObject) {
-        self.preQualificationFields(!self.swPreQualified.on)
-    }
-    
     @IBAction func btnBack(sender: AnyObject) {
         self.goBack()
     }
@@ -95,10 +84,9 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         let userId = User().getField("id")
         var params = "type_property="+Utility().switchValue(self.swType, onValue: "rental", offValue: "sale")+"&area="+self.txtArea.text!
             params = params+"&beds="+Utility().sliderValue(self.slBeds)+"&baths="+Utility().sliderValue(self.slBaths)
-            params = params+"&pool="+Utility().switchValue(self.swLikeToBe, onValue: "1", offValue: "0")
+            params = params+"&pool="+Utility().switchValue(self.swPool, onValue: "1", offValue: "0")
             params = params+"&price_range_less="+self.priceRangeLess+"&price_range_higher="+Utility().sliderValue(self.slPriceRange)
-            params = params+"&pre_qualified="+Utility().switchValue(self.swPreQualified, onValue: "1", offValue: "0")
-            params = params+"&like_pre_qualification="+Utility().switchValue(self.swLikeToBe, onValue: "1", offValue: "0")+"&user_id="+userId
+            params = params+"&user_id="+userId
         
         var url = AppConfig.APP_URL+"/user_config_searches"
         let configSearchId = SearchConfig().getField("id")
@@ -116,7 +104,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         if(result["result"].bool == true ) {
             dispatch_async(dispatch_get_main_queue()) {
                 SearchConfig().saveIfExists(result)
-                self.goBack()
+                Utility().goHome(self)
             }
         } else {
             var msg = "Error saving, please try later"
@@ -153,18 +141,6 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
                 self.slPriceRange.value = Float(beds)!
                 self.showSlidersValues("", baths: "", priceRange: price)
             }
-            
-            let preQualified = SearchConfig().getField("pre_qualified")
-            if(preQualified == "1") {
-                self.swPreQualified.on = true
-                self.preQualificationFields(false)
-            }else{
-                self.swPreQualified.on = false
-                self.preQualificationFields(true)
-            }
-            
-            let likeToBe = SearchConfig().getField("like_pre_qualification")
-            if(likeToBe == "1"){self.swLikeToBe.on = true}else{self.swLikeToBe.on = false}
         }
     }
     
@@ -179,26 +155,6 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
             priceRange = Utility().formatCurrency(priceRange)
             self.lblPriceRange.text  = "Your Preference: \(priceRange)"
         }
-    }
-    
-    func preQualificationFields(preQuealificationIsEnabled:Bool){
-        if(preQuealificationIsEnabled == true) {
-            self.btnScan.enabled       = true
-            self.lblLikeTobe.hidden    = true
-            self.lblYesLikeTobe.hidden = true
-            self.lblNoLikeTobe.hidden  = true
-            self.swLikeToBe.hidden     = true
-        } else {
-            self.btnScan.enabled       = false
-            self.lblLikeTobe.hidden    = false
-            self.lblYesLikeTobe.hidden = false
-            self.lblNoLikeTobe.hidden  = false
-            self.swLikeToBe.hidden     = false
-        }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
     }
 
 }
