@@ -3,7 +3,7 @@
 //  See-It-Pronto
 //
 //  Created by Deyson on 3/14/16.
-//  Copyright © 2016 user114136. All rights reserved.
+//  Copyright © 2016 Deyson. All rights reserved.
 //
 
 import UIKit

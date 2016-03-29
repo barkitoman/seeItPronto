@@ -136,9 +136,9 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
             let pool = SearchConfig().getField("pool")
             if(pool == "1"){self.swPool.on = true}else{self.swPool.on = false}
             
-            let price = SearchConfig().getField("id")
+            let price = SearchConfig().getField("price_range_higher")
             if(!price.isEmpty) {
-                self.slPriceRange.value = Float(beds)!
+                self.slPriceRange.value = Float(price)!
                 self.showSlidersValues("", baths: "", priceRange: price)
             }
         }
