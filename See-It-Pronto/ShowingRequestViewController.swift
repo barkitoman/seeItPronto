@@ -78,7 +78,6 @@ class ShowingRequestViewController: UIViewController {
     
     func afterRequest(let response: NSData, titleOption:String) {
         let result = JSON(data: response)
-        print(result)
         if(result["result"].bool == true ) {
             dispatch_async(dispatch_get_main_queue()) {
                 let alertController = UIAlertController(title:"Success", message: "The request has been "+titleOption, preferredStyle: .Alert)

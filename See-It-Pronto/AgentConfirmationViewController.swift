@@ -95,11 +95,14 @@ class AgentConfirmationViewController: UIViewController {
         let showingRate   = PropertyRealtor().getField("showing_rate")
         let rating        = PropertyRealtor().getField("rating")
         let image         = PropertyRealtor().getField("url_image")
-        let distance      = PropertyRealtor().getField("distance")
+        var distance      = PropertyRealtor().getField("travel_range")
+        if(!distance.isEmpty) {
+            distance = distance.stringByReplacingOccurrencesOfString("mi",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        }
         
         
         self.lblShowingRate.text = (!showingRate.isEmpty) ? "$"+showingRate : ""
-        self.lblDistance.text    = (!distance.isEmpty) ? distance+"mi" : ""
+        self.lblDistance.text    = (!distance.isEmpty) ? distance+" mi" : ""
         self.lblRaringLabel.text = (!rating.isEmpty) ? rating+" of 5" : ""
         if(!image.isEmpty) {
             Utility().showPhoto(self.agentPhoto, imgPath: image)

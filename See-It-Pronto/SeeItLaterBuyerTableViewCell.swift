@@ -8,22 +8,22 @@
 
 import UIKit
 
-class MyListingsBuyerTableViewCell: UITableViewCell {
+class SeeItLaterBuyerTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var propertyImage: UIImageView!
+    @IBOutlet weak var lblAddress: UILabel!
+    @IBOutlet weak var lblPrice: UILabel!
     
-    @IBOutlet weak var imageProperty: UIImageView!
-    
-    @IBOutlet weak var lblDescription: UILabel!
+    @IBOutlet weak var lblNiceDate: UILabel!
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
 
 }

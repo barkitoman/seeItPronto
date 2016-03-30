@@ -52,10 +52,32 @@ class AppointmentsViewController: UIViewController {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! AppointmentsTableViewCell
-        let appoiment = JSON(self.appoiments[indexPath.row])
-        cell.address.text  = appoiment["property"]["address"].stringValue
+        let appoiment      = JSON(self.appoiments[indexPath.row])
+        cell.address.text  = appoiment["property"][0]["address"].stringValue
+        cell.lblPrice.text = Utility().formatCurrency(appoiment["property"][0]["price"].stringValue)
+        let state = appoiment["showing_status"].stringValue
+        cell.lblState.text = self.getState(state)
         cell.niceDate.text = appoiment["nice_date"].stringValue
+        if(!appoiment["property"][0]["image"].stringValue.isEmpty) {
+            Utility().showPhoto(cell.propertyImage, imgPath: appoiment["property"][0]["image"].stringValue)
+        }
         return cell
+    }
+    
+    func getState(state:String)->String {
+        var out = ""
+        if(state == "0") {
+            out = "Pending"
+        } else if(state == "1") {
+            out = "Accepted"
+        } else if(state == "2") {
+            out = "Rejected"
+        } else if(state == "3") {
+            out = "Completed"
+        } else if(state == "4") {
+            out = "Cancelled"
+        }
+        return out
     }
     
     //Pagination
@@ -75,9 +97,8 @@ class AppointmentsViewController: UIViewController {
     
     func findAppoiments() {
         let userId = User().getField("id")
-        let role   = User().getField("id")
+        let role   = User().getField("role")
         let url = AppConfig.APP_URL+"/list_showings/\(userId)/\(role)/"+String(self.stepPage)+"/?page="+String(self.countPage + 1)
-        print(url)
         Request().get(url, successHandler: {(response) in self.loadAppoiments(response)})
     }
     

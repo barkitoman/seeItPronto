@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyListingsBuyerViewController: UIViewController {
+class SeeItLaterBuyerViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     var countPage = 0    //number of current page
@@ -41,14 +41,10 @@ class MyListingsBuyerViewController: UIViewController {
         super.viewWillDisappear(animated)
     }
 
+    
     @IBAction func btnBack(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
     }
-    
-    @IBAction func btnSearchAgain(sender: AnyObject) {
-        Utility().goHome(self)
-    }
-    
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -59,13 +55,13 @@ class MyListingsBuyerViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MyListingsBuyerTableViewCell
-        var listing = JSON(self.myListings[indexPath.row])
-        var description = listing["address"].stringValue+" $"+listing["price"].stringValue
-        description = description+" "+listing["bedrooms"].stringValue+"Br / "+listing["bathrooms"].stringValue+"Ba"
-        cell.lblDescription.text = description
-        if(!listing["image"].stringValue.isEmpty) {
-            Utility().showPhoto(cell.imageProperty, imgPath: listing["image"].stringValue)
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! SeeItLaterBuyerTableViewCell
+        let showing = JSON(self.myListings[indexPath.row])
+        cell.lblAddress.text  = showing["property"][0]["address"].stringValue
+        cell.lblPrice.text = Utility().formatCurrency(showing["property"][0]["price"].stringValue)
+        cell.lblNiceDate.text = showing["nice_date"].stringValue
+        if(!showing["property"][0]["image"].stringValue.isEmpty) {
+            Utility().showPhoto(cell.propertyImage, imgPath: showing["property"][0]["image"].stringValue)
         }
         return cell
     }
@@ -86,14 +82,14 @@ class MyListingsBuyerViewController: UIViewController {
     }
     
     func findListings() {
-        let url = AppConfig.APP_URL+"/my_listings/\(User().getField("id"))/\(self.stepPage)/\(User().getField("mls_id"))/?page="+String(self.countPage + 1)
+        let url = AppConfig.APP_URL+"/see_it_later_buyer/\(User().getField("id"))/\(self.stepPage)/?page="+String(self.countPage + 1)
         Request().get(url, successHandler: {(response) in self.loadListings(response)})
     }
     
     func loadListings(let response: NSData){
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
-            for (_,subJson):(String, JSON) in result {
+            for (_,subJson):(String, JSON) in result["data"] {
                 let jsonObject: AnyObject = subJson.object
                 self.myListings.addObject(jsonObject)
             }
