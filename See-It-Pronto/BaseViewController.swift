@@ -58,7 +58,8 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     func menuBuyer(){
         addChildView("RealtorHomeViewController",    titleOfChildren: "Home",         iconName: "home")
         addChildView("ListRealtorsViewController",   titleOfChildren: "Agents",       iconName: "realtor")
-        addChildView("MyListingsBuyerViewController",titleOfChildren: "My Listings",  iconName: "my_listings")
+        addChildView("SeeItLaterBuyerViewController",titleOfChildren: "See it later", iconName: "my_listings")
+        addChildView("PastListingsBuyerViewController",titleOfChildren: "Past listings",iconName: "past_listings")
         addChildView("BuyerForm1ViewController",     titleOfChildren: "Edit Profile", iconName: "edit_profile")
         addChildView("NotificationsViewController",  titleOfChildren: "Notifications",iconName: "notification")
         addChildView("LoginViewController",          titleOfChildren: "Log out",      iconName: "logout")
@@ -110,8 +111,10 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             
         }else if (viewIdentifier == "MyListingsRealtorViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("MyListingsRealtorViewController") as! MyListingsRealtorViewController
-        }else if (viewIdentifier == "MyListingsBuyerViewController") {
-            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("MyListingsBuyerViewController") as! MyListingsBuyerViewController
+        }else if (viewIdentifier == "SeeItLaterBuyerViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("SeeItLaterBuyerViewController") as! SeeItLaterBuyerViewController
+        }else if (viewIdentifier == "PastListingsBuyerViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("PastListingsBuyerViewController") as! PastListingsBuyerViewController
         }
     
         if(viewIdentifier != nil && viewIdentifier!.isEmpty) {

@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		102526F11CA080FE00EE2DB0 /* MyListingsBuyerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102526F01CA080FE00EE2DB0 /* MyListingsBuyerViewController.swift */; };
-		102526F31CA082CD00EE2DB0 /* MyListingsBuyerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102526F21CA082CD00EE2DB0 /* MyListingsBuyerTableViewCell.swift */; };
+		102526F11CA080FE00EE2DB0 /* SeeItLaterBuyerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102526F01CA080FE00EE2DB0 /* SeeItLaterBuyerViewController.swift */; };
+		102526F31CA082CD00EE2DB0 /* SeeItLaterBuyerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102526F21CA082CD00EE2DB0 /* SeeItLaterBuyerTableViewCell.swift */; };
+		1040F5441CAC47910011E497 /* PastListingsBuyerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1040F5431CAC47910011E497 /* PastListingsBuyerViewController.swift */; };
+		1040F5461CAC47CB0011E497 /* PastListingBuyerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1040F5451CAC47CB0011E497 /* PastListingBuyerTableViewCell.swift */; };
 		107A40331C848C1A001C96A8 /* SeeitNowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107A40321C848C1A001C96A8 /* SeeitNowTableViewCell.swift */; };
 		107A40351C84C31A001C96A8 /* PropertyRealtorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107A40341C84C31A001C96A8 /* PropertyRealtorManager.swift */; };
 		107DA4781C9328970069FD07 /* OneShotLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107DA4771C9328970069FD07 /* OneShotLocationManager.swift */; };
@@ -96,8 +98,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		102526F01CA080FE00EE2DB0 /* MyListingsBuyerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyListingsBuyerViewController.swift; sourceTree = "<group>"; };
-		102526F21CA082CD00EE2DB0 /* MyListingsBuyerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyListingsBuyerTableViewCell.swift; sourceTree = "<group>"; };
+		102526F01CA080FE00EE2DB0 /* SeeItLaterBuyerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeItLaterBuyerViewController.swift; sourceTree = "<group>"; };
+		102526F21CA082CD00EE2DB0 /* SeeItLaterBuyerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeItLaterBuyerTableViewCell.swift; sourceTree = "<group>"; };
+		1040F5431CAC47910011E497 /* PastListingsBuyerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastListingsBuyerViewController.swift; sourceTree = "<group>"; };
+		1040F5451CAC47CB0011E497 /* PastListingBuyerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastListingBuyerTableViewCell.swift; sourceTree = "<group>"; };
 		107A40321C848C1A001C96A8 /* SeeitNowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeitNowTableViewCell.swift; sourceTree = "<group>"; };
 		107A40341C84C31A001C96A8 /* PropertyRealtorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyRealtorManager.swift; sourceTree = "<group>"; };
 		107DA4771C9328970069FD07 /* OneShotLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneShotLocationManager.swift; sourceTree = "<group>"; };
@@ -219,8 +223,9 @@
 				107A40321C848C1A001C96A8 /* SeeitNowTableViewCell.swift */,
 				108795981C970A7500B3D6FA /* AppointmentsTableViewCell.swift */,
 				1087959A1C97367A00B3D6FA /* MyListingsRealtorTableViewCell.swift */,
-				102526F21CA082CD00EE2DB0 /* MyListingsBuyerTableViewCell.swift */,
+				102526F21CA082CD00EE2DB0 /* SeeItLaterBuyerTableViewCell.swift */,
 				10B360651CA9B45800B73D01 /* FeedBacksTableViewCell.swift */,
+				1040F5451CAC47CB0011E497 /* PastListingBuyerTableViewCell.swift */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -261,8 +266,9 @@
 				68C265831C7B5608006ADF61 /* ListBuyersViewController.swift */,
 				6861249D1C7D019900F17670 /* NotificationsViewController.swift */,
 				108795961C97069D00B3D6FA /* AppointmentsViewController.swift */,
-				102526F01CA080FE00EE2DB0 /* MyListingsBuyerViewController.swift */,
+				102526F01CA080FE00EE2DB0 /* SeeItLaterBuyerViewController.swift */,
 				10B360631CA9B3A900B73D01 /* FeedBacksViewController.swift */,
+				1040F5431CAC47910011E497 /* PastListingsBuyerViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -518,11 +524,12 @@
 				684D08481C6534B900BF086E /* MenuTableViewCell.swift in Sources */,
 				6811408B1C3AC3280068AE1C /* SelectRoleViewController.swift in Sources */,
 				686E8F431C3C2C2300F5FE01 /* BuyerHomeViewController.swift in Sources */,
+				1040F5461CAC47CB0011E497 /* PastListingBuyerTableViewCell.swift in Sources */,
 				684D08491C6534B900BF086E /* ZFRippleButton.swift in Sources */,
 				6885E5F11C57021200CCCA19 /* SRWebClient.swift in Sources */,
 				6811409F1C3AC6940068AE1C /* RealtorForm3ViewController.swift in Sources */,
 				683983211C74BCE900129EA5 /* ListRealtorsTableViewCell.swift in Sources */,
-				102526F11CA080FE00EE2DB0 /* MyListingsBuyerViewController.swift in Sources */,
+				102526F11CA080FE00EE2DB0 /* SeeItLaterBuyerViewController.swift in Sources */,
 				6897A12A1C244B5F00AB3A0A /* ViewController.swift in Sources */,
 				686E8F3F1C3C096300F5FE01 /* SwiftyJSON.swift in Sources */,
 				683F7F271C3D7E4700CA0A0C /* FeedBack2ViewController.swift in Sources */,
@@ -536,7 +543,7 @@
 				10B360621CA3267600B73D01 /* BuyerForm5ViewController.swift in Sources */,
 				68663D2F1C3C931B00460D42 /* FullPropertyDetailsViewController.swift in Sources */,
 				108795991C970A7500B3D6FA /* AppointmentsTableViewCell.swift in Sources */,
-				102526F31CA082CD00EE2DB0 /* MyListingsBuyerTableViewCell.swift in Sources */,
+				102526F31CA082CD00EE2DB0 /* SeeItLaterBuyerTableViewCell.swift in Sources */,
 				685E527F1C402B100022718B /* Request.swift in Sources */,
 				681140AF1C3AC8360068AE1C /* BeaconStoreViewController.swift in Sources */,
 				681140A91C3AC7C30068AE1C /* MyListingsRealtorViewController.swift in Sources */,
@@ -552,6 +559,7 @@
 				6897A1301C244B5F00AB3A0A /* See_It_Pronto.xcdatamodeld in Sources */,
 				681140A71C3AC7950068AE1C /* RealtorDashboardViewController.swift in Sources */,
 				68C265841C7B5608006ADF61 /* ListBuyersViewController.swift in Sources */,
+				1040F5441CAC47910011E497 /* PastListingsBuyerViewController.swift in Sources */,
 				683F7F211C3D62FA00CA0A0C /* AgentConfirmationViewController.swift in Sources */,
 				10B360641CA9B3A900B73D01 /* FeedBacksViewController.swift in Sources */,
 			);

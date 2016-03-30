@@ -50,7 +50,7 @@ class NotificationsViewController: UIViewController {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         let notification = JSON(self.notifications[indexPath.row])
         cell.detailTextLabel?.text = notification["created_at_nice"].stringValue
-        cell.textLabel!.text = notification["description"].stringValue
+        cell.textLabel!.text = notification["title"].stringValue
         if(notification["type"] == "see_it_later" || notification["type"] == "see_it_pronto") {
             cell.textLabel!.text = notification["title"].stringValue
         }

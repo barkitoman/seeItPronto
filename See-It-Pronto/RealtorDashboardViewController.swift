@@ -62,6 +62,9 @@ class RealtorDashboardViewController: UIViewController {
     }
     
     @IBAction func btnFeedBack(sender: AnyObject) {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let viewController = mainStoryboard.instantiateViewControllerWithIdentifier("FeedBacksViewController") as! FeedBacksViewController
+        self.navigationController?.showViewController(viewController, sender: nil)
     }
     
     

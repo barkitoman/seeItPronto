@@ -81,7 +81,7 @@ class PropertyDetailsViewController: UIViewController {
             if(!result["images"][0].stringValue.isEmpty) {
                 Utility().showPhoto(self.photo, imgPath: result["images"][0].stringValue)
             }
-            self.lblPrice.text      = result["price"].stringValue
+            self.lblPrice.text      = Utility().formatCurrency(result["price"].stringValue)
             self.lblAddress.text    = result["address"].stringValue
             self.lblBedrooms.text   = result["bedrooms"].stringValue
             self.lblBathrooms.text  = result["bathrooms"].stringValue
