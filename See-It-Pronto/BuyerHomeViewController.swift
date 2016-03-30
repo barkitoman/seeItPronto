@@ -19,7 +19,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var txtSearch: UITextField!
     
-    let autocompleteTableView = UITableView(frame: CGRectMake(0,110,320,120), style: UITableViewStyle.Plain)
+    let autocompleteTableView = UITableView(frame: CGRectMake(0,110,320,210), style: UITableViewStyle.Plain)
     var autocompleteUrls:NSMutableArray! = NSMutableArray()
     
     override func viewDidLoad() {
