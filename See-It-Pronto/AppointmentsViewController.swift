@@ -58,10 +58,18 @@ class AppointmentsViewController: UIViewController {
         let state = appoiment["showing_status"].stringValue
         cell.lblState.text = self.getState(state)
         cell.niceDate.text = appoiment["nice_date"].stringValue
-        if(!appoiment["property"][0]["image"].stringValue.isEmpty) {
-            Utility().showPhoto(cell.propertyImage, imgPath: appoiment["property"][0]["image"].stringValue)
+        let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+appoiment["property"][0]["id"].stringValue+"/1"
+        if cell.propertyImage.image == nil {
+            Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
         }
         return cell
+    }
+    
+    func loadImage(img:UIImageView,let response: NSData) {
+        let result = JSON(data: response)
+        dispatch_async(dispatch_get_main_queue()) {
+           Utility().showPhoto(img, imgPath: result[0]["url"].stringValue)
+        }
     }
     
     func getState(state:String)->String {
@@ -98,7 +106,7 @@ class AppointmentsViewController: UIViewController {
     func findAppoiments() {
         let userId = User().getField("id")
         let role   = User().getField("role")
-        let url = AppConfig.APP_URL+"/list_showings/\(userId)/\(role)/"+String(self.stepPage)+"/?page="+String(self.countPage + 1)
+        let url    = AppConfig.APP_URL+"/list_showings/\(userId)/\(role)/"+String(self.stepPage)+"/?page="+String(self.countPage + 1)
         Request().get(url, successHandler: {(response) in self.loadAppoiments(response)})
     }
     

@@ -121,7 +121,7 @@ class CongratulationsViewController: UIViewController {
         if(!image.isEmpty) {
             Utility().showPhoto(self.photo, imgPath: image)
         }
-        self.lblPrice.text   = Property().getField("price")
+        self.lblPrice.text   = Utility().formatCurrency(Property().getField("price"))
         self.lblAddress.text = Property().getField("address")
         var description = ""
         if(!Property().getField("bedrooms").isEmpty) {

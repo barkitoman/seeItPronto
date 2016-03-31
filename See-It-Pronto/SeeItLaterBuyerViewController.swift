@@ -60,10 +60,18 @@ class SeeItLaterBuyerViewController: UIViewController {
         cell.lblAddress.text  = showing["property"][0]["address"].stringValue
         cell.lblPrice.text = Utility().formatCurrency(showing["property"][0]["price"].stringValue)
         cell.lblNiceDate.text = showing["nice_date"].stringValue
-        if(!showing["property"][0]["image"].stringValue.isEmpty) {
-            Utility().showPhoto(cell.propertyImage, imgPath: showing["property"][0]["image"].stringValue)
+        let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+showing["property"][0]["id"].stringValue+"/1"
+        if cell.propertyImage.image == nil {
+            Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
         }
         return cell
+    }
+    
+    func loadImage(img:UIImageView,let response: NSData) {
+        let result = JSON(data: response)
+        dispatch_async(dispatch_get_main_queue()) {
+            Utility().showPhoto(img, imgPath: result[0]["url"].stringValue)
+        }
     }
     
     //Pagination

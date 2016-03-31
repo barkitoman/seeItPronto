@@ -19,7 +19,7 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     var propertyId:String = ""
     @IBOutlet weak var webView: UIWebView!
     
-    let autocompleteTableView = UITableView(frame: CGRectMake(0,70,320,120), style: UITableViewStyle.Plain)
+    let autocompleteTableView = UITableView(frame: CGRectMake(0,110,320,210), style: UITableViewStyle.Plain)
     var autocompleteUrls:NSMutableArray! = NSMutableArray()
     
     override func viewDidLoad() {

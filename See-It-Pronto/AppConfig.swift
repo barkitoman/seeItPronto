@@ -15,7 +15,7 @@ struct AppConfig {
     //0 en espera, 1 aceptado, 2 rechazado, 3 completado, 4 cancelado
     static var SHOWING_CANCELED_STATUS = "4"
     static var SHOWING_WAIT_SECONDS    = 20
-    static var MODE                    = "DEVELOP" //PROD, DEVELOP
+    static var MODE                    = "PROD" //PROD, DEVELOP
 
 }
 

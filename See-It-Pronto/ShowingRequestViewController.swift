@@ -46,6 +46,8 @@ class ShowingRequestViewController: UIViewController {
         navigationController?.popViewControllerAnimated(true)
     }
     
+    
+    
     @IBAction func btnYes(sender: AnyObject) {
         let url          = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         var params       = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=1"
@@ -111,6 +113,7 @@ class ShowingRequestViewController: UIViewController {
             var description     = result["property"]["address"].stringValue+" $"+result["property"]["price"].stringValue
             description         = description+" "+result["property"]["bedrooms"].stringValue+"Br / "+result["property"]["bathrooms"].stringValue+"Ba"
             self.lblPropertyDescription.text = description
+            self.showingInstructions.text = result["realtor_properties"]["showing_instruction"].stringValue
             if(!result["buyer"]["url_image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.buyerPhoto, imgPath: result["buyer"]["url_image"].stringValue)
             }
@@ -123,19 +126,22 @@ class ShowingRequestViewController: UIViewController {
     
     func statusMessage() {
         var message = ""
-        if(self.viewData["showings"]["status"].int == 4) {
+        if(self.viewData == nil) {
+            message = "Sorry, the request has been removed"
+            
+        }else if(self.viewData["showing"]["showing_status"].int == 4) {
             message = "This showing request has been canceled"
             
-        }else if(self.viewData["showings"]["status"].int == 3) {
+        }else if(self.viewData["showing"]["showing_status"].int == 3) {
             message = "This showing request has been completed"
             
-        }else if(self.viewData["showings"]["status"].int == 2) {
+        }else if(self.viewData["showing"]["showing_status"].int == 2) {
             message = "This showing request has been rejected"
             
-        }else if(self.viewData["showings"]["status"].int == 2) {
+        }else if(self.viewData["showing"]["showing_status"].int == 1) {
             message = "This showing request has been accepted"
         }
-        if(self.viewData["showings"]["status"].int != nil && self.viewData["showings"]["status"].int != 0) {
+        if(!message.isEmpty) {
             let alertController = UIAlertController(title:"Message", message: message, preferredStyle: .Alert)
             let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
                 UIAlertAction in
