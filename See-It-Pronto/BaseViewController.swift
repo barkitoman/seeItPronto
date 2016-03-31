@@ -44,7 +44,6 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     }
     
     func menuRealtor() {
-        
         addChildView("RealtorHomeViewController",     titleOfChildren: "Home",          iconName: "home")
         addChildView("AppointmentsViewController",    titleOfChildren: "Appointments",  iconName: "appoiments")
         addChildView("FeedBacksViewController",       titleOfChildren: "Feedbacks",     iconName: "feedbacks")
@@ -53,7 +52,6 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         addChildView("ListBuyersViewController",      titleOfChildren: "Buyers",        iconName: "buyer")
         addChildView("RealtorForm1ViewController",    titleOfChildren: "Edit Profile",  iconName: "edit_profile")
         addChildView("NotificationsViewController",   titleOfChildren: "Notifications", iconName: "notification")
-        addChildView("RealtorDashboardViewController",titleOfChildren: "Dashboard",     iconName: "dashboard")
         addChildView("LoginViewController",           titleOfChildren: "Log out",       iconName: "logout")
     }
     
