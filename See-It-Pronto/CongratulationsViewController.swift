@@ -59,9 +59,9 @@ class CongratulationsViewController: UIViewController {
     func canceledNotificationParams(var params:String)->String {
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+self.viewData["showing"]["realtor_id"].stringValue
-        params = params+"&title=Showing Request Cancelled"
+        params = params+"&title=Showing request cancelled"
         params = params+"&description=User \(fullUsername) cancelled the showing request"
-        params = params+"&parent_id="+self.viewData["showing"]["id"].stringValue+"&type=showing_cancelled&parent_type=showings"
+        params = params+"&parent_id="+self.viewData["showing"]["id"].stringValue+"&notification_type=showing_cancelled&parent_type=showings"
         return params
     }
     

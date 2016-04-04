@@ -17,6 +17,7 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     @IBOutlet weak var searchTextField: UITextField!
     var viewData:JSON    = []
     var propertyId:String = ""
+    var executeFind = true
     @IBOutlet weak var webView: UIWebView!
     
     let autocompleteTableView = UITableView(frame: CGRectMake(0,110,320,210), style: UITableViewStyle.Plain)
@@ -118,9 +119,12 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     }
     
     func findproperties(substring:String) {
-        let urlString = "\(AppConfig.APP_URL)/real_state_property_basics/find_by_address/\(substring)"
-        let url = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-        Request().get(url!, successHandler: {(response) in self.loadProperties(response)})
+        if(self.executeFind == true) {
+            self.executeFind = false
+            let urlString = "\(AppConfig.APP_URL)/real_state_property_basics/find_by_address/\(substring)"
+            let url = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+            Request().get(url!, successHandler: {(response) in self.loadProperties(response)})
+        }
     }
     
     func loadProperties(let response: NSData) {
@@ -132,6 +136,7 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
                 self.autocompleteUrls.addObject(jsonObject)
             }
             self.autocompleteTableView.reloadData()
+            self.executeFind = true
         }
     }
     
