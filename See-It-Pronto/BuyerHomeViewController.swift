@@ -16,6 +16,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     
     var viewData:JSON     = []
     var propertyId:String = ""
+    var executeFind = true
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var txtSearch: UITextField!
     
@@ -117,9 +118,12 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     }
     
     func findproperties(substring:String) {
-        let urlString = "\(AppConfig.APP_URL)/real_state_property_basics/find_by_address/\(substring)"
-        let url = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-        Request().get(url!, successHandler: {(response) in self.loadProperties(response)})
+        if(self.executeFind == true) {
+            self.executeFind = false
+            let urlString = "\(AppConfig.APP_URL)/real_state_property_basics/find_by_address/\(substring)"
+            let url = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+            Request().get(url!, successHandler: {(response) in self.loadProperties(response)})
+        }
     }
     
     func loadProperties(let response: NSData) {
@@ -131,6 +135,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
                 self.autocompleteUrls.addObject(jsonObject)
             }
             self.autocompleteTableView.reloadData()
+            self.executeFind = true
         }
     }
         

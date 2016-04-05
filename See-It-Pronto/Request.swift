@@ -77,4 +77,28 @@ class Request {
         }
         task.resume();
     }
+    
+    func delete(url : String, var params : String, successHandler: (response: NSData) -> Void) {
+        let url = NSURL(string: url)
+        params+="&_method=DELETE"
+        let params = String(params);
+        let request = NSMutableURLRequest(URL: url!);
+        request.HTTPMethod = "POST"
+        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+            data, response, error in
+            //in case of error
+            if error != nil {
+                print("AN ERROR HAS OCURRED SENDING DELETE REQUEST!")
+                print(error); return
+            }
+            if(self.debug == true) {
+                let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
+                print(responseString)
+            }
+            successHandler(response: data!)
+        }
+        task.resume();
+    }
 }

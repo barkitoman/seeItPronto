@@ -78,6 +78,10 @@ class PropertyDetailsViewController: UIViewController {
     func showPropertydetails(let response: NSData) {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
+            let propertyId = result["id"].stringValue
+            if(propertyId.isEmpty) {
+                self.propertyNoExistMessage()
+            }
             if(!result["images"][0].stringValue.isEmpty) {
                 Utility().showPhoto(self.photo, imgPath: result["images"][0].stringValue)
             }
@@ -91,5 +95,15 @@ class PropertyDetailsViewController: UIViewController {
             self.lblYearBuilt.text  = result["year_built"].stringValue
             Property().saveIfExists(result)
         }
+    }
+    
+    func propertyNoExistMessage() {
+        let alertController = UIAlertController(title:"Message", message: "The property is not available at this time", preferredStyle: .Alert)
+        let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            Utility().goHome(self)
+        }
+        alertController.addAction(homeAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
 }

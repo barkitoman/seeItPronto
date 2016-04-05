@@ -79,7 +79,7 @@ class PropertyRealtor {
         newItem.url_image    = image
         newItem.rating       = propertyData["rating"].stringValue
         newItem.showing_rate = propertyData["showing_rate"].stringValue
-        newItem.brokeragent  = propertyData["brokeragent"].stringValue
+        newItem.brokeragent  = propertyData["brokerage"].stringValue
         newItem.travel_range = propertyData["travel_range"].stringValue
         newItem.company      = propertyData["company"].stringValue
         newItem.phone        = propertyData["phone"].stringValue

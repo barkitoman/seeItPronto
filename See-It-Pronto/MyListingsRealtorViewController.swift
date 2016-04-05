@@ -38,7 +38,6 @@ class MyListingsRealtorViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-
     }
     
     @IBAction func btnBack(sender: AnyObject) {
@@ -48,7 +47,6 @@ class MyListingsRealtorViewController: UIViewController {
     @IBAction func btnSearchAgain(sender: AnyObject) {
         Utility().goHome(self)
     }
-    
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1

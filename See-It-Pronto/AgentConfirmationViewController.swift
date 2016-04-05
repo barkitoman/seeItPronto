@@ -100,7 +100,7 @@ class AgentConfirmationViewController: UIViewController {
             distance = distance.stringByReplacingOccurrencesOfString("mi",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         }
         
-        
+        self.lblBrokerAgent.text = PropertyRealtor().getField("brokeragent")
         self.lblShowingRate.text = (!showingRate.isEmpty) ? "$"+showingRate : ""
         self.lblDistance.text    = (!distance.isEmpty) ? distance+" mi" : ""
         self.lblRaringLabel.text = (!rating.isEmpty) ? rating+" of 5" : ""
