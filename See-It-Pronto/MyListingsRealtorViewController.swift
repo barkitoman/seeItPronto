@@ -59,23 +59,33 @@ class MyListingsRealtorViewController: UIViewController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MyListingsRealtorTableViewCell
         var listing = JSON(self.myListings[indexPath.row])
-        var description = listing["address"].stringValue+" $"+listing["price"].stringValue
-        description = description+" "+listing["bedrooms"].stringValue+"Br / "+listing["bathrooms"].stringValue+"Ba"
+        var description = listing["property"][0]["address"].stringValue+"\n"+Utility().formatCurrency(listing["property"][0]["price"].stringValue)
+        description = description+" "+listing["property"][0]["bedrooms"].stringValue+"Br / "+listing["property"][0]["bathrooms"].stringValue+"Ba"
         cell.lblInformation.text = description
-        if(!listing["image"].stringValue.isEmpty) {
-            Utility().showPhoto(cell.PropertyImage, imgPath: listing["image"].stringValue)
+        let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+listing["property"][0]["id"].stringValue+"/1"
+        if cell.PropertyImage.image == nil {
+            Request().get(url, successHandler: {(response) in self.loadImage(cell.PropertyImage, response: response)})
         }
-        cell.btnBeacon.tag = Int(listing["id"].stringValue)!
-        cell.btnBeacon.addTarget(self, action: "openBeaconView:", forControlEvents: .TouchUpInside)
+        if(!listing["property"][0]["id"].stringValue.isEmpty) {
+            cell.btnBeacon.tag = Int(listing["property"][0]["id"].stringValue)!
+            cell.btnBeacon.addTarget(self, action: "openBeaconView:", forControlEvents: .TouchUpInside)
         
-        cell.btnEdit.tag = Int(listing["id"].stringValue)!
-        cell.btnEdit.addTarget(self, action: "openEditView:", forControlEvents: .TouchUpInside)
-        if(listing["state_beacon"].int == 1) {
-            cell.swBeacon.on = true
+            cell.btnEdit.tag = Int(listing["property"][0]["id"].stringValue)!
+            cell.btnEdit.addTarget(self, action: "openEditView:", forControlEvents: .TouchUpInside)
+            if(listing["state_beacon"].int == 1) {
+                cell.swBeacon.on = true
+            }
+            cell.swBeacon.tag = Int(listing["property"][0]["id"].stringValue)!
+            cell.swBeacon.addTarget(self, action: "turnBeaconOnOff:", forControlEvents: .TouchUpInside)
         }
-        cell.swBeacon.tag = Int(listing["id"].stringValue)!
-        cell.swBeacon.addTarget(self, action: "turnBeaconOnOff:", forControlEvents: .TouchUpInside)
         return cell
+    }
+    
+    func loadImage(img:UIImageView,let response: NSData) {
+        let result = JSON(data: response)
+        dispatch_async(dispatch_get_main_queue()) {
+            Utility().showPhoto(img, imgPath: result[0]["url"].stringValue)
+        }
     }
     
     @IBAction func openBeaconView(sender:UIButton) {
@@ -131,7 +141,7 @@ class MyListingsRealtorViewController: UIViewController {
     func loadListings(let response: NSData){
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
-            for (_,subJson):(String, JSON) in result {
+            for (_,subJson):(String, JSON) in result["data"] {
                 let jsonObject: AnyObject = subJson.object
                 self.myListings.addObject(jsonObject)
             }

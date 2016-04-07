@@ -18,9 +18,6 @@ class ShowingRequestViewController: UIViewController {
     @IBOutlet weak var showingInstructions: UILabel!
     var showingId:String = ""
     
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.findShowing()
@@ -48,20 +45,57 @@ class ShowingRequestViewController: UIViewController {
     
     @IBAction func btnYes(sender: AnyObject) {
         let url          = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
-        var params       = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=1"
+        var params       = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=1&current_showing="+self.isCurrentShowing()
+        params           = params+"&user_id="+User().getField("id")
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         let type         = "showing_acepted"
         let title        = "Showing request accepted"
         let description  = "User \(fullUsername) Accepted your showing request"
         params           = self.notificationParams(params,type: type,title: title,descripcion: description)
-        Request().put(url, params:params,successHandler: {(response) in self.afterRequest(response, titleOption: "accepted, Please proceed to the property")});
+        Request().put(url, params:params,successHandler: {(response) in self.afterYesRequest(response)});
+    }
+    
+    func afterYesRequest(let response: NSData) {
+        let result = JSON(data: response)
+        if(result["result"].bool == true ) {
+            dispatch_async(dispatch_get_main_queue()) {
+                let alertController = UIAlertController(title:"Success", message: "The request has been accepted, Please proceed to the property", preferredStyle: .Alert)
+                let currentShowingAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                    if(self.viewData["showing"]["type"].stringValue == "see_it_pronto") {
+                        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                        let vc : CurrentShowingViewController = mainStoryboard.instantiateViewControllerWithIdentifier("CurrentShowingViewController") as! CurrentShowingViewController
+                        vc.showingId = self.showingId
+                        self.navigationController?.showViewController(vc, sender: nil)
+                    } else {
+                        Utility().goHome(self)
+                    }
+                }
+                alertController.addAction(currentShowingAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
+        } else {
+            var msg = "Error saving, please try later"
+            if(result["msg"].stringValue != "") {
+                msg = result["msg"].stringValue
+            }
+            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
+        }
+    }
+    
+    func isCurrentShowing()->String {
+        var out = "0"
+        if(self.viewData["showing"]["type"].stringValue == "see_it_pronto") {
+            out = "1"
+        }
+        return out
     }
     
     func notificationParams(var params:String, type:String, title:String, descripcion:String)->String {
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+self.viewData["showing"]["buyer_id"].stringValue
         params = params+"&title="+title
         params = params+"&description="+descripcion
-        params = params+"&parent_id="+self.viewData["showing"]["id"].stringValue+"&parent_type=showings&notificacion_type="+type
+        params = params+"&parent_id="+self.viewData["showing"]["id"].stringValue+"&parent_type=showings&notification_type="+type
         return params
     }
     
@@ -73,19 +107,24 @@ class ShowingRequestViewController: UIViewController {
         let title        = "Showing request rejected"
         let description  = "User \(fullUsername) is not available to show you the property at this time"
         params           = self.notificationParams(params,type: type,title: title,descripcion: description)
-        Request().put(url, params:params,successHandler: {(response) in self.afterRequest(response, titleOption: "rejected")});
+        Request().put(url, params:params,successHandler: {(response) in self.afterNoRequest(response)});
     }
     
-    func afterRequest(let response: NSData, titleOption:String) {
+    func afterNoRequest(let response: NSData) {
         let result = JSON(data: response)
         if(result["result"].bool == true ) {
             dispatch_async(dispatch_get_main_queue()) {
-                let alertController = UIAlertController(title:"Success", message: "The request has been "+titleOption, preferredStyle: .Alert)
+                let alertController = UIAlertController(title:"Success", message: "The request has been rejected", preferredStyle: .Alert)
                 let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
                     UIAlertAction in
                     Utility().goHome(self)
                 }
+                let backAction = UIAlertAction(title: "Back", style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
                 alertController.addAction(homeAction)
+                alertController.addAction(backAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
             }
         } else {
@@ -103,13 +142,12 @@ class ShowingRequestViewController: UIViewController {
     }
     
     func loadShowingData(let response: NSData) {
-        let result    = JSON(data: response)
-        print(result)
+        let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
             self.viewData = result
             let name = result["buyer"]["first_name"].stringValue+" "+result["buyer"]["last_name"].stringValue
             self.lblBuyerName.text = "User \(name) want to see it on \(result["showing"]["date"].stringValue)"
-            var description = result["property"]["address"].stringValue+" $"+result["property"]["price"].stringValue
+            var description = result["property"]["address"].stringValue+Utility().formatCurrency(result["property"]["price"].stringValue)
             description = description+" "+result["property"]["bedrooms"].stringValue+"Br / "+result["property"]["bathrooms"].stringValue+"Ba"
             self.lblPropertyDescription.text = description
             self.showingInstructions.text = result["realtor_properties"]["showing_instruction"].stringValue
@@ -142,9 +180,9 @@ class ShowingRequestViewController: UIViewController {
         }
         if(!message.isEmpty) {
             let alertController = UIAlertController(title:"Message", message: message, preferredStyle: .Alert)
-            let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+            let homeAction = UIAlertAction(title: "Back", style: UIAlertActionStyle.Default) {
                 UIAlertAction in
-                Utility().goHome(self)
+                self.navigationController?.popViewControllerAnimated(true)
             }
             alertController.addAction(homeAction)
             self.presentViewController(alertController, animated: true, completion: nil)

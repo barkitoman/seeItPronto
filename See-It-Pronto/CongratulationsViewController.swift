@@ -109,10 +109,12 @@ class CongratulationsViewController: UIViewController {
     }
 
     @IBAction func btnHome(sender: AnyObject) {
+        if self.congratulationTimer != nil { self.stopCongratulationTimer()}
         Utility().goHome(self)
     }
     
     @IBAction func btnSearchAgain(sender: AnyObject) {
+        if self.congratulationTimer != nil { self.stopCongratulationTimer()}
         Utility().goHome(self)
     }
     

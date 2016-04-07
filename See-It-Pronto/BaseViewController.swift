@@ -45,6 +45,10 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     
     func menuRealtor() {
         addChildView("RealtorHomeViewController",     titleOfChildren: "Home",          iconName: "home")
+        addChildView("CurrentShowingViewController",     titleOfChildren: "Current showing",          iconName: "current_showing")
+        
+        
+        
         addChildView("AppointmentsViewController",    titleOfChildren: "Appointments",  iconName: "appoiments")
         addChildView("FeedBacksViewController",       titleOfChildren: "Feedbacks",     iconName: "feedbacks")
         addChildView("MyListingsRealtorViewController",titleOfChildren: "My Listings",  iconName: "my_listings")
@@ -60,7 +64,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         addChildView("ListRealtorsViewController",   titleOfChildren: "Agents",       iconName: "realtor")
         addChildView("SeeItLaterBuyerViewController",titleOfChildren: "See it later", iconName: "my_listings")
         addChildView("PastListingsBuyerViewController",titleOfChildren: "Past listings",iconName: "past_listings")
-        addChildView("BuyerForm1ViewController",     titleOfChildren: "Edit Profile", iconName: "edit_profile")
+        addChildView("BuyerForm1ViewController",     titleOfChildren: "Edit profile", iconName: "edit_profile")
         addChildView("NotificationsViewController",  titleOfChildren: "Notifications",iconName: "notification")
         addChildView("LoginViewController",          titleOfChildren: "Log out",      iconName: "logout")
     }
@@ -111,14 +115,20 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             
         }else if (viewIdentifier == "MyListingsRealtorViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("MyListingsRealtorViewController") as! MyListingsRealtorViewController
+        
         }else if (viewIdentifier == "SeeItLaterBuyerViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("SeeItLaterBuyerViewController") as! SeeItLaterBuyerViewController
+        
         }else if (viewIdentifier == "PastListingsBuyerViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("PastListingsBuyerViewController") as! PastListingsBuyerViewController
+        
         }else if (viewIdentifier == "FeedBacksViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("FeedBacksViewController") as! FeedBacksViewController
+        
+        }else if (viewIdentifier == "CurrentShowingViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("CurrentShowingViewController") as! CurrentShowingViewController
         }
-    
+        
         if(viewIdentifier != nil && viewIdentifier!.isEmpty) {
             self.navigationController?.pushViewController(viewController, animated: true)
         } else {

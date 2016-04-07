@@ -106,7 +106,7 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
     func loadPropertyDetails(let response: NSData) {
         dispatch_async(dispatch_get_main_queue()) {
             let result = JSON(data: response)
-            var description = result["address"].stringValue+" $"+result["price"].stringValue
+            var description = result["address"].stringValue+Utility().formatCurrency(result["price"].stringValue)
             description     = description+" "+result["bedrooms"].stringValue+"Br / "
             description     = description+result["bathrooms"].stringValue+"Ba"
             self.propertyDescription.text = description

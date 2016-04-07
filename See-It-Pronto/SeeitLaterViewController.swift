@@ -56,6 +56,9 @@ class SeeitLaterViewController: UIViewController {
     }
     
     @IBAction func btnMyListing(sender: AnyObject) {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let viewController = mainStoryboard.instantiateViewControllerWithIdentifier("SeeItLaterBuyerViewController") as! SeeItLaterBuyerViewController
+        self.navigationController?.showViewController(viewController, sender: nil)
     }
     
     func showPropertydetails() {

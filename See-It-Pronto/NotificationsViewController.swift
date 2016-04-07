@@ -16,6 +16,7 @@ class NotificationsViewController: UIViewController {
     var maxRow    = 0    //maximum limit records of your parse table class
     var maxPage   = 0    //maximum page
     var notifications:NSMutableArray! = NSMutableArray()
+    var viewData:JSON = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,17 +61,16 @@ class NotificationsViewController: UIViewController {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let notification = JSON(self.notifications[indexPath.row])
         let role   = User().getField("role")
+        self.viewData = notification
+        
         if(role == "realtor" && (notification["type"] == "see_it_later" || notification["type"] == "see_it_pronto")) {
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            let viewController : ShowingRequestViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ShowingRequestViewController") as! ShowingRequestViewController
-            viewController.showingId = notification["parent_id"].stringValue
-            self.navigationController?.showViewController(viewController, sender: nil)
+                Utility().displayAlert(self,title: notification["title"].stringValue, message:notification["description"].stringValue, performSegue:"ShowingRequestDetail")
         } else {
             var title = "Notificacion"
             if(!notification["description"].stringValue.isEmpty) {
                 title = notification["title"].stringValue
             }
-            Utility().displayAlert(self,title: title, message:notification["description"].stringValue, performSegue:"")
+            Utility().displayAlert(self,title: title, message:notification["description"].stringValue, performSegue:"NotificationDetail")
         }
     }
     
@@ -108,6 +108,17 @@ class NotificationsViewController: UIViewController {
     
     @IBAction func btnBack(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "NotificationDetail") {
+            let view: NotificationDetailViewController = segue.destinationViewController as! NotificationDetailViewController
+            view.showingId  = self.viewData["parent_id"].stringValue
+        }
+        if (segue.identifier == "ShowingRequestDetail") {
+            let view: ShowingRequestViewController = segue.destinationViewController as! ShowingRequestViewController
+            view.showingId  = self.viewData["parent_id"].stringValue
+        }
     }
     
 }

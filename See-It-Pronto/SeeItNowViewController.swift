@@ -17,7 +17,7 @@ class SeeItNowViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var countPage = 0    //number of current page
-    var stepPage  = 20   //number of records by page
+    var stepPage  = 5   //number of records by page
     var maxRow    = 0    //maximum limit records of your parse table class
     var maxPage   = 0    //maximum page
     var realtors:NSMutableArray! = NSMutableArray()
