@@ -177,7 +177,11 @@ class ShowingRequestViewController: UIViewController {
             
         }else if(self.viewData["showing"]["showing_status"].int == 1) {
             message = "This showing request has been accepted"
+            
+        }else if(self.viewData["showing"]["expired"].stringValue == "true") {
+            message = "This showing request has expired on \(self.viewData["showing"]["nice_date"].stringValue)"
         }
+        
         if(!message.isEmpty) {
             let alertController = UIAlertController(title:"Message", message: message, preferredStyle: .Alert)
             let homeAction = UIAlertAction(title: "Back", style: UIAlertActionStyle.Default) {

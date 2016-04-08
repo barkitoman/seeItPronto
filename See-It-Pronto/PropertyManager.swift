@@ -16,6 +16,11 @@ class PropertyEntity: NSManagedObject {
     @NSManaged var address:String
     @NSManaged var id:String
     @NSManaged var image:String
+    @NSManaged var image2:String
+    @NSManaged var image3:String
+    @NSManaged var image4:String
+    @NSManaged var image5:String
+    @NSManaged var image6:String
     @NSManaged var price:String
     @NSManaged var est_payments:String
     @NSManaged var your_credits:String
@@ -80,6 +85,11 @@ class Property {
         newItem.address       = propertyData["address"].stringValue
         newItem.id            = propertyData["id"].stringValue
         newItem.image         = propertyData["images"][0].stringValue
+        newItem.image2        = propertyData["images"][1].stringValue
+        newItem.image3        = propertyData["images"][2].stringValue
+        newItem.image4        = propertyData["images"][3].stringValue
+        newItem.image5        = propertyData["images"][4].stringValue
+        newItem.image6        = propertyData["images"][5].stringValue
         newItem.price         = propertyData["price"].stringValue
         newItem.est_payments  = propertyData["est_payments"].stringValue
         newItem.your_credits  = propertyData["your_credits"].stringValue
