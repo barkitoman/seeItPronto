@@ -44,10 +44,6 @@ class MyListingsRealtorViewController: UIViewController {
         navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func btnSearchAgain(sender: AnyObject) {
-        Utility().goHome(self)
-    }
-    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }

@@ -68,12 +68,7 @@ class SeeItLaterBuyerViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
         let alertController = UIAlertController(title:"Action", message: "Select an action", preferredStyle: .Alert)
-        let closeAction = UIAlertAction(title: "Close", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            
-        }
         let deleteAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default) {
             UIAlertAction in
             self.cancelShowingRequest(indexPath)
@@ -81,6 +76,10 @@ class SeeItLaterBuyerViewController: UIViewController {
         let editAction = UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default) {
             UIAlertAction in
             self.showEditDatePicker(indexPath)
+        }
+        let closeAction = UIAlertAction(title: "Close", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
         alertController.addAction(deleteAction)
         alertController.addAction(editAction)
@@ -95,14 +94,11 @@ class SeeItLaterBuyerViewController: UIViewController {
             dateTime     = dateTime.stringByReplacingOccurrencesOfString(" +0000",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
             let showing = JSON(self.myListings[indexPath.row])
             let params = self.editRequestParams(showing, dateTime:dateTime)
-            var url = AppConfig.APP_URL+"/showings/"+showing["id"].stringValue
+            let url = AppConfig.APP_URL+"/showings/"+showing["id"].stringValue
             Request().put(url,params: params, successHandler: {(response) in })
-            let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! SeeItLaterBuyerTableViewCell
-            url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+showing["property"][0]["id"].stringValue+"/1"
-            if cell.propertyImage.image == nil {
-                Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
-            }
+            let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! SeeItLaterBuyerTableViewCell
             cell.lblNiceDate.text = dateTime
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
     }
     

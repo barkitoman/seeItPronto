@@ -60,6 +60,10 @@ class CurrentShowingViewController: UIViewController {
             if(self.viewData["showing"]["id"].stringValue.isEmpty) {
                 self.showingNotExistMessage()
             }
+            if(self.viewData["showing"]["showing_status"].int == 0
+                && (self.viewData["showing"]["type"] == "see_it_later" || self.viewData["showing"]["type"] == "see_it_pronto")) {
+                self.showingPendingMessage(self.viewData["showing"]["id"].stringValue)
+            }
             self.lblBathrooms.text   = result["property"]["bathrooms"].stringValue
             self.lblBedrooms.text    = result["property"]["bedrooms"].stringValue
             self.lblDescription.text = result["property"]["address"].stringValue
@@ -68,6 +72,23 @@ class CurrentShowingViewController: UIViewController {
             if(!result["property"]["image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.propertyImage, imgPath: result["property"]["image"].stringValue)
             }
+        }
+    }
+    
+    func showingPendingMessage(showingId:String) {
+        let role = User().getField("role")
+        if(role == "realtor") {
+            let alertController = UIAlertController(title:"Message", message: "This showing request is pending to be approved", preferredStyle: .Alert)
+            let goAction = UIAlertAction(title: "Go", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                let vc : ShowingRequestViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ShowingRequestViewController") as! ShowingRequestViewController
+                vc.showingId = showingId
+                self.navigationController?.showViewController(vc, sender: nil)
+            }
+            alertController.addAction(goAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
     
