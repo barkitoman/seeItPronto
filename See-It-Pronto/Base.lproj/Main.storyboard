@@ -7038,7 +7038,7 @@ $480,000
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pc3-Mp-1OK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4691" y="2358"/>
+            <point key="canvasLocation" x="4695" y="2374"/>
         </scene>
         <!--Beacon Store View Controller-->
         <scene sceneID="tsW-w9-H00">
