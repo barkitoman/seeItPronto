@@ -132,7 +132,9 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyListViewController") as! PropertyListViewController
         
         }else if (viewIdentifier == "ReadyToWorkViewController") {
-            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("ReadyToWorkViewController") as! ReadyToWorkViewController
+            let vc:ReadyToWorkViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ReadyToWorkViewController") as! ReadyToWorkViewController
+            vc.pageTitle = "Making money status"
+            viewController = vc
         }
         
         if(viewIdentifier != nil && viewIdentifier!.isEmpty) {

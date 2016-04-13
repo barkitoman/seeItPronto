@@ -15,9 +15,13 @@ class ReadyToWorkViewController: UIViewController {
     @IBOutlet weak var slTravelRate: UISlider!
     @IBOutlet weak var lblShowingRate: UILabel!
     @IBOutlet weak var lblTravelRate: UILabel!
+    @IBOutlet weak var lblCurrentState: UILabel!
+    @IBOutlet weak var lblTitle: UILabel!
+    var pageTitle = "Ready to work?"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.lblTitle.text = pageTitle
         self.findUserInfo()
     }
 
@@ -109,6 +113,11 @@ class ReadyToWorkViewController: UIViewController {
             if(!result["travel_range"].stringValue.isEmpty) {
                 self.slTravelRate.value = Float(result["travel_range"].stringValue)!
                 self.showRates("", traveRange: result["travel_range"].stringValue)
+            }
+            if(result["active_for_showing"].int == 1) {
+                self.lblCurrentState.text = "You are currently active"
+            } else {
+                self.lblCurrentState.text = "You are currently inactive"
             }
         }
     }
