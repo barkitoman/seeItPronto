@@ -67,8 +67,8 @@ class SeeitLaterViewController: UIViewController {
             if(!image.isEmpty) {
                 Utility().showPhoto(self.photo, imgPath: image)
             }
-            self.lblPrice.text   = Property().getField("price")
-            self.lblAddress.text  = Property().getField("address")
+            self.lblPrice.text   = Utility().formatCurrency(Property().getField("price"))
+            self.lblAddress.text = Property().getField("address")
             var description = ""
             if(!Property().getField("bedrooms").isEmpty) {
                 description += "Bed "+Property().getField("bedrooms")+"/"

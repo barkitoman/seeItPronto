@@ -56,7 +56,7 @@ class MyListingsRealtorViewController: UIViewController {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MyListingsRealtorTableViewCell
         var listing = JSON(self.myListings[indexPath.row])
         var description = listing["property"][0]["address"].stringValue+"\n"+Utility().formatCurrency(listing["property"][0]["price"].stringValue)
-        description = description+" "+listing["property"][0]["bedrooms"].stringValue+"Br / "+listing["property"][0]["bathrooms"].stringValue+"Ba"
+        description = description+" "+listing["property"][0]["bedrooms"].stringValue+"Bd / "+listing["property"][0]["bathrooms"].stringValue+"Ba"
         cell.lblInformation.text = description
         let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+listing["property"][0]["id"].stringValue+"/1"
         if cell.PropertyImage.image == nil {
@@ -138,8 +138,10 @@ class MyListingsRealtorViewController: UIViewController {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
             for (_,subJson):(String, JSON) in result["data"] {
-                let jsonObject: AnyObject = subJson.object
-                self.myListings.addObject(jsonObject)
+                if(!subJson["property"][0]["id"].stringValue.isEmpty) {
+                    let jsonObject: AnyObject = subJson.object
+                    self.myListings.addObject(jsonObject)
+                }
             }
             self.tableView.reloadData()
         }

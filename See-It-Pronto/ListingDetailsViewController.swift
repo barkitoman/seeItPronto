@@ -107,7 +107,7 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
         dispatch_async(dispatch_get_main_queue()) {
             let result = JSON(data: response)
             var description = result["address"].stringValue+Utility().formatCurrency(result["price"].stringValue)
-            description     = description+" "+result["bedrooms"].stringValue+"Br / "
+            description     = description+" "+result["bedrooms"].stringValue+"Bd / "
             description     = description+result["bathrooms"].stringValue+"Ba"
             self.propertyDescription.text = description
             if(!result["images"][0].stringValue.isEmpty) {
