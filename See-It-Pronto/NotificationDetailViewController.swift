@@ -52,7 +52,6 @@ class NotificationDetailViewController: UIViewController {
     
     func loadShowingData(let response: NSData) {
         let result = JSON(data: response)
-        print(result)
         dispatch_async(dispatch_get_main_queue()) {
             self.viewData = result
             self.lblBathrooms.text   = result["property"]["bathrooms"].stringValue

@@ -51,6 +51,7 @@ class Utility {
         let formatter = NSNumberFormatter()
         formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
         formatter.locale = NSLocale(localeIdentifier: "en_US")
+        formatter.maximumFractionDigits = 0 //remove cents
         let numberFromField = (NSString(string: currentString ).doubleValue)
         currentString  = formatter.stringFromNumber(numberFromField)!
         return currentString

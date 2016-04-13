@@ -44,17 +44,18 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     }
     
     func menuRealtor() {
-        addChildView("RealtorHomeViewController",     titleOfChildren: "Home",           iconName: "home")
-        addChildView("PropertyListViewController",    titleOfChildren: "List properties",iconName: "list_properties")
-        addChildView("CurrentShowingViewController",  titleOfChildren: "Current showing",iconName: "current_showing")
-        addChildView("AppointmentsViewController",    titleOfChildren: "Appointments",   iconName: "appoiments")
-        addChildView("FeedBacksViewController",       titleOfChildren: "Feedbacks",      iconName: "feedbacks")
-        addChildView("MyListingsRealtorViewController",titleOfChildren: "My Listings",   iconName: "my_listings")
-        addChildView("RealtorProfileViewController",  titleOfChildren: "My Profile",     iconName: "my_profile")
-        addChildView("ListBuyersViewController",      titleOfChildren: "Buyers",         iconName: "buyer")
-        addChildView("RealtorForm1ViewController",    titleOfChildren: "Edit Profile",   iconName: "edit_profile")
-        addChildView("NotificationsViewController",   titleOfChildren: "Notifications",  iconName: "notification")
-        addChildView("LoginViewController",           titleOfChildren: "Log out",        iconName: "logout")
+        addChildView("RealtorHomeViewController",      titleOfChildren: "Home",           iconName: "home")
+        addChildView("PropertyListViewController",     titleOfChildren: "List properties",iconName: "list_properties")
+        addChildView("CurrentShowingViewController",   titleOfChildren: "Current showing",iconName: "current_showing")
+        addChildView("AppointmentsViewController",     titleOfChildren: "Appointments",   iconName: "appoiments")
+        addChildView("FeedBacksViewController",        titleOfChildren: "Feedbacks",      iconName: "feedbacks")
+        addChildView("MyListingsRealtorViewController",titleOfChildren: "My Listings",    iconName: "my_listings")
+        //addChildView("RealtorProfileViewController",  titleOfChildren: "My Profile",    iconName: "my_profile")
+        addChildView("ListBuyersViewController",       titleOfChildren: "Buyers",         iconName: "buyer")
+        addChildView("RealtorForm1ViewController",     titleOfChildren: "My Profile",     iconName: "edit_profile")
+        addChildView("NotificationsViewController",    titleOfChildren: "Notifications",  iconName: "notification")
+        addChildView("ReadyToWorkViewController",      titleOfChildren: "Making money status",  iconName: "making_money")
+        addChildView("LoginViewController",            titleOfChildren: "Log out",        iconName: "logout")
     }
     
     func menuBuyer(){
@@ -126,8 +127,12 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         
         }else if (viewIdentifier == "CurrentShowingViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("CurrentShowingViewController") as! CurrentShowingViewController
+        
         }else if (viewIdentifier == "PropertyListViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyListViewController") as! PropertyListViewController
+        
+        }else if (viewIdentifier == "ReadyToWorkViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("ReadyToWorkViewController") as! ReadyToWorkViewController
         }
         
         if(viewIdentifier != nil && viewIdentifier!.isEmpty) {

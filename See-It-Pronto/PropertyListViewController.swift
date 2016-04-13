@@ -26,6 +26,7 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
+        self.webView.hidden = true
         manager = OneShotLocationManager()
         manager!.fetchWithCompletion {location, error in
             // fetch location or an error
@@ -48,14 +49,12 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
     
     func loadMap() {
         let url = AppConfig.APP_URL+"/get_current_location/\(User().getField("id"))?lat=\(self.latitude)&lon=\(self.longintude)"
-        print(url)
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         self.webView.loadRequest(request)
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
-        print("cargado correctamente...")
         self.findProperties()
     }
 
@@ -130,7 +129,7 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
         if (row == lastRow) && (row == pageLimit)  {
             self.countPage++
             print("Loading Page \(self.countPage) from \(self.maxPage)")
-            self.findProperties()
+            //self.findProperties()
         }
     }
     

@@ -86,7 +86,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
             view.viewData  = self.viewData
             
         }else if(segue.identifier == "LoginRealtor") {
-            let view: RealtorHomeViewController = segue.destinationViewController as! RealtorHomeViewController
+            let view: ReadyToWorkViewController = segue.destinationViewController as! ReadyToWorkViewController
             view.viewData  = self.viewData
         }
     }
