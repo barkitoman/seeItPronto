@@ -70,9 +70,9 @@ class CongratulationsViewController: UIViewController {
         if(result["result"].bool == true ) {
             dispatch_async(dispatch_get_main_queue()) {
                 let alertController = UIAlertController(title:"Success", message: "The request has been canceled", preferredStyle: .Alert)
-                let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+                let homeAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default) {
                     UIAlertAction in
-                    Utility().goHome(self)
+                    self.gotoSelectAnotherAgent()
                 }
                 alertController.addAction(homeAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
@@ -223,14 +223,17 @@ class CongratulationsViewController: UIViewController {
         }
         let selectAgentAction = UIAlertAction(title: "Select another", style: UIAlertActionStyle.Default) {
             UIAlertAction in
-            
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            let viewController : SeeItNowViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SeeItNowViewController") as! SeeItNowViewController
-            self.navigationController?.showViewController(viewController, sender: nil)
+            self.gotoSelectAnotherAgent()
         }
         alertController.addAction(homeAction)
         alertController.addAction(selectAgentAction)
         self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func gotoSelectAnotherAgent() {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let viewController : SeeItNowViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SeeItNowViewController") as! SeeItNowViewController
+        self.navigationController?.showViewController(viewController, sender: nil)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

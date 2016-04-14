@@ -101,7 +101,7 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
         if(result["result"].bool == true) {
             self.viewData = result
             self.uploadImage()
-            Utility().displayAlert(self,title: "Success", message:"The data have been saved correctly", performSegue:"FromBuyerForm2")
+            Utility().performSegue(self, performSegue: "FromBuyerForm2")
         } else {
             var msg = "Error saving, please try later"
             if(result["msg"].stringValue != "") {

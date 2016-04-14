@@ -10,9 +10,10 @@ import UIKit
 
 class ListBuyersViewController: UIViewController {
 
+    var viewData:JSON = []
     @IBOutlet weak var tableView: UITableView!
     var countPage = 0    //number of current page
-    var stepPage  = 20   //number of records by page
+    var stepPage  = 6   //number of records by page
     var maxRow    = 0    //maximum limit records of your parse table class
     var maxPage   = 0    //maximum page
     var buyers:NSMutableArray! = NSMutableArray()
@@ -62,6 +63,11 @@ class ListBuyersViewController: UIViewController {
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.viewData = JSON(self.buyers[indexPath.row])
+        self.performSegueWithIdentifier("showBuyerProfile", sender: self)
+    }
+    
     //Pagination
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath){
         let row = indexPath.row
@@ -78,7 +84,7 @@ class ListBuyersViewController: UIViewController {
     }
     
     func findBuyers() {
-        let url = AppConfig.APP_URL+"/list_buyers/"+String(self.stepPage)+"/?page="+String(self.countPage + 1)
+        let url = AppConfig.APP_URL+"/list_realtor_buyers/\(User().getField("id"))/"+String(self.stepPage)+"/?page="+String(self.countPage + 1)
         Request().get(url, successHandler: {(response) in self.loadBuyers(response)})
     }
     
@@ -89,7 +95,17 @@ class ListBuyersViewController: UIViewController {
                 let jsonObject: AnyObject = subJson.object
                 self.buyers.addObject(jsonObject)
             }
+            if(self.buyers.count == 0 && self.countPage == 0) {
+                Utility().displayAlertBack(self, title: "Message", message: "There are no buyers to show")
+            }
             self.tableView.reloadData()
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "showBuyerProfile") {
+            let view: BuyerProfileViewController = segue.destinationViewController as! BuyerProfileViewController
+            view.viewData  = self.viewData
         }
     }
 

@@ -87,7 +87,7 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
                 self.viewData = result["user"]
                 User().saveIfExists(result)
             }
-            Utility().displayAlert(self,title:"Success", message:"The data have been saved correctly", performSegue:"RealtorForm1")
+            Utility().performSegue(self, performSegue: "RealtorForm1")
         } else {
             var msg = "Error saving, please try later"
             if(result["msg"].stringValue != "") {

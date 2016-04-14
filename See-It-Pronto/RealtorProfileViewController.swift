@@ -76,9 +76,5 @@ class RealtorProfileViewController: UIViewController {
             }
         }
     }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
-    }
 
 }

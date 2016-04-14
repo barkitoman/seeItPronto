@@ -132,7 +132,7 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
         if(result["result"].bool == true) {
             self.viewData = result
             self.uploadImage()
-            Utility().displayAlert(self,title: "Success", message:"The data have been saved correctly", performSegue:"FromBuyerForm5")
+            Utility().performSegue(self, performSegue: "FromBuyerForm5")
         } else {
             var msg = "Error saving, please try later"
             if(result["msg"].stringValue != "") {
@@ -159,7 +159,6 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
     
     func loadDataToEdit(let response: NSData) {
         let result = JSON(data: response)
-        defer {
         dispatch_async(dispatch_get_main_queue()) {
             let preQualified = result["pre_qualified"].stringValue
             if(preQualified == "1") {
@@ -171,7 +170,6 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
             }
             let likeToBe = result["like_pre_qualification"].stringValue
             if(likeToBe == "1"){self.swLikeToBe.on = true}else{self.swLikeToBe.on = false}
-        }
         }
     }
     

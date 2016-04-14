@@ -44,10 +44,5 @@ class BuyerForm4ViewController: UIViewController {
         self.performSegueWithIdentifier("FormBuyer4", sender: self)
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "FormBuyer4") {
-    
-        }
-    }
 
 }

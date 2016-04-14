@@ -61,7 +61,23 @@ class PastListingsBuyerViewController: UIViewController {
         if cell.propertyImage.image == nil {
             Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
         }
+        
+        if(!showing["property"][0]["id"].stringValue.isEmpty) {
+            cell.btnSeeItAgain.tag = indexPath.row
+            cell.btnSeeItAgain.addTarget(self, action: "openPropertyDetailView:", forControlEvents: .TouchUpInside)
+        }
         return cell
+    }
+    
+    @IBAction func openPropertyDetailView(sender:UIButton) {
+        let showing = JSON(self.myListings[sender.tag])
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let viewController : PropertyDetailsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController
+        
+        let saveData: JSON =  ["id":showing["property"][0]["id"].stringValue]
+        Property().saveIfExists(saveData)
+        self.navigationController?.showViewController(viewController, sender:self)
+     
     }
     
     func loadImage(img:UIImageView,let response: NSData) {

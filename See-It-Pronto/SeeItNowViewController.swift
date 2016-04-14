@@ -127,6 +127,9 @@ class SeeItNowViewController: UIViewController {
                 let jsonObject: AnyObject = subJson.object
                 self.realtors.addObject(jsonObject)
             }
+            if(self.realtors.count == 0 && self.countPage == 0) {
+                Utility().displayAlert(self, title: "Message", message: "There are no agents available to show this property", performSegue: "")
+            }
             self.tableView.reloadData()
         }
     }

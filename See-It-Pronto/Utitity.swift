@@ -26,6 +26,24 @@ class Utility {
         }
     }
     
+    func displayAlertBack(controller:UIViewController, title:String, message:String){
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title:title, message: message, preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "Back", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                controller.navigationController?.popViewControllerAnimated(true)
+            }
+            alertController.addAction(okAction)
+            controller.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func performSegue(controller:UIViewController, performSegue:String) {
+        dispatch_async(dispatch_get_main_queue()) {
+            controller.performSegueWithIdentifier(performSegue, sender: self)
+        }
+    }
+    
     func showPhoto(img:UIImageView, imgPath:String){
         var url = NSURL(string: AppConfig.APP_URL+"/"+imgPath)
         if (imgPath.rangeOfString("http://") != nil || imgPath.rangeOfString("https://") != nil ){

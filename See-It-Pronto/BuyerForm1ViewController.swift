@@ -92,7 +92,7 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
                 self.viewData = result["user"]
                 User().saveIfExists(result)
             }
-            Utility().displayAlert(self,title: "Success", message:"The data have been saved correctly", performSegue:"FromBuyerForm1")
+            Utility().performSegue(self, performSegue: "FromBuyerForm1")
         } else {
             var msg = "Error saving, please try later"
             if(result["msg"].stringValue != "") {

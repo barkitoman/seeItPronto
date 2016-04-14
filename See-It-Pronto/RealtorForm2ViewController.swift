@@ -111,7 +111,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
         if(result["result"].bool == true) {
             self.viewData = result
             self.uploadImage()
-            Utility().displayAlert(self,title:"Success", message:"The data have been saved correctly", performSegue:"RealtorForm2")
+            Utility().performSegue(self, performSegue: "RealtorForm2")
         } else {
             var msg = "Error saving, please try later"
             if(result["msg"].stringValue != "") {

@@ -60,7 +60,7 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result
-            Utility().displayAlert(self,title:"Success", message:"The data have been saved correctly", performSegue:"RealtorForm3")
+            Utility().performSegue(self, performSegue: "RealtorForm3")
         } else {
             var msg = "Error saving, please try later"
             if(result["msg"].stringValue != "") {
