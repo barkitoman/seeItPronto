@@ -22,6 +22,8 @@ class SearchConfigEntity: NSManagedObject {
     @NSManaged var beds:String
     @NSManaged var baths:String
     @NSManaged var area:String
+    @NSManaged var property_class:String
+    @NSManaged var property_class_name:String
 }
 
 class SearchConfig {
@@ -78,6 +80,8 @@ class SearchConfig {
         newItem.beds                = searchConfigData["beds"].stringValue
         newItem.baths               = searchConfigData["baths"].stringValue
         newItem.area                = searchConfigData["area"].stringValue
+        newItem.property_class      = searchConfigData["property_class"].stringValue
+        newItem.property_class_name = searchConfigData["property_class_name"].stringValue
         do {
             try contxt.save()
         } catch let error as NSError {

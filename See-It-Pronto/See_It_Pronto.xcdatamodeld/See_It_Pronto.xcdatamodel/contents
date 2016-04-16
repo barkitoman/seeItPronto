@@ -48,6 +48,8 @@
         <attribute name="pool" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price_range_higher" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price_range_less" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="property_class" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="property_class_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type_property" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="user_id" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -69,7 +71,7 @@
         <element name="Property" positionX="-54" positionY="117" width="128" height="375"/>
         <element name="PropertyAction" positionX="-54" positionY="135" width="128" height="60"/>
         <element name="PropertyRealtor" positionX="-54" positionY="108" width="128" height="210"/>
-        <element name="SearchConfig" positionX="-63" positionY="54" width="128" height="180"/>
+        <element name="SearchConfig" positionX="-63" positionY="54" width="128" height="210"/>
         <element name="User" positionX="-63" positionY="-18" width="128" height="225"/>
     </elements>
 </model>

@@ -54,17 +54,29 @@ class PastListingsBuyerViewController: UIViewController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PastListingBuyerTableViewCell
         let showing = JSON(self.myListings[indexPath.row])
-        cell.lblAddress.text  = showing["property"][0]["address"].stringValue
-        cell.lblPrice.text = Utility().formatCurrency(showing["property"][0]["price"].stringValue)
-        cell.lblNiceDate.text = showing["nice_date"].stringValue
-        let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+showing["property"][0]["id"].stringValue+"/1"
-        if cell.propertyImage.image == nil {
-            Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
-        }
-        
         if(!showing["property"][0]["id"].stringValue.isEmpty) {
+            cell.lblAddress.text  = showing["property"][0]["address"].stringValue
+            cell.lblPrice.text = Utility().formatCurrency(showing["property"][0]["price"].stringValue)
+            cell.lblNiceDate.text = showing["nice_date"].stringValue
+            let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+showing["property"][0]["id"].stringValue+"/1"
+            if cell.propertyImage.image == nil {
+                Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
+            }
+            if(!showing["showing_rating_value"].stringValue.isEmpty) {
+                cell.showingRating.image = UIImage(named: showing["showing_rating_value"].stringValue+"stars")
+            }
+            if(!showing["home_rating_value"].stringValue.isEmpty) {
+                cell.propertyRating.image = UIImage(named: showing["home_rating_value"].stringValue+"stars")
+            }
+            if(!showing["user_rating_value"].stringValue.isEmpty) {
+                cell.agentRating.image = UIImage(named: showing["user_rating_value"].stringValue+"stars")
+            }
+        
             cell.btnSeeItAgain.tag = indexPath.row
             cell.btnSeeItAgain.addTarget(self, action: "openPropertyDetailView:", forControlEvents: .TouchUpInside)
+            
+            cell.btnComments.tag = indexPath.row
+            cell.btnComments.addTarget(self, action: "viewShowingComments:", forControlEvents: .TouchUpInside)
         }
         return cell
     }
@@ -78,6 +90,15 @@ class PastListingsBuyerViewController: UIViewController {
         Property().saveIfExists(saveData)
         self.navigationController?.showViewController(viewController, sender:self)
      
+    }
+    
+    @IBAction func viewShowingComments(sender:UIButton) {
+        let showing  = JSON(self.myListings[sender.tag])
+        print(showing)
+        var comments = "Showing Comments:\n"+showing["feedback_showing_comment"].stringValue+"\n\n"
+        comments     = comments+" Reviews for the agent:\n"+showing["feedback_realtor_comment"].stringValue
+        
+        Utility().displayAlert(self, title: "My comments", message: comments, performSegue: "")
     }
     
     func loadImage(img:UIImageView,let response: NSData) {
