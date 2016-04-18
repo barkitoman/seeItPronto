@@ -20,32 +20,24 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     @IBOutlet weak var beds4: UIButton!
     @IBOutlet weak var beds5: UIButton!
     
-    
     @IBOutlet weak var baths1: UIButton!
     @IBOutlet weak var baths2: UIButton!
     @IBOutlet weak var baths3: UIButton!
     @IBOutlet weak var baths4: UIButton!
     @IBOutlet weak var baths5: UIButton!
     
-    @IBOutlet weak var slPriceFrom: UISlider!
-    @IBOutlet weak var slPriceTo: UISlider!
+    
+    @IBOutlet weak var txtPriceFrom: UITextField!
+    @IBOutlet weak var txtPriceTo: UITextField!
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var swType: UISwitch!
     @IBOutlet weak var txtArea: UITextField!
     @IBOutlet weak var swPool: UISwitch!
 
-
-    
-
     @IBOutlet weak var lblBeds: UILabel!
     @IBOutlet weak var lblBaths: UILabel!
-    @IBOutlet weak var lblPriceFrom: UILabel!
-    @IBOutlet weak var lblPriceTo: UILabel!
     
-    
-    
-
     var priceRangeLess:String = "100000"
     var propertySelectedClass:String = "1"
     var propertySelectedClassName:String = "Single Family"
@@ -70,11 +62,75 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.addButtonTarget()
         self.btnClass.setTitle(self.propertySelectedClassName, forState: .Normal)
-        createPicker()
-        scrollView.contentSize.height = 1100
+        self.createPicker()
         self.selfDelegate()
-        self.loadSearcConfig()
+        self.findSearcConfig()
+        scrollView.contentSize.height = 1100
+    }
+    
+    func addButtonTarget() {
+        self.beds1.addTarget(self, action: "setBedrooms:", forControlEvents: .TouchUpInside)
+        self.beds2.addTarget(self, action: "setBedrooms:", forControlEvents: .TouchUpInside)
+        self.beds3.addTarget(self, action: "setBedrooms:", forControlEvents: .TouchUpInside)
+        self.beds4.addTarget(self, action: "setBedrooms:", forControlEvents: .TouchUpInside)
+        self.beds5.addTarget(self, action: "setBedrooms:", forControlEvents: .TouchUpInside)
+        
+        self.baths1.addTarget(self, action: "setBathrooms:", forControlEvents: .TouchUpInside)
+        self.baths2.addTarget(self, action: "setBathrooms:", forControlEvents: .TouchUpInside)
+        self.baths3.addTarget(self, action: "setBathrooms:", forControlEvents: .TouchUpInside)
+        self.baths4.addTarget(self, action: "setBathrooms:", forControlEvents: .TouchUpInside)
+        self.baths5.addTarget(self, action: "setBathrooms:", forControlEvents: .TouchUpInside)
+    }
+    
+    @IBAction func setBedrooms(button:UIButton) {
+        self.bedRooms = (button.titleLabel?.text)! as String
+        setBedsAndBaths("bedrooms", value: self.bedRooms)
+    }
+    
+    @IBAction func setBathrooms(button:UIButton) {
+        self.bathRooms = (button.titleLabel?.text)! as String
+        setBedsAndBaths("bathrooms", value: self.bathRooms)
+    }
+    
+    func setBedsAndBaths(type:String, value:String) {
+        if(type == "bedrooms") {
+            self.beds1.backgroundColor = UIColor(rgba: "#45B5DC")
+            self.beds2.backgroundColor = UIColor(rgba: "#45B5DC")
+            self.beds3.backgroundColor = UIColor(rgba: "#45B5DC")
+            self.beds4.backgroundColor = UIColor(rgba: "#45B5DC")
+            self.beds5.backgroundColor = UIColor(rgba: "#45B5DC")
+            if(value == "1") {
+                beds1.backgroundColor = UIColor(rgba: "#5cb85c")
+            } else if(value == "2") {
+                beds2.backgroundColor = UIColor(rgba: "#5cb85c")
+            } else if(value == "3") {
+                beds3.backgroundColor = UIColor(rgba: "#5cb85c")
+            } else if(value == "4") {
+                beds4.backgroundColor = UIColor(rgba: "#5cb85c")
+            } else if(value == "5") {
+                beds5.backgroundColor = UIColor(rgba: "#5cb85c")
+            }
+            
+        } else if(type == "bathrooms") {
+            self.baths1.backgroundColor = UIColor(rgba: "#45B5DC")
+            self.baths2.backgroundColor = UIColor(rgba: "#45B5DC")
+            self.baths3.backgroundColor = UIColor(rgba: "#45B5DC")
+            self.baths4.backgroundColor = UIColor(rgba: "#45B5DC")
+            self.baths5.backgroundColor = UIColor(rgba: "#45B5DC")
+            if(value == "1") {
+                baths1.backgroundColor = UIColor(rgba: "#5cb85c")
+            } else if(value == "2") {
+                baths2.backgroundColor = UIColor(rgba: "#5cb85c")
+            } else if(value == "3") {
+                baths3.backgroundColor = UIColor(rgba: "#5cb85c")
+            } else if(value == "4") {
+                baths4.backgroundColor = UIColor(rgba: "#5cb85c")
+            } else if(value == "5") {
+                baths5.backgroundColor = UIColor(rgba: "#5cb85c")
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -107,16 +163,6 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         picker.hidden ? openPicker() : closePicker()
     }
     
-    @IBAction func selectPriceFrom(sender: AnyObject) {
-        let priceRange = String(Int(roundf(slPriceFrom.value)))
-        self.showSlidersValues(priceRange, priceTo: "")
-    }
-    
-    @IBAction func selectPriceTo(sender: AnyObject) {
-        let priceRange = String(Int(roundf(slPriceTo.value)))
-        self.showSlidersValues("", priceTo: priceRange)
-    }
-    
     @IBAction func btnBack(sender: AnyObject) {
         self.goBack()
     }
@@ -130,7 +176,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         var params = "type_property="+Utility().switchValue(self.swType, onValue: "rental", offValue: "sale")+"&area="+self.txtArea.text!
             params = params+"&beds=\(self.bedRooms)&baths=\(self.bathRooms)"
             params = params+"&pool=\(Utility().switchValue(self.swPool, onValue: "1", offValue: "0"))"
-            params = params+"&price_range_less=\(Utility().sliderValue(self.slPriceFrom))&price_range_higher=\(Utility().sliderValue(self.slPriceTo))"
+            params = params+"&price_range_less=\(txtPriceFrom.text!)&price_range_higher=\(txtPriceTo.text!)"
             params = params+"&user_id=\(userId)&property_class=\(self.propertySelectedClass)&property_class_name=\(self.propertySelectedClassName)"
 
         var url = AppConfig.APP_URL+"/user_config_searches"
@@ -142,6 +188,11 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         } else {
             Request().post(url, params:params,successHandler: {(response) in self.afterPost(response)});
         }
+    }
+    
+    func formValidation()->Bool {
+     let out = true
+     return out
     }
     
     func afterPost(let response: NSData) {
@@ -160,56 +211,55 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         }
     }
     
-    func loadSearcConfig(){
+    func findSearcConfig(){
         let configSearchId = SearchConfig().getField("id")
-        if(!configSearchId.isEmpty) {
-            let type = SearchConfig().getField("type_property")
-            if(type == "1"){self.swType.on = true}else{self.swType.on = false}
-            let area = SearchConfig().getField("area")
-            self.txtArea.text = area
-            let beds = SearchConfig().getField("beds")
-            self.propertySelectedClass = SearchConfig().getField("property_class")
-            let className = SearchConfig().getField("property_class_name")
-            print(className)
-            if(!className.isEmpty) {
-                self.btnClass.setTitle(className, forState: .Normal)
-            }
-            self.propertySelectedClassName = className
-            if(!beds.isEmpty) {
-                //self.slBeds.value = Float(beds)!
-                //self.showSlidersValues(beds, baths: "", priceRange: "")
-            }
-            
-            let baths = SearchConfig().getField("baths")
-            if(!baths.isEmpty) {
-                //self.slBaths.value = Float(baths)!
-                //self.showSlidersValues("", baths: baths, priceRange: "")
-            }
-            let pool = SearchConfig().getField("pool")
-            if(pool == "1"){self.swPool.on = true}else{self.swPool.on = false}
-            
-            let priceFrom = SearchConfig().getField("price_range_less")
-            if(!priceFrom.isEmpty) {
-                self.slPriceFrom.value = Float(priceFrom)!
-                self.showSlidersValues(priceFrom, priceTo: "")
-            }
-            let priceTo = SearchConfig().getField("price_range_higher")
-            if(!priceTo.isEmpty) {
-                self.slPriceTo.value = Float(priceTo)!
-                self.showSlidersValues("", priceTo: priceTo)
-            }
-            
+        if(!configSearchId.isEmpty && 1 == 2) {
+            self.loadSearchConfig()
+        } else {
+            let url = AppConfig.APP_URL+"/get_search_config/\(User().getField("id"))"
+            Request().get(url, successHandler: {(response) in self.afterGet(response)});
         }
     }
     
-    func showSlidersValues(var priceFrom:String, var priceTo:String) {
-        if(!priceFrom.isEmpty){
-            priceFrom = Utility().formatCurrency(priceFrom)
-            self.lblPriceFrom.text  = "Your Preference: \(priceFrom)"
+    func loadSearchConfig() {
+        let type = SearchConfig().getField("type_property")
+        if(type == "1"){self.swType.on = true}else{self.swType.on = false}
+        let area = SearchConfig().getField("area")
+        self.txtArea.text = area
+        
+        self.propertySelectedClass = SearchConfig().getField("property_class")
+        let className = SearchConfig().getField("property_class_name")
+        if(!className.isEmpty) {
+            self.btnClass.setTitle(className, forState: .Normal)
         }
-        if(!priceTo.isEmpty){
-            priceTo = Utility().formatCurrency(priceTo)
-            self.lblPriceTo.text  = "Your Preference: \(priceTo)"
+        self.propertySelectedClassName = className
+        let beds = SearchConfig().getField("beds")
+        if(!beds.isEmpty) {
+            self.bedRooms = beds
+            setBedsAndBaths("bedrooms", value: beds)
+        }
+        
+        let baths = SearchConfig().getField("baths")
+        if(!baths.isEmpty) {
+            self.bathRooms = baths
+            setBedsAndBaths("bathrooms", value: baths)
+        }
+        let pool = SearchConfig().getField("pool")
+        if(pool == "1"){self.swPool.on = true}else{self.swPool.on = false}
+        
+        let priceFrom = SearchConfig().getField("price_range_less")
+        self.txtPriceFrom.text = priceFrom
+        let priceTo = SearchConfig().getField("price_range_higher")
+        self.txtPriceTo.text = priceTo
+    }
+    
+    func afterGet(let response: NSData) {
+        let result = JSON(data: response)
+        if(result["result"].bool == true ) {
+            dispatch_async(dispatch_get_main_queue()) {
+                SearchConfig().saveIfExists(result)
+                self.loadSearchConfig()
+            }
         }
     }
     
