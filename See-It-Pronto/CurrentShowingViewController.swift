@@ -12,9 +12,15 @@ class CurrentShowingViewController: UIViewController {
 
     @IBOutlet weak var propertyImage: UIImageView!
     @IBOutlet weak var lblPrice: UILabel!
-    @IBOutlet weak var lblDescription: UILabel!
-    @IBOutlet weak var lblBedrooms: UILabel!
-    @IBOutlet weak var lblBathrooms: UILabel!
+    @IBOutlet weak var address: UILabel!
+    @IBOutlet weak var propertyDescription: UILabel!
+
+  
+   
+    
+    
+
+    var manager: OneShotLocationManager?
     var showingId:String = ""
     var viewData:JSON = []
     
@@ -64,11 +70,18 @@ class CurrentShowingViewController: UIViewController {
                 && (self.viewData["showing"]["type"] == "see_it_later" || self.viewData["showing"]["type"] == "see_it_pronto")) {
                 self.showingPendingMessage(self.viewData["showing"]["id"].stringValue)
             }
-            self.lblBathrooms.text   = result["property"]["bathrooms"].stringValue
-            self.lblBedrooms.text    = result["property"]["bedrooms"].stringValue
-            self.lblDescription.text = result["property"]["address"].stringValue
-            self.lblPrice.text       = Utility().formatCurrency(result["property"]["price"].stringValue)
-            
+            self.address.text  = result["property"]["address"].stringValue
+            self.lblPrice.text = Utility().formatCurrency(result["property"]["price"].stringValue)
+            var description = ""
+            description += "Bed "+result["property"]["bedrooms"].stringValue+"/"
+            description += "Bath "+result["property"]["bathrooms"].stringValue+"/"
+            if(!result["property"]["property_type"].stringValue.isEmpty) {
+                description += result["property"]["property_type"].stringValue+"/"
+            }
+            if(!result["property"]["lot_size"].stringValue.isEmpty) {
+                description += result["property"]["lot_size"].stringValue
+            }
+            self.propertyDescription.text = description
             if(!result["property"]["image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.propertyImage, imgPath: result["property"]["image"].stringValue)
             }
@@ -101,5 +114,46 @@ class CurrentShowingViewController: UIViewController {
         alertController.addAction(homeAction)
         self.presentViewController(alertController, animated: true, completion: nil)
     }
-
+    
+    @IBAction func btnGetDirections(sender: AnyObject) {
+        manager = OneShotLocationManager()
+        manager!.fetchWithCompletion {location, error in
+            // fetch location or an error
+            if let loc  = location {
+                let lat = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.latitude)" : "26.189244"
+                let lng = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.longitude)": "-80.1824587"
+                var address = self.viewData["property"]["address"].stringValue
+                address = address.stringByReplacingOccurrencesOfString(" ", withString: "+", options: NSStringCompareOptions.LiteralSearch, range: nil)
+                let fullAddress = "http://maps.apple.com/?saddr=\(lat),\(lng)&daddr=\(address)"
+                UIApplication.sharedApplication().openURL(NSURL(string: fullAddress)!)
+            } else if let _ = error {
+                print("ERROR GETTING LOCATION")
+            }
+            // destroy the object immediately to save memory
+            self.manager = nil
+        }
+    }
+    
+    @IBAction func btnCallCustomer(sender: AnyObject) {
+        let phoneNumber = self.viewData["buyer"]["phone"].stringValue
+        if(phoneNumber.isEmpty) {
+            Utility().displayAlert(self,title: "Message", message:"The call can't be made at this time, because the customer hasn't confirmed his/her phone number.", performSegue:"")
+        } else {
+            callNumber(phoneNumber)
+        }
+    }
+    
+    private func callNumber(phoneNumber:String) {
+        if let phoneCallURL:NSURL = NSURL(string: "tel://\(phoneNumber)") {
+            let application:UIApplication = UIApplication.sharedApplication()
+            if (application.canOpenURL(phoneCallURL)) {
+                application.openURL(phoneCallURL);
+            }
+        }
+    }
+    
+    @IBAction func btnStartEndShowing(sender: AnyObject) {
+    }
+    
+    
 }

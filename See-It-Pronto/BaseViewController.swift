@@ -93,6 +93,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             url = url+"/"+token
             Request().get(url, successHandler: {(response) in })
             User().deleteAllData()
+            SearchConfig().deleteAllData()
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
             
         } else if (viewIdentifier == "ListRealtorsViewController") {

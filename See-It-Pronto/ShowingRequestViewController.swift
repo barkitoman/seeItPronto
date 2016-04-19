@@ -143,14 +143,15 @@ class ShowingRequestViewController: UIViewController {
     
     func loadShowingData(let response: NSData) {
         let result = JSON(data: response)
+        print(result)
         dispatch_async(dispatch_get_main_queue()) {
             self.viewData = result
             let name = result["buyer"]["first_name"].stringValue+" "+result["buyer"]["last_name"].stringValue
             self.lblBuyerName.text = "User \(name) want to see it on \(result["showing"]["date"].stringValue)"
-            var description = result["property"]["address"].stringValue+Utility().formatCurrency(result["property"]["price"].stringValue)
+            var description = result["property"]["address"].stringValue+" \(Utility().formatCurrency(result["property"]["price"].stringValue))"
             description = description+" "+result["property"]["bedrooms"].stringValue+"Bd / "+result["property"]["bathrooms"].stringValue+"Ba"
             self.lblPropertyDescription.text = description
-            self.showingInstructions.text = result["realtor_properties"]["showing_instruction"].stringValue
+            //self.showingInstructions.text = result["realtor_properties"]["showing_instruction"].stringValue
             if(!result["buyer"]["url_image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.buyerPhoto, imgPath: result["buyer"]["url_image"].stringValue)
             }
@@ -192,5 +193,32 @@ class ShowingRequestViewController: UIViewController {
             self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
-
+    
+    @IBAction func btnViewShowingInstructions(sender: AnyObject) {
+        let instructions = self.viewData["realtor_properties"]["showing_instruction"].stringValue
+        if(!instructions.isEmpty) {
+            Utility().displayAlert(self, title: "Showing instructions", message: instructions, performSegue: "")
+        } else {
+            Utility().displayAlert(self, title: "Message", message: "There are no showing instructions to show", performSegue: "")
+        }
+    }
+    
+    @IBAction func btnCallCustomer(sender: AnyObject) {
+        let phoneNumber = self.viewData["buyer"]["phone"].stringValue
+        if(phoneNumber.isEmpty) {
+            Utility().displayAlert(self,title: "Message", message:"The call can't be made at this time, because the customer hasn't confirmed his/her phone number.", performSegue:"")
+        } else {
+            callNumber(phoneNumber)
+        }
+    }
+    
+    private func callNumber(phoneNumber:String) {
+        if let phoneCallURL:NSURL = NSURL(string: "tel://\(phoneNumber)") {
+            let application:UIApplication = UIApplication.sharedApplication()
+            if (application.canOpenURL(phoneCallURL)) {
+                application.openURL(phoneCallURL);
+            }
+        }
+    }
+    
 }

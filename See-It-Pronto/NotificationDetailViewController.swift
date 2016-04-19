@@ -15,9 +15,12 @@ class NotificationDetailViewController: UIViewController {
 
     @IBOutlet weak var propertyImage: UIImageView!
     @IBOutlet weak var lblPrice: UILabel!
-    @IBOutlet weak var lblDescription: UILabel!
-    @IBOutlet weak var lblBedrooms: UILabel!
-    @IBOutlet weak var lblBathrooms: UILabel!
+    @IBOutlet weak var address: UILabel!
+ 
+    @IBOutlet weak var propertyDescription: UILabel!
+   
+    @IBOutlet weak var showingDate: UILabel!
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,11 +57,19 @@ class NotificationDetailViewController: UIViewController {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
             self.viewData = result
-            self.lblBathrooms.text   = result["property"]["bathrooms"].stringValue
-            self.lblBedrooms.text    = result["property"]["bedrooms"].stringValue
-            self.lblDescription.text = result["property"]["address"].stringValue
-            self.lblPrice.text       = Utility().formatCurrency(result["property"]["price"].stringValue)
-        
+            self.address.text  = result["property"]["address"].stringValue
+            self.lblPrice.text = Utility().formatCurrency(result["property"]["price"].stringValue)
+            var description = ""
+            description += "Bed "+result["property"]["bedrooms"].stringValue+"/"
+            description += "Bath "+result["property"]["bathrooms"].stringValue+"/"
+            if(!result["property"]["property_type"].stringValue.isEmpty) {
+                description += result["property"]["property_type"].stringValue+"/"
+            }
+            if(!result["property"]["lot_size"].stringValue.isEmpty) {
+                description += result["property"]["lot_size"].stringValue
+            }
+            self.propertyDescription.text = description
+            self.showingDate.text = result["showing"]["nice_date"].stringValue
             if(!result["property"]["image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.propertyImage, imgPath: result["property"]["image"].stringValue)
             }
