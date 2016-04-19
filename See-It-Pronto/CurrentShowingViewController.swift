@@ -15,11 +15,9 @@ class CurrentShowingViewController: UIViewController {
     @IBOutlet weak var address: UILabel!
     @IBOutlet weak var propertyDescription: UILabel!
 
-  
-   
+    @IBOutlet weak var btnCall: UIButton!
+    @IBOutlet weak var btnStartEndShowing: UIButton!
     
-    
-
     var manager: OneShotLocationManager?
     var showingId:String = ""
     var viewData:JSON = []

@@ -1661,6 +1661,8 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="address" destination="mTD-FZ-ABx" id="MtC-gE-xZ3"/>
+                        <outlet property="btnCall" destination="XfO-UI-wSo" id="REu-QX-B1t"/>
+                        <outlet property="btnStartEndShowing" destination="Om2-cy-7g6" id="3HV-g2-nbZ"/>
                         <outlet property="lblPrice" destination="Gqb-UA-eaq" id="q8V-05-xwE"/>
                         <outlet property="propertyDescription" destination="nwG-Uj-dSo" id="cWx-ry-i8C"/>
                         <outlet property="propertyImage" destination="MVk-KP-SKU" id="8kr-lX-Nqw"/>
