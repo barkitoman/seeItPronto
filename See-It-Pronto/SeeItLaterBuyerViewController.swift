@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EventKit
 
 class SeeItLaterBuyerViewController: UIViewController {
 
@@ -18,6 +19,7 @@ class SeeItLaterBuyerViewController: UIViewController {
     var myListings:NSMutableArray! = NSMutableArray()
     var viewData:JSON = []
     var propertyId:String = ""
+    var savedEventId:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,24 +69,24 @@ class SeeItLaterBuyerViewController: UIViewController {
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let alertController = UIAlertController(title:"Action", message: "Select an action", preferredStyle: .Alert)
-        let deleteAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let showing = JSON(self.myListings[indexPath.row])
+        let delete = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete"){(UITableViewRowAction,NSIndexPath) -> Void in
             self.cancelShowingRequest(indexPath)
         }
-        let editAction = UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
+        let edit = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Edit"){(UITableViewRowAction,NSIndexPath) -> Void in
             self.showEditDatePicker(indexPath)
         }
-        let closeAction = UIAlertAction(title: "Close", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        var calendar = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Add calendar"){(UITableViewRowAction,NSIndexPath) -> Void in
+            self.addShowingCalendar(indexPath)
         }
-        alertController.addAction(deleteAction)
-        alertController.addAction(editAction)
-        alertController.addAction(closeAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        if(!showing["buyer_calendar_id"].stringValue.isEmpty) {
+            calendar = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "View calendar"){(UITableViewRowAction,NSIndexPath) -> Void in
+                //self.addShowingCalendar(indexPath)
+            }
+        }
+        edit.backgroundColor = UIColor(rgba: "#45B5DC")
+        return [delete,edit, calendar]
     }
     
     func showEditDatePicker(indexPath:NSIndexPath){
@@ -144,6 +146,39 @@ class SeeItLaterBuyerViewController: UIViewController {
         return params
     }
     
+    func addShowingCalendar(indexPath:NSIndexPath) {
+        let store = EKEventStore()
+        var showing = JSON(self.myListings[indexPath.row])
+        store.requestAccessToEntityType(.Event) {(granted, error) in
+            if !granted { return }
+            let event = EKEvent(eventStore: store)
+            event.title = "See it pronto, showing request"
+            let dateString = "\(showing["date"].stringValue) EST"
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
+            let date: NSDate? = dateFormatter.dateFromString(dateString)
+            event.startDate = date!
+            print(event.startDate)
+            event.endDate = event.startDate.dateByAddingTimeInterval(60*60) //30 min long meeting
+            event.calendar = store.defaultCalendarForNewEvents
+            do {
+                try store.saveEvent(event, span: .ThisEvent, commit: true)
+                self.savedEventId = event.eventIdentifier
+                showing["buyer_calendar_id"].stringValue = self.savedEventId
+                self.myListings[indexPath.row] = showing.object
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.saveCalendarId(showing)
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                    self.gotoAppleCalendar(event.startDate)
+                }
+                //save event id to access this particular event later
+            } catch {
+                Utility().displayAlert(self, title: "Error", message: "Error saving, please try later", performSegue: "")
+            }
+        }
+    }
+    
     func loadImage(img:UIImageView,let response: NSData) {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
@@ -180,6 +215,18 @@ class SeeItLaterBuyerViewController: UIViewController {
             }
             self.tableView.reloadData()
         }
+    }
+    
+    func saveCalendarId(showing:JSON) {
+        let params = "id=\(showing["id"].stringValue)&buyer_calendar_id=\(self.savedEventId)"
+        let url = AppConfig.APP_URL+"/showings/\(showing["id"].stringValue)"
+        Request().put(url,params: params, successHandler: {(response) in })
+    }
+    
+    func gotoAppleCalendar(date: NSDate) {
+        let interval = date.timeIntervalSinceReferenceDate
+        let url = NSURL(string: "calshow:\(interval)")!
+        UIApplication.sharedApplication().openURL(url)
     }
 
 }
