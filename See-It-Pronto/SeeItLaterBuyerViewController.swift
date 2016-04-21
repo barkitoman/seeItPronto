@@ -71,7 +71,7 @@ class SeeItLaterBuyerViewController: UIViewController {
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let showing = JSON(self.myListings[indexPath.row])
-        let delete = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete"){(UITableViewRowAction,NSIndexPath) -> Void in
+        let delete = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Cancel"){(UITableViewRowAction,NSIndexPath) -> Void in
             self.cancelShowingRequest(indexPath)
         }
         let edit = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Edit"){(UITableViewRowAction,NSIndexPath) -> Void in
@@ -82,10 +82,14 @@ class SeeItLaterBuyerViewController: UIViewController {
         }
         if(!showing["buyer_calendar_id"].stringValue.isEmpty) {
             calendar = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "View calendar"){(UITableViewRowAction,NSIndexPath) -> Void in
-                //self.addShowingCalendar(indexPath)
+                let dateString = "\(showing["date"].stringValue) EST"
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
+                let date: NSDate? = dateFormatter.dateFromString(dateString)
+                self.gotoAppleCalendar(date!)
             }
         }
-        edit.backgroundColor = UIColor(rgba: "#45B5DC")
         return [delete,edit, calendar]
     }
     
@@ -114,7 +118,6 @@ class SeeItLaterBuyerViewController: UIViewController {
         return params
     }
     
-    
     func cancelShowingRequest(indexPath:NSIndexPath){
         let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to cancel this showing request?", preferredStyle: .Alert)
         let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
@@ -126,6 +129,7 @@ class SeeItLaterBuyerViewController: UIViewController {
             let url = AppConfig.APP_URL+"/showings/"+showing["id"].stringValue
             let params = self.cancelParams(showing)
             Request().put(url,params: params, successHandler: {(response) in })
+            self.removeAppleCalendarEvent(showing["buyer_calendar_id"].stringValue)
         }
         let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
             UIAlertAction in
@@ -149,6 +153,7 @@ class SeeItLaterBuyerViewController: UIViewController {
     func addShowingCalendar(indexPath:NSIndexPath) {
         let store = EKEventStore()
         var showing = JSON(self.myListings[indexPath.row])
+        //add showing to calendar
         store.requestAccessToEntityType(.Event) {(granted, error) in
             if !granted { return }
             let event = EKEvent(eventStore: store)
@@ -159,7 +164,6 @@ class SeeItLaterBuyerViewController: UIViewController {
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
             let date: NSDate? = dateFormatter.dateFromString(dateString)
             event.startDate = date!
-            print(event.startDate)
             event.endDate = event.startDate.dateByAddingTimeInterval(60*60) //30 min long meeting
             event.calendar = store.defaultCalendarForNewEvents
             do {
@@ -175,6 +179,23 @@ class SeeItLaterBuyerViewController: UIViewController {
                 //save event id to access this particular event later
             } catch {
                 Utility().displayAlert(self, title: "Error", message: "Error saving, please try later", performSegue: "")
+            }
+        }
+    }
+    
+    func removeAppleCalendarEvent(eventId:String) {
+        if(!eventId.isEmpty){
+            let store = EKEventStore()
+                store.requestAccessToEntityType(EKEntityType.Event) {(granted, error) in
+                if !granted { return }
+                let eventToRemove = store.eventWithIdentifier(eventId)
+                if eventToRemove != nil {
+                    do {
+                    try store.removeEvent(eventToRemove!, span: .ThisEvent, commit: true)
+                    } catch {
+                    // Display error to user
+                    }
+                }
             }
         }
     }

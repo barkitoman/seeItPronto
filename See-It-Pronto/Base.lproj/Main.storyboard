@@ -3111,15 +3111,15 @@ $480,000
                                     <constraint firstItem="rmc-5T-1W2" firstAttribute="centerX" secondItem="tDL-8g-2Qk" secondAttribute="centerX" id="GRA-1E-dJB"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="216" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HWd-Ty-t05">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="173" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HWd-Ty-t05">
                                 <rect key="frame" x="0.0" y="80" width="320" height="488"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="216" id="Ods-jg-vkQ" customClass="PastListingBuyerTableViewCell" customModule="See_It_Pronto" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="320" height="216"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="173" id="Ods-jg-vkQ" customClass="PastListingBuyerTableViewCell" customModule="See_It_Pronto" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="173"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ods-jg-vkQ" id="XXQ-1W-7Uv">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="215"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="172"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mSE-nK-Amd">
@@ -3130,7 +3130,7 @@ $480,000
                                                     </constraints>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fq7-E2-buj">
-                                                    <rect key="frame" x="92" y="8" width="228" height="199"/>
+                                                    <rect key="frame" x="92" y="8" width="228" height="156"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aug 15 15:30" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hKK-l3-oRC">
                                                             <rect key="frame" x="3" y="55" width="214" height="16"/>
@@ -3165,16 +3165,6 @@ $480,000
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wgq-dY-YUu">
-                                                            <rect key="frame" x="0.0" y="166" width="96" height="30"/>
-                                                            <color key="backgroundColor" red="0.27058823529999998" green="0.70980392160000005" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="96" id="0bf-8N-OLN"/>
-                                                            </constraints>
-                                                            <state key="normal" title="See it again">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                        </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$48.000.000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xhu-dk-oWy">
                                                             <rect key="frame" x="3" y="31" width="214" height="16"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -3187,38 +3177,25 @@ $480,000
                                                             <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbn-bQ-JKC">
-                                                            <rect key="frame" x="124" y="166" width="100" height="30"/>
-                                                            <color key="backgroundColor" red="0.27058823529999998" green="0.70980392160000005" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <state key="normal" title="Comments">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstItem="hKK-l3-oRC" firstAttribute="top" secondItem="Xhu-dk-oWy" secondAttribute="bottom" constant="8" id="1EM-JU-hha"/>
                                                         <constraint firstItem="tf6-lZ-AZa" firstAttribute="leading" secondItem="a7m-MN-ZAY" secondAttribute="leading" id="3As-Oz-Lx7"/>
-                                                        <constraint firstItem="bbn-bQ-JKC" firstAttribute="bottom" secondItem="wgq-dY-YUu" secondAttribute="bottom" id="4ga-Pg-pKg"/>
-                                                        <constraint firstItem="wgq-dY-YUu" firstAttribute="top" secondItem="tf6-lZ-AZa" secondAttribute="bottom" constant="16" id="9eZ-6R-idj"/>
                                                         <constraint firstItem="hKK-l3-oRC" firstAttribute="leading" secondItem="Xhu-dk-oWy" secondAttribute="leading" id="Cbg-9x-hif"/>
                                                         <constraint firstItem="Xhu-dk-oWy" firstAttribute="leading" secondItem="IwT-f6-EWs" secondAttribute="leading" id="J41-4R-0kN"/>
                                                         <constraint firstItem="Xhu-dk-oWy" firstAttribute="top" secondItem="IwT-f6-EWs" secondAttribute="bottom" constant="8" id="JHu-zb-9Yc"/>
                                                         <constraint firstItem="hFY-Jq-Obf" firstAttribute="leading" secondItem="I8G-5d-jrC" secondAttribute="trailing" constant="6" id="Jwa-n4-7IN"/>
-                                                        <constraint firstItem="bbn-bQ-JKC" firstAttribute="top" secondItem="wgq-dY-YUu" secondAttribute="top" id="KGL-OW-lA7"/>
                                                         <constraint firstItem="IwT-f6-EWs" firstAttribute="top" secondItem="Fq7-E2-buj" secondAttribute="top" constant="8" id="LEz-Kf-snE"/>
                                                         <constraint firstItem="a7m-MN-ZAY" firstAttribute="top" secondItem="I8G-5d-jrC" secondAttribute="bottom" constant="15" id="Mdi-0g-m3V"/>
-                                                        <constraint firstItem="bbn-bQ-JKC" firstAttribute="leading" secondItem="wgq-dY-YUu" secondAttribute="trailing" constant="28" id="PQm-62-JWS"/>
                                                         <constraint firstItem="tf6-lZ-AZa" firstAttribute="top" secondItem="a7m-MN-ZAY" secondAttribute="bottom" constant="14" id="RHI-bJ-b9y"/>
                                                         <constraint firstItem="Lpc-Vn-wKY" firstAttribute="leading" secondItem="a7m-MN-ZAY" secondAttribute="trailing" constant="21" id="Via-eJ-hPC"/>
                                                         <constraint firstItem="Lpc-Vn-wKY" firstAttribute="centerY" secondItem="a7m-MN-ZAY" secondAttribute="centerY" id="WG9-5Q-Bmo"/>
                                                         <constraint firstItem="hFY-Jq-Obf" firstAttribute="centerY" secondItem="I8G-5d-jrC" secondAttribute="centerY" id="a09-oH-4KQ"/>
-                                                        <constraint firstItem="wgq-dY-YUu" firstAttribute="leading" secondItem="Fq7-E2-buj" secondAttribute="leading" id="cqy-aU-0BF"/>
                                                         <constraint firstItem="Dg3-aS-TRm" firstAttribute="centerY" secondItem="tf6-lZ-AZa" secondAttribute="centerY" id="d1d-4S-LJi"/>
                                                         <constraint firstItem="IwT-f6-EWs" firstAttribute="leading" secondItem="Fq7-E2-buj" secondAttribute="leading" constant="3" id="dye-rn-goS"/>
                                                         <constraint firstItem="Xhu-dk-oWy" firstAttribute="trailing" secondItem="IwT-f6-EWs" secondAttribute="trailing" id="emk-Qi-QH6"/>
                                                         <constraint firstItem="hKK-l3-oRC" firstAttribute="trailing" secondItem="Xhu-dk-oWy" secondAttribute="trailing" id="fi6-K2-8AA"/>
-                                                        <constraint firstItem="bbn-bQ-JKC" firstAttribute="trailing" secondItem="Dg3-aS-TRm" secondAttribute="trailing" id="h4y-8o-57y"/>
                                                         <constraint firstAttribute="trailing" secondItem="IwT-f6-EWs" secondAttribute="trailing" constant="11" id="kgQ-gV-b0P"/>
                                                         <constraint firstItem="I8G-5d-jrC" firstAttribute="top" secondItem="hKK-l3-oRC" secondAttribute="bottom" constant="8" id="kui-eJ-0dC"/>
                                                         <constraint firstItem="Dg3-aS-TRm" firstAttribute="leading" secondItem="tf6-lZ-AZa" secondAttribute="trailing" constant="7" id="lYA-5b-JCV"/>
@@ -3238,8 +3215,6 @@ $480,000
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="agentRating" destination="Lpc-Vn-wKY" id="dyJ-57-kww"/>
-                                            <outlet property="btnComments" destination="bbn-bQ-JKC" id="HcR-j6-ji8"/>
-                                            <outlet property="btnSeeItAgain" destination="wgq-dY-YUu" id="UTd-Or-pBx"/>
                                             <outlet property="lblAddress" destination="IwT-f6-EWs" id="asp-JE-0hO"/>
                                             <outlet property="lblNiceDate" destination="hKK-l3-oRC" id="wAP-2G-BM9"/>
                                             <outlet property="lblPrice" destination="Xhu-dk-oWy" id="Dz0-3h-ftS"/>
