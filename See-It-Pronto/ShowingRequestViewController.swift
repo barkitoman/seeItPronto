@@ -93,7 +93,7 @@ class ShowingRequestViewController: UIViewController {
     
     func notificationParams(var params:String, type:String, title:String, descripcion:String)->String {
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+self.viewData["showing"]["buyer_id"].stringValue
-        params = params+"&title="+title
+        params = params+"&title=\(title)&property_id="+self.viewData["showing"]["property_id"].stringValue
         params = params+"&description="+descripcion
         params = params+"&parent_id="+self.viewData["showing"]["id"].stringValue+"&parent_type=showings&notification_type="+type
         return params

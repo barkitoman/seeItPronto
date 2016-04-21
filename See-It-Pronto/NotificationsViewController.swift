@@ -70,7 +70,13 @@ class NotificationsViewController: UIViewController {
             if(!notification["description"].stringValue.isEmpty) {
                 title = notification["title"].stringValue
             }
-            Utility().displayAlert(self,title: title, message:notification["description"].stringValue, performSegue:"NotificationDetail")
+            var segue = "NotificationDetail"
+            if(notification["type"] == "showing_completed") {
+                self.viewData = ["showing":["id":notification["parent_id"].stringValue,"property_id":notification["property_id"].stringValue, "realtor_id":notification["from_user_id"].stringValue]]
+                segue = "showFeedback1"
+            }
+            print(self.viewData)
+            Utility().displayAlert(self,title: title, message:notification["description"].stringValue, performSegue:segue)
         }
     }
     
@@ -118,6 +124,10 @@ class NotificationsViewController: UIViewController {
         if (segue.identifier == "ShowingRequestDetail") {
             let view: ShowingRequestViewController = segue.destinationViewController as! ShowingRequestViewController
             view.showingId  = self.viewData["parent_id"].stringValue
+        }
+        if (segue.identifier == "showFeedback1") {
+            let view: FeedBack1ViewController = segue.destinationViewController as! FeedBack1ViewController
+            view.viewData  = self.viewData
         }
     }
     
