@@ -87,7 +87,8 @@ class FeedBack1ViewController: UIViewController {
     @IBAction func btnNext(sender: AnyObject) {
         var params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3&feedback_showing_comment="+self.showingComments.text!
         params     = params+"&showing_rating_value="+self.showingRating+"&user_rating_value="+self.userRating+"&home_rating_value="+self.homeRating
-        params     = params+"&user_id="+User().getField("id")+"&realtor_id="+self.viewData["showing"]["realtor_id"].stringValue+"&property_id="+self.viewData["showing"]["property_id"].stringValue
+        params     = params+"&user_id="+User().getField("id")+"&realtor_id="+self.viewData["showing"]["realtor_id"].stringValue
+        params     = params+"&notification_feedback=1&property_id=\(self.viewData["showing"]["property_id"].stringValue)"
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         Request().put(url, params:params,successHandler: {(response) in self.afterNextRequest(response)});
     }

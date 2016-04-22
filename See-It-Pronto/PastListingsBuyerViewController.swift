@@ -71,33 +71,34 @@ class PastListingsBuyerViewController: UIViewController {
             if(!showing["user_rating_value"].stringValue.isEmpty) {
                 cell.agentRating.image = UIImage(named: showing["user_rating_value"].stringValue+"stars")
             }
-        
-            cell.btnSeeItAgain.tag = indexPath.row
-            cell.btnSeeItAgain.addTarget(self, action: "openPropertyDetailView:", forControlEvents: .TouchUpInside)
-            
-            cell.btnComments.tag = indexPath.row
-            cell.btnComments.addTarget(self, action: "viewShowingComments:", forControlEvents: .TouchUpInside)
         }
         return cell
     }
     
-    @IBAction func openPropertyDetailView(sender:UIButton) {
-        let showing = JSON(self.myListings[sender.tag])
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let seeItAgain = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "See it again"){(UITableViewRowAction,NSIndexPath) -> Void in
+            self.openPropertyDetailView(indexPath)
+        }
+        let comments = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Comments"){(UITableViewRowAction,NSIndexPath) -> Void in
+            self.viewShowingComments(indexPath)
+        }
+        return [seeItAgain,comments]
+    }
+    
+    func openPropertyDetailView(indexPath: NSIndexPath) {
+        let showing = JSON(self.myListings[indexPath.row])
         let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         let viewController : PropertyDetailsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController
         
         let saveData: JSON =  ["id":showing["property"][0]["id"].stringValue]
         Property().saveIfExists(saveData)
         self.navigationController?.showViewController(viewController, sender:self)
-     
     }
     
-    @IBAction func viewShowingComments(sender:UIButton) {
-        let showing  = JSON(self.myListings[sender.tag])
-        print(showing)
+    func viewShowingComments(indexPath: NSIndexPath) {
+        let showing  = JSON(self.myListings[indexPath.row])
         var comments = "Showing Comments:\n"+showing["feedback_showing_comment"].stringValue+"\n\n"
         comments     = comments+" Reviews for the agent:\n"+showing["feedback_realtor_comment"].stringValue
-        
         Utility().displayAlert(self, title: "My comments", message: comments, performSegue: "")
     }
     
@@ -125,7 +126,6 @@ class PastListingsBuyerViewController: UIViewController {
     
     func findListings() {
         let url = AppConfig.APP_URL+"/past_listing_buyer/\(User().getField("id"))/\(self.stepPage)/?page="+String(self.countPage + 1)
-        print(url)
         Request().get(url, successHandler: {(response) in self.loadListings(response)})
     }
     

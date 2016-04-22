@@ -20,11 +20,21 @@ class CurrentShowingViewController: UIViewController {
     
     var manager: OneShotLocationManager?
     var showingId:String = ""
+    var startEndButtonAction = "start"
     var viewData:JSON = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.findShowing()
+        self.showHideButtons()
+    }
+    
+    func showHideButtons() {
+        let role = User().getField("role")
+        if(role == "buyer") {
+            self.btnCall.hidden = true
+            self.btnStartEndShowing.hidden = true
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -90,7 +100,7 @@ class CurrentShowingViewController: UIViewController {
         let role = User().getField("role")
         if(role == "realtor") {
             let alertController = UIAlertController(title:"Message", message: "This showing request is pending to be approved", preferredStyle: .Alert)
-            let goAction = UIAlertAction(title: "Go", style: UIAlertActionStyle.Default) {
+            let goAction = UIAlertAction(title: "View Request", style: UIAlertActionStyle.Default) {
                 UIAlertAction in
                 
                 let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
@@ -98,7 +108,12 @@ class CurrentShowingViewController: UIViewController {
                 vc.showingId = showingId
                 self.navigationController?.showViewController(vc, sender: nil)
             }
+            let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                Utility().goHome(self)
+            }
             alertController.addAction(goAction)
+            alertController.addAction(homeAction)
             self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
@@ -151,7 +166,59 @@ class CurrentShowingViewController: UIViewController {
     }
     
     @IBAction func btnStartEndShowing(sender: AnyObject) {
+        if(self.startEndButtonAction == "start") {
+            self.startEndButtonAction = "end"
+            self.btnStartEndShowing.setTitle("End showing", forState: .Normal)
+            self.btnStartEndShowing.backgroundColor = UIColor(rgba: "#45B5DC")
+        } else {
+            print("was here")
+         self.endShowing()
+        }
     }
     
+    func endShowing() {
+        let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to end this showing?", preferredStyle: .Alert)
+        let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            self.sendEndShowingSaveRequest()
+        }
+        let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            
+        }
+        alertController.addAction(yesAction)
+        alertController.addAction(noAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+
+    func sendEndShowingSaveRequest(){
+        let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
+        var params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3"
+        params     = self.endNotificationParams(params)
+        Request().put(url, params:params,successHandler: {(response) in self.afterCancelRequest(response)});
+    }
     
+    func endNotificationParams(var params:String)->String {
+        let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
+        params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+self.viewData["showing"]["buyer_id"].stringValue
+        params = params+"&title=Showing request completed&property_id="+self.viewData["showing"]["property_id"].stringValue
+        params = params+"&description=You have completed a showing with \(fullUsername) please give us your feedback"
+        params = params+"&parent_id="+self.viewData["showing"]["id"].stringValue+"&notification_type=showing_completed&parent_type=showings"
+        return params
+    }
+    
+    func afterCancelRequest(let response: NSData) {
+        let result = JSON(data: response)
+        if(result["result"].bool == true ) {
+            dispatch_async(dispatch_get_main_queue()) {
+                Utility().goHome(self)
+            }
+        } else {
+            var msg = "Failed to completed the showing request, please try later"
+            if(result["msg"].stringValue != "") {
+                msg = result["msg"].stringValue
+            }
+            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
+        }
+    }
 }

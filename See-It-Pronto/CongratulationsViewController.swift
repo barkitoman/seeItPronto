@@ -59,7 +59,7 @@ class CongratulationsViewController: UIViewController {
     func canceledNotificationParams(var params:String)->String {
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+self.viewData["showing"]["realtor_id"].stringValue
-        params = params+"&title=Showing request cancelled"
+        params = params+"&title=Showing request cancelled&property_id="+self.viewData["showing"]["property_id"].stringValue
         params = params+"&description=User \(fullUsername) cancelled the showing request"
         params = params+"&parent_id="+self.viewData["showing"]["id"].stringValue+"&notification_type=showing_cancelled&parent_type=showings"
         return params
@@ -179,7 +179,8 @@ class CongratulationsViewController: UIViewController {
             if(result["showing_status"].int == 0) {
                 self.noResponse()
             } else if(result["showing_status"].int == 1) {
-                Utility().displayAlert(self,title: "Success", message:"The agent has accepted your request", performSegue:"CongratulationsToFeedBack1")
+                Utility().displayAlert(self,title: "Success", message:"The agent has accepted your request", performSegue:"showCurrentShowing")
+                
             } else if(result["showing_status"].int == 2) {
                 self.requestRejected()
             }
@@ -241,6 +242,10 @@ class CongratulationsViewController: UIViewController {
             let view: FeedBack1ViewController = segue.destinationViewController as! FeedBack1ViewController
             view.showStartMessage  = true
             view.viewData = self.viewData
+        }
+        if (segue.identifier == "showCurrentShowing") {
+            let view: CurrentShowingViewController = segue.destinationViewController as! CurrentShowingViewController
+            view.showingId = self.viewData["showing"]["id"].stringValue
         }
     }
     

@@ -16,6 +16,7 @@ class PropertyListTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.propertyImage.image = nil
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

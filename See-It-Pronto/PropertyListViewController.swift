@@ -13,7 +13,7 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var tableView: UITableView!
     var countPage = 0   //number of current page
-    var stepPage  = 6   //number of records by page
+    var stepPage  = 0   //number of records by page
     var maxRow    = 0   //maximum limit records of your parse table class
     var maxPage   = 0   //maximum page
     var properties:NSMutableArray! = NSMutableArray()
@@ -22,7 +22,6 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
     var latitude   = "0"
     var longintude = "0"
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
@@ -89,10 +88,12 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell   = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PropertyListTableViewCell
         let property = JSON(self.properties[indexPath.row])
+        var description = property["address"].stringValue+"\n"+Utility().formatCurrency(property["price"].stringValue)
+        description = description+" "+property["bedrooms"].stringValue+" Bd / "+property["bathrooms"].stringValue+" Ba"
+        cell.lblDescription.text = description
         let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+property["id"].stringValue+"/1"
-        if cell.propertyImage.image == nil {
-            Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
-        }
+        cell.propertyImage.image = nil
+        Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
         if(!property["id"].stringValue.isEmpty) {
             cell.btnViewDetails.tag = Int(property["id"].stringValue)!
             cell.btnViewDetails.addTarget(self, action: "viewDetails:", forControlEvents: .TouchUpInside)
@@ -108,28 +109,12 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
         let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         let vc : PropertyDetailsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController
         self.navigationController?.showViewController(vc, sender: nil)
-        
     }
     
     func loadImage(img:UIImageView,let response: NSData) {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
             Utility().showPhoto(img, imgPath: result[0]["url"].stringValue)
-        }
-    }
-    
-    //Pagination
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath){
-        let row = indexPath.row
-        let lastRow = self.properties.count - 1
-        let pageLimit = (((self.countPage+1) * (self.stepPage)) - 1)  //prevision of the page limit based on step and countPage
-        
-        // 1) The last rown and is the last
-        // 2) To avoid two calls in a short space from time, while the data is downloading
-        if (row == lastRow) && (row == pageLimit)  {
-            self.countPage++
-            print("Loading Page \(self.countPage) from \(self.maxPage)")
-            //self.findProperties()
         }
     }
     
