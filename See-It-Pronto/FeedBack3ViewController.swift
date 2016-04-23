@@ -37,7 +37,7 @@ class FeedBack3ViewController: UIViewController {
     }
     
     @IBAction func btnBuyWithThisAgent(sender: AnyObject) {
-        var params = "id="+self.viewData["showing"]["id"].stringValue+"&buy_with_realtor=1notificaction_feedback=1"
+        var params = "id="+self.viewData["showing"]["id"].stringValue+"&buy_with_realtor=1"
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         params     = self.canceledNotificationParams(params)
         Request().put(url, params:params,successHandler: {(response) in self.afterBuyWithAgentRequest(response)});
