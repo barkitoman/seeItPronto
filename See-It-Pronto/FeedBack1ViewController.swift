@@ -68,7 +68,7 @@ class FeedBack1ViewController: UIViewController {
     }
     
     @IBAction func btnSkip(sender: AnyObject) {
-        let params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3"
+        let params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3&notification_feedback=1"
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         Request().put(url, params:params,successHandler: {(response) in self.afterSkipRequest(response)});
     }

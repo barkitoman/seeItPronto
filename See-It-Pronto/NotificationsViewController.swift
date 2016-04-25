@@ -70,13 +70,17 @@ class NotificationsViewController: UIViewController {
             if(!notification["description"].stringValue.isEmpty) {
                 title = notification["title"].stringValue
             }
-            var segue = "NotificationDetail"
-            if(notification["type"] == "showing_completed") {
-                self.viewData = ["showing":["id":notification["parent_id"].stringValue,"property_id":notification["property_id"].stringValue, "realtor_id":notification["from_user_id"].stringValue]]
-                segue = "showFeedback1"
+            if(notification["type"] == "showing_completed" && notification["feedback"].stringValue != "1") {
+                self.viewData = ["showing":["id":notification["parent_id"].stringValue,"property_id":notification["property_id"].stringValue, "realtor_id":notification["from_user_id"].stringValue,"notification_id":notification["id"].stringValue]]
+                Utility().displayAlert(self,title: title, message:notification["description"].stringValue, performSegue:"showFeedback1")
+            } else {
+                if(notification["feedback"].stringValue == "1") {
+                    self.performSegueWithIdentifier("NotificationDetail", sender: self)
+                } else {
+                    Utility().displayAlert(self,title: title, message:notification["description"].stringValue, performSegue:"NotificationDetail")
+                }
             }
-            print(self.viewData)
-            Utility().displayAlert(self,title: title, message:notification["description"].stringValue, performSegue:segue)
+
         }
     }
     

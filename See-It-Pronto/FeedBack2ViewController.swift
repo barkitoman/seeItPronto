@@ -34,8 +34,7 @@ class FeedBack2ViewController: UIViewController {
     }
     
     @IBAction func btnBuyWithThisAgent(sender: AnyObject) {
-        var params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3&feedback_realtor_comment="+self.txtAgentComments.text!
-        params     = params+"&notification_feedback=1"
+        let params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3&feedback_realtor_comment="+self.txtAgentComments.text!
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         Request().put(url, params:params,successHandler: {(response) in self.afterBuyWithAgentButton(response)});
     }
