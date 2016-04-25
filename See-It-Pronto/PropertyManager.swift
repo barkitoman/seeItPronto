@@ -103,8 +103,7 @@ class Property {
         newItem.neighborhood  = propertyData["neighborhood"].stringValue
         newItem.added_on      = propertyData["added_on"].stringValue
         newItem.square_feed   = propertyData["square_feed"].stringValue
-        newItem.square_feed   = propertyData["square_feed"].stringValue
-        newItem.square_feed   = propertyData["location"].stringValue
+        newItem.location      = propertyData["location"].stringValue
         
         do {
             try contxt.save()

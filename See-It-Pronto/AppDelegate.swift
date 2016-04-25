@@ -66,22 +66,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func sendPosition(latitude: String, longitude: String){
-        
         //print("\(latitude) ---- \(longintude)")
         if (User().getField("id") != "") {
             let urlString = "\(AppConfig.APP_URL)/save_current_location/\(User().getField("id"))/\(latitude)/\(longitude)/"
             let url = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
             Request().get(url!, successHandler: {(response) in self.response(response)})
         }
-        
-        
-        
     }
     
     func response(let response: NSData){
-        print("\(response)")
+        //print("\(response)")
     }
-    
     
     func findNotifications() {
         if(!self.userId.isEmpty) {
@@ -96,21 +91,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         }
     }
-    
-    func getUserId() {
-        if(self.userId.isEmpty) {
-            let user = User().find()
-            if(user.count >= 1 && user[0] != nil) {
-                let obj  = user[0] as! NSManagedObject
-                self.userId = obj.valueForKey("id") as! String
-            }
-        }
-    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         Notification.askPermission()
-        //self.getUserId()
         self.intervalLocation()
         return true
     }

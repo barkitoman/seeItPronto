@@ -8,23 +8,61 @@
 
 import UIKit
 
-class SeeItNowViewController: UIViewController {
+class SeeItNowViewController: UIViewController,UIWebViewDelegate {
 
     var viewData:JSON = []
     
+    @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var propertyPhoto: UIImageView!
     @IBOutlet weak var lblPropertyAddress: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    var countPage = 0    //number of current page
-    var stepPage  = 5   //number of records by page
-    var maxRow    = 0    //maximum limit records of your parse table class
-    var maxPage   = 0    //maximum page
+    var countPage = 0 //number of current page
+    var stepPage  = 5 //number of records by page
+    var maxRow    = 0 //maximum limit records of your parse table class
+    var maxPage   = 0 //maximum page
     var realtors:NSMutableArray! = NSMutableArray()
+    
+    var manager: OneShotLocationManager?
+    var latitude   = "0"
+    var longintude = "0"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.selfDelegate()
+        self.webView.hidden = false
         self.loadPropertyData()
+        manager = OneShotLocationManager()
+        manager!.fetchWithCompletion {location, error in
+            // fetch location or an error
+            if let loc = location {
+                self.latitude   = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.latitude)" : "26.189244"
+                self.longintude = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.longitude)": "-80.1824587"
+                self.loadMap()
+            } else if let _ = error {
+                print("ERROR GETTING LOCATION")
+                self.loadMap()
+            }
+            // destroy the object immediately to save memory
+            self.manager = nil
+        }
+    }
+    
+    func selfDelegate() {
+        self.webView.delegate = self;
+    }
+    
+    func loadMap() {
+        var url = AppConfig.APP_URL+"/calculate_distances/\(User().getField("id"))/\(String(self.stepPage))"
+        url     = url+"/?page=\(String(self.countPage + 1))"
+        url     = url+"&lat=\(self.latitude)&lon=\(self.longintude)"
+        let requestURL = NSURL(string:url)
+        let request = NSURLRequest(URL: requestURL!)
+        self.webView.loadRequest(request)
+    }
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        print("was here")
         self.findPropertyRealtors()
     }
     
@@ -71,7 +109,7 @@ class SeeItNowViewController: UIViewController {
         cell.lblCompany.text     = realtor["brokerage"].stringValue
         cell.lblName.text        = name
         cell.lblShowingRate.text = (!realtor["showing_rate"].stringValue.isEmpty) ? "$"+realtor["showing_rate"].stringValue  : ""
-        cell.lblDistance.text    = (!realtor["travel_range"].stringValue.isEmpty) ? realtor["travel_range"].stringValue+"mi" : ""
+        cell.lblDistance.text    = realtor["distance"].stringValue
         cell.lblRating.text      = (!realtor["rating"].stringValue.isEmpty) ? realtor["rating"].stringValue+" of 5" : ""
         cell.btnViewDetails.tag  = indexPath.row
         cell.btnViewDetails.addTarget(self, action: "openPropertyAction:", forControlEvents: .TouchUpInside)
@@ -96,7 +134,7 @@ class SeeItNowViewController: UIViewController {
         if (row == lastRow) && (row == pageLimit)  {
             self.countPage++
             print("Loading Page \(self.countPage) from \(self.maxPage)")
-            self.findPropertyRealtors()
+            self.loadMap()
         }
     }
     
@@ -116,7 +154,8 @@ class SeeItNowViewController: UIViewController {
 
     func findPropertyRealtors() {
         let propertyId = Property().getField("id")
-        let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_realtors/"+propertyId+"/"+String(self.stepPage)+"/?page="+String(self.countPage + 1)
+        let url = AppConfig.APP_URL+"/get_property_realtors/\(User().getField("id"))/\(propertyId)/\(String(self.stepPage))/?page="+String(self.countPage + 1)
+        print(url)
         Request().get(url, successHandler: {(response) in self.loadRealtors(response)})
     }
     

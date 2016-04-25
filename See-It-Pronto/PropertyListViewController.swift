@@ -133,6 +133,4 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
             self.tableView.reloadData()
         }
     }
-
-    
 }
