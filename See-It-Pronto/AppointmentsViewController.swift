@@ -194,7 +194,6 @@ class AppointmentsViewController: UIViewController {
         let userId = User().getField("id")
         let role   = User().getField("role")
         let url    = AppConfig.APP_URL+"/list_showings/\(userId)/\(role)/"+String(self.stepPage)+"/?page="+String(self.countPage + 1)
-        print(url)
         Request().get(url, successHandler: {(response) in self.loadAppoiments(response)})
     }
     
