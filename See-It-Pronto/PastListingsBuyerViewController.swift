@@ -90,7 +90,7 @@ class PastListingsBuyerViewController: UIViewController {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         let viewController : PropertyDetailsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController
         
-        let saveData: JSON =  ["id":showing["property"][0]["id"].stringValue]
+        let saveData: JSON =  ["id":showing["property"][0]["id"].stringValue,"property_class":showing["property_class"].stringValue]
         Property().saveIfExists(saveData)
         self.navigationController?.showViewController(viewController, sender:self)
     }

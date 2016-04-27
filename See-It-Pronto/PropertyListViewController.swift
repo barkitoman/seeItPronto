@@ -97,14 +97,15 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
             Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
         }
         if(!property["id"].stringValue.isEmpty) {
-            cell.btnViewDetails.tag = Int(property["id"].stringValue)!
+            cell.btnViewDetails.tag = indexPath.row
             cell.btnViewDetails.addTarget(self, action: "viewDetails:", forControlEvents: .TouchUpInside)
         }
         return cell
     }
     
     @IBAction func viewDetails(sender:UIButton) {
-        let propertyId = String(sender.tag)
+        let property = JSON(self.properties[sender.tag])
+        let saveData: JSON =  ["id":property["id"].stringValue,"property_class":property["class"].stringValue]
         let saveData: JSON =  ["id":propertyId]
         Property().saveIfExists(saveData)
         

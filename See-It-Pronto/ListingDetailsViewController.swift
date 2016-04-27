@@ -24,6 +24,7 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
+        self.propertyId = self.viewData["property"][0]["id"].stringValue
         self.findPropertyDetails()
         self.findPropertyListing()
     }
@@ -99,7 +100,9 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
     }
     
     func findPropertyDetails(){
-        let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/"+self.propertyId+"/"+User().getField("id")
+        var propertyClass = self.viewData["property"][0]["class"].stringValue
+        if(propertyClass.isEmpty) {propertyClass = "1"}
+        let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/\(self.propertyId)/\(propertyClass)/\(User().getField("id"))"
         Request().get(url, successHandler: {(response) in self.loadPropertyDetails(response)})
     }
     

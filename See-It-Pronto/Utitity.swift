@@ -112,15 +112,19 @@ class Utility {
         return String(Int(roundf(sl.value)))
     }
     
-    func getIdFromUrl(url:String)->String{
+    func getIdFromUrl(url:String)->JSON{
         var id = url.stringByReplacingOccurrencesOfString(AppConfig.APP_URL, withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         id     = id.stringByReplacingOccurrencesOfString("http:",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        id     = id.stringByReplacingOccurrencesOfString("map",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        id     = id.stringByReplacingOccurrencesOfString("map",    withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         id     = id.stringByReplacingOccurrencesOfString("/",      withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         id     = id.stringByReplacingOccurrencesOfString("#",      withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         id     = id.stringByReplacingOccurrencesOfString("?",      withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         id     = id.stringByReplacingOccurrencesOfString(" ",      withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        return id
+        let urlData = id.componentsSeparatedByString("_SEPARATOR_")
+        let propertyId: String = urlData[0]
+        let propertyClass: String? = urlData[1]
+        let out:JSON = ["id":propertyId, "property_class":propertyClass!]
+        return out
     }
     
     func getCurrentDate(separator:String)->String {

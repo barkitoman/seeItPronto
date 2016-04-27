@@ -66,7 +66,7 @@ class MyListingsRealtorViewController: UIViewController {
             cell.btnBeacon.tag = Int(listing["property"][0]["id"].stringValue)!
             cell.btnBeacon.addTarget(self, action: "openBeaconView:", forControlEvents: .TouchUpInside)
         
-            cell.btnEdit.tag = Int(listing["property"][0]["id"].stringValue)!
+            cell.btnEdit.tag = indexPath.row
             cell.btnEdit.addTarget(self, action: "openEditView:", forControlEvents: .TouchUpInside)
             if(listing["state_beacon"].int == 1) {
                 cell.swBeacon.on = true
@@ -90,7 +90,8 @@ class MyListingsRealtorViewController: UIViewController {
     }
     
     @IBAction func openEditView(sender:UIButton) {
-        self.propertyId = String(sender.tag)
+        let listing = JSON(self.myListings[sender.tag])
+        self.viewData = listing
         self.performSegueWithIdentifier("MyListingToEditListng", sender: self)
     }
     
@@ -154,7 +155,7 @@ class MyListingsRealtorViewController: UIViewController {
             
         }else if (segue.identifier == "MyListingToEditListng") {
             let view: ListingDetailsViewController = segue.destinationViewController as! ListingDetailsViewController
-            view.propertyId = self.propertyId
+            view.viewData = self.viewData
         }
     }
 

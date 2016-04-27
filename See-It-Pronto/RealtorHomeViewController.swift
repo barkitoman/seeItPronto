@@ -88,8 +88,7 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         if navigationType == UIWebViewNavigationType.LinkClicked {
             let url:String = request.URL!.absoluteString
             if(url.containsString(AppConfig.APP_URL)) {
-                let id = Utility().getIdFromUrl(url)
-                let saveData: JSON =  ["id":id]
+                let saveData: JSON =  Utility().getIdFromUrl(url)
                 Property().saveIfExists(saveData)
                 self.performSegueWithIdentifier("RealtorHomePropertyDetails", sender: self)
             }

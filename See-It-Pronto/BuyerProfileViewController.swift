@@ -47,7 +47,7 @@ class BuyerProfileViewController: UIViewController {
             let url = AppConfig.APP_URL+"/user_info/"+userId
             Request().get(url, successHandler: {(response) in self.loadDataToEdit(response)})
         }
-    }
+    }  
     
     func loadDataToEdit(let response: NSData) {
         dispatch_async(dispatch_get_main_queue()) {
