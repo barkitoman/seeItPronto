@@ -13,6 +13,9 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPhone: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
+    @IBOutlet weak var txtBiography: UITextView!
+    @IBOutlet weak var txtCharacters: UILabel!
+    
  
     var viewData:JSON = []
     
@@ -50,6 +53,7 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
         self.txtEmail.delegate = self
         self.txtPhone.delegate = self
         self.txtPassword.delegate = self
+        self.txtBiography.delegate = self
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -64,7 +68,8 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
     func save() {
         //create params
         let userId = User().getField("id")
-        var params = "role=realtor&client_id="+txtEmail.text!+"&phone="+txtPhone.text!+"&client_secret="+txtPassword.text!+"&grant_type="+AppConfig.GRANT_TYPE
+        var params = "role=realtor&client_id="+txtEmail.text!+"&phone="+txtPhone.text!+"&client_secret="+txtPassword.text!
+        params     = params+"&biography=\(self.txtBiography.text)&grant_type="+AppConfig.GRANT_TYPE
         var url = AppConfig.APP_URL+"/users"
         if(!userId.isEmpty) {
             params = params+"&id="+userId
@@ -111,6 +116,7 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
             let result = JSON(data: response)
             self.txtEmail.text = result["email"].stringValue
             self.txtPhone.text = result["phone"].stringValue
+            self.txtBiography.text = result["biography"].stringValue
         }
     }
     
@@ -120,5 +126,17 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
             view.viewData  = self.viewData
         }
     }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        self.txtCharacters.text = String(250 - textView.text.characters.count)
+        return textView.text.characters.count + (text.characters.count - range.length) <= 250
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        //let biographyLength = textView.text.characters.count
+
+    }
+    
+    
     
 }

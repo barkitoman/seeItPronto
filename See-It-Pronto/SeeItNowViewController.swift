@@ -62,7 +62,6 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
-        print("was here")
         self.findPropertyRealtors()
     }
     
@@ -155,7 +154,6 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
     func findPropertyRealtors() {
         let propertyId = Property().getField("id")
         let url = AppConfig.APP_URL+"/get_property_realtors/\(User().getField("id"))/\(propertyId)/\(String(self.stepPage))/?page="+String(self.countPage + 1)
-        print(url)
         Request().get(url, successHandler: {(response) in self.loadRealtors(response)})
     }
     
