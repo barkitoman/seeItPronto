@@ -146,7 +146,7 @@ class SeeItLaterBuyerViewController: UIViewController {
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+showing["realtor_id"].stringValue
         params = params+"&title=Showing request cancelled&property_id="+showing["property_id"].stringValue
         params = params+"&description=  The customer \(fullUsername) has cancelled the showing for a property"
-        params = params+"&parent_id="+showing["id"].stringValue+"&notification_type=showing_cancelled&parent_type=showings"
+        params = params+"&parent_id="+showing["id"].stringValue+"&notification_type=showing_cancelled&parent_type=showings&property_class=\(Property().getField("property_class"))"
         return params
     }
     

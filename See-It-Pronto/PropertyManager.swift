@@ -82,6 +82,10 @@ class Property {
         let en = NSEntityDescription.entityForName("Property", inManagedObjectContext: contxt)
         //create instance of pur data model and inicilize
         let newItem = PropertyEntity(entity:en!, insertIntoManagedObjectContext:contxt)
+        var propertyClass = propertyData["property_class"].stringValue
+        if(propertyData["property_class"].stringValue.isEmpty && !propertyData["class"].stringValue.isEmpty) {
+            propertyClass = propertyData["class"].stringValue
+        }
         //map our properties
         newItem.address       = propertyData["address"].stringValue
         newItem.id            = propertyData["id"].stringValue
@@ -105,7 +109,7 @@ class Property {
         newItem.added_on      = propertyData["added_on"].stringValue
         newItem.square_feed   = propertyData["square_feed"].stringValue
         newItem.location      = propertyData["location"].stringValue
-        newItem.property_class = propertyData["property_class"].stringValue
+        newItem.property_class = propertyClass
         
         do {
             try contxt.save()

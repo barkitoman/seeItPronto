@@ -4374,6 +4374,7 @@ $480,000
                         <outlet property="lblPropertyAddress" destination="SPc-gG-GI0" id="2BY-Am-USU"/>
                         <outlet property="propertyPhoto" destination="aWO-a9-ueU" id="Pfh-Wz-bpo"/>
                         <outlet property="tableView" destination="r4M-da-I9z" id="cdf-6k-CQa"/>
+                        <outlet property="webView" destination="Vdj-xQ-GhY" id="HlI-RI-8Uw"/>
                         <segue destination="AHv-ro-QuS" kind="show" identifier="SeeItNowAgentConfirmation" id="wBD-J4-5sj"/>
                         <segue destination="NCt-ZK-yTO" kind="show" identifier="seeItNowConfirmation" id="pOl-Xy-bj0"/>
                     </connections>

@@ -96,7 +96,9 @@ class FeedBack1ViewController: UIViewController {
     func afterNextRequest(let response: NSData) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
-            Utility().displayAlert(self,title: "Success", message:"The data have been saved correctly", performSegue:"FeedBack1ViewController")
+            dispatch_async(dispatch_get_main_queue()) {
+                self.performSegueWithIdentifier("FeedBack1ViewController", sender: self)
+            }
         } else {
             var msg = "Error saving, please try later"
             if(result["msg"].stringValue != "") {

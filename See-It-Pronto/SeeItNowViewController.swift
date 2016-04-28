@@ -85,7 +85,7 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
         navigationController?.popViewControllerAnimated(true)
     }
     
-    func loadPropertyData(){
+    func loadPropertyData() {
         let image = Property().getField("image")
         self.lblPropertyAddress.text = Property().getField("address")
         if(!image.isEmpty) {

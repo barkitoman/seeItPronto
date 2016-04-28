@@ -55,15 +55,15 @@ class MyListingsRealtorViewController: UIViewController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MyListingsRealtorTableViewCell
         var listing = JSON(self.myListings[indexPath.row])
-        var description = listing["property"][0]["address"].stringValue+"\n"+Utility().formatCurrency(listing["property"][0]["price"].stringValue)
-        description = description+" "+listing["property"][0]["bedrooms"].stringValue+"Bd / "+listing["property"][0]["bathrooms"].stringValue+"Ba"
+        var description = listing["property"]["address"].stringValue+"\n"+Utility().formatCurrency(listing["property"]["price"].stringValue)
+        description = description+" "+listing["property"]["bedrooms"].stringValue+"Bd / "+listing["property"]["bathrooms"].stringValue+"Ba"
         cell.lblInformation.text = description
-        let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+listing["property"][0]["id"].stringValue+"/1"
+        let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+listing["property"]["id"].stringValue+"/1"
         if cell.PropertyImage.image == nil {
             Request().get(url, successHandler: {(response) in self.loadImage(cell.PropertyImage, response: response)})
         }
-        if(!listing["property"][0]["id"].stringValue.isEmpty) {
-            cell.btnBeacon.tag = Int(listing["property"][0]["id"].stringValue)!
+        if(!listing["property"]["id"].stringValue.isEmpty) {
+            cell.btnBeacon.tag = indexPath.row
             cell.btnBeacon.addTarget(self, action: "openBeaconView:", forControlEvents: .TouchUpInside)
         
             cell.btnEdit.tag = indexPath.row
@@ -71,7 +71,7 @@ class MyListingsRealtorViewController: UIViewController {
             if(listing["state_beacon"].int == 1) {
                 cell.swBeacon.on = true
             }
-            cell.swBeacon.tag = Int(listing["property"][0]["id"].stringValue)!
+            cell.swBeacon.tag = Int(listing["property"]["id"].stringValue)!
             cell.swBeacon.addTarget(self, action: "turnBeaconOnOff:", forControlEvents: .TouchUpInside)
         }
         return cell
@@ -85,7 +85,8 @@ class MyListingsRealtorViewController: UIViewController {
     }
     
     @IBAction func openBeaconView(sender:UIButton) {
-        self.propertyId = String(sender.tag)
+        let listing = JSON(self.myListings[sender.tag])
+        self.viewData = listing
         self.performSegueWithIdentifier("MyListingToAddBeacon", sender: self)
     }
     
@@ -132,14 +133,15 @@ class MyListingsRealtorViewController: UIViewController {
     
     func findListings() {
         let url = AppConfig.APP_URL+"/my_listings/\(User().getField("id"))/\(self.stepPage)/\(User().getField("mls_id"))/?page="+String(self.countPage + 1)
+        print(url)
         Request().get(url, successHandler: {(response) in self.loadListings(response)})
     }
     
     func loadListings(let response: NSData){
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
-            for (_,subJson):(String, JSON) in result["data"] {
-                if(!subJson["property"][0]["id"].stringValue.isEmpty) {
+            for (_,subJson):(String, JSON) in result{
+                if(!subJson["property"]["id"].stringValue.isEmpty) {
                     let jsonObject: AnyObject = subJson.object
                     self.myListings.addObject(jsonObject)
                 }
@@ -151,7 +153,7 @@ class MyListingsRealtorViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "MyListingToAddBeacon") {
             let view: AddBeaconViewController = segue.destinationViewController as! AddBeaconViewController
-            view.propertyId = self.propertyId
+            view.viewData = self.viewData
             
         }else if (segue.identifier == "MyListingToEditListng") {
             let view: ListingDetailsViewController = segue.destinationViewController as! ListingDetailsViewController

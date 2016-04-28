@@ -92,7 +92,6 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
         description = description+" "+property["bedrooms"].stringValue+" Bd / "+property["bathrooms"].stringValue+" Ba"
         cell.lblDescription.text = description
         let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+property["id"].stringValue+"/1"
-        print(cell.propertyImage.image?.description)
         if(cell.propertyImage.image == nil) {
             Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
         }

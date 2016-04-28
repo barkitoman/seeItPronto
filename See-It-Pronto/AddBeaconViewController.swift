@@ -20,6 +20,8 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.propertyId = self.viewData["property"]["id"].stringValue
+        self.viewData["id"] = JSON("")
         self.selfDelegate()
         self.findPropertyBeacon()
     }
@@ -65,9 +67,13 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     }
     
     func save() {
+        var propertyClass = self.viewData["property_class"].stringValue
+        if(self.viewData["property_class"].stringValue.isEmpty && !self.viewData["property"]["class"].stringValue.isEmpty) {
+            propertyClass = self.viewData["property"]["class"].stringValue
+        }
         var url = AppConfig.APP_URL+"/beacons"
-        var params = "brand="+self.txtBrand.text!+"&beacon_id="+self.txtBeaconId.text!+"&location="+self.txtLocation.text!
-        params     = params+"&state_beacon=0&property_id="+self.propertyId+"&user_id="+User().getField("id")
+        var params = "brand=\(self.txtBrand.text!)&beacon_id=\(self.txtBeaconId.text!)&location=\(self.txtLocation.text!)"
+        params     = params+"&state_beacon=0&property_id=\(self.propertyId)&user_id=\(User().getField("id"))&property_class=\(propertyClass)"
         if(!self.viewData["id"].stringValue.isEmpty) {
             //if user is editing a beacon
             params = params+"&id="+self.viewData["id"].stringValue
@@ -131,12 +137,14 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     func loadDataToEdit(let response: NSData) {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
-            self.viewData = result
-            self.txtBrand.text    = result["brand"].stringValue
-            self.txtBeaconId.text = result["beacon_id"].stringValue
-            self.txtLocation.text = result["location"].stringValue
-            if(!result["url_image"].stringValue.isEmpty) {
-                Utility().showPhoto(self.previewImage, imgPath: result["url_image"].stringValue)
+            if(!result["id"].stringValue.isEmpty) {
+                self.viewData = result
+                self.txtBrand.text    = result["brand"].stringValue
+                self.txtBeaconId.text = result["beacon_id"].stringValue
+                self.txtLocation.text = result["location"].stringValue
+                if(!result["url_image"].stringValue.isEmpty) {
+                    Utility().showPhoto(self.previewImage, imgPath: result["url_image"].stringValue)
+                }
             }
         }
     }

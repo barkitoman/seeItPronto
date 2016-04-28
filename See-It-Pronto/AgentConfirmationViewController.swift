@@ -60,7 +60,8 @@ class AgentConfirmationViewController: UIViewController {
     func sendRequest() {
         //create params
         var params = "buyer_id="+User().getField("id")+"&realtor_id="+PropertyRealtor().getField("id")+"&property_id="+Property().getField("id")
-        params     = params+"&type="+PropertyAction().getField("type")+"&coupon_code="+self.txtCouponCode.text!+"&date="+Utility().getCurrentDate("-")
+        params     = params+"&type="+PropertyAction().getField("type")+"&coupon_code="+self.txtCouponCode.text!
+        params     = params+"&date=\(Utility().getCurrentDate("-"))&property_class=\(Property().getField("property_class"))"
         let url    = AppConfig.APP_URL+"/seeitpronto"
         Request().post(url, params:params,successHandler: {(response) in self.afterPostRequest(response)});
     }

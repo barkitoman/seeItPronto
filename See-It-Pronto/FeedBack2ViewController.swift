@@ -67,15 +67,7 @@ class FeedBack2ViewController: UIViewController {
     func afterNextRequest(let response: NSData) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
-            dispatch_async(dispatch_get_main_queue()) {
-                let alertController = UIAlertController(title:"Success", message: "The data have been saved correctly", preferredStyle: .Alert)
-                let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
-                    UIAlertAction in
-                    Utility().goHome(self)
-                }
-                alertController.addAction(homeAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
-            }
+            Utility().goHome(self)
         } else {
             var msg = "Error saving, please try later"
             if(result["msg"].stringValue != "") {

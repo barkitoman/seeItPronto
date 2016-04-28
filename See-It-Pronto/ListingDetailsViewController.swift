@@ -24,7 +24,8 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
-        self.propertyId = self.viewData["property"][0]["id"].stringValue
+        self.propertyId = self.viewData["property"]["id"].stringValue
+        self.viewData["id"] = JSON("")
         self.findPropertyDetails()
         self.findPropertyListing()
     }
@@ -71,9 +72,14 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
     }
     
     func updateData() {
+        var propertyClass = self.viewData["property_class"].stringValue
+        if(self.viewData["property_class"].stringValue.isEmpty && !self.viewData["property"]["class"].stringValue.isEmpty) {
+            propertyClass = self.viewData["property"]["class"].stringValue
+        }
         var url = AppConfig.APP_URL+"/realtor_properties"
-        var params = "showing_instruction="+self.txtShowingInstructions.text!+"&owner_email="+self.txtEmail.text!
-        params     =  params+"&owner_phone="+self.txtPhone.text!+"&user_id="+User().getField("id")+"&property_id="+self.propertyId
+        var params = "showing_instruction=\(self.txtShowingInstructions.text!)&owner_email=\(self.txtEmail.text!)"
+        params     = params+"&owner_phone=\(self.txtPhone.text!)&user_id=\(User().getField("id"))"
+        params     = params+"&property_id=\(self.propertyId)&property_class=\(propertyClass)"
         if(!self.viewData["id"].stringValue.isEmpty) {
             //if user is editing a beacon
             params = params+"&id="+self.viewData["id"].stringValue
@@ -100,7 +106,7 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
     }
     
     func findPropertyDetails(){
-        var propertyClass = self.viewData["property"][0]["class"].stringValue
+        var propertyClass = self.viewData["property"]["class"].stringValue
         if(propertyClass.isEmpty) {propertyClass = "1"}
         let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/\(self.propertyId)/\(propertyClass)/\(User().getField("id"))"
         Request().get(url, successHandler: {(response) in self.loadPropertyDetails(response)})
@@ -142,15 +148,17 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
         Request().get(url, successHandler: {(response) in self.loadPropertyListing(response)})
     }
     
-    func loadPropertyListing(let response: NSData){
+    func loadPropertyListing(let response: NSData) {
+        let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
-            let result = JSON(data: response)
-            self.viewData = result
-            self.txtShowingInstructions.text = result["showing_instruction"].stringValue
-            self.txtEmail.text = result["owner_email"].stringValue
-            self.txtPhone.text = result["owner_phone"].stringValue
-            if(result["state_beacon"].int == 1) {
-                self.swBeacon.on = true
+            if(!result["id"].stringValue.isEmpty) {
+                self.viewData = result
+                self.txtShowingInstructions.text = result["showing_instruction"].stringValue
+                self.txtEmail.text = result["owner_email"].stringValue
+                self.txtPhone.text = result["owner_phone"].stringValue
+                if(result["state_beacon"].int == 1) {
+                    self.swBeacon.on = true
+                }
             }
         }
     }
