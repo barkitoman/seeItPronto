@@ -90,7 +90,11 @@ class AppointmentsViewController: UIViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let appoiment = JSON(self.appoiments[indexPath.row])
-        let alertController = UIAlertController(title:"Action", message: "Select an action", preferredStyle: .Alert)
+        var message = "Select an action"
+        if(appoiment["showing_status"].stringValue == "3" || appoiment["showing_status"].stringValue == "4") {
+            message = "No actions available"
+        }
+        let alertController = UIAlertController(title:"Actions", message:message , preferredStyle: .Alert)
         if(appoiment["showing_status"].stringValue == "1" || appoiment["showing_status"].stringValue == "0" ) {
             let deleteAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default) {
                 UIAlertAction in
@@ -158,7 +162,6 @@ class AppointmentsViewController: UIViewController {
         }
         let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
             UIAlertAction in
-            
         }
         alertController.addAction(yesAction)
         alertController.addAction(noAction)
@@ -194,7 +197,6 @@ class AppointmentsViewController: UIViewController {
         let userId = User().getField("id")
         let role   = User().getField("role")
         let url    = AppConfig.APP_URL+"/list_showings/\(userId)/\(role)/"+String(self.stepPage)+"/?page="+String(self.countPage + 1)
-        print(url)
         Request().get(url, successHandler: {(response) in self.loadAppoiments(response)})
     }
     

@@ -54,7 +54,6 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
             ["title" : "Residential Rental",        "class":"6",  "color" : "#4870b7"],
             ["title" : "Improved Comm/Indust",      "class":"7",  "color" : "#4870b7"],
             ["title" : "Business Opportunity",      "class":"8",  "color" : "#4870b7"],
-            ["title" : "Member",                    "class":"9",  "color" : "#4870b7"],
             ["title" : "Office",                    "class":"10", "color" : "#4870b7"],
             ["title" : "Open House",                "class":"13", "color" : "#4870b7"]
         ]
