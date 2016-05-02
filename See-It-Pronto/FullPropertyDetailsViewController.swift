@@ -12,6 +12,18 @@ class FullPropertyDetailsViewController: UIViewController {
 
     var viewData:JSON = []
     
+    @IBOutlet weak var lbAddress: UILabel!
+    @IBOutlet weak var lbCity: UILabel!
+    @IBOutlet weak var lbZipCode: UILabel!
+    @IBOutlet weak var lbTypeProperty: UILabel!
+    @IBOutlet weak var lbPrice: UILabel!
+    @IBOutlet weak var lbRemarks: UILabel!
+    @IBOutlet weak var lbGarage: UILabel!
+    @IBOutlet weak var lbInternet: UILabel!
+    @IBOutlet weak var lbPets: UILabel!
+    @IBOutlet weak var lbPool: UILabel!
+    @IBOutlet weak var lbSpa: UILabel!
+    
     @IBOutlet weak var photo: UIImageView!
     @IBOutlet weak var lblEstPayment: UILabel!
     @IBOutlet weak var lblYourCredits: UILabel!
@@ -102,6 +114,19 @@ class FullPropertyDetailsViewController: UIViewController {
             self.lblNeighborhood.text = Property().getField("neighborhood")
             self.lblAddedOn.text      = Property().getField("added_on")
             self.lblLocation.text     = Property().getField("location")
+            
+            self.lbAddress.text       = Property().getField("address")
+            self.lbCity.text          = Property().getField("location")
+            self.lbZipCode.text       = Property().getField("lot")
+            self.lbTypeProperty.text  = Property().getField("rs")
+            self.lbPrice.text         = Property().getField("price")
+            self.lbRemarks.text       = Property().getField("remarks")
+            self.lbGarage.text        = Property().getField("garage")
+            self.lbInternet.text      = Property().getField("internet")
+            self.lbPets.text          = Property().getField("petsAllowed")
+            self.lbPool.text          = Property().getField("pool")
+            self.lbSpa.text           = Property().getField("spa")
+            
         }
     }
     

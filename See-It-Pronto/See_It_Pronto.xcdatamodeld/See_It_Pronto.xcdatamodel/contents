@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F1713" minimumToolsVersion="Automatic">
     <entity name="Property" syncable="YES">
         <attribute name="added_on" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bathrooms" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bedrooms" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="est_payments" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="garage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image2" optional="YES" attributeType="String" syncable="YES"/>
@@ -13,14 +14,21 @@
         <attribute name="image4" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image5" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image6" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="internet" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lot" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lot_size" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="neighborhood" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="petsAllowed" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pool" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pricesqft" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="property_class" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="property_type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="remarks" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rs" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="size" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="spa" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="square_feed" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="year_built" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="your_credits" optional="YES" attributeType="String" syncable="YES"/>
@@ -69,7 +77,7 @@
         <attribute name="token_type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Property" positionX="-54" positionY="117" width="128" height="390"/>
+        <element name="Property" positionX="-54" positionY="117" width="128" height="510"/>
         <element name="PropertyAction" positionX="-54" positionY="135" width="128" height="60"/>
         <element name="PropertyRealtor" positionX="-54" positionY="108" width="128" height="210"/>
         <element name="SearchConfig" positionX="-63" positionY="54" width="128" height="210"/>

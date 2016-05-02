@@ -36,6 +36,15 @@ class PropertyEntity: NSManagedObject {
     @NSManaged var lot_size:String
     @NSManaged var location:String
     @NSManaged var property_class:String
+    @NSManaged var rs:String
+    @NSManaged var pricesqft:String
+    @NSManaged var garage:String
+    @NSManaged var internet:String
+    @NSManaged var petsAllowed:String
+    @NSManaged var pool:String
+    @NSManaged var remarks:String
+    @NSManaged var spa:String
+    
 
 }
 
@@ -109,6 +118,17 @@ class Property {
         newItem.added_on      = propertyData["added_on"].stringValue
         newItem.square_feed   = propertyData["square_feed"].stringValue
         newItem.location      = propertyData["location"].stringValue
+        newItem.rs            = propertyData["rs"].stringValue //for Sale or For Rent
+        newItem.pricesqft     = propertyData["pricesqft"].stringValue //price by sqft
+        newItem.garage        = propertyData["garage"].stringValue //garage yes o no
+        newItem.internet      = propertyData["internet"].stringValue //yes or no
+        newItem.petsAllowed   = propertyData["petsAllowed"].stringValue
+        newItem.pool          = propertyData["pool"].stringValue
+        newItem.remarks       = propertyData["remarks"].stringValue //description
+        newItem.spa           = propertyData["spa"].stringValue //spa
+        
+        
+        
         newItem.property_class = propertyClass
         
         do {
