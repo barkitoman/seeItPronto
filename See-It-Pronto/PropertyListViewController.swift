@@ -8,6 +8,14 @@
 
 import UIKit
 
+class Model {
+    var property : JSON = []
+    var im : UIImage!
+    var picurl : String!
+    var task : NSURLSessionTask!
+    var reloaded = false
+}
+
 class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,UITextViewDelegate  {
 
     @IBOutlet weak var webView: UIWebView!
@@ -21,6 +29,21 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
     var manager: OneShotLocationManager?
     var latitude   = "0"
     var longintude = "0"
+    var cache = ImageLoadingWithCache()
+    var model = [Model]()
+    var models = [String:Model]()
+    var count = 0
+    
+    lazy var configuration : NSURLSessionConfiguration = {
+        let config = NSURLSessionConfiguration.ephemeralSessionConfiguration()
+        config.allowsCellularAccess = false
+        config.URLCache = nil
+        return config
+    }()
+    
+    lazy var downloader : MyDownloader = {
+        return MyDownloader(configuration:self.configuration)
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,15 +114,49 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
         var description = property["address"].stringValue+"\n"+Utility().formatCurrency(property["price"].stringValue)
         description = description+" "+property["bedrooms"].stringValue+" Bd / "+property["bathrooms"].stringValue+" Ba"
         cell.lblDescription.text = description
-        let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+property["id"].stringValue+"/1"
-        if(cell.propertyImage.image == nil) {
-            Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
-        }
-        if(!property["id"].stringValue.isEmpty) {
-            cell.btnViewDetails.tag = indexPath.row
-            cell.btnViewDetails.addTarget(self, action: "viewDetails:", forControlEvents: .TouchUpInside)
+        cell.btnViewDetails.tag = indexPath.row
+        cell.btnViewDetails.addTarget(self, action: "viewDetails:", forControlEvents: .TouchUpInside)
+        if let _ = self.models[property["id"].stringValue] {
+            self.showCell(cell, property: property, indexPath: indexPath)
+        } else {
+            cell.propertyImage.image = nil
+            self.models[property["id"].stringValue] = Model()
+            self.showCell(cell, property: property, indexPath: indexPath)
         }
         return cell
+    }
+    
+    func showCell(cell:PropertyListTableViewCell, property:JSON,indexPath: NSIndexPath){
+        // have we got a picture?
+        if let im = self.models[property["id"].stringValue]!.im {
+            cell.propertyImage.image = im
+        } else {
+            if self.models[property["id"].stringValue]!.task == nil &&  self.models[property["id"].stringValue]!.reloaded == false {
+                // no task? start one!
+                let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+property["id"].stringValue+"/1"
+                Request().get(url, successHandler: {(response) in self.imageCell(indexPath, img:cell.propertyImage, response: response)})
+            }
+        }
+    }
+    
+    func imageCell(indexPath: NSIndexPath, img:UIImageView,let response: NSData) {
+        let property = JSON(self.properties[indexPath.row])
+        let result = JSON(data: response)
+        let url = AppConfig.APP_URL+"/"+result[0]["url"].stringValue
+        self.models[property["id"].stringValue]!.task = self.downloader.download(url) {
+            [weak self] url in // *
+            self!.models[property["id"].stringValue]!.task = nil
+            if url == nil {
+                return
+            }
+            let data = NSData(contentsOfURL: url)!
+            let im = UIImage(data:data)
+            self!.models[property["id"].stringValue]!.im = im
+            dispatch_async(dispatch_get_main_queue()) {
+                self!.models[property["id"].stringValue]!.reloaded = true
+                self!.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+            }
+        }
     }
     
     @IBAction func viewDetails(sender:UIButton) {
@@ -112,11 +169,9 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
         self.navigationController?.showViewController(vc, sender: nil)
     }
     
-    func loadImage(img:UIImageView,let response: NSData) {
+    func loadImage(indexPath: NSIndexPath, img:UIImageView,let response: NSData) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
-            Utility().showPhoto(img, imgPath: result[0]["url"].stringValue)
-        }
+        cache.getImage(result[0]["url"].stringValue, imageView:img )
     }
     
     func findProperties() {
@@ -128,8 +183,11 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
             for (_,subJson):(String, JSON) in result {
-                let jsonObject: AnyObject = subJson.object
-                self.properties.addObject(jsonObject)
+                if(!subJson["id"].stringValue.isEmpty) {
+                    let jsonObject: AnyObject = subJson.object
+                    self.properties.addObject(jsonObject)
+                    
+                }
             }
             self.tableView.reloadData()
         }
