@@ -38,32 +38,34 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     @IBOutlet weak var lblBeds: UILabel!
     @IBOutlet weak var lblBaths: UILabel!
     
-    var priceRangeLess:String = "100000"
     var propertySelectedClass:String = "1"
     var propertySelectedClassName:String = "Single Family"
+    var defaultColor     = "#4870b7"
+    var selectedColor    = "#5cb85c"
+    var selectedIndex    = 0
     var bedRooms:String  = ""
     var bathRooms:String = ""
     
     struct properties {
         static let moods = [
-            ["title" : "Single Family",             "class":"1",  "color" : "#4870b7"],
-            ["title" : "Condo/Coop/Villa/Twnhse",   "class":"2",  "color" : "#4870b7"],
-            ["title" : "Residential Income",        "class":"3",  "color" : "#4870b7"],
-            ["title" : "ResidentialLand/BoatDocks", "class":"4",  "color" : "#4870b7"],
-            ["title" : "Comm/Bus/Agr/Indust Land",  "class":"5",  "color" : "#4870b7"],
-            ["title" : "Residential Rental",        "class":"6",  "color" : "#4870b7"],
-            ["title" : "Improved Comm/Indust",      "class":"7",  "color" : "#4870b7"],
-            ["title" : "Business Opportunity",      "class":"8",  "color" : "#4870b7"],
-            ["title" : "Office",                    "class":"10", "color" : "#4870b7"],
-            ["title" : "Open House",                "class":"13", "color" : "#4870b7"]
+            ["title" : "Single Family",             "class":"1"],
+            ["title" : "Condo/Coop/Villa/Twnhse",   "class":"2"],
+            ["title" : "Residential Income",        "class":"3"],
+            ["title" : "ResidentialLand/BoatDocks", "class":"4"],
+            ["title" : "Comm/Bus/Agr/Indust Land",  "class":"5"],
+            ["title" : "Residential Rental",        "class":"6"],
+            ["title" : "Improved Comm/Indust",      "class":"7"],
+            ["title" : "Business Opportunity",      "class":"8"],
+            ["title" : "Office",                    "class":"10"],
+            ["title" : "Open House",                "class":"13"]
         ]
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.createPicker()
         self.addButtonTarget()
         self.btnClass.setTitle(self.propertySelectedClassName, forState: .Normal)
-        self.createPicker()
         self.selfDelegate()
         self.findSearcConfig()
         scrollView.contentSize.height = 1100
@@ -270,10 +272,15 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         var offset = 35
         for (index, feeling) in properties.moods.enumerate() {
             let button = UIButton()
-            button.frame = CGRect(x: 13, y: offset, width: 260, height: 12)
-            button.setTitleColor(UIColor(rgba: feeling["color"]!), forState: .Normal)
-            button.setTitle(feeling["title"], forState: .Normal)
             button.tag = index
+            button.frame = CGRect(x: 13, y: offset, width: 260, height: 12)
+            var color = self.defaultColor
+            if(feeling["title"] == self.propertySelectedClassName) {
+                color = self.selectedColor
+                self.selectedIndex = index
+            }
+            button.setTitleColor(UIColor(rgba: color), forState: .Normal)
+            button.setTitle(feeling["title"], forState: .Normal)
             button.addTarget(self, action: "clickPicker:", forControlEvents: .TouchUpInside)
             picker.addSubview(button)
             offset += 35
@@ -283,6 +290,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     
     @IBAction func clickPicker(sender:UIButton) {
         let index = sender.tag
+        self.selectedIndex = index
         self.btnClass.setTitle(properties.moods[index]["title"], forState: .Normal)
         self.propertySelectedClass = properties.moods[index]["class"]!
         self.propertySelectedClassName = properties.moods[index]["title"]!
@@ -290,6 +298,15 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     }
     
     func openPicker() {
+        for v in self.picker.subviews {
+            if (v is UIButton) {
+                let button = v as! UIButton
+                button.setTitleColor(UIColor(rgba: self.defaultColor), forState: .Normal)
+                if(v.tag == self.selectedIndex) {
+                    button.setTitleColor(UIColor(rgba: "#5cb85c"), forState: .Normal)
+                }
+            }
+        }
         self.picker.hidden = false
         UIView.animateWithDuration(0.3,
             animations: {

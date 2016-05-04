@@ -169,11 +169,6 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
         self.navigationController?.showViewController(vc, sender: nil)
     }
     
-    func loadImage(indexPath: NSIndexPath, img:UIImageView,let response: NSData) {
-        let result = JSON(data: response)
-        cache.getImage(result[0]["url"].stringValue, imageView:img )
-    }
-    
     func findProperties() {
         let url = AppConfig.APP_URL+"/property_list/\(User().getField("id"))"
         Request().get(url, successHandler: {(response) in self.loadProperties(response)})
