@@ -224,7 +224,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     
     func loadSearchConfig() {
         let type = SearchConfig().getField("type_property")
-        if(type == "1"){self.swType.on = true}else{self.swType.on = false}
+        if(type == "rental"){self.swType.on = true}else{self.swType.on = false}
         let area = SearchConfig().getField("area")
         self.txtArea.text = area
         

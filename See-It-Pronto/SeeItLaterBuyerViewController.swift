@@ -20,6 +20,21 @@ class SeeItLaterBuyerViewController: UIViewController {
     var viewData:JSON = []
     var propertyId:String = ""
     var savedEventId:String = ""
+    var cache = ImageLoadingWithCache()
+    var model = [Model]()
+    var models = [String:Model]()
+    var count = 0
+    
+    lazy var configuration : NSURLSessionConfiguration = {
+        let config = NSURLSessionConfiguration.ephemeralSessionConfiguration()
+        config.allowsCellularAccess = false
+        config.URLCache = nil
+        return config
+    }()
+    
+    lazy var downloader : MyDownloader = {
+        return MyDownloader(configuration:self.configuration)
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,12 +77,55 @@ class SeeItLaterBuyerViewController: UIViewController {
         cell.lblAddress.text  = showing["property"][0]["address"].stringValue
         cell.lblPrice.text = Utility().formatCurrency(showing["property"][0]["price"].stringValue)
         cell.lblNiceDate.text = showing["nice_date"].stringValue
-        let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+showing["property"][0]["id"].stringValue+"/1"
-        if cell.propertyImage.image == nil {
-            Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
+        let property = showing["property"][0]
+        if let _ = self.models[property["id"].stringValue] {
+            self.showCell(cell, property: property, indexPath: indexPath)
+        } else {
+            cell.propertyImage.image = nil
+            self.models[property["id"].stringValue] = Model()
+            self.showCell(cell, property: property, indexPath: indexPath)
         }
         return cell
     }
+    
+    func showCell(cell:SeeItLaterBuyerTableViewCell, property:JSON,indexPath: NSIndexPath){
+        // have we got a picture?
+        if let im = self.models[property["id"].stringValue]!.im {
+            cell.propertyImage.image = im
+        } else {
+            if self.models[property["id"].stringValue]!.task == nil &&  self.models[property["id"].stringValue]!.reloaded == false {
+                // no task? start one!
+                let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+property["id"].stringValue+"/1"
+                Request().get(url, successHandler: {(response) in self.imageCell(indexPath, img:cell.propertyImage, response: response)})
+            }
+        }
+    }
+    
+    func imageCell(indexPath: NSIndexPath, img:UIImageView,let response: NSData) {
+        let showing = JSON(self.myListings[indexPath.row])
+        let property = showing["property"][0]
+        let result = JSON(data: response)
+        let url = AppConfig.APP_URL+"/"+result[0]["url"].stringValue
+        self.models[property["id"].stringValue]!.task = self.downloader.download(url) {
+            [weak self] url in // *
+            self!.models[property["id"].stringValue]!.task = nil
+            if url == nil {
+                return
+            }
+            let data = NSData(contentsOfURL: url)!
+            let im = UIImage(data:data)
+            self!.models[property["id"].stringValue]!.im = im
+            dispatch_async(dispatch_get_main_queue()) {
+                self!.models[property["id"].stringValue]!.reloaded = true
+                self!.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+            }
+        }
+    }
+    
+    
+    
+    
+    
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let showing = JSON(self.myListings[indexPath.row])
@@ -105,6 +163,7 @@ class SeeItLaterBuyerViewController: UIViewController {
             let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! SeeItLaterBuyerTableViewCell
             cell.lblNiceDate.text = dateTime
             self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            self.tableView.setEditing(false, animated: true)
         }
     }
     
@@ -174,6 +233,7 @@ class SeeItLaterBuyerViewController: UIViewController {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.saveCalendarId(showing)
                     self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                    self.tableView.setEditing(false, animated: true)
                     self.gotoAppleCalendar(event.startDate)
                 }
                 //save event id to access this particular event later
@@ -231,8 +291,10 @@ class SeeItLaterBuyerViewController: UIViewController {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
             for (_,subJson):(String, JSON) in result["data"] {
-                let jsonObject: AnyObject = subJson.object
-                self.myListings.addObject(jsonObject)
+                if(!subJson["property"][0]["id"].stringValue.isEmpty) {
+                    let jsonObject: AnyObject = subJson.object
+                    self.myListings.addObject(jsonObject)
+                }
             }
             self.tableView.reloadData()
         }

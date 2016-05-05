@@ -16,6 +16,21 @@ class AppointmentsViewController: UIViewController {
     var maxRow    = 0    //maximum limit records of your parse table class
     var maxPage   = 0    //maximum page
     var appoiments:NSMutableArray! = NSMutableArray()
+    var cache = ImageLoadingWithCache()
+    var model = [Model]()
+    var models = [String:Model]()
+    var count = 0
+    
+    lazy var configuration : NSURLSessionConfiguration = {
+        let config = NSURLSessionConfiguration.ephemeralSessionConfiguration()
+        config.allowsCellularAccess = false
+        config.URLCache = nil
+        return config
+    }()
+    
+    lazy var downloader : MyDownloader = {
+        return MyDownloader(configuration:self.configuration)
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +65,23 @@ class AppointmentsViewController: UIViewController {
         return appoiments.count
     }
     
+//    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! AppointmentsTableViewCell
+//        let appoiment      = JSON(self.appoiments[indexPath.row])
+//        cell.address.text  = appoiment["property"][0]["address"].stringValue
+//        cell.lblPrice.text = Utility().formatCurrency(appoiment["property"][0]["price"].stringValue)
+//        let state = appoiment["showing_status"].stringValue
+//        cell.lblState.text = self.getState(state)
+//        cell.niceDate.text = appoiment["nice_date"].stringValue
+//        
+//        let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+appoiment["property"][0]["id"].stringValue+"/1"
+//        if cell.propertyImage.image == nil {
+//            Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
+//        }
+//        return cell
+//    }
+    
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! AppointmentsTableViewCell
         let appoiment      = JSON(self.appoiments[indexPath.row])
@@ -58,11 +90,50 @@ class AppointmentsViewController: UIViewController {
         let state = appoiment["showing_status"].stringValue
         cell.lblState.text = self.getState(state)
         cell.niceDate.text = appoiment["nice_date"].stringValue
-        let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+appoiment["property"][0]["id"].stringValue+"/1"
-        if cell.propertyImage.image == nil {
-            Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
+        let property = appoiment["property"][0]
+        
+        if let _ = self.models[property["id"].stringValue] {
+            self.showCell(cell, property: property, indexPath: indexPath)
+        } else {
+            cell.propertyImage.image = nil
+            self.models[property["id"].stringValue] = Model()
+            self.showCell(cell, property: property, indexPath: indexPath)
         }
         return cell
+    }
+    
+    func showCell(cell:AppointmentsTableViewCell, property:JSON,indexPath: NSIndexPath){
+        // have we got a picture?
+        if let im = self.models[property["id"].stringValue]!.im {
+            cell.propertyImage.image = im
+        } else {
+            if self.models[property["id"].stringValue]!.task == nil &&  self.models[property["id"].stringValue]!.reloaded == false {
+                // no task? start one!
+                let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+property["id"].stringValue+"/1"
+                Request().get(url, successHandler: {(response) in self.imageCell(indexPath, img:cell.propertyImage, response: response)})
+            }
+        }
+    }
+    
+    func imageCell(indexPath: NSIndexPath, img:UIImageView,let response: NSData) {
+        let appoiment = JSON(self.appoiments[indexPath.row])
+        let property = appoiment["property"][0]
+        let result = JSON(data: response)
+        let url = AppConfig.APP_URL+"/"+result[0]["url"].stringValue
+        self.models[property["id"].stringValue]!.task = self.downloader.download(url) {
+            [weak self] url in // *
+            self!.models[property["id"].stringValue]!.task = nil
+            if url == nil {
+                return
+            }
+            let data = NSData(contentsOfURL: url)!
+            let im = UIImage(data:data)
+            self!.models[property["id"].stringValue]!.im = im
+            dispatch_async(dispatch_get_main_queue()) {
+                self!.models[property["id"].stringValue]!.reloaded = true
+                self!.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+            }
+        }
     }
     
     func loadImage(img:UIImageView,let response: NSData) {
@@ -88,38 +159,31 @@ class AppointmentsViewController: UIViewController {
         return out
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         let appoiment = JSON(self.appoiments[indexPath.row])
-        var message = "Select an action"
-        if(appoiment["showing_status"].stringValue == "3" || appoiment["showing_status"].stringValue == "4") {
-            message = "No actions available"
-        }
-        let alertController = UIAlertController(title:"Actions", message:message , preferredStyle: .Alert)
         if(appoiment["showing_status"].stringValue == "1" || appoiment["showing_status"].stringValue == "0" ) {
-            let deleteAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default) {
-                UIAlertAction in
-                self.cancelShowingRequest(indexPath)
-            }
-            alertController.addAction(deleteAction)
-            let editAction = UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default) {
-                UIAlertAction in
-                self.showEditDatePicker(indexPath)
-            }
-            alertController.addAction(editAction)
+            return true
         }
-        let closeAction = UIAlertAction(title: "Close", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        return false
+    }
+    
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Cancel"){
+            (UITableViewRowAction,NSIndexPath) -> Void in
+            self.cancelShowingRequest(indexPath)
         }
-        alertController.addAction(closeAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        let edit = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Edit"){
+            (UITableViewRowAction,NSIndexPath) -> Void in
+            self.showEditDatePicker(indexPath)
+        }
+        return [delete, edit]
     }
     
     func showEditDatePicker(indexPath:NSIndexPath){
         DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .DateAndTime) {
             (date) -> Void in
-            var dateTime = "\(date)"
-            dateTime     = dateTime.stringByReplacingOccurrencesOfString(" +0000",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            var dateTime  = "\(date)"
+            dateTime      = dateTime.stringByReplacingOccurrencesOfString(" +0000",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
             let appoiment = JSON(self.appoiments[indexPath.row])
             let params = self.editRequestParams(appoiment, dateTime:dateTime)
             var url = AppConfig.APP_URL+"/showings/"+appoiment["id"].stringValue
@@ -131,6 +195,7 @@ class AppointmentsViewController: UIViewController {
             }
             cell.niceDate.text = dateTime
             self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            self.tableView.setEditing(false, animated: true)
         }
     }
     
@@ -159,6 +224,7 @@ class AppointmentsViewController: UIViewController {
             appoiment["showing_status"].int = 4
             self.appoiments[indexPath.row] = appoiment.object
             self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            self.tableView.setEditing(false, animated: true)
         }
         let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
             UIAlertAction in
@@ -204,8 +270,10 @@ class AppointmentsViewController: UIViewController {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
             for (_,subJson):(String, JSON) in result["data"] {
-                let jsonObject: AnyObject = subJson.object
-                self.appoiments.addObject(jsonObject)
+                if(!subJson["property"][0]["id"].stringValue.isEmpty) {
+                    let jsonObject: AnyObject = subJson.object
+                    self.appoiments.addObject(jsonObject)
+                }
             }
             self.tableView.reloadData()
         }

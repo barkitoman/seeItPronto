@@ -99,6 +99,7 @@ class ListRealtorsViewController: UIViewController,UIWebViewDelegate {
         cell.lblTravelRange.text = realtor["distance"].stringValue
         cell.lblStaring.text     = (!realtor["rating"].stringValue.isEmpty) ? realtor["rating"].stringValue+" of 5" : ""
         if(!realtor["image"].stringValue.isEmpty) {
+            cell.photo.image = nil
             Utility().showPhoto(cell.photo, imgPath: realtor["image"].stringValue)
         }
         if(!realtor["rating"].stringValue.isEmpty) {

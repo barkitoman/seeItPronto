@@ -58,6 +58,7 @@ class ListBuyersViewController: UIViewController {
         let name   = buyer["first_name"].stringValue+" "+buyer["last_name"].stringValue
         cell.lblName.text = name
         if(!buyer["url_image"].stringValue.isEmpty) {
+            cell.photo.image = nil
             Utility().showPhoto(cell.photo, imgPath: buyer["url_image"].stringValue)
         }
         return cell

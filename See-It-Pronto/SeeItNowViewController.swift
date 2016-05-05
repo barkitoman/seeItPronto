@@ -26,6 +26,21 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
     var manager: OneShotLocationManager?
     var latitude   = "0"
     var longintude = "0"
+    var cache = ImageLoadingWithCache()
+    var model = [Model]()
+    var models = [String:Model]()
+    var count = 0
+    
+    lazy var configuration : NSURLSessionConfiguration = {
+        let config = NSURLSessionConfiguration.ephemeralSessionConfiguration()
+        config.allowsCellularAccess = false
+        config.URLCache = nil
+        return config
+    }()
+    
+    lazy var downloader : MyDownloader = {
+        return MyDownloader(configuration:self.configuration)
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,6 +129,7 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
         cell.btnViewDetails.addTarget(self, action: "openPropertyAction:", forControlEvents: .TouchUpInside)
         let image = (!realtor["image"].stringValue.isEmpty) ? realtor["image"].stringValue : realtor["url_image"].stringValue
         if(!image.isEmpty) {
+            cell.photo.image = nil
             Utility().showPhoto(cell.photo, imgPath: image)
         }
         if(!realtor["rating"].stringValue.isEmpty) {
@@ -161,8 +177,10 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
             for (_,subJson):(String, JSON) in result {
-                let jsonObject: AnyObject = subJson.object
-                self.realtors.addObject(jsonObject)
+                if(!subJson["id"].stringValue.isEmpty) {
+                    let jsonObject: AnyObject = subJson.object
+                    self.realtors.addObject(jsonObject)
+                }
             }
             if(self.realtors.count == 0 && self.countPage == 0) {
                 Utility().displayAlert(self, title: "Message", message: "There are no agents available to show this property", performSegue: "")
