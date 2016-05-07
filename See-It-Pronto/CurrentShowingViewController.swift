@@ -171,7 +171,6 @@ class CurrentShowingViewController: UIViewController {
             self.btnStartEndShowing.setTitle("End showing", forState: .Normal)
             self.btnStartEndShowing.backgroundColor = UIColor(rgba: "#45B5DC")
         } else {
-            print("was here")
          self.endShowing()
         }
     }

@@ -66,32 +66,6 @@ class PastListingsBuyerViewController: UIViewController {
         return myListings.count
     }
     
-//    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PastListingBuyerTableViewCell
-//        let showing = JSON(self.myListings[indexPath.row])
-//        if(!showing["property"][0]["id"].stringValue.isEmpty) {
-//            cell.lblAddress.text  = showing["property"][0]["address"].stringValue
-//            cell.lblPrice.text = Utility().formatCurrency(showing["property"][0]["price"].stringValue)
-//            cell.lblNiceDate.text = showing["nice_date"].stringValue
-//            let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+showing["property"][0]["id"].stringValue+"/1"
-//            if cell.propertyImage.image == nil {
-//                Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
-//            }
-//            if(!showing["showing_rating_value"].stringValue.isEmpty) {
-//                cell.showingRating.image = UIImage(named: showing["showing_rating_value"].stringValue+"stars")
-//            }
-//            if(!showing["home_rating_value"].stringValue.isEmpty) {
-//                cell.propertyRating.image = UIImage(named: showing["home_rating_value"].stringValue+"stars")
-//            }
-//            if(!showing["user_rating_value"].stringValue.isEmpty) {
-//                cell.agentRating.image = UIImage(named: showing["user_rating_value"].stringValue+"stars")
-//            }
-//        }
-//        return cell
-//    }
-    
-    
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PastListingBuyerTableViewCell
         let showing = JSON(self.myListings[indexPath.row])
@@ -138,30 +112,21 @@ class PastListingsBuyerViewController: UIViewController {
         let url = AppConfig.APP_URL+"/"+result[0]["url"].stringValue
         self.models[property["id"].stringValue]!.task = self.downloader.download(url) {
             [weak self] url in // *
-            self!.models[property["id"].stringValue]!.task = nil
-            if url == nil {
-                return
-            }
-            let data = NSData(contentsOfURL: url)!
-            let im = UIImage(data:data)
-            self!.models[property["id"].stringValue]!.im = im
-            dispatch_async(dispatch_get_main_queue()) {
-                self!.models[property["id"].stringValue]!.reloaded = true
-                self!.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+            if let _ = self?.models[property["id"].stringValue] {
+                self!.models[property["id"].stringValue]!.task = nil
+                if url == nil {
+                    return
+                }
+                let data = NSData(contentsOfURL: url)!
+                let im = UIImage(data:data)
+                self!.models[property["id"].stringValue]!.im = im
+                dispatch_async(dispatch_get_main_queue()) {
+                    self!.models[property["id"].stringValue]!.reloaded = true
+                    self!.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                }
             }
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let seeItAgain = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "See it again"){(UITableViewRowAction,NSIndexPath) -> Void in

@@ -49,7 +49,6 @@ class NotificationDetailViewController: UIViewController {
 
     func findShowing() {
         let url = AppConfig.APP_URL+"/get_showing_details/"+self.showingId+"/"+User().getField("id")
-        print(url)
         Request().get(url, successHandler: {(response) in self.loadShowingData(response)})
     }
     

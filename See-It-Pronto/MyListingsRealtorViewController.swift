@@ -139,16 +139,18 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
         let url = AppConfig.APP_URL+"/"+result[0]["url"].stringValue
         self.models[property["id"].stringValue]!.task = self.downloader.download(url) {
             [weak self] url in // *
-            self!.models[property["id"].stringValue]!.task = nil
-            if url == nil {
-                return
-            }
-            let data = NSData(contentsOfURL: url)!
-            let im = UIImage(data:data)
-            self!.models[property["id"].stringValue]!.im = im
-            dispatch_async(dispatch_get_main_queue()) {
-                self!.models[property["id"].stringValue]!.reloaded = true
-                self!.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+            if let _ = self?.models[property["id"].stringValue] {
+                self!.models[property["id"].stringValue]!.task = nil
+                if url == nil {
+                    return
+                }
+                let data = NSData(contentsOfURL: url)!
+                let im = UIImage(data:data)
+                self!.models[property["id"].stringValue]!.im = im
+                dispatch_async(dispatch_get_main_queue()) {
+                    self!.models[property["id"].stringValue]!.reloaded = true
+                    self!.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                }
             }
         }
     }

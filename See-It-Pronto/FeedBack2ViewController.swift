@@ -8,13 +8,22 @@
 
 import UIKit
 
-class FeedBack2ViewController: UIViewController {
+class FeedBack2ViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate {
 
     var viewData:JSON = []
     @IBOutlet weak var txtAgentComments: UITextView!
+    var animateDistance: CGFloat!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.txtAgentComments.delegate = self
+    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+        }
+        return true
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -90,6 +99,44 @@ class FeedBack2ViewController: UIViewController {
             let view: FeedBack3ViewController = segue.destinationViewController as! FeedBack3ViewController
             view.viewData  = self.viewData
         }
+    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        let textFieldRect : CGRect = self.view.window!.convertRect(textView.bounds, fromView: textView)
+        let viewRect : CGRect = self.view.window!.convertRect(self.view.bounds, fromView: self.view)
+        let midline : CGFloat = textFieldRect.origin.y + 0.5 * textFieldRect.size.height
+        let numerator : CGFloat = midline - viewRect.origin.y - MoveKeyboard.MINIMUM_SCROLL_FRACTION * viewRect.size.height
+        let denominator : CGFloat = (MoveKeyboard.MAXIMUM_SCROLL_FRACTION - MoveKeyboard.MINIMUM_SCROLL_FRACTION) * viewRect.size.height
+        var heightFraction : CGFloat = numerator / denominator
+        if heightFraction < 0.0 {
+            heightFraction = 0.0
+        } else if heightFraction > 1.0 {
+            heightFraction = 1.0
+        }
+        let orientation : UIInterfaceOrientation = UIApplication.sharedApplication().statusBarOrientation
+        if (orientation == UIInterfaceOrientation.Portrait || orientation == UIInterfaceOrientation.PortraitUpsideDown) {
+            animateDistance = floor(MoveKeyboard.PORTRAIT_KEYBOARD_HEIGHT * heightFraction)
+        } else {
+            animateDistance = floor(MoveKeyboard.LANDSCAPE_KEYBOARD_HEIGHT * heightFraction)
+        }
+        var viewFrame : CGRect = self.view.frame
+        viewFrame.origin.y -= animateDistance
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(NSTimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
+        self.view.frame = viewFrame
+        UIView.commitAnimations()
+    }
+    
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        var viewFrame : CGRect = self.view.frame
+        viewFrame.origin.y += animateDistance
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(NSTimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
+        self.view.frame = viewFrame
+        UIView.commitAnimations()
     }
     
 }

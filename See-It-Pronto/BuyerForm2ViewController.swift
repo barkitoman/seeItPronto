@@ -15,6 +15,7 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
     @IBOutlet weak var txtLastName: UITextField!
     @IBOutlet weak var btnSelectPicture: UIButton!
     @IBOutlet weak var previewProfilePicture: UIImageView!
+    
     var haveImage:Bool = false
     var viewData:JSON = []
     
@@ -137,6 +138,5 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
             view.viewData  = self.viewData
         }
     }
-
-
+    
 }

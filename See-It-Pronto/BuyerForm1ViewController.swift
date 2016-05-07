@@ -16,7 +16,8 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
     @IBOutlet weak var txtPhone: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
     @IBOutlet weak var btnBack: UIButton!
-     var viewData:JSON = []
+    var animateDistance: CGFloat!
+    var viewData:JSON = []
     
     override func viewDidLoad() {
         super.viewDidLoad()

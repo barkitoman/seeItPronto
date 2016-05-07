@@ -151,13 +151,17 @@ class Utility {
     func goHome(controller:UIViewController){
         let role   = User().getField("role")
         if(role == "realtor") {
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            let viewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("RealtorHomeViewController") as UIViewController
-            controller.navigationController?.showViewController(viewController, sender: nil)
+            dispatch_async(dispatch_get_main_queue()) {
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                let viewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("RealtorHomeViewController") as UIViewController
+                controller.navigationController?.showViewController(viewController, sender: nil)
+            }
         } else if (role == "buyer") {
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            let viewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as UIViewController
-            controller.navigationController?.showViewController(viewController, sender: nil)
+             dispatch_async(dispatch_get_main_queue()) {
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                let viewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as UIViewController
+                controller.navigationController?.showViewController(viewController, sender: nil)
+            }
         }
     }
 }

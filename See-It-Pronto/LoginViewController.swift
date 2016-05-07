@@ -90,4 +90,5 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
             view.viewData  = self.viewData
         }
     }
+
 }
