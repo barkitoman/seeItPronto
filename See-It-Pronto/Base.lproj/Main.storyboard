@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -2911,12 +2911,6 @@ $480,000
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uBB-ab-rrH">
-                                        <rect key="frame" x="20" y="3" width="280" height="26"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lot Size" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YQX-jI-sZH">
                                         <rect key="frame" x="74" y="181" width="61" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -2954,6 +2948,12 @@ $480,000
                                         <rect key="frame" x="20" y="37" width="280" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uBB-ab-rrH">
+                                        <rect key="frame" x="20" y="3" width="280" height="26"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                        <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -3031,13 +3031,20 @@ $480,000
                                     <action selector="btnSeeItPronto:" destination="IrI-DG-f7l" eventType="touchUpInside" id="KA9-IC-YLm"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ApJ-2m-pcP">
-                                <rect key="frame" x="0.0" y="120" width="320" height="143"/>
-                            </imageView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="6" translatesAutoresizingMaskIntoConstraints="NO" id="a83-5A-lCG">
+                                <rect key="frame" x="111" y="228" width="102" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="102" id="Ci9-hV-u8N"/>
+                                </constraints>
+                                <color key="pageIndicatorTintColor" red="0.81176470588235294" green="0.88235294117647056" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="currentPageIndicatorTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </pageControl>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNM-ua-Lhv">
+                                <rect key="frame" x="0.0" y="120" width="320" height="145"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="ApJ-2m-pcP" secondAttribute="trailing" id="01w-eC-XQI"/>
                             <constraint firstItem="5SL-9X-ckp" firstAttribute="leading" secondItem="Df7-Mi-bBu" secondAttribute="trailing" constant="-2" id="1cP-cv-0EI"/>
                             <constraint firstItem="5SL-9X-ckp" firstAttribute="height" secondItem="Df7-Mi-bBu" secondAttribute="height" id="8PC-dA-KEe"/>
                             <constraint firstItem="8Bc-Wc-JtV" firstAttribute="leading" secondItem="R9V-K0-Gih" secondAttribute="leading" id="CLP-7Z-cFH"/>
@@ -3045,18 +3052,22 @@ $480,000
                             <constraint firstAttribute="trailingMargin" secondItem="5SL-9X-ckp" secondAttribute="trailing" constant="-20" id="Dro-xC-4yr"/>
                             <constraint firstItem="GoX-04-Fd6" firstAttribute="top" secondItem="Df7-Mi-bBu" secondAttribute="bottom" constant="-1" id="Fdr-KO-a2g"/>
                             <constraint firstAttribute="trailing" secondItem="4Dz-dm-NxU" secondAttribute="trailing" id="HmO-9m-Wis"/>
+                            <constraint firstItem="MNM-ua-Lhv" firstAttribute="top" secondItem="E7M-gx-nAY" secondAttribute="bottom" id="HzC-Mi-Kvx"/>
                             <constraint firstItem="E7M-gx-nAY" firstAttribute="leading" secondItem="R9V-K0-Gih" secondAttribute="leading" id="JVc-me-3C4"/>
+                            <constraint firstItem="4Dz-dm-NxU" firstAttribute="top" secondItem="MNM-ua-Lhv" secondAttribute="bottom" id="KWo-zW-7rN"/>
+                            <constraint firstItem="a83-5A-lCG" firstAttribute="bottom" secondItem="MNM-ua-Lhv" secondAttribute="bottom" id="MEZ-64-stZ"/>
                             <constraint firstAttribute="trailing" secondItem="8Bc-Wc-JtV" secondAttribute="trailing" id="NMl-Jo-r2i"/>
                             <constraint firstAttribute="trailing" secondItem="E7M-gx-nAY" secondAttribute="trailing" id="Q4m-LE-0zC"/>
                             <constraint firstItem="4Dz-dm-NxU" firstAttribute="leading" secondItem="R9V-K0-Gih" secondAttribute="leading" id="S9n-LU-4VN"/>
                             <constraint firstItem="8Bc-Wc-JtV" firstAttribute="top" secondItem="Tx7-bC-xK9" secondAttribute="bottom" constant="8" symbolic="YES" id="UFH-ok-rgg"/>
+                            <constraint firstItem="MNM-ua-Lhv" firstAttribute="leading" secondItem="R9V-K0-Gih" secondAttribute="leading" id="UOj-Ed-IcC"/>
                             <constraint firstItem="Df7-Mi-bBu" firstAttribute="top" secondItem="4Dz-dm-NxU" secondAttribute="bottom" constant="8" id="Uyl-jA-VdO"/>
                             <constraint firstItem="GoX-04-Fd6" firstAttribute="top" secondItem="5SL-9X-ckp" secondAttribute="bottom" constant="-1" id="ebd-bR-DGD"/>
-                            <constraint firstItem="ApJ-2m-pcP" firstAttribute="top" secondItem="E7M-gx-nAY" secondAttribute="bottom" id="gmB-Wn-VcO"/>
                             <constraint firstItem="E7M-gx-nAY" firstAttribute="top" secondItem="8Bc-Wc-JtV" secondAttribute="bottom" id="ie9-vc-ThY"/>
-                            <constraint firstItem="ApJ-2m-pcP" firstAttribute="leading" secondItem="R9V-K0-Gih" secondAttribute="leading" id="jSD-Ip-Knc"/>
-                            <constraint firstItem="4Dz-dm-NxU" firstAttribute="top" secondItem="ApJ-2m-pcP" secondAttribute="bottom" constant="2" id="sUU-An-BtV"/>
+                            <constraint firstAttribute="trailing" secondItem="MNM-ua-Lhv" secondAttribute="trailing" id="rQ4-oN-66B"/>
                             <constraint firstAttribute="trailing" secondItem="4Dz-dm-NxU" secondAttribute="trailing" id="uYx-mg-nW1"/>
+                            <constraint firstItem="4Dz-dm-NxU" firstAttribute="top" secondItem="a83-5A-lCG" secondAttribute="bottom" id="vEL-fd-EXM"/>
+                            <constraint firstItem="a83-5A-lCG" firstAttribute="centerX" secondItem="R9V-K0-Gih" secondAttribute="centerX" constant="2" id="vYS-Yd-iI9"/>
                             <constraint firstItem="Df7-Mi-bBu" firstAttribute="leading" secondItem="R9V-K0-Gih" secondAttribute="leadingMargin" constant="-20" id="w1v-e2-iew"/>
                             <constraint firstItem="4Dz-dm-NxU" firstAttribute="leading" secondItem="R9V-K0-Gih" secondAttribute="leading" id="wU8-Fy-Wp3"/>
                         </constraints>
@@ -3078,7 +3089,8 @@ $480,000
                         <outlet property="lblSquareFeed" destination="cGG-Sv-9ft" id="xBr-6g-uYB"/>
                         <outlet property="lblType" destination="qd5-hr-feM" id="CNw-B5-I3y"/>
                         <outlet property="lblYearBuilt" destination="nlB-3q-mAT" id="UlX-v3-wKx"/>
-                        <outlet property="photo" destination="ApJ-2m-pcP" id="EZE-1n-dV8"/>
+                        <outlet property="pageControl" destination="a83-5A-lCG" id="Pjw-KM-v09"/>
+                        <outlet property="scrollImages" destination="MNM-ua-Lhv" id="WCh-nP-hqq"/>
                         <segue destination="DN6-Yg-czW" kind="show" identifier="selectAgentForProperty" id="eGo-7Q-bwm"/>
                     </connections>
                 </viewController>
@@ -3760,19 +3772,29 @@ $480,000
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="trN-cV-0IZ" userLabel="View">
-                                <rect key="frame" x="0.0" y="80" width="320" height="144"/>
+                                <rect key="frame" x="0.0" y="72" width="320" height="159"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ov0-1f-Aio">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="144"/>
-                                    </imageView>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3g3-Cg-rVZ">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="159"/>
+                                    </scrollView>
+                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="6" translatesAutoresizingMaskIntoConstraints="NO" id="WkV-Ph-zUd">
+                                        <rect key="frame" x="114" y="122" width="91" height="37"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="91" id="UfH-bc-3RQ"/>
+                                        </constraints>
+                                        <color key="pageIndicatorTintColor" red="0.81176470590000005" green="0.88235294119999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="currentPageIndicatorTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </pageControl>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="Ov0-1f-Aio" firstAttribute="leading" secondItem="trN-cV-0IZ" secondAttribute="leading" id="2J4-0U-ghg"/>
-                                    <constraint firstAttribute="bottom" secondItem="Ov0-1f-Aio" secondAttribute="bottom" id="G2t-yK-y3N"/>
-                                    <constraint firstItem="Ov0-1f-Aio" firstAttribute="top" secondItem="trN-cV-0IZ" secondAttribute="top" id="Xmm-Du-CV8"/>
-                                    <constraint firstAttribute="trailing" secondItem="Ov0-1f-Aio" secondAttribute="trailing" id="Z5Q-aE-OG0"/>
-                                    <constraint firstAttribute="height" constant="144" id="kvB-8c-GUb"/>
+                                    <constraint firstItem="3g3-Cg-rVZ" firstAttribute="top" secondItem="trN-cV-0IZ" secondAttribute="top" id="0cz-jU-KsK"/>
+                                    <constraint firstItem="WkV-Ph-zUd" firstAttribute="centerX" secondItem="trN-cV-0IZ" secondAttribute="centerX" id="8tY-eZ-X8z"/>
+                                    <constraint firstAttribute="bottom" secondItem="3g3-Cg-rVZ" secondAttribute="bottom" id="Xx0-j1-sjy"/>
+                                    <constraint firstAttribute="trailing" secondItem="3g3-Cg-rVZ" secondAttribute="trailing" id="dOE-pW-drx"/>
+                                    <constraint firstItem="WkV-Ph-zUd" firstAttribute="bottom" secondItem="3g3-Cg-rVZ" secondAttribute="bottom" id="duT-MP-n53"/>
+                                    <constraint firstAttribute="height" constant="159" id="kvB-8c-GUb"/>
+                                    <constraint firstItem="3g3-Cg-rVZ" firstAttribute="leading" secondItem="trN-cV-0IZ" secondAttribute="leading" id="zce-yz-a3q"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ojz-q6-9t3">
@@ -4264,7 +4286,7 @@ $480,000
                             <constraint firstAttribute="trailing" secondItem="Kiv-bg-9cP" secondAttribute="trailing" id="BCe-k5-slR"/>
                             <constraint firstItem="4Lv-jr-y4K" firstAttribute="top" secondItem="PiR-Jm-wHm" secondAttribute="bottom" id="CdP-3k-rg7"/>
                             <constraint firstItem="PiR-Jm-wHm" firstAttribute="height" secondItem="vmN-m5-vt4" secondAttribute="height" id="EZq-be-QJs"/>
-                            <constraint firstItem="trN-cV-0IZ" firstAttribute="top" secondItem="Kiv-bg-9cP" secondAttribute="bottom" constant="8" symbolic="YES" id="I0w-46-J1X"/>
+                            <constraint firstItem="trN-cV-0IZ" firstAttribute="top" secondItem="Kiv-bg-9cP" secondAttribute="bottom" id="I0w-46-J1X"/>
                             <constraint firstAttribute="trailing" secondItem="trN-cV-0IZ" secondAttribute="trailing" id="LeF-bF-gky"/>
                             <constraint firstItem="vmN-m5-vt4" firstAttribute="height" secondItem="0R2-z3-Ech" secondAttribute="height" id="Ncj-Ry-FU0"/>
                             <constraint firstItem="4Lv-jr-y4K" firstAttribute="top" secondItem="vmN-m5-vt4" secondAttribute="bottom" id="OO3-fG-y4d"/>
@@ -4277,9 +4299,9 @@ $480,000
                             <constraint firstAttribute="trailing" secondItem="PiR-Jm-wHm" secondAttribute="trailing" id="hhK-Lq-n7D"/>
                             <constraint firstItem="PiR-Jm-wHm" firstAttribute="top" secondItem="ojz-q6-9t3" secondAttribute="bottom" constant="3" id="iYe-oW-VGe"/>
                             <constraint firstItem="vmN-m5-vt4" firstAttribute="leading" secondItem="0R2-z3-Ech" secondAttribute="trailing" id="jRm-QU-Wyg"/>
-                            <constraint firstItem="trN-cV-0IZ" firstAttribute="top" secondItem="bj6-C1-Nml" secondAttribute="top" constant="80" id="nXh-ce-aiU"/>
+                            <constraint firstItem="trN-cV-0IZ" firstAttribute="top" secondItem="bj6-C1-Nml" secondAttribute="top" constant="72" id="nXh-ce-aiU"/>
                             <constraint firstItem="PiR-Jm-wHm" firstAttribute="leading" secondItem="vmN-m5-vt4" secondAttribute="trailing" id="pgN-tX-s7i"/>
-                            <constraint firstItem="ojz-q6-9t3" firstAttribute="top" secondItem="trN-cV-0IZ" secondAttribute="bottom" constant="8" symbolic="YES" id="qVj-ee-MdF"/>
+                            <constraint firstItem="ojz-q6-9t3" firstAttribute="top" secondItem="trN-cV-0IZ" secondAttribute="bottom" constant="1" id="qVj-ee-MdF"/>
                             <constraint firstAttribute="trailing" secondItem="ojz-q6-9t3" secondAttribute="trailing" id="xNs-Ct-7NT"/>
                         </constraints>
                     </view>
@@ -4311,7 +4333,8 @@ $480,000
                         <outlet property="lblType" destination="QLM-57-48H" id="96D-Ne-BWo"/>
                         <outlet property="lblYearBuilt" destination="F5X-bW-O3a" id="yIL-j5-OWQ"/>
                         <outlet property="lblYourCredits" destination="r0d-8D-N4o" id="kef-3G-yBc"/>
-                        <outlet property="photo" destination="Ov0-1f-Aio" id="xSB-WQ-W6g"/>
+                        <outlet property="pageControl" destination="WkV-Ph-zUd" id="Pyc-44-g3H"/>
+                        <outlet property="scrollImages" destination="3g3-Cg-rVZ" id="C2b-6A-4Uh"/>
                         <segue destination="DN6-Yg-czW" kind="show" identifier="selectAgentForProperty" id="U05-Ui-KM7"/>
                     </connections>
                 </viewController>
