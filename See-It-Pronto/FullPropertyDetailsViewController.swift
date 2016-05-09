@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FullPropertyDetailsViewController: UIViewController {
+class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
 
     var viewData:JSON = []
     
@@ -23,8 +23,9 @@ class FullPropertyDetailsViewController: UIViewController {
     @IBOutlet weak var lbPets: UILabel!
     @IBOutlet weak var lbPool: UILabel!
     @IBOutlet weak var lbSpa: UILabel!
+    @IBOutlet weak var scrollImages: UIScrollView!
+    @IBOutlet weak var pageControl: UIPageControl!
     
-    @IBOutlet weak var photo: UIImageView!
     @IBOutlet weak var lblEstPayment: UILabel!
     @IBOutlet weak var lblYourCredits: UILabel!
     @IBOutlet weak var lblBedrooms: UILabel!
@@ -43,6 +44,7 @@ class FullPropertyDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.scrollImages.frame = CGRectMake(0, 0, self.view.frame.width, self.scrollImages.frame.height)
         self.showPropertydetails()
         self.showHideButtons()
     }
@@ -99,10 +101,51 @@ class FullPropertyDetailsViewController: UIViewController {
     
     func showPropertydetails() {
         dispatch_async(dispatch_get_main_queue()) {
-            let image = Property().getField("image")
-            if(!image.isEmpty) {
-                Utility().showPhoto(self.photo, imgPath: image)
+            let scrollViewWidth:CGFloat = self.scrollImages.frame.width
+            let scrollViewHeight:CGFloat = self.scrollImages.frame.height
+            var cont = 0
+            if(!Property().getField("image").isEmpty) {
+                let img = UIImageView(frame: CGRectMake(0, 0,scrollViewWidth, scrollViewHeight))
+                Utility().showPhoto(img, imgPath: Property().getField("image"))
+                self.scrollImages.addSubview(img)
+                cont++
             }
+            if(!Property().getField("image2").isEmpty) {
+                let img1 = UIImageView(frame: CGRectMake(scrollViewWidth, 0,scrollViewWidth, scrollViewHeight))
+                Utility().showPhoto(img1, imgPath: Property().getField("image2"))
+                self.scrollImages.addSubview(img1)
+                cont++
+            }
+            if(!Property().getField("image3").isEmpty) {
+                let img2 = UIImageView(frame: CGRectMake(scrollViewWidth*2, 0,scrollViewWidth, scrollViewHeight))
+                Utility().showPhoto(img2, imgPath: Property().getField("image3"))
+                self.scrollImages.addSubview(img2)
+                cont++
+            }
+            if(!Property().getField("image4").isEmpty) {
+                let img3 = UIImageView(frame: CGRectMake(scrollViewWidth*3, 0,scrollViewWidth, scrollViewHeight))
+                Utility().showPhoto(img3, imgPath: Property().getField("image4"))
+                self.scrollImages.addSubview(img3)
+                cont++
+            }
+            if(!Property().getField("image5").isEmpty) {
+                let img4 = UIImageView(frame: CGRectMake(scrollViewWidth*4, 0,scrollViewWidth, scrollViewHeight))
+                Utility().showPhoto(img4, imgPath: Property().getField("image5"))
+                self.scrollImages.addSubview(img4)
+                cont++
+            }
+            if(!Property().getField("image6").isEmpty) {
+                let img4 = UIImageView(frame: CGRectMake(scrollViewWidth*5, 0,scrollViewWidth, scrollViewHeight))
+                Utility().showPhoto(img4, imgPath: Property().getField("image6"))
+                self.scrollImages.addSubview(img4)
+                cont++
+            }
+            
+            self.scrollImages.contentSize = CGSizeMake(self.scrollImages.frame.width * CGFloat(cont), self.scrollImages.frame.height)
+            self.scrollImages.delegate = self
+            self.pageControl.numberOfPages = cont
+            self.pageControl.currentPage = 0
+            
             self.lblEstPayment.text   = Property().getField("est_payments")
             self.lblYourCredits.text  = Property().getField("your_credits")
             self.lblBedrooms.text     = Property().getField("bedrooms")
@@ -128,6 +171,15 @@ class FullPropertyDetailsViewController: UIViewController {
             self.lbSpa.text           = Property().getField("spa")
             
         }
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView){
+        // Test the offset and calculate the current page after scrolling ends
+        let pageWidth:CGFloat = CGRectGetWidth(scrollView.frame)
+        let currentPage:CGFloat = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
+        // Change the indicator
+        self.pageControl.currentPage = Int(currentPage);
+        
     }
     
 }

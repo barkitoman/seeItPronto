@@ -8,10 +8,13 @@
 
 import UIKit
 
-class PropertyDetailsViewController: UIViewController {
+class PropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
 
     var viewData:JSON = []
-    @IBOutlet weak var photo: UIImageView!
+    
+    @IBOutlet weak var scrollImages: UIScrollView!
+    
+    @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var lblPrice: UILabel!
     @IBOutlet weak var lblAddress: UILabel!
     @IBOutlet weak var lblBedrooms: UILabel!
@@ -25,6 +28,7 @@ class PropertyDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.scrollImages.frame = CGRectMake(0, 0, self.view.frame.width, self.scrollImages.frame.height)
         self.findPropertyDetails()
         self.showHideButtons()
     }
@@ -81,9 +85,51 @@ class PropertyDetailsViewController: UIViewController {
             if(propertyId.isEmpty) {
                 self.propertyNoExistMessage()
             }
+            let scrollViewWidth:CGFloat = self.scrollImages.frame.width
+            let scrollViewHeight:CGFloat = self.scrollImages.frame.height
+            var cont = 0
+            
             if(!result["images"][0].stringValue.isEmpty) {
-                Utility().showPhoto(self.photo, imgPath: result["images"][0].stringValue)
+                let img = UIImageView(frame: CGRectMake(0, 0,scrollViewWidth, scrollViewHeight))
+                Utility().showPhoto(img, imgPath: result["images"][0].stringValue)
+                self.scrollImages.addSubview(img)
+                cont++
             }
+            if(!result["images"][1].stringValue.isEmpty) {
+                let img1 = UIImageView(frame: CGRectMake(scrollViewWidth, 0,scrollViewWidth, scrollViewHeight))
+                Utility().showPhoto(img1, imgPath: result["images"][1].stringValue)
+                self.scrollImages.addSubview(img1)
+                cont++
+            }
+            if(!result["images"][2].stringValue.isEmpty) {
+                let img2 = UIImageView(frame: CGRectMake(scrollViewWidth*2, 0,scrollViewWidth, scrollViewHeight))
+                Utility().showPhoto(img2, imgPath: result["images"][2].stringValue)
+                self.scrollImages.addSubview(img2)
+                cont++
+            }
+            if(!result["images"][3].stringValue.isEmpty) {
+                let img3 = UIImageView(frame: CGRectMake(scrollViewWidth*3, 0,scrollViewWidth, scrollViewHeight))
+                Utility().showPhoto(img3, imgPath: result["images"][3].stringValue)
+                self.scrollImages.addSubview(img3)
+                cont++
+            }
+            if(!result["images"][4].stringValue.isEmpty) {
+                let img4 = UIImageView(frame: CGRectMake(scrollViewWidth*4, 0,scrollViewWidth, scrollViewHeight))
+                Utility().showPhoto(img4, imgPath: result["images"][4].stringValue)
+                self.scrollImages.addSubview(img4)
+                cont++
+            }
+            if(!result["images"][5].stringValue.isEmpty) {
+                let img4 = UIImageView(frame: CGRectMake(scrollViewWidth*5, 0,scrollViewWidth, scrollViewHeight))
+                Utility().showPhoto(img4, imgPath: result["images"][5].stringValue)
+                self.scrollImages.addSubview(img4)
+                cont++
+            }
+            
+            self.scrollImages.contentSize = CGSizeMake(self.scrollImages.frame.width * CGFloat(cont), self.scrollImages.frame.height)
+            self.scrollImages.delegate = self
+            self.pageControl.numberOfPages = cont
+            self.pageControl.currentPage = 0
             self.lblPrice.text      = Utility().formatCurrency(result["price"].stringValue)
             self.lblAddress.text    = result["address"].stringValue
             self.lblBedrooms.text   = result["bedrooms"].stringValue
@@ -105,4 +151,14 @@ class PropertyDetailsViewController: UIViewController {
         alertController.addAction(homeAction)
         self.presentViewController(alertController, animated: true, completion: nil)
     }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView){
+        // Test the offset and calculate the current page after scrolling ends
+        let pageWidth:CGFloat = CGRectGetWidth(scrollView.frame)
+        let currentPage:CGFloat = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
+        // Change the indicator
+        self.pageControl.currentPage = Int(currentPage);
+        
+    }
+
 }
