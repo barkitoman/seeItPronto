@@ -3031,6 +3031,9 @@ $480,000
                                     <action selector="btnSeeItPronto:" destination="IrI-DG-f7l" eventType="touchUpInside" id="KA9-IC-YLm"/>
                                 </connections>
                             </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNM-ua-Lhv">
+                                <rect key="frame" x="0.0" y="120" width="320" height="145"/>
+                            </scrollView>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="6" translatesAutoresizingMaskIntoConstraints="NO" id="a83-5A-lCG">
                                 <rect key="frame" x="111" y="228" width="102" height="37"/>
                                 <constraints>
@@ -3039,9 +3042,6 @@ $480,000
                                 <color key="pageIndicatorTintColor" red="0.81176470588235294" green="0.88235294117647056" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="currentPageIndicatorTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </pageControl>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNM-ua-Lhv">
-                                <rect key="frame" x="0.0" y="120" width="320" height="145"/>
-                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -8540,11 +8540,11 @@ $480,000
         <image name="rating" width="132" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="voO-kP-iEV"/>
         <segue reference="gRd-bz-hb9"/>
         <segue reference="vxA-X1-U6d"/>
         <segue reference="7AY-Fz-Bqm"/>
         <segue reference="eGo-7Q-bwm"/>
         <segue reference="CcM-Cn-vPF"/>
+        <segue reference="voO-kP-iEV"/>
     </inferredMetricsTieBreakers>
 </document>
