@@ -37,4 +37,3 @@ struct MoveKeyboard {
     static let LANDSCAPE_KEYBOARD_HEIGHT : CGFloat = 162;
 }
 
-

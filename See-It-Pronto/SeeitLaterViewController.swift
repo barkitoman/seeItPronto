@@ -57,7 +57,7 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
         DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .DateAndTime) {
             (date) -> Void in
             var dateTime = "\(date)"
-            dateTime     = dateTime.stringByReplacingOccurrencesOfString(" +0000",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            dateTime = dateTime.stringByReplacingOccurrencesOfString(" +0000",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
             self.txtDate.text = dateTime
         }
     }

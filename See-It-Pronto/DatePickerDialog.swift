@@ -66,7 +66,7 @@ class DatePickerDialog: UIView {
         self.datePickerMode = datePickerMode
         self.callback = callback
         self.defaultDate = defaultDate
-        self.datePicker.datePickerMode = self.datePickerMode ?? .Date
+        self.datePicker.datePickerMode = self.datePickerMode ?? .DateAndTime
         self.datePicker.date = self.defaultDate ?? NSDate()
         
         /* */
@@ -168,6 +168,8 @@ class DatePickerDialog: UIView {
         self.datePicker = UIDatePicker(frame: CGRectMake(0, 30, 0, 0))
         self.datePicker.autoresizingMask = UIViewAutoresizing.FlexibleRightMargin
         self.datePicker.frame.size.width = 300
+        self.datePicker.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        self.datePicker.timeZone = NSTimeZone(name: "UTC")
         dialogContainer.addSubview(self.datePicker)
         
         // Add the buttons
@@ -214,7 +216,6 @@ class DatePickerDialog: UIView {
         if sender.tag == kDatePickerDialogDoneButtonTag {
             self.callback?(date: self.datePicker.date)
         }
-        
         close()
     }
     

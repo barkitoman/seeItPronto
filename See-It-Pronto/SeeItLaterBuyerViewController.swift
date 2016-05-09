@@ -125,10 +125,6 @@ class SeeItLaterBuyerViewController: UIViewController {
     }
     
     
-    
-    
-    
-    
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let showing = JSON(self.myListings[indexPath.row])
         let delete = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Cancel"){(UITableViewRowAction,NSIndexPath) -> Void in
