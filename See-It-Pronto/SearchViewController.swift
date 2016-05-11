@@ -63,7 +63,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.createPicker()
+        
         self.addButtonTarget()
         self.btnClass.setTitle(self.propertySelectedClassName, forState: .Normal)
         self.selfDelegate()
@@ -254,15 +254,14 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         self.txtPriceFrom.text = priceFrom
         let priceTo = SearchConfig().getField("price_range_higher")
         self.txtPriceTo.text = priceTo
+        self.createPicker()
     }
     
     func afterGet(let response: NSData) {
         let result = JSON(data: response)
-        if(result["result"].bool == true ) {
-            dispatch_async(dispatch_get_main_queue()) {
-                SearchConfig().saveIfExists(result)
-                self.loadSearchConfig()
-            }
+        dispatch_async(dispatch_get_main_queue()) {
+            SearchConfig().saveIfExists(result)
+            self.loadSearchConfig()
         }
     }
     
@@ -366,7 +365,6 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         self.view.frame = viewFrame
         UIView.commitAnimations()
     }
-    
     
     func textFieldDidEndEditing(textField: UITextField) {
         var viewFrame : CGRect = self.view.frame
