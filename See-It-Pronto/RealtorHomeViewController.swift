@@ -17,6 +17,7 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     @IBOutlet weak var searchTextField: UITextField!
     var viewData:JSON    = []
     var propertyId:String = ""
+    var propertyClass:String = ""
     var executeFind = true
     @IBOutlet weak var webView: UIWebView!
     
@@ -77,8 +78,10 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     }
     
     func loadMap() {
-        let url = AppConfig.APP_URL+"/map/\(User().getField("id"))?lat=\(self.latitude)&lon=\(self.longintude)&role=\(User().getField("role"))&property=\(self.propertyId)"
+        let url = AppConfig.APP_URL+"/map/\(User().getField("id"))?lat=\(self.latitude)&lon=\(self.longintude)&role=\(User().getField("role"))&property=\(self.propertyId)&property_class=\(self.propertyClass)"
         self.propertyId = ""
+        self.propertyClass = ""
+        print(url)
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         self.webView.loadRequest(request)
@@ -98,6 +101,7 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     }
     
     @IBAction func btnMenu(sender: AnyObject) {
+        self.textFieldShouldReturn(self.searchTextField)
         self.onSlideMenuButtonPressed(sender as! UIButton)
     }
     
@@ -127,15 +131,19 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     }
     
     func loadProperties(let response: NSData) {
+        print("was here")
         autocompleteUrls = NSMutableArray()
         dispatch_async(dispatch_get_main_queue()) {
             let properties = JSON(data: response)
-            for (_,subJson):(String, JSON) in properties {
-                let jsonObject: AnyObject = subJson.object
-                self.autocompleteUrls.addObject(jsonObject)
+            if(properties["result"].stringValue.isEmpty) {
+                for (_,subJson):(String, JSON) in properties {
+                    let jsonObject: AnyObject = subJson.object
+                    self.autocompleteUrls.addObject(jsonObject)
+                }
             }
-            self.autocompleteTableView.reloadData()
             self.executeFind = true
+            self.autocompleteTableView.reloadData()
+            
         }
     }
     
@@ -160,6 +168,7 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         self.autocompleteTableView.hidden = true
         let item = JSON(self.autocompleteUrls[indexPath.row])
         self.propertyId = item["id"].stringValue
+        self.propertyClass = item["class"].stringValue
         self.loadMap()
     }
     

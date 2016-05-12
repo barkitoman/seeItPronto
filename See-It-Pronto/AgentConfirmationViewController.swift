@@ -70,7 +70,7 @@ class AgentConfirmationViewController: UIViewController, UITextFieldDelegate, UI
         params     = params+"&type="+PropertyAction().getField("type")+"&coupon_code="+self.txtCouponCode.text!
         params     = params+"&date=\(Utility().getCurrentDate("-"))&property_class=\(Property().getField("property_class"))"
         let url    = AppConfig.APP_URL+"/seeitpronto"
-        Request().post(url, params:params,successHandler: {(response) in self.afterPostRequest(response)});
+        Request().post(url, params:params,controller: self,successHandler: {(response) in self.afterPostRequest(response)});
     }
     
     func afterPostRequest(let response: NSData) {

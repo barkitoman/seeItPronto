@@ -16,6 +16,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     
     var viewData:JSON     = []
     var propertyId:String = ""
+    var propertyClass:String = ""
     var executeFind = true
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var txtSearch: UITextField!
@@ -76,8 +77,9 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     }
     
     func loadMap() {
-        let url = AppConfig.APP_URL+"/map/\(User().getField("id"))?lat=\(self.latitude)&lon=\(self.longintude)&role=\(User().getField("role"))&property=\(self.propertyId)"
+        let url = AppConfig.APP_URL+"/map/\(User().getField("id"))?lat=\(self.latitude)&lon=\(self.longintude)&role=\(User().getField("role"))&property=\(self.propertyId)&property_class=\(self.propertyClass)"
         self.propertyId = ""
+        self.propertyClass = ""
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         self.webView.loadRequest(request)
@@ -97,6 +99,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     }
     
     @IBAction func btnMenu(sender: AnyObject) {
+        self.textFieldShouldReturn(self.txtSearch)
         self.onSlideMenuButtonPressed(sender as! UIButton)
     }
     
@@ -129,11 +132,13 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
         self.autocompleteUrls = NSMutableArray()
         dispatch_async(dispatch_get_main_queue()) {
             let properties = JSON(data: response)
-            for (_,subJson):(String, JSON) in properties {
-                let jsonObject: AnyObject = subJson.object
-                self.autocompleteUrls.addObject(jsonObject)
+            if(properties["result"].stringValue.isEmpty) {
+                for (_,subJson):(String, JSON) in properties {
+                    let jsonObject: AnyObject = subJson.object
+                    self.autocompleteUrls.addObject(jsonObject)
+                }
+                self.autocompleteTableView.reloadData()
             }
-            self.autocompleteTableView.reloadData()
             self.executeFind = true
         }
     }
@@ -159,6 +164,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
         self.autocompleteTableView.hidden = true
         let item = JSON(self.autocompleteUrls[indexPath.row])
         self.propertyId = item["id"].stringValue
+        self.propertyClass = item["class"].stringValue
         self.loadMap()
     }
 }

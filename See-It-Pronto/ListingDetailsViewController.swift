@@ -95,7 +95,7 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
             Request().put(url, params:params,successHandler: {(response) in self.afterUpdateRequest(response)});
         } else {
             //if user is registering a new beacon
-            Request().post(url, params:params,successHandler: {(response) in self.afterUpdateRequest(response)});
+            Request().post(url, params:params, controller: self, successHandler: {(response) in self.afterUpdateRequest(response)});
         }
     }
     

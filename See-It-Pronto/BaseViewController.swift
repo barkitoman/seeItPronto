@@ -55,7 +55,9 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         addChildView("RealtorForm1ViewController",     titleOfChildren: "My profile",     iconName: "edit_profile")
         addChildView("NotificationsViewController",    titleOfChildren: "Notifications",  iconName: "notification")
         addChildView("ReadyToWorkViewController",      titleOfChildren: "Making money status",  iconName: "making_money")
+        addChildView("ConfigViewController",      titleOfChildren: "Settings",  iconName: "making_money")
         addChildView("LoginViewController",            titleOfChildren: "Log out",        iconName: "logout")
+        //
     }
     
     func menuBuyer(){
@@ -66,6 +68,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         addChildView("PastListingsBuyerViewController",titleOfChildren: "Properties viewed",  iconName: "properties_viewed")
         addChildView("BuyerForm1ViewController",       titleOfChildren: "My profile",     iconName: "edit_profile")
         addChildView("NotificationsViewController",    titleOfChildren: "Notifications",  iconName: "notification")
+        addChildView("ConfigViewController",      titleOfChildren: "Settings",  iconName: "making_money")
         addChildView("LoginViewController",            titleOfChildren: "Log out",        iconName: "logout")
     }
     
@@ -136,7 +139,12 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             let vc:ReadyToWorkViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ReadyToWorkViewController") as! ReadyToWorkViewController
             vc.pageTitle = "Making money status"
             viewController = vc
+        }else if (viewIdentifier == "ConfigViewController") {
+            let vc:ConfigViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ConfigViewController") as! ConfigViewController
+            viewController = vc
         }
+        
+        //
         
         if(viewIdentifier != nil && viewIdentifier!.isEmpty) {
             self.navigationController?.pushViewController(viewController, animated: true)

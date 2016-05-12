@@ -7,10 +7,13 @@
 //
 
 import Foundation
+import UIKit
+
 class Request {
     var debug:Bool = false
 
-    func post(url : String, params : String, successHandler: (response: NSData) -> Void) {
+    func post(url : String, params : String,controller:UIViewController, successHandler: (response: NSData) -> Void) {
+        if(self.internet()){
         let url = NSURL(string: url)
         let params = String(params);
         let request = NSMutableURLRequest(URL: url!);
@@ -32,6 +35,13 @@ class Request {
             successHandler(response: data!)
         }
         task.resume();
+        } else {
+            Utility().displayAlert(controller, title: "Alert", message: "No internet", performSegue: "")
+        }
+    }
+    
+    func internet()->Bool {
+        return true
     }
  
     func put(url : String, var params : String, successHandler: (response: NSData) -> Void) {

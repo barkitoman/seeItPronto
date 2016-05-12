@@ -117,7 +117,7 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
         var params = "buyer_id="+User().getField("id")+"&realtor_id="+PropertyRealtor().getField("id")+"&property_id="+Property().getField("id")
         params     = params+"&type=see_it_later&date=\(self.txtDate.text!)&property_class=\(Property().getField("property_class"))"
         let url    = AppConfig.APP_URL+"/seeitpronto"
-        Request().post(url, params:params,successHandler: {(response) in self.afterPostRequest(response)});
+        Request().post(url, params:params,controller: self,successHandler: {(response) in self.afterPostRequest(response)});
     }
         
     func afterPostRequest(let response: NSData) {

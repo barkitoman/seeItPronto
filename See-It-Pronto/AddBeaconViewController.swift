@@ -82,7 +82,7 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
             Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
         } else {
             //if user is registering a new beacon
-            Request().post(url, params:params,successHandler: {(response) in self.afterPost(response)});
+            Request().post(url, params:params,controller: self,successHandler: {(response) in self.afterPost(response)});
         }
     }
     
