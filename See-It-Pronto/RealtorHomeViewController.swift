@@ -81,7 +81,6 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         let url = AppConfig.APP_URL+"/map/\(User().getField("id"))?lat=\(self.latitude)&lon=\(self.longintude)&role=\(User().getField("role"))&property=\(self.propertyId)&property_class=\(self.propertyClass)"
         self.propertyId = ""
         self.propertyClass = ""
-        print(url)
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         self.webView.loadRequest(request)
