@@ -55,7 +55,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         addChildView("RealtorForm1ViewController",     titleOfChildren: "My profile",     iconName: "edit_profile")
         addChildView("NotificationsViewController",    titleOfChildren: "Notifications",  iconName: "notification")
         addChildView("ReadyToWorkViewController",      titleOfChildren: "Making money status",  iconName: "making_money")
-        addChildView("ConfigViewController",      titleOfChildren: "Settings",  iconName: "making_money")
+        addChildView("ConfigViewController",      titleOfChildren: "Settings",  iconName: "settings")
         addChildView("LoginViewController",            titleOfChildren: "Log out",        iconName: "logout")
         //
     }
@@ -68,7 +68,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         addChildView("PastListingsBuyerViewController",titleOfChildren: "Properties viewed",  iconName: "properties_viewed")
         addChildView("BuyerForm1ViewController",       titleOfChildren: "My profile",     iconName: "edit_profile")
         addChildView("NotificationsViewController",    titleOfChildren: "Notifications",  iconName: "notification")
-        addChildView("ConfigViewController",      titleOfChildren: "Settings",  iconName: "making_money")
+        addChildView("ConfigViewController",      titleOfChildren: "Settings",  iconName: "settings")
         addChildView("LoginViewController",            titleOfChildren: "Log out",        iconName: "logout")
     }
     
