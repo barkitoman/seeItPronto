@@ -26,6 +26,8 @@ class Utility {
         }
     }
     
+    
+    
     func displayAlertBack(controller:UIViewController, title:String, message:String){
         dispatch_async(dispatch_get_main_queue()) {
             let alertController = UIAlertController(title:title, message: message, preferredStyle: .Alert)
@@ -164,4 +166,6 @@ class Utility {
             }
         }
     }
+    
+    
 }

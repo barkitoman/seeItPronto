@@ -89,6 +89,7 @@
 		68C265861C7B5AC5006ADF61 /* ListBuyersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C265851C7B5AC5006ADF61 /* ListBuyersTableViewCell.swift */; };
 		68D64C561C443DF5006CBE2F /* Utitity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D64C551C443DF5006CBE2F /* Utitity.swift */; };
 		68FA964C1C3D9DD80023C292 /* SeeitLaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FA964B1C3D9DD80023C292 /* SeeitLaterViewController.swift */; };
+		A4FDCA661CE544F600D18B88 /* BProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FDCA651CE544F600D18B88 /* BProgressHUD.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -196,6 +197,7 @@
 		68C265851C7B5AC5006ADF61 /* ListBuyersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListBuyersTableViewCell.swift; sourceTree = "<group>"; };
 		68D64C551C443DF5006CBE2F /* Utitity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utitity.swift; sourceTree = "<group>"; };
 		68FA964B1C3D9DD80023C292 /* SeeitLaterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeitLaterViewController.swift; sourceTree = "<group>"; };
+		A4FDCA651CE544F600D18B88 /* BProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BProgressHUD.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -307,6 +309,7 @@
 			children = (
 				107DA4771C9328970069FD07 /* OneShotLocationManager.swift */,
 				6885E5F01C57021200CCCA19 /* SRWebClient.swift */,
+				A4FDCA651CE544F600D18B88 /* BProgressHUD.swift */,
 				10E46AE91CC1535300C5F8D5 /* UIColor.swift */,
 				109FF84B1C861B1A00E20FC2 /* DatePickerDialog.swift */,
 				686E8F3E1C3C096300F5FE01 /* SwiftyJSON.swift */,
@@ -532,6 +535,7 @@
 				682EF3571C528960007176BF /* RealtorForm1ViewController.swift in Sources */,
 				681140B11C3AC8760068AE1C /* ListingDetailsViewController.swift in Sources */,
 				68598DF31C2AF44F00E104C9 /* LoginViewController.swift in Sources */,
+				A4FDCA661CE544F600D18B88 /* BProgressHUD.swift in Sources */,
 				10A3AC371CBFF167005AAD85 /* BuyerProfileViewController.swift in Sources */,
 				109FF84C1C861B1A00E20FC2 /* DatePickerDialog.swift in Sources */,
 				681140991C3AC62F0068AE1C /* BuyerForm3ViewController.swift in Sources */,

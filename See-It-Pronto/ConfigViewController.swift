@@ -10,6 +10,10 @@ import UIKit
 
 class ConfigViewController: UIViewController {
 
+    @IBOutlet weak var btnGPS: UISwitch!
+    @IBOutlet weak var btnPUSH: UISwitch!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,7 +37,44 @@ class ConfigViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    //navigationController?.popViewControllerAnimated(true)
+    @IBAction func fnBack(sender: AnyObject) {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func gpsEnabled(sender: AnyObject) {
+        if btnGPS.enabled {
+            /*Notification.askPermission()
+            var manager: OneShotLocationManager?
+            manager = OneShotLocationManager()
+            manager!.fetchWithCompletion {location, error in
+                // fetch location or an error
+                if let loc = location {
+                    print(loc.coordinate.latitude)
+                    print(loc.coordinate.longitude)
+                } else if let _ = error {
+                    print("ERROR GETTING LOCATION")
+                }
+                // destroy the object immediately to save memory
+                manager = nil
+            }*/
+
+        }else
+        {
+            
+        }
+        
+    }
+    
+    @IBAction func pushEnabled(sender: AnyObject) {
+        if btnPUSH.enabled {
+            
+        }else
+        {
+            
+        }
+    }
+    
+    //
     
 
     /*
