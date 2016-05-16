@@ -18,6 +18,8 @@ class ShowingRequestViewController: UIViewController {
     @IBOutlet weak var showingInstructions: UILabel!
     var showingId:String = ""
     
+    @IBOutlet weak var btnConvenienceFee: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.findShowing()
@@ -138,6 +140,7 @@ class ShowingRequestViewController: UIViewController {
     
     func findShowing() {
         let url = AppConfig.APP_URL+"/get_showing_details/"+self.showingId+"/\(User().getField("id"))"
+        print(url)
         Request().get(url, successHandler: {(response) in self.loadShowingData(response)})
     }
     
@@ -151,7 +154,7 @@ class ShowingRequestViewController: UIViewController {
             var description = result["property"]["address"].stringValue+" \(Utility().formatCurrency(result["property"]["price"].stringValue))"
             description = description+" "+result["property"]["bedrooms"].stringValue+"Bd / "+result["property"]["bathrooms"].stringValue+"Ba"
             self.lblPropertyDescription.text = description
-            //self.showingInstructions.text = result["realtor_properties"]["showing_instruction"].stringValue
+            self.btnConvenienceFee.setTitle("$"+result["information_realtor"]["showing_rate"].stringValue+" convenience fee", forState: .Normal)
             if(!result["buyer"]["url_image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.buyerPhoto, imgPath: result["buyer"]["url_image"].stringValue)
             }
