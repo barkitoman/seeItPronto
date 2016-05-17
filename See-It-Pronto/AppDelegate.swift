@@ -47,7 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func findLocation() {
         dispatch_async(dispatch_get_main_queue()) {
-            print("IS LOGIN"+User().getField("is_login"))
             if (User().getField("id") != "" && User().getField("is_login") == "1") {
                 self.manager = OneShotLocationManager()
                 self.manager!.fetchWithCompletion {location, error in
@@ -67,7 +66,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func sendPosition(latitude: String, longitude: String) {
-        print("sending location...")
         let urlString = "\(AppConfig.APP_URL)/save_current_location/\(User().getField("id"))/\(latitude)/\(longitude)/"
         let url = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         Request().get(url!, successHandler: {(response) in self.response(response)})

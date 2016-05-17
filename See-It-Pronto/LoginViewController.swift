@@ -60,7 +60,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
     
     func afterLoginRequest(let response: NSData) {
         let result = JSON(data: response)
-        print(result)
         if(result["user"]["result"].bool == true) {
             //is login is ok, store the user data
             User().saveIfExists(result)
