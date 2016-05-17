@@ -162,7 +162,7 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate 
             self.lbCity.text          = Property().getField("location")
             self.lbZipCode.text       = Property().getField("lot")
             self.lbTypeProperty.text  = Property().getField("rs")
-            self.lbPrice.text         = Property().getField("price")
+            self.lbPrice.text         = Utility().formatCurrency(Property().getField("price"))
             self.lbRemarks.text       = Property().getField("remarks")
             self.lbGarage.text        = Property().getField("garage")
             self.lbInternet.text      = Property().getField("internet")
