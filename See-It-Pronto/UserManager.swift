@@ -25,6 +25,7 @@ class UserEntity: NSManagedObject {
     @NSManaged var password:String
     @NSManaged var realtor_id:String
     @NSManaged var mls_id:String
+    @NSManaged var is_login:String
  
 }
 
@@ -85,10 +86,19 @@ class User {
         newItem.token_type    = userData["token_type"].stringValue
         newItem.realtor_id    = userData["realtor_id"].stringValue
         newItem.mls_id        = userData["user"]["mls_id"].stringValue
+        newItem.is_login      = userData["user"]["is_login"].stringValue
         do {
             try contxt.save()
         } catch let error as NSError {
             print("Error when save user. error : \(error) \(error.userInfo)")
+        }
+    }
+    
+    func updateField(field:String,value:String) {
+        let user       = User().find()
+        if(user.count >= 1 && user[0] != nil) {
+            let obj  = user[0] as! NSManagedObject
+            obj.setValue(value as String, forKey: field)
         }
     }
     

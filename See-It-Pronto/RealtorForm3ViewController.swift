@@ -44,6 +44,7 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
     }
     
     @IBAction func btnMakeSomeMoney(sender: AnyObject) {
+        User().updateField("is_login", value: "1")
         save()
     }
     

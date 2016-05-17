@@ -30,9 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
     }
     
-    
     func intervalLocation() {
-        self.NotificationTimer = NSTimer.scheduledTimerWithTimeInterval(30,
+        self.NotificationTimer = NSTimer.scheduledTimerWithTimeInterval(3,
             target:self,
             selector:Selector("findLocation"),
             userInfo:nil,
@@ -48,30 +47,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func findLocation() {
         dispatch_async(dispatch_get_main_queue()) {
-            self.manager = OneShotLocationManager()
-            self.manager!.fetchWithCompletion {location, error in
-                // fetch location or an error
-                if let loc = location {
-                    self.latitude   = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.latitude)" : "26.189244"
-                    self.longintude = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.longitude)": "-80.1824587"
-                    self.sendPosition(self.latitude, longitude: self.longintude)
-                } else if let _ = error {
-                    print("ERROR GETTING LOCATION")
+            print("IS LOGIN"+User().getField("is_login"))
+            if (User().getField("id") != "" && User().getField("is_login") == "1") {
+                self.manager = OneShotLocationManager()
+                self.manager!.fetchWithCompletion {location, error in
+                    // fetch location or an error
+                    if let loc = location {
+                        self.latitude   = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.latitude)" : "26.189244"
+                        self.longintude = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.longitude)": "-80.1824587"
+                        self.sendPosition(self.latitude, longitude: self.longintude)
+                    } else if let _ = error {
+                        print("ERROR GETTING LOCATION")
+                    }
+                    // destroy the object immediately to save memory
+                    self.manager = nil
                 }
-                // destroy the object immediately to save memory
-                self.manager = nil
             }
-
         }
     }
     
-    func sendPosition(latitude: String, longitude: String){
-        //print("\(latitude) ---- \(longintude)")
-        if (User().getField("id") != "") {
-            let urlString = "\(AppConfig.APP_URL)/save_current_location/\(User().getField("id"))/\(latitude)/\(longitude)/"
-            let url = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-            Request().get(url!, successHandler: {(response) in self.response(response)})
-        }
+    func sendPosition(latitude: String, longitude: String) {
+        print("sending location...")
+        let urlString = "\(AppConfig.APP_URL)/save_current_location/\(User().getField("id"))/\(latitude)/\(longitude)/"
+        let url = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        Request().get(url!, successHandler: {(response) in self.response(response)})
     }
     
     func response(let response: NSData){
