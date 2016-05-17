@@ -16,6 +16,7 @@ class MyListingsRealtorTableViewCell: UITableViewCell {
     @IBOutlet weak var PropertyImage: UIImageView!
     @IBOutlet weak var lblInformation: UILabel!
     @IBOutlet weak var swBeacon: UISwitch!
+    @IBOutlet weak var viewSelection: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

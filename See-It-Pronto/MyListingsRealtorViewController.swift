@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationControllerDelegate {
+class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate{
 
     let picker = UIImageView(image: UIImage(named: "picker_white"))
     @IBOutlet weak var tableView: UITableView!
@@ -58,6 +58,9 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        BProgressHUD.showLoadingViewWithMessage("Loading")
+        self.tableView.delegate = self
+        
         self.findListings()
         self.createPicker()
         self.btnPropertyClass.setTitle(self.propertySelectedClassName, forState: .Normal)
@@ -92,7 +95,14 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MyListingsRealtorTableViewCell
+        let colorView = UIView()
+        colorView.backgroundColor = UIColor.clearColor()
+        cell.selectedBackgroundView = colorView
+        cell.selectedBackgroundView!.layer.borderColor = UIColor.yellowColor().CGColor
+        cell.selectedBackgroundView!.layer.borderWidth = 5
+        
         var listing = JSON(self.myListings[indexPath.row])
         var description = listing["property"]["address"].stringValue+"\n"+Utility().formatCurrency(listing["property"]["price"].stringValue)
         description = description+" "+listing["property"]["bedrooms"].stringValue+"Bd / "+listing["property"]["bathrooms"].stringValue+"Ba"
@@ -119,6 +129,7 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
         return cell
     }
     
+        
     func showCell(cell:MyListingsRealtorTableViewCell, property:JSON,indexPath: NSIndexPath){
         // have we got a picture?
         if let im = self.models[property["id"].stringValue]!.im {
@@ -218,6 +229,7 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
                 }
             }
             self.tableView.reloadData()
+            BProgressHUD.dismissHUD(5)
         }
     }
     
