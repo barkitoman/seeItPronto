@@ -45,31 +45,31 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     
     func menuRealtor() {
         addChildView("RealtorHomeViewController",      titleOfChildren: "Home",           iconName: "home")
-        addChildView("PropertyListViewController",     titleOfChildren: "List properties",iconName: "list_properties")
-        addChildView("CurrentShowingViewController",   titleOfChildren: "Current showing",iconName: "current_showing")
+        addChildView("PropertyListViewController",     titleOfChildren: "List Properties",iconName: "list_properties")
+        addChildView("CurrentShowingViewController",   titleOfChildren: "Current Showing",iconName: "current_showing")
         addChildView("AppointmentsViewController",     titleOfChildren: "Appointments",   iconName: "appoiments")
-        addChildView("FeedBacksViewController",        titleOfChildren: "Feedbacks",      iconName: "feedbacks")
-        addChildView("MyListingsRealtorViewController",titleOfChildren: "My listings",    iconName: "my_listings")
+        addChildView("FeedBacksViewController",        titleOfChildren: "Feedback",      iconName: "feedbacks")
+        addChildView("MyListingsRealtorViewController",titleOfChildren: "My Listings",    iconName: "my_listings")
         //addChildView("RealtorProfileViewController",  titleOfChildren: "My Profile",    iconName: "my_profile")
         addChildView("ListBuyersViewController",       titleOfChildren: "Buyers",         iconName: "buyer")
-        addChildView("RealtorForm1ViewController",     titleOfChildren: "My profile",     iconName: "edit_profile")
+        addChildView("RealtorForm1ViewController",     titleOfChildren: "My Profile",     iconName: "edit_profile")
         addChildView("NotificationsViewController",    titleOfChildren: "Notifications",  iconName: "notification")
-        addChildView("ReadyToWorkViewController",      titleOfChildren: "Making money status",  iconName: "making_money")
+        addChildView("ReadyToWorkViewController",      titleOfChildren: "Making Money Status",  iconName: "making_money")
         addChildView("ConfigViewController",      titleOfChildren: "Settings",  iconName: "settings")
-        addChildView("LoginViewController",            titleOfChildren: "Log out",        iconName: "logout")
+        addChildView("LoginViewController",            titleOfChildren: "Log Out",        iconName: "logout")
         //
     }
     
     func menuBuyer(){
         addChildView("RealtorHomeViewController",      titleOfChildren: "Home",           iconName: "home")
-        addChildView("PropertyListViewController",     titleOfChildren: "List properties",iconName: "list_properties")
+        addChildView("PropertyListViewController",     titleOfChildren: "List Properties",iconName: "list_properties")
         addChildView("ListRealtorsViewController",     titleOfChildren: "Agents",         iconName: "realtor")
-        addChildView("SeeItLaterBuyerViewController",  titleOfChildren: "See it later",   iconName: "my_listings")
-        addChildView("PastListingsBuyerViewController",titleOfChildren: "Properties viewed",  iconName: "properties_viewed")
-        addChildView("BuyerForm1ViewController",       titleOfChildren: "My profile",     iconName: "edit_profile")
+        addChildView("SeeItLaterBuyerViewController",  titleOfChildren: "See It Later",   iconName: "my_listings")
+        addChildView("PastListingsBuyerViewController",titleOfChildren: "Properties Viewed",  iconName: "properties_viewed")
+        addChildView("BuyerForm1ViewController",       titleOfChildren: "My Profile",     iconName: "edit_profile")
         addChildView("NotificationsViewController",    titleOfChildren: "Notifications",  iconName: "notification")
-        addChildView("ConfigViewController",      titleOfChildren: "Settings",  iconName: "settings")
-        addChildView("LoginViewController",            titleOfChildren: "Log out",        iconName: "logout")
+        addChildView("ConfigViewController",           titleOfChildren: "Settings",       iconName: "settings")
+        addChildView("LoginViewController",            titleOfChildren: "Log Out",        iconName: "logout")
     }
     
     //MARK: Functions for Container
