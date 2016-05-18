@@ -48,6 +48,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
     }
     
     @IBAction func btnLogin(sender: AnyObject) {
+        BProgressHUD.showLoadingViewWithMessage("Loading")
         self.login()
     }
     
@@ -60,6 +61,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
     
     func afterLoginRequest(let response: NSData) {
         let result = JSON(data: response)
+        dispatch_async(dispatch_get_main_queue()) {
+            BProgressHUD.dismissHUD(0)
+        }
         if(result["user"]["result"].bool == true) {
             //is login is ok, store the user data
             User().saveIfExists(result)

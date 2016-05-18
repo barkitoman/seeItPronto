@@ -97,11 +97,10 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MyListingsRealtorTableViewCell
-        let colorView = UIView()
-        colorView.backgroundColor = UIColor.clearColor()
-        cell.selectedBackgroundView = colorView
+        
         cell.selectedBackgroundView!.layer.borderColor = UIColor.yellowColor().CGColor
-        cell.selectedBackgroundView!.layer.borderWidth = 5
+        cell.selectedBackgroundView!.layer.borderWidth = 3
+        cell.selectedBackgroundView!.backgroundColor = UIColor(white: 0.8, alpha: 0.9)
         
         var listing = JSON(self.myListings[indexPath.row])
         var description = listing["property"]["address"].stringValue+"\n"+Utility().formatCurrency(listing["property"]["price"].stringValue)
@@ -228,8 +227,16 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
                     self.myListings.addObject(jsonObject)
                 }
             }
-            self.tableView.reloadData()
-            BProgressHUD.dismissHUD(5)
+            if self.myListings.count > 0 {
+                self.tableView.reloadData()
+                BProgressHUD.dismissHUD(5)
+            }else{
+                BProgressHUD.dismissHUD(0)
+                let msg = "¡No properties found!"
+                Utility().displayAlert(self,title: "Notification", message:msg, performSegue:"")
+                
+            }
+            
         }
     }
     
@@ -320,6 +327,7 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
         self.myListings.removeAllObjects()
         self.tableView.reloadData()
         self.countPage = 0
+        BProgressHUD.showLoadingViewWithMessage("Loading")
         self.findListings()
     }
 }

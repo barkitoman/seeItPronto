@@ -27,6 +27,7 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
+        BProgressHUD.showLoadingViewWithMessage("Loading")
         manager = OneShotLocationManager()
         manager!.fetchWithCompletion {location, error in
             // fetch location or an error
@@ -94,7 +95,13 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
                 Property().saveIfExists(saveData)
                 self.performSegueWithIdentifier("RealtorHomePropertyDetails", sender: self)
             }
+            dispatch_async(dispatch_get_main_queue()) {
+                BProgressHUD.dismissHUD(2)
+            }
             return false
+        }
+        dispatch_async(dispatch_get_main_queue()) {
+            BProgressHUD.dismissHUD(2)
         }
         return true
     }
