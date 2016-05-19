@@ -178,7 +178,7 @@ class AppointmentsViewController: UIViewController {
             if cell.propertyImage.image == nil {
                 Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
             }
-            cell.niceDate.text = dateTime
+            cell.niceDate.text = Utility().millitaryToStandardTime(dateTime, format: "MMM dd, hh:mm a")
             self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
             self.tableView.setEditing(false, animated: true)
         }

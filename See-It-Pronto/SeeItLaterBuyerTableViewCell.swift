@@ -16,6 +16,8 @@ class SeeItLaterBuyerTableViewCell: UITableViewCell {
     
     @IBOutlet weak var lblNiceDate: UILabel!
 
+    @IBOutlet weak var btnViewDetails: UIButton!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

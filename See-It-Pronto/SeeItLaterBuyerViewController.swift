@@ -77,6 +77,9 @@ class SeeItLaterBuyerViewController: UIViewController {
         cell.lblAddress.text  = showing["property"][0]["address"].stringValue
         cell.lblPrice.text = Utility().formatCurrency(showing["property"][0]["price"].stringValue)
         cell.lblNiceDate.text = showing["nice_date"].stringValue
+        
+        cell.btnViewDetails.tag = indexPath.row
+        cell.btnViewDetails.addTarget(self, action: "openViewDetails:", forControlEvents: .TouchUpInside)
         let property = showing["property"][0]
         if let _ = self.models[property["id"].stringValue] {
             self.showCell(cell, property: property, indexPath: indexPath)
@@ -124,7 +127,6 @@ class SeeItLaterBuyerViewController: UIViewController {
         }
     }
     
-    
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let showing = JSON(self.myListings[indexPath.row])
         let delete = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Cancel"){(UITableViewRowAction,NSIndexPath) -> Void in
@@ -146,15 +148,16 @@ class SeeItLaterBuyerViewController: UIViewController {
                 self.gotoAppleCalendar(date!)
             }
         }
-        let viewDetails = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "View\nDetails"){(UITableViewRowAction,NSIndexPath) -> Void in
-            let saveData: JSON =  ["id":showing["property"][0]["id"].stringValue,"property_class":showing["property_class"].stringValue]
-            Property().saveIfExists(saveData)
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            let vc : PropertyDetailsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController
-            self.navigationController?.showViewController(vc, sender: nil)
-            
-        }
-        return [delete, edit, calendar, viewDetails]
+        return [delete, edit, calendar]
+    }
+    
+    @IBAction func openViewDetails(sender:UIButton) {
+        let showing = JSON(self.myListings[sender.tag])
+        let saveData: JSON =  ["id":showing["property"][0]["id"].stringValue,"property_class":showing["property_class"].stringValue]
+        Property().saveIfExists(saveData)
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let vc : PropertyDetailsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController
+        self.navigationController?.showViewController(vc, sender: nil)
     }
     
     func showEditDatePicker(indexPath:NSIndexPath){
@@ -167,7 +170,7 @@ class SeeItLaterBuyerViewController: UIViewController {
             let url = AppConfig.APP_URL+"/showings/"+showing["id"].stringValue
             Request().put(url,params: params, successHandler: {(response) in })
             let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! SeeItLaterBuyerTableViewCell
-            cell.lblNiceDate.text = dateTime
+            cell.lblNiceDate.text = Utility().millitaryToStandardTime(dateTime, format: "MMM dd, hh:mm a")
             self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
             self.tableView.setEditing(false, animated: true)
         }

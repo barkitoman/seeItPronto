@@ -109,7 +109,7 @@ class Property {
         newItem.your_credits  = propertyData["your_credits"].stringValue
         newItem.bedrooms      = propertyData["bedrooms"].stringValue
         newItem.bathrooms     = propertyData["bathrooms"].stringValue
-        newItem.property_type = propertyData["property_type"].stringValue
+        newItem.property_type = propertyData["type"].stringValue
         newItem.size          = propertyData["size"].stringValue
         newItem.lot           = propertyData["lot"].stringValue
         newItem.lot_size      = propertyData["lot_size"].stringValue
@@ -126,9 +126,6 @@ class Property {
         newItem.pool          = propertyData["pool"].stringValue
         newItem.remarks       = propertyData["remarks"].stringValue //description
         newItem.spa           = propertyData["spa"].stringValue //spa
-        
-        
-        
         newItem.property_class = propertyClass
         
         do {

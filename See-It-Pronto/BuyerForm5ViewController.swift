@@ -75,7 +75,6 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
     }
 
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        print("Got an image")
         if let pickedImage:UIImage = (info[UIImagePickerControllerOriginalImage]) as? UIImage {
             let selectorToCall = Selector("imageWasSavedSuccessfully:didFinishSavingWithError:context:")
             UIImageWriteToSavedPhotosAlbum(pickedImage, self, selectorToCall, nil)
@@ -93,7 +92,6 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     func imageWasSavedSuccessfully(image: UIImage, didFinishSavingWithError error: NSError!, context: UnsafeMutablePointer<()>){
-        print("Image saved")
         if let theError = error {
             print("An error happened while saving the image = \(theError)")
         } else {

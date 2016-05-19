@@ -75,6 +75,7 @@ class PropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
     
     func findPropertyDetails(){
         let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/\(Property().getField("id"))/\(Property().getField("property_class"))/\(User().getField("id"))"
+        print(url)
         Request().get(url, successHandler: {(response) in self.showPropertydetails(response)})
     }
     
@@ -134,8 +135,11 @@ class PropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
             self.lblAddress.text    = result["address"].stringValue
             self.lblBedrooms.text   = result["bedrooms"].stringValue
             self.lblBathrooms.text  = result["bathrooms"].stringValue
-            self.lblType.text       = result["property_type"].stringValue
-            self.lblSquareFeed.text = result["square_feed"].stringValue
+            self.lblType.text       = result["type"].stringValue
+            self.lblSquareFeed.text = ""
+            if(!result["square_feed"].stringValue.isEmpty) {
+                self.lblSquareFeed.text = Utility().formatNumber(result["square_feed"].stringValue)
+            }
             self.lblLotSize.text    = result["lot_size"].stringValue
             self.lblYearBuilt.text  = result["year_built"].stringValue
             Property().saveIfExists(result)

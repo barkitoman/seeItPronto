@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate   {
+class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
    
     @IBOutlet weak var txtBrokerage: UITextField!
     @IBOutlet weak var txtLisence: UITextField!
@@ -17,8 +17,10 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     @IBOutlet weak var txtLastName: UITextField!
     @IBOutlet weak var previewProfilePicture: UIImageView!
     @IBOutlet weak var txtmlsid: UITextField!
+    let imagePicker: UIImagePickerController! = UIImagePickerController()
     var haveImage:Bool = false
     var viewData:JSON = []
+    var isTakenImage = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,11 +64,66 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
         self.presentViewController(myPickerController, animated: true, completion: nil)
     }
     
+    @IBAction func btnTakePhoto(sender: AnyObject) {
+        self.isTakenImage = true
+        if (UIImagePickerController.isSourceTypeAvailable(.Camera)) {
+            if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
+                imagePicker.allowsEditing = false
+                imagePicker.sourceType = .Camera
+                imagePicker.cameraCaptureMode = .Photo
+                presentViewController(imagePicker, animated: true, completion: {})
+            } else {
+                Utility().displayAlert(self, title: "Rear camera doesn't exist", message:  "Application cannot access the camera.", performSegue: "")
+                self.isTakenImage = false
+            }
+        } else {
+            Utility().displayAlert(self, title: "Camera inaccessable", message: "Application cannot access the camera.", performSegue: "")
+            self.isTakenImage = false
+        }
+    }
+    
     //display image after select
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        self.previewProfilePicture.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        if(self.isTakenImage == true) {
+            if let pickedImage:UIImage = (info[UIImagePickerControllerOriginalImage]) as? UIImage {
+                let selectorToCall = Selector("imageWasSavedSuccessfully:didFinishSavingWithError:context:")
+                UIImageWriteToSavedPhotosAlbum(pickedImage, self, selectorToCall, nil)
+            }
+        } else {
+            self.previewProfilePicture.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
         self.haveImage = true
-        self.dismissViewControllerAnimated(true, completion: nil)
+        imagePicker.dismissViewControllerAnimated(true, completion: {
+            // Anything you want to happen when the user saves an image
+            self.isTakenImage = false
+        })
+    }
+    
+    func documentPicker(controller: UIDocumentPickerViewController, didPickDocumentAtURL url: NSURL) {
+        if controller.documentPickerMode == UIDocumentPickerMode.Import {
+            // This is what it should be
+            print(url.path)
+            //self.newNoteBody.text = String(contentsOfFile: url.path!)
+        }
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        print("User canceled image")
+        dismissViewControllerAnimated(true, completion: {
+            // Anything you want to happen when the user selects cancel
+        })
+    }
+    
+    func imageWasSavedSuccessfully(image: UIImage, didFinishSavingWithError error: NSError!, context: UnsafeMutablePointer<()>){
+        if let theError = error {
+            print("An error happened while saving the image = \(theError)")
+        } else {
+            print("Displaying")
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.previewProfilePicture.image = image
+            })
+        }
     }
     
     //upload photo to server

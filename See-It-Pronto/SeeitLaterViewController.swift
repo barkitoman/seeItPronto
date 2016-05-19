@@ -60,21 +60,7 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
             var dateTime = "\(date)"
             dateTime = dateTime.stringByReplacingOccurrencesOfString(" +0000",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
             self.seeItLaterDate = dateTime
-            self.militaryTimeToStandartTime(dateTime)
-        }
-    }
-    
-    func militaryTimeToStandartTime(militaryTime:String) {
-        dispatch_async(dispatch_get_main_queue()) {
-            let dateString = "\(militaryTime) EST"
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
-            let date = dateFormatter.dateFromString(dateString)
-        
-            dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
-            let standarTime = dateFormatter.stringFromDate(date!)
-            self.txtDate.text = "\(standarTime)"
+            self.txtDate.text = Utility().millitaryToStandardTime(dateTime)
         }
     }
     

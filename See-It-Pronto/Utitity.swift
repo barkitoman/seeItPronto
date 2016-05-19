@@ -77,6 +77,17 @@ class Utility {
         return currentString
     }
     
+    func formatNumber(var numberString : String)->String  {
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
+        formatter.locale = NSLocale(localeIdentifier: "en_US")
+        formatter.maximumFractionDigits = 0
+        let numberFromField = (NSString(string: numberString ).doubleValue)
+        numberString  = formatter.stringFromNumber(numberFromField)!
+        numberString = numberString.stringByReplacingOccurrencesOfString("$",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        return numberString
+    }
+    
     func defaultMenuImage() -> UIImage {
         var defaultMenuImage = UIImage()
         struct Static {
@@ -167,5 +178,17 @@ class Utility {
         }
     }
     
+    
+    func millitaryToStandardTime(militaryTime:String, format:String="MM/dd/yyyy hh:mm a")->String {
+        let dateString = "\(militaryTime) EST"
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
+        let date = dateFormatter.dateFromString(dateString)
+            
+        dateFormatter.dateFormat = format
+        let standardTime = dateFormatter.stringFromDate(date!)
+        return standardTime
+    }
     
 }
