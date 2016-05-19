@@ -29,6 +29,7 @@ class PropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.scrollImages.frame = CGRectMake(0, 0, self.view.frame.width, self.scrollImages.frame.height)
+    BProgressHUD.showLoadingViewWithMessage("Loading")
         self.findPropertyDetails()
         self.showHideButtons()
     }
@@ -82,6 +83,7 @@ class PropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
             let propertyId = result["id"].stringValue
+            BProgressHUD.dismissHUD(3)
             if(propertyId.isEmpty) {
                 self.propertyNoExistMessage()
             }

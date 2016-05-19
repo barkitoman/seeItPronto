@@ -77,6 +77,7 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
+        BProgressHUD.showLoadingViewWithMessage("Loading")
         self.findPropertyRealtors()
     }
     
@@ -183,9 +184,12 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
                 }
             }
             if(self.realtors.count == 0 && self.countPage == 0) {
+                
+                BProgressHUD.dismissHUD(0)
                 Utility().displayAlert(self, title: "Message", message: "There are no agents available to show this property", performSegue: "")
             }
             self.tableView.reloadData()
+            BProgressHUD.dismissHUD(4)
         }
     }
     

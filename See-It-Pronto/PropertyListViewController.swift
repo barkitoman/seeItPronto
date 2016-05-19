@@ -69,6 +69,7 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
+    BProgressHUD.showLoadingViewWithMessage("Loading")
         self.findProperties()
     }
 
@@ -178,7 +179,15 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
                     
                 }
             }
-            self.tableView.reloadData()
+            if self.properties.count > 0 {
+                self.tableView.reloadData()
+                BProgressHUD.dismissHUD(5)
+            }else{
+                BProgressHUD.dismissHUD(0)
+                let msg = "¡No properties found!"
+                Utility().displayAlert(self,title: "Notification", message:msg, performSegue:"")
+            }
+            
         }
     }
 }
