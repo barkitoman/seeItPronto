@@ -34,6 +34,7 @@ class AppointmentsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        BProgressHUD.showLoadingViewWithMessage("Loading")
         self.findAppoiments()
     }
 
@@ -260,7 +261,13 @@ class AppointmentsViewController: UIViewController {
                     self.appoiments.addObject(jsonObject)
                 }
             }
+            if(self.appoiments.count == 0 && self.countPage == 0) {
+                BProgressHUD.dismissHUD(0)
+                Utility().displayAlert(self, title: "Message", message: "There are no appointments available to show", performSegue: "")
+                
+            }
             self.tableView.reloadData()
+            BProgressHUD.dismissHUD(4)
         }
     }
 

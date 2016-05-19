@@ -24,6 +24,7 @@ class RealtorProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        BProgressHUD.showLoadingViewWithMessage("Loading")
         self.findUserInfo()
         let role = User().getField("id")
         if(role != "realtor") {
@@ -68,6 +69,7 @@ class RealtorProfileViewController: UIViewController {
     
     func loadDataToEdit(let response: NSData) {
         dispatch_async(dispatch_get_main_queue()) {
+            BProgressHUD.dismissHUD(0)
             let result = JSON(data: response)
             self.lblFirstName.text = result["first_name"].stringValue
             self.lblLastName.text  = result["last_name"].stringValue

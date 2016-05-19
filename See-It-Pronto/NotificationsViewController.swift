@@ -20,6 +20,7 @@ class NotificationsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    BProgressHUD.showLoadingViewWithMessage("Loading")
         self.findNotifications()
     }
 
@@ -112,11 +113,19 @@ class NotificationsViewController: UIViewController {
     func loadNotifications(let response: NSData){
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
+            BProgressHUD.dismissHUD(0)
             for (_,subJson):(String, JSON) in result["data"] {
                 let jsonObject: AnyObject = subJson.object
                 self.notifications.addObject(jsonObject)
             }
-            self.tableView.reloadData()
+            if self.notifications.count > 0{
+                self.tableView.reloadData()
+                BProgressHUD.dismissHUD(0)
+            }else{
+                BProgressHUD.dismissHUD(0)
+                let msg = "¡No notifications found!"
+                Utility().displayAlert(self,title: "Notification", message:msg, performSegue:"")
+            }
         }
     }
     

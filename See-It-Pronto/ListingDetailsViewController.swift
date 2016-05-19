@@ -27,6 +27,7 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
         self.selfDelegate()
         self.propertyId = self.viewData["property"]["id"].stringValue
         self.viewData["id"] = JSON("")
+        BProgressHUD.showLoadingViewWithMessage("Loading")
         self.findPropertyDetails()
         self.findPropertyListing()
     }
@@ -130,6 +131,7 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
             if(!result["images"][0].stringValue.isEmpty) {
                 Utility().showPhoto(self.propertyImage, imgPath: result["images"][0].stringValue)
             }
+            BProgressHUD.dismissHUD(0)
         }
     }
     @IBAction func swBeaconState(sender: AnyObject) {

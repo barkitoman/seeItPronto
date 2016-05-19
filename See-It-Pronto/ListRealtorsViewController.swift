@@ -57,6 +57,7 @@ class ListRealtorsViewController: UIViewController,UIWebViewDelegate {
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
+    BProgressHUD.showLoadingViewWithMessage("Loading")
         self.findRealtors()
     }
     
@@ -123,7 +124,6 @@ class ListRealtorsViewController: UIViewController,UIWebViewDelegate {
         // 2) To avoid two calls in a short space from time, while the data is downloading
         if (row == lastRow) && (row == pageLimit)  {
             self.countPage++
-            print("Loading Page \(self.countPage) from \(self.maxPage)")
             self.findRealtors()
         }
     }
@@ -140,7 +140,15 @@ class ListRealtorsViewController: UIViewController,UIWebViewDelegate {
                 let jsonObject: AnyObject = subJson.object
                 self.realtors.addObject(jsonObject)
             }
-            self.tableView.reloadData()
+            if self.realtors.count > 0 {
+                self.tableView.reloadData()
+                BProgressHUD.dismissHUD(5)
+            }else {
+                BProgressHUD.dismissHUD(0)
+                let msg = "¡Currently no available agents!"
+                Utility().displayAlert(self,title: "Notification", message:msg, performSegue:"")
+            }
+            
         }
     }
     
