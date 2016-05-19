@@ -19,6 +19,7 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
     @IBOutlet weak var agentPhoto: UIImageView!
     @IBOutlet weak var agentName: UILabel!
     var animateDistance: CGFloat!
+    var seeItLaterDate:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +59,22 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
             (date) -> Void in
             var dateTime = "\(date)"
             dateTime = dateTime.stringByReplacingOccurrencesOfString(" +0000",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            self.txtDate.text = dateTime
+            self.seeItLaterDate = dateTime
+            self.militaryTimeToStandartTime(dateTime)
+        }
+    }
+    
+    func militaryTimeToStandartTime(militaryTime:String) {
+        dispatch_async(dispatch_get_main_queue()) {
+            let dateString = "\(militaryTime) EST"
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
+            let date = dateFormatter.dateFromString(dateString)
+        
+            dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
+            let standarTime = dateFormatter.stringFromDate(date!)
+            self.txtDate.text = "\(standarTime)"
         }
     }
     
@@ -109,13 +125,17 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
     }
     
     @IBAction func btnSubmit(sender: AnyObject) {
-        self.sendRequest()
+        if(!self.seeItLaterDate.isEmpty) {
+            self.sendRequest()
+        } else  {
+            Utility().displayAlert(self, title: "Message", message: "Please select a date", performSegue: "")
+        }
     }
     
     func sendRequest() {
         //create params
         var params = "buyer_id="+User().getField("id")+"&realtor_id="+PropertyRealtor().getField("id")+"&property_id="+Property().getField("id")
-        params     = params+"&type=see_it_later&date=\(self.txtDate.text!)&property_class=\(Property().getField("property_class"))"
+        params     = params+"&type=see_it_later&date=\(self.seeItLaterDate)&property_class=\(Property().getField("property_class"))"
         let url    = AppConfig.APP_URL+"/seeitpronto"
         Request().post(url, params:params,controller: self,successHandler: {(response) in self.afterPostRequest(response)});
     }

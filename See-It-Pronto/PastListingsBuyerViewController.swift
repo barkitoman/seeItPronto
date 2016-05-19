@@ -129,20 +129,28 @@ class PastListingsBuyerViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-        let seeItAgain = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "See it again"){(UITableViewRowAction,NSIndexPath) -> Void in
+        let seeItAgain = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "See It Again"){(UITableViewRowAction,NSIndexPath) -> Void in
             self.openPropertyDetailView(indexPath)
         }
         let comments = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Comments"){(UITableViewRowAction,NSIndexPath) -> Void in
             self.viewShowingComments(indexPath)
         }
-        return [seeItAgain,comments]
+        let viewDetails = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "View\nDetails"){(UITableViewRowAction,NSIndexPath) -> Void in
+            let showing = JSON(self.myListings[indexPath.row])
+            let saveData: JSON =  ["id":showing["property"][0]["id"].stringValue,"property_class":showing["property_class"].stringValue]
+            print(saveData)
+            Property().saveIfExists(saveData)
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let vc : PropertyDetailsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController
+            self.navigationController?.showViewController(vc, sender: nil)
+        }
+        return [seeItAgain,comments,viewDetails]
     }
     
     func openPropertyDetailView(indexPath: NSIndexPath) {
         let showing = JSON(self.myListings[indexPath.row])
         let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         let viewController : PropertyDetailsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController
-        
         let saveData: JSON =  ["id":showing["property"][0]["id"].stringValue,"property_class":showing["property_class"].stringValue]
         Property().saveIfExists(saveData)
         self.navigationController?.showViewController(viewController, sender:self)
