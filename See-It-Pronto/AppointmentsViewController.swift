@@ -65,23 +65,6 @@ class AppointmentsViewController: UIViewController {
         return appoiments.count
     }
     
-//    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! AppointmentsTableViewCell
-//        let appoiment      = JSON(self.appoiments[indexPath.row])
-//        cell.address.text  = appoiment["property"][0]["address"].stringValue
-//        cell.lblPrice.text = Utility().formatCurrency(appoiment["property"][0]["price"].stringValue)
-//        let state = appoiment["showing_status"].stringValue
-//        cell.lblState.text = self.getState(state)
-//        cell.niceDate.text = appoiment["nice_date"].stringValue
-//        
-//        let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+appoiment["property"][0]["id"].stringValue+"/1"
-//        if cell.propertyImage.image == nil {
-//            Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
-//        }
-//        return cell
-//    }
-    
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! AppointmentsTableViewCell
         let appoiment      = JSON(self.appoiments[indexPath.row])
@@ -174,7 +157,7 @@ class AppointmentsViewController: UIViewController {
             (UITableViewRowAction,NSIndexPath) -> Void in
             self.cancelShowingRequest(indexPath)
         }
-        let edit = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Edit"){
+        let edit = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Reschedule"){
             (UITableViewRowAction,NSIndexPath) -> Void in
             self.showEditDatePicker(indexPath)
         }

@@ -130,14 +130,14 @@ class SeeItLaterBuyerViewController: UIViewController {
         let delete = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Cancel"){(UITableViewRowAction,NSIndexPath) -> Void in
             self.cancelShowingRequest(indexPath)
         }
-        let edit = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Edit"){(UITableViewRowAction,NSIndexPath) -> Void in
+        let edit = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Reschedule"){(UITableViewRowAction,NSIndexPath) -> Void in
             self.showEditDatePicker(indexPath)
         }
-        var calendar = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Add calendar"){(UITableViewRowAction,NSIndexPath) -> Void in
+        var calendar = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Add\ncalendar"){(UITableViewRowAction,NSIndexPath) -> Void in
             self.addShowingCalendar(indexPath)
         }
         if(!showing["buyer_calendar_id"].stringValue.isEmpty) {
-            calendar = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "View calendar"){(UITableViewRowAction,NSIndexPath) -> Void in
+            calendar = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "View\nCalendar"){(UITableViewRowAction,NSIndexPath) -> Void in
                 let dateString = "\(showing["date"].stringValue) EST"
                 let dateFormatter = NSDateFormatter()
                 dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
@@ -146,7 +146,15 @@ class SeeItLaterBuyerViewController: UIViewController {
                 self.gotoAppleCalendar(date!)
             }
         }
-        return [delete,edit, calendar]
+        let viewDetails = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "View\nDetails"){(UITableViewRowAction,NSIndexPath) -> Void in
+            let saveData: JSON =  ["id":showing["property"][0]["id"].stringValue,"property_class":showing["property_class"].stringValue]
+            Property().saveIfExists(saveData)
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let vc : PropertyDetailsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController
+            self.navigationController?.showViewController(vc, sender: nil)
+            
+        }
+        return [delete, edit, calendar, viewDetails]
     }
     
     func showEditDatePicker(indexPath:NSIndexPath){
