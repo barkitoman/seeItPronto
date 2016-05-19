@@ -38,6 +38,7 @@ class SeeItLaterBuyerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        BProgressHUD.showLoadingViewWithMessage("Loading")
         self.findListings()
     }
 
@@ -302,7 +303,19 @@ class SeeItLaterBuyerViewController: UIViewController {
                     self.myListings.addObject(jsonObject)
                 }
             }
-            self.tableView.reloadData()
+            if self.myListings.count > 0 {
+                self.tableView.reloadData()
+                BProgressHUD.dismissHUD(4)
+            }else{
+                BProgressHUD.dismissHUD(0)
+                BProgressHUD.dismissHUD(0)
+                
+                let msg = "¡No properties found!"
+                
+                Utility().displayAlert(self,title: "Notification", message:msg, performSegue:"")
+            }
+            
+            
         }
     }
     

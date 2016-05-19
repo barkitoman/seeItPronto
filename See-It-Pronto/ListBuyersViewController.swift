@@ -21,6 +21,7 @@ class ListBuyersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.findBuyers()
+    BProgressHUD.showLoadingViewWithMessage("Loading")
     }
 
     override func didReceiveMemoryWarning() {
