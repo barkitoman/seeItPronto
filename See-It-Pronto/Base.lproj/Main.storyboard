@@ -5990,7 +5990,7 @@ $480,000
                                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nS7-hh-chm">
-                                        <rect key="frame" x="262" y="223" width="41" height="37"/>
+                                        <rect key="frame" x="259" y="223" width="41" height="37"/>
                                         <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="take_photo">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

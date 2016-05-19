@@ -203,7 +203,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         if(result["result"].bool == true ) {
             dispatch_async(dispatch_get_main_queue()) {
                 SearchConfig().saveIfExists(result)
-                self.Utility().goHome(self)
+                Utility().goHome(self)
             }
         } else {
             var msg = "Error saving, please try later"
