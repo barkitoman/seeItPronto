@@ -114,6 +114,7 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
         
         cell.btnEdit.tag = indexPath.row
         cell.btnEdit.addTarget(self, action: "openEditView:", forControlEvents: .TouchUpInside)
+        cell.swBeacon.on = false
         if(listing["state_beacon"].int == 1) {
             cell.swBeacon.on = true
         }
@@ -216,8 +217,11 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
     }
     
     func findListings() {
-        let url = AppConfig.APP_URL+"/my_listings/\(User().getField("id"))/\(self.stepPage)/\(self.propertySelectedClass)/\(User().getField("mls_id"))/?page="+String(self.countPage + 1)
-        print(url)
+        var mslId = User().getField("mls_id")
+        if mslId.isEmpty {
+            mslId = "0"
+        }
+        let url = AppConfig.APP_URL+"/my_listings/\(User().getField("id"))/\(self.stepPage)/\(self.propertySelectedClass)/\(mslId)/?page="+String(self.countPage + 1)
         Request().get(url, successHandler: {(response) in self.loadListings(response)})
     }
     
