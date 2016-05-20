@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -715,13 +715,10 @@
                                                     <constraint firstAttribute="height" constant="37" id="oTZ-C2-m20"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFi-nL-er5">
-                                                <rect key="frame" x="45" y="0.0" width="141" height="37"/>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFi-nL-er5">
+                                                <rect key="frame" x="45" y="0.0" width="94" height="37"/>
                                                 <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="37" id="g9F-hF-4oc"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <state key="normal" title="Choose Picture">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -732,12 +729,9 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="hFi-nL-er5" firstAttribute="leading" secondItem="NgF-v1-5Js" secondAttribute="trailing" constant="8" id="2RB-MM-vGx"/>
-                                            <constraint firstAttribute="trailing" secondItem="hFi-nL-er5" secondAttribute="trailing" id="4zW-V3-RLb"/>
                                             <constraint firstItem="NgF-v1-5Js" firstAttribute="leading" secondItem="3oU-sq-ce0" secondAttribute="leading" id="GSD-yJ-hug"/>
                                             <constraint firstItem="NgF-v1-5Js" firstAttribute="centerY" secondItem="3oU-sq-ce0" secondAttribute="centerY" id="Rgg-f1-wLM"/>
                                             <constraint firstAttribute="height" constant="37" id="WYg-dQ-3ED"/>
-                                            <constraint firstItem="hFi-nL-er5" firstAttribute="centerY" secondItem="3oU-sq-ce0" secondAttribute="centerY" id="uW3-rd-IYO"/>
                                         </constraints>
                                     </view>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3kv-Lm-y5g">
@@ -747,6 +741,14 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Qx-CM-Bfz">
+                                        <rect key="frame" x="259" y="96" width="41" height="37"/>
+                                        <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="take_photo"/>
+                                        <connections>
+                                            <action selector="btnTakePicture:" destination="6VJ-KH-B8x" eventType="touchUpInside" id="c6K-cO-8Id"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1646,8 +1648,9 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="icr-sO-ldA">
-                                        <rect key="frame" x="112" y="163" width="97" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="icr-sO-ldA">
+                                        <rect key="frame" x="20" y="149" width="280" height="30"/>
+                                        <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Get directions"/>
                                         <connections>
                                             <action selector="btnGetDirections:" destination="IMr-f1-iEG" eventType="touchUpInside" id="Y7x-lT-hPU"/>
@@ -1665,6 +1668,22 @@
                                         <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V1i-cU-2Ah">
+                                        <rect key="frame" x="20" y="186" width="280" height="30"/>
+                                        <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Showing instrunctions"/>
+                                        <connections>
+                                            <action selector="btnShowingInstrunctions:" destination="IMr-f1-iEG" eventType="touchUpInside" id="875-Vp-K7Y"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdc-dT-jR7">
+                                        <rect key="frame" x="20" y="111" width="280" height="30"/>
+                                        <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="View Details"/>
+                                        <connections>
+                                            <action selector="btnViewDetails:" destination="IMr-f1-iEG" eventType="touchUpInside" id="Uvu-3F-KEY"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1673,13 +1692,11 @@
                                     <constraint firstItem="mTD-FZ-ABx" firstAttribute="leading" secondItem="dau-1u-C0F" secondAttribute="leading" constant="20" id="5l3-40-k3b"/>
                                     <constraint firstAttribute="height" constant="224" id="SHR-cq-NmS"/>
                                     <constraint firstItem="nwG-Uj-dSo" firstAttribute="top" secondItem="mTD-FZ-ABx" secondAttribute="bottom" constant="8" id="SNr-Rs-40i"/>
-                                    <constraint firstItem="icr-sO-ldA" firstAttribute="top" secondItem="nwG-Uj-dSo" secondAttribute="bottom" constant="67" id="Ugf-yB-ggj"/>
                                     <constraint firstAttribute="trailing" secondItem="Gqb-UA-eaq" secondAttribute="trailing" constant="20" id="W8M-L0-ZWE"/>
                                     <constraint firstItem="mTD-FZ-ABx" firstAttribute="top" secondItem="Gqb-UA-eaq" secondAttribute="bottom" constant="8" symbolic="YES" id="ZFj-tE-CtQ"/>
                                     <constraint firstItem="nwG-Uj-dSo" firstAttribute="trailing" secondItem="mTD-FZ-ABx" secondAttribute="trailing" id="Zdc-Cf-CFU"/>
                                     <constraint firstAttribute="trailing" secondItem="mTD-FZ-ABx" secondAttribute="trailing" constant="20" id="aSc-L4-ZED"/>
                                     <constraint firstItem="Gqb-UA-eaq" firstAttribute="leading" secondItem="dau-1u-C0F" secondAttribute="leading" constant="20" id="tjd-nu-KQK"/>
-                                    <constraint firstItem="icr-sO-ldA" firstAttribute="centerX" secondItem="nwG-Uj-dSo" secondAttribute="centerX" id="zPt-ic-9s6"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MVk-KP-SKU">
@@ -1753,6 +1770,7 @@
                     <connections>
                         <outlet property="address" destination="mTD-FZ-ABx" id="MtC-gE-xZ3"/>
                         <outlet property="btnCall" destination="XfO-UI-wSo" id="REu-QX-B1t"/>
+                        <outlet property="btnInstructions" destination="V1i-cU-2Ah" id="623-rj-rFd"/>
                         <outlet property="btnStartEndShowing" destination="Om2-cy-7g6" id="3HV-g2-nbZ"/>
                         <outlet property="lblPrice" destination="Gqb-UA-eaq" id="q8V-05-xwE"/>
                         <outlet property="propertyDescription" destination="nwG-Uj-dSo" id="cWx-ry-i8C"/>
@@ -3251,6 +3269,14 @@ $480,000
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Qm-Fx-Ez3">
+                                                            <rect key="frame" x="0.0" y="105" width="143" height="30"/>
+                                                            <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <state key="normal" title="View Details"/>
+                                                            <connections>
+                                                                <action selector="btnViewDetails:" destination="X0g-KE-Vym" eventType="touchUpInside" id="I8A-CT-i4z"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
@@ -5890,7 +5916,7 @@ $480,000
                                         <color key="textColor" red="0.0039215686269999999" green="0.45882352939999999" blue="0.79215686269999996" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="** Send broker an email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNo-uG-Gu2">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="** Send broker an email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNo-uG-Gu2">
                                         <rect key="frame" x="20" y="340" width="280" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="0.023529411760000001" green="0.023529411760000001" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -5903,7 +5929,7 @@ $480,000
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* A showing does not constitute procuring costs" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nA1-v6-lZd">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="* A showing does not constitute procuring costs" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nA1-v6-lZd">
                                         <rect key="frame" x="20" y="270" width="280" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="0.023529411760000001" green="0.023529411760000001" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -5915,21 +5941,7 @@ $480,000
                                         <color key="textColor" red="0.0039215686269999999" green="0.45882352939999999" blue="0.79215686269999996" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="klX-dc-5BV">
-                                        <rect key="frame" x="167" y="223" width="133" height="37"/>
-                                        <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="37" id="3GQ-Kn-N6o"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <state key="normal" title="Choose Picture">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="btnchoosePicture:" destination="n7j-92-mj8" eventType="touchUpInside" id="IMI-WA-eR8"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="**You will not receive any buyer info" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Vv-z4-8NW">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="**You will not receive any buyer info" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Vv-z4-8NW">
                                         <rect key="frame" x="20" y="314" width="280" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="0.023529411760000001" green="0.023529411760000001" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -5967,7 +5979,7 @@ $480,000
                                         <color key="textColor" red="0.0039215686269999999" green="0.45882352939999999" blue="0.79215686269999996" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Preference: 3,000,000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w2L-wx-gET">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Your Preference: 3,000,000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w2L-wx-gET">
                                         <rect key="frame" x="20" y="392" width="280" height="15"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.023529411760000001" green="0.023529411760000001" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -6009,7 +6021,7 @@ $480,000
                                             <constraint firstAttribute="width" constant="37" id="g3i-sP-x9i"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="**We retain 20% of transaction fee" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Buz-OL-hh3">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="**We retain 20% of transaction fee" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Buz-OL-hh3">
                                         <rect key="frame" x="20" y="366" width="280" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="0.023529411760000001" green="0.023529411760000001" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -6022,11 +6034,29 @@ $480,000
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6f-ce-vFa">
+                                        <rect key="frame" x="258" y="223" width="41" height="37"/>
+                                        <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="take_photo"/>
+                                        <connections>
+                                            <action selector="btnTakePhoto:" destination="n7j-92-mj8" eventType="touchUpInside" id="yQg-oT-PxN"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="klX-dc-5BV">
+                                        <rect key="frame" x="167" y="223" width="88" height="37"/>
+                                        <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <state key="normal" title="Choose Picture">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="btnchoosePicture:" destination="n7j-92-mj8" eventType="touchUpInside" id="IMI-WA-eR8"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="Ryg-hh-gF3" firstAttribute="leading" secondItem="Fz5-od-KuU" secondAttribute="leading" id="2xr-vP-Skc"/>
-                                    <constraint firstItem="klX-dc-5BV" firstAttribute="leading" secondItem="iUA-2F-wqe" secondAttribute="trailing" constant="8" id="3J8-aq-S1B"/>
                                     <constraint firstItem="ZhA-y3-eZ0" firstAttribute="leading" secondItem="5Dp-Bk-PM0" secondAttribute="leading" id="5Bg-Gy-iJS"/>
                                     <constraint firstItem="w2L-wx-gET" firstAttribute="leading" secondItem="Buz-OL-hh3" secondAttribute="leading" id="6If-s1-19x"/>
                                     <constraint firstItem="po4-Hz-8Bc" firstAttribute="centerY" secondItem="HMR-oj-Ete" secondAttribute="centerY" id="74G-BL-gwl"/>
@@ -6040,7 +6070,6 @@ $480,000
                                     <constraint firstItem="5Dp-Bk-PM0" firstAttribute="top" secondItem="Ryg-hh-gF3" secondAttribute="bottom" constant="15" id="EEb-U1-8mh"/>
                                     <constraint firstAttribute="trailing" secondItem="nA1-v6-lZd" secondAttribute="trailing" constant="20" id="FeL-Le-BTS"/>
                                     <constraint firstItem="Buz-OL-hh3" firstAttribute="leading" secondItem="dNo-uG-Gu2" secondAttribute="leading" id="Fna-hE-vg9"/>
-                                    <constraint firstItem="klX-dc-5BV" firstAttribute="centerY" secondItem="iUA-2F-wqe" secondAttribute="centerY" id="Hqg-rX-5S7"/>
                                     <constraint firstItem="ZhA-y3-eZ0" firstAttribute="top" secondItem="5Dp-Bk-PM0" secondAttribute="bottom" constant="15" id="M0H-Hd-HLb"/>
                                     <constraint firstItem="nA1-v6-lZd" firstAttribute="centerX" secondItem="0RO-sq-IlL" secondAttribute="centerX" id="Mxx-ce-f3Y"/>
                                     <constraint firstItem="Hhx-AR-noJ" firstAttribute="top" secondItem="ZhA-y3-eZ0" secondAttribute="bottom" constant="15" id="NTR-z1-R2h"/>
@@ -6055,7 +6084,6 @@ $480,000
                                     <constraint firstItem="Fz5-od-KuU" firstAttribute="top" secondItem="kBg-ZF-pAD" secondAttribute="bottom" constant="15" id="Wbm-py-S7c"/>
                                     <constraint firstItem="dNo-uG-Gu2" firstAttribute="top" secondItem="9Vv-z4-8NW" secondAttribute="bottom" constant="8" id="Y3c-2y-XL9"/>
                                     <constraint firstItem="w2L-wx-gET" firstAttribute="trailing" secondItem="Buz-OL-hh3" secondAttribute="trailing" id="Y6L-c0-duB"/>
-                                    <constraint firstItem="nA1-v6-lZd" firstAttribute="top" secondItem="klX-dc-5BV" secondAttribute="bottom" constant="10" id="ZUa-a3-uck"/>
                                     <constraint firstItem="iUA-2F-wqe" firstAttribute="leading" secondItem="fdp-ah-u4X" secondAttribute="leading" id="ZVc-sF-sXT"/>
                                     <constraint firstItem="7As-gb-MwV" firstAttribute="trailing" secondItem="Yup-Wt-j3A" secondAttribute="trailing" id="dLF-48-1by"/>
                                     <constraint firstItem="eQ1-pb-Bb6" firstAttribute="trailing" secondItem="K3r-yD-ly2" secondAttribute="trailing" id="dsm-pC-wFK"/>
@@ -6075,7 +6103,6 @@ $480,000
                                     <constraint firstItem="9Vv-z4-8NW" firstAttribute="centerX" secondItem="nA1-v6-lZd" secondAttribute="centerX" id="p38-OX-vjJ"/>
                                     <constraint firstItem="dNo-uG-Gu2" firstAttribute="trailing" secondItem="9Vv-z4-8NW" secondAttribute="trailing" id="rwk-Gl-Rch"/>
                                     <constraint firstItem="w2L-wx-gET" firstAttribute="top" secondItem="Buz-OL-hh3" secondAttribute="bottom" constant="8" id="sEK-FP-eP0"/>
-                                    <constraint firstItem="klX-dc-5BV" firstAttribute="trailing" secondItem="fdp-ah-u4X" secondAttribute="trailing" id="shs-7f-tdR"/>
                                     <constraint firstItem="9Vv-z4-8NW" firstAttribute="leading" secondItem="nA1-v6-lZd" secondAttribute="leading" id="uaQ-hA-N4z"/>
                                     <constraint firstItem="5Dp-Bk-PM0" firstAttribute="leading" secondItem="Ryg-hh-gF3" secondAttribute="leading" id="ucP-pF-Qb8"/>
                                     <constraint firstItem="fdp-ah-u4X" firstAttribute="trailing" secondItem="eQ1-pb-Bb6" secondAttribute="trailing" id="vQw-gk-2cc"/>
@@ -8660,6 +8687,7 @@ $480,000
         <image name="logo" width="432" height="226"/>
         <image name="pLogo" width="110" height="146"/>
         <image name="rating" width="132" height="28"/>
+        <image name="take_photo" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="uBa-RI-Zc4"/>

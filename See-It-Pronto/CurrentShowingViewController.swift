@@ -155,6 +155,7 @@ class CurrentShowingViewController: UIViewController {
         Utility().goPropertyDetails(self,propertyId: self.viewData["showing"]["property_id"].stringValue, PropertyClass: self.viewData["showing"]["property_class"].stringValue)
     }
     
+    
     @IBAction func btnShowingInstrunctions(sender: AnyObject) {
         let instructions = self.viewData["realtor_properties"]["showing_instruction"].stringValue
         if(!instructions.isEmpty) {
