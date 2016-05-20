@@ -161,14 +161,12 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
     func loadPropertyListing(let response: NSData) {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
-            if(!result["id"].stringValue.isEmpty) {
-                self.viewData = result
-                self.txtShowingInstructions.text = result["showing_instruction"].stringValue
-                self.txtEmail.text = result["owner_email"].stringValue
-                self.txtPhone.text = result["owner_phone"].stringValue
-                if(result["state_beacon"].int == 1) {
-                    self.swBeacon.on = true
-                }
+            self.viewData = result
+            self.txtShowingInstructions.text = result["showing_instruction"].stringValue
+            self.txtEmail.text = result["owner_email"].stringValue
+            self.txtPhone.text = result["owner_phone"].stringValue
+            if(result["state_beacon"].int == 1) {
+                self.swBeacon.on = true
             }
         }
     }
