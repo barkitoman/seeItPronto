@@ -18,6 +18,8 @@ class CurrentShowingViewController: UIViewController {
     @IBOutlet weak var btnCall: UIButton!
     @IBOutlet weak var btnStartEndShowing: UIButton!
     
+    @IBOutlet weak var btnInstructions: UIButton!
+    
     var manager: OneShotLocationManager?
     var showingId:String = ""
     var startEndButtonAction = "start"
@@ -34,6 +36,7 @@ class CurrentShowingViewController: UIViewController {
         if(role == "buyer") {
             self.btnCall.hidden = true
             self.btnStartEndShowing.hidden = true
+            self.btnInstructions.hidden = true
         }
     }
 
@@ -86,8 +89,8 @@ class CurrentShowingViewController: UIViewController {
             if(!result["property"]["property_type"].stringValue.isEmpty) {
                 description += result["property"]["property_type"].stringValue+"/"
             }
-            if(!result["property"]["lot_size"].stringValue.isEmpty) {
-                description += result["property"]["lot_size"].stringValue
+            if(!result["property"]["square_feed"].stringValue.isEmpty) {
+                description += result["property"]["square_feed"].stringValue+" SqrFt"
             }
             self.propertyDescription.text = description
             if(!result["property"]["image"].stringValue.isEmpty) {
@@ -144,6 +147,20 @@ class CurrentShowingViewController: UIViewController {
             }
             // destroy the object immediately to save memory
             self.manager = nil
+        }
+    }
+    
+    
+    @IBAction func btnViewDetails(sender: AnyObject) {
+        Utility().goPropertyDetails(self,propertyId: self.viewData["showing"]["property_id"].stringValue, PropertyClass: self.viewData["showing"]["property_class"].stringValue)
+    }
+    
+    @IBAction func btnShowingInstrunctions(sender: AnyObject) {
+        let instructions = self.viewData["realtor_properties"]["showing_instruction"].stringValue
+        if(!instructions.isEmpty) {
+            Utility().displayAlert(self, title: "Showing instructions", message: instructions, performSegue: "")
+        } else {
+            Utility().displayAlert(self, title: "Message", message: "You don't have showing instructions for this property", performSegue: "")
         }
     }
     

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -1664,13 +1664,6 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="icr-sO-ldA">
-                                        <rect key="frame" x="112" y="163" width="97" height="30"/>
-                                        <state key="normal" title="Get directions"/>
-                                        <connections>
-                                            <action selector="btnGetDirections:" destination="IMr-f1-iEG" eventType="touchUpInside" id="Y7x-lT-hPU"/>
-                                        </connections>
-                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gqb-UA-eaq">
                                         <rect key="frame" x="20" y="20" width="280" height="26"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
@@ -1683,6 +1676,38 @@
                                         <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dQ0-IU-UtY">
+                                        <rect key="frame" x="20" y="110" width="280" height="30"/>
+                                        <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <state key="normal" title="View Details">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="btnViewDetails:" destination="IMr-f1-iEG" eventType="touchUpInside" id="gkc-N4-ESE"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9YH-Gl-KkP">
+                                        <rect key="frame" x="20" y="186" width="280" height="30"/>
+                                        <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Showing Instructions">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="btnShowingInstrunctions:" destination="IMr-f1-iEG" eventType="touchUpInside" id="Rug-lC-Ad9"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="icr-sO-ldA">
+                                        <rect key="frame" x="20" y="148" width="280" height="30"/>
+                                        <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <state key="normal" title="Get Directions">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="btnGetDirections:" destination="IMr-f1-iEG" eventType="touchUpInside" id="Y7x-lT-hPU"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1690,13 +1715,11 @@
                                     <constraint firstItem="Gqb-UA-eaq" firstAttribute="top" secondItem="dau-1u-C0F" secondAttribute="top" constant="20" symbolic="YES" id="4k3-Jz-Pg1"/>
                                     <constraint firstItem="mTD-FZ-ABx" firstAttribute="leading" secondItem="dau-1u-C0F" secondAttribute="leading" constant="20" id="5l3-40-k3b"/>
                                     <constraint firstItem="nwG-Uj-dSo" firstAttribute="top" secondItem="mTD-FZ-ABx" secondAttribute="bottom" constant="8" id="SNr-Rs-40i"/>
-                                    <constraint firstItem="icr-sO-ldA" firstAttribute="top" secondItem="nwG-Uj-dSo" secondAttribute="bottom" constant="67" id="Ugf-yB-ggj"/>
                                     <constraint firstAttribute="trailing" secondItem="Gqb-UA-eaq" secondAttribute="trailing" constant="20" id="W8M-L0-ZWE"/>
                                     <constraint firstItem="mTD-FZ-ABx" firstAttribute="top" secondItem="Gqb-UA-eaq" secondAttribute="bottom" constant="8" symbolic="YES" id="ZFj-tE-CtQ"/>
                                     <constraint firstItem="nwG-Uj-dSo" firstAttribute="trailing" secondItem="mTD-FZ-ABx" secondAttribute="trailing" id="Zdc-Cf-CFU"/>
                                     <constraint firstAttribute="trailing" secondItem="mTD-FZ-ABx" secondAttribute="trailing" constant="20" id="aSc-L4-ZED"/>
                                     <constraint firstItem="Gqb-UA-eaq" firstAttribute="leading" secondItem="dau-1u-C0F" secondAttribute="leading" constant="20" id="tjd-nu-KQK"/>
-                                    <constraint firstItem="icr-sO-ldA" firstAttribute="centerX" secondItem="nwG-Uj-dSo" secondAttribute="centerX" id="zPt-ic-9s6"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MVk-KP-SKU">
@@ -1708,7 +1731,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Om2-cy-7g6">
                                 <rect key="frame" x="160" y="508" width="160" height="60"/>
                                 <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Start showing">
+                                <state key="normal" title="Start Showing">
                                     <color key="titleColor" red="0.81176470590000005" green="0.88235294119999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -1770,6 +1793,7 @@
                     <connections>
                         <outlet property="address" destination="mTD-FZ-ABx" id="MtC-gE-xZ3"/>
                         <outlet property="btnCall" destination="XfO-UI-wSo" id="REu-QX-B1t"/>
+                        <outlet property="btnInstructions" destination="9YH-Gl-KkP" id="v3q-95-K8F"/>
                         <outlet property="btnStartEndShowing" destination="Om2-cy-7g6" id="3HV-g2-nbZ"/>
                         <outlet property="lblPrice" destination="Gqb-UA-eaq" id="q8V-05-xwE"/>
                         <outlet property="propertyDescription" destination="nwG-Uj-dSo" id="cWx-ry-i8C"/>

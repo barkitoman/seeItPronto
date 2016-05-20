@@ -188,6 +188,8 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
         }
     }
     
+    
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "FromBuyerForm2") {
             let view: BuyerForm3ViewController = segue.destinationViewController as! BuyerForm3ViewController

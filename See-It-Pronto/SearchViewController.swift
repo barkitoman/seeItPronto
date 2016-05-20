@@ -10,7 +10,7 @@ import UIKit
 
 class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIPopoverPresentationControllerDelegate  {
 
-    let picker = UIImageView(image: UIImage(named: "picker_white"))
+    let picker = UIImageView(image: UIImage(named: "picker"))
     @IBOutlet weak var btnClass: UIButton!
     
     @IBOutlet weak var beds1: UIButton!
@@ -50,14 +50,17 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         static let moods = [
             ["title" : "Single Family",             "class":"1"],
             ["title" : "Condo/Coop/Villa/Twnhse",   "class":"2"],
+            ["title" : "Residential Rental",        "class":"6"],
+            ["title" : "Business Opportunity",      "class":"8"],
+            /*
             ["title" : "Residential Income",        "class":"3"],
             ["title" : "ResidentialLand/BoatDocks", "class":"4"],
             ["title" : "Comm/Bus/Agr/Indust Land",  "class":"5"],
-            ["title" : "Residential Rental",        "class":"6"],
             ["title" : "Improved Comm/Indust",      "class":"7"],
             ["title" : "Business Opportunity",      "class":"8"],
             ["title" : "Office",                    "class":"10"],
             ["title" : "Open House",                "class":"13"]
+            */
         ]
     }
     
@@ -266,15 +269,15 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     }
     
     func createPicker(){
-        picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 200, width: 286, height: 400)
+        picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 200, width: 286, height: 208)
         picker.alpha = 0
         picker.hidden = true
         picker.userInteractionEnabled = true
-        var offset = 35
+        var offset = 21
         for (index, feeling) in properties.moods.enumerate() {
             let button = UIButton()
             button.tag = index
-            button.frame = CGRect(x: 13, y: offset, width: 260, height: 12)
+            button.frame = CGRect(x: 13, y: offset, width: 260, height: 43)
             var color = self.defaultColor
             if(feeling["title"] == self.propertySelectedClassName) {
                 color = self.selectedColor
@@ -284,7 +287,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
             button.setTitle(feeling["title"], forState: .Normal)
             button.addTarget(self, action: "clickPicker:", forControlEvents: .TouchUpInside)
             picker.addSubview(button)
-            offset += 35
+            offset += 44
         }
         view.addSubview(picker)
     }
@@ -311,7 +314,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         self.picker.hidden = false
         UIView.animateWithDuration(0.3,
             animations: {
-                self.picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 100, width: 286, height: 420)
+                self.picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 100, width: 286, height: 208)
                 self.picker.alpha = 1
         })
     }

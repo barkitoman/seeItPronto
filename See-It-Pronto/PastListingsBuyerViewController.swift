@@ -150,11 +150,7 @@ class PastListingsBuyerViewController: UIViewController {
     
     func openPropertyDetailView(indexPath: NSIndexPath) {
         let showing = JSON(self.myListings[indexPath.row])
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let viewController : PropertyDetailsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController
-        let saveData: JSON =  ["id":showing["property"][0]["id"].stringValue,"property_class":showing["property_class"].stringValue]
-        Property().saveIfExists(saveData)
-        self.navigationController?.showViewController(viewController, sender:self)
+        Utility().goPropertyDetails(self,propertyId: showing["property"][0]["id"].stringValue, PropertyClass: showing["property_class"].stringValue)
     }
     
     func viewShowingComments(indexPath: NSIndexPath) {

@@ -202,7 +202,7 @@ class ShowingRequestViewController: UIViewController {
         if(!instructions.isEmpty) {
             Utility().displayAlert(self, title: "Showing instructions", message: instructions, performSegue: "")
         } else {
-            Utility().displayAlert(self, title: "Message", message: "There are no showing instructions to show", performSegue: "")
+            Utility().displayAlert(self, title: "Message", message: "You don't have showing instructions for this property", performSegue: "")
         }
     }
     

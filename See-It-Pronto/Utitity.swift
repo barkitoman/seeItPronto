@@ -26,8 +26,6 @@ class Utility {
         }
     }
     
-    
-    
     func displayAlertBack(controller:UIViewController, title:String, message:String){
         dispatch_async(dispatch_get_main_queue()) {
             let alertController = UIAlertController(title:title, message: message, preferredStyle: .Alert)
@@ -178,6 +176,13 @@ class Utility {
         }
     }
     
+    func goPropertyDetails(controller:UIViewController, propertyId:String, PropertyClass:String){
+        let saveData: JSON =  ["id":propertyId,"property_class":PropertyClass]
+        Property().saveIfExists(saveData)
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let vc : PropertyDetailsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController
+        controller.navigationController?.showViewController(vc, sender: nil)
+    }
     
     func millitaryToStandardTime(militaryTime:String, format:String="MM/dd/yyyy hh:mm a")->String {
         let dateString = "\(militaryTime) EST"
