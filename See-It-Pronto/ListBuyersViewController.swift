@@ -98,9 +98,11 @@ class ListBuyersViewController: UIViewController {
                 self.buyers.addObject(jsonObject)
             }
             if(self.buyers.count == 0 && self.countPage == 0) {
+                BProgressHUD.dismissHUD(0)
                 Utility().displayAlertBack(self, title: "Message", message: "There are no buyers to show")
             }
             self.tableView.reloadData()
+            BProgressHUD.dismissHUD(4)
         }
     }
     

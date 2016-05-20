@@ -60,6 +60,7 @@ class BuyerProfileViewController: UIViewController {
                 self.lblPrequelified.text = "No"
             }
             if(!result["url_image"].stringValue.isEmpty) {
+                print(result["url_image"].stringValue)
                 Utility().showPhoto(self.photo, imgPath: result["url_image"].stringValue)
             }
         }
