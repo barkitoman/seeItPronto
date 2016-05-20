@@ -3794,6 +3794,7 @@ $480,000
                             <constraint firstAttribute="bottom" secondItem="Efi-ym-Mgb" secondAttribute="bottom" constant="72" id="h3d-6M-R4G"/>
                             <constraint firstItem="EVd-tB-GYx" firstAttribute="leading" secondItem="2gC-sx-32C" secondAttribute="leading" id="j8J-0U-XqA"/>
                             <constraint firstItem="8P0-tf-dBu" firstAttribute="width" secondItem="76f-cu-hIc" secondAttribute="width" id="oBU-0d-MHa"/>
+                            <constraint firstItem="NUL-U8-DZT" firstAttribute="leading" secondItem="2gC-sx-32C" secondAttribute="leading" id="oGB-Tk-GfF"/>
                             <constraint firstItem="NUL-U8-DZT" firstAttribute="top" secondItem="Zt3-tD-1xo" secondAttribute="bottom" constant="8" id="pvt-nb-VOi"/>
                             <constraint firstItem="3nW-Ge-dC8" firstAttribute="top" secondItem="76f-cu-hIc" secondAttribute="bottom" constant="6" id="q1Z-ZD-pza"/>
                             <constraint firstItem="YzZ-Pd-GKJ" firstAttribute="top" secondItem="4n9-fP-OtE" secondAttribute="bottom" constant="8" symbolic="YES" id="qQX-2Z-nvC"/>
@@ -3802,6 +3803,7 @@ $480,000
                             <constraint firstItem="BOC-sO-fn6" firstAttribute="top" secondItem="Efi-ym-Mgb" secondAttribute="bottom" constant="8" symbolic="YES" id="sBs-sP-5rw"/>
                             <constraint firstItem="76f-cu-hIc" firstAttribute="leading" secondItem="2gC-sx-32C" secondAttribute="leading" id="udc-Tj-4Ua"/>
                             <constraint firstItem="BOC-sO-fn6" firstAttribute="width" secondItem="EVd-tB-GYx" secondAttribute="width" id="vEJ-ah-Xsp"/>
+                            <constraint firstAttribute="trailing" secondItem="NUL-U8-DZT" secondAttribute="trailing" id="vs2-Ft-Q6I"/>
                             <constraint firstItem="BOC-sO-fn6" firstAttribute="height" secondItem="EVd-tB-GYx" secondAttribute="height" id="xOc-qj-BVB"/>
                             <constraint firstItem="Zt3-tD-1xo" firstAttribute="top" secondItem="3nW-Ge-dC8" secondAttribute="bottom" constant="8" id="y1s-GK-nZT"/>
                             <constraint firstItem="8P0-tf-dBu" firstAttribute="leading" secondItem="76f-cu-hIc" secondAttribute="trailing" id="zee-in-c6z"/>
