@@ -2035,9 +2035,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RMa-Gi-3Ng">
-                                                    <rect key="frame" x="20" y="10" width="126" height="101"/>
+                                                    <rect key="frame" x="20" y="10" width="101" height="101"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="RMa-Gi-3Ng" secondAttribute="height" multiplier="101:81" id="5GK-cp-6RO"/>
+                                                        <constraint firstAttribute="width" secondItem="RMa-Gi-3Ng" secondAttribute="height" multiplier="101:81" constant="-24.938271604938265" id="5GK-cp-6RO"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Frances Drake" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cZs-q9-Df2">
@@ -2050,7 +2050,7 @@
                                             <constraints>
                                                 <constraint firstItem="RMa-Gi-3Ng" firstAttribute="top" secondItem="j93-6k-cay" secondAttribute="top" constant="10" id="BMa-bS-tsw"/>
                                                 <constraint firstAttribute="bottom" secondItem="RMa-Gi-3Ng" secondAttribute="bottom" constant="10" id="W8j-ex-aHx"/>
-                                                <constraint firstItem="cZs-q9-Df2" firstAttribute="leading" secondItem="RMa-Gi-3Ng" secondAttribute="trailing" constant="8" symbolic="YES" id="dFe-Jk-QRm"/>
+                                                <constraint firstItem="cZs-q9-Df2" firstAttribute="leading" secondItem="RMa-Gi-3Ng" secondAttribute="trailing" constant="33" id="dFe-Jk-QRm"/>
                                                 <constraint firstItem="cZs-q9-Df2" firstAttribute="centerY" secondItem="RMa-Gi-3Ng" secondAttribute="centerY" id="jKJ-YE-d5Z"/>
                                                 <constraint firstItem="RMa-Gi-3Ng" firstAttribute="leading" secondItem="j93-6k-cay" secondAttribute="leading" constant="20" symbolic="YES" id="q4L-Yb-lxd"/>
                                             </constraints>
