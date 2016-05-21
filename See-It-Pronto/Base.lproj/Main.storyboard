@@ -2590,7 +2590,6 @@ To</string>
                                         </state>
                                         <connections>
                                             <action selector="btnClass:" destination="k73-JC-gI7" eventType="touchUpInside" id="Uzs-HN-lmw"/>
-                                            <action selector="clickPicker:" destination="k73-JC-gI7" eventType="touchUpInside" id="o2y-Ud-HKj"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -7937,7 +7936,6 @@ $480,000
                                         </state>
                                         <connections>
                                             <action selector="btnOpenPropertyClass:" destination="0IW-p9-LBW" eventType="touchUpInside" id="bnx-Ub-x1P"/>
-                                            <action selector="clickPicker:" destination="0IW-p9-LBW" eventType="touchUpInside" id="l7T-Hx-eGi"/>
                                         </connections>
                                     </button>
                                 </subviews>

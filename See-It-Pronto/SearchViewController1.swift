@@ -9,7 +9,7 @@
 import UIKit
 
 class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIPopoverPresentationControllerDelegate  {
-    
+
     let picker = UIImageView(image: UIImage(named: "picker"))
     @IBOutlet weak var btnClass: UIButton!
     
@@ -33,7 +33,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     @IBOutlet weak var swType: UISwitch!
     @IBOutlet weak var txtArea: UITextField!
     @IBOutlet weak var swPool: UISwitch!
-    
+
     @IBOutlet weak var lblBeds: UILabel!
     @IBOutlet weak var lblBaths: UILabel!
     var animateDistance: CGFloat!
@@ -148,7 +148,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         }
         super.viewWillDisappear(animated)
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -180,11 +180,11 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     @IBAction func btnSearch(sender: AnyObject) {
         let userId = User().getField("id")
         var params = "type_property="+Utility().switchValue(self.swType, onValue: "rental", offValue: "sale")+"&area="+self.txtArea.text!
-        params = params+"&beds=\(self.bedRooms)&baths=\(self.bathRooms)"
-        params = params+"&pool=\(Utility().switchValue(self.swPool, onValue: "1", offValue: "0"))"
-        params = params+"&price_range_less=\(txtPriceFrom.text!)&price_range_higher=\(txtPriceTo.text!)"
-        params = params+"&user_id=\(userId)&property_class=\(self.propertySelectedClass)&property_class_name=\(self.propertySelectedClassName)"
-        
+            params = params+"&beds=\(self.bedRooms)&baths=\(self.bathRooms)"
+            params = params+"&pool=\(Utility().switchValue(self.swPool, onValue: "1", offValue: "0"))"
+            params = params+"&price_range_less=\(txtPriceFrom.text!)&price_range_higher=\(txtPriceTo.text!)"
+            params = params+"&user_id=\(userId)&property_class=\(self.propertySelectedClass)&property_class_name=\(self.propertySelectedClassName)"
+
         var url = AppConfig.APP_URL+"/user_config_searches"
         let configSearchId = SearchConfig().getField("id")
         if(!configSearchId.isEmpty) {
@@ -197,8 +197,8 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     }
     
     func formValidation()->Bool {
-        let out = true
-        return out
+     let out = true
+     return out
     }
     
     func afterPost(let response: NSData) {
@@ -269,7 +269,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     }
     
     func createPicker(){
-        picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 100, width: 286, height: 208)
+        picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 200, width: 286, height: 208)
         picker.alpha = 0
         picker.hidden = true
         picker.userInteractionEnabled = true
@@ -314,7 +314,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         self.picker.hidden = false
         UIView.animateWithDuration(0.3,
             animations: {
-                self.picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 120, width: 286, height: 208)
+                self.picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 100, width: 286, height: 208)
                 self.picker.alpha = 1
         })
     }
@@ -378,5 +378,5 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         self.view.frame = viewFrame
         UIView.commitAnimations()
     }
-    
+
 }
