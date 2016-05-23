@@ -11,9 +11,9 @@ import UIKit
 class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate   {
 
     var viewData:JSON = []
-    @IBOutlet weak var txtBrand: UITextField!
+    //@IBOutlet weak var txtBrand: UITextField!
     @IBOutlet weak var txtLocation: UITextField!
-    @IBOutlet weak var txtBeaconId: UITextField!
+    //@IBOutlet weak var txtBeaconId: UITextField!
     @IBOutlet weak var previewImage: UIImageView!
     var haveImage:Bool = false
     var propertyId:String = ""
@@ -45,8 +45,8 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     
     //selfDelegate, textFieldShouldReturn are functions for hide keyboard when press 'return' key
     func selfDelegate() {
-        self.txtBeaconId.delegate = self
-        self.txtBrand.delegate = self
+        //self.txtBeaconId.delegate = self
+        //self.txtBrand.delegate = self
         self.txtLocation.delegate = self
     }
     
@@ -73,7 +73,7 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
             propertyClass = self.viewData["property"]["class"].stringValue
         }
         var url = AppConfig.APP_URL+"/beacons"
-        var params = "brand=\(self.txtBrand.text!)&beacon_id=\(self.txtBeaconId.text!)&location=\(self.txtLocation.text!)"
+        var params = "brand=&beacon_id=&location=\(self.txtLocation.text!)"
         params     = params+"&state_beacon=0&property_id=\(self.propertyId)&user_id=\(User().getField("id"))&property_class=\(propertyClass)"
         if(!self.viewData["id"].stringValue.isEmpty) {
             //if user is editing a beacon
@@ -140,8 +140,8 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
         dispatch_async(dispatch_get_main_queue()) {
             if(!result["id"].stringValue.isEmpty) {
                 self.viewData = result
-                self.txtBrand.text    = result["brand"].stringValue
-                self.txtBeaconId.text = result["beacon_id"].stringValue
+                //self.txtBrand.text    = result["brand"].stringValue
+                //self.txtBeaconId.text = result["beacon_id"].stringValue
                 self.txtLocation.text = result["location"].stringValue
                 if(!result["url_image"].stringValue.isEmpty) {
                     Utility().showPhoto(self.previewImage, imgPath: result["url_image"].stringValue)

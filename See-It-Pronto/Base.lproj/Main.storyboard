@@ -8521,7 +8521,7 @@ $480,000
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="btnSelectBeacon:" destination="wVY-wx-4oP" eventType="touchUpInside" id="Bmk-bL-Y7A"/>
+                                            <segue destination="4iP-Ne-gyi" kind="presentation" identifier="chowSelectBeacon" id="emA-ye-QEi"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -8573,10 +8573,10 @@ $480,000
             </objects>
             <point key="canvasLocation" x="5723" y="2366"/>
         </scene>
-        <!--View Controller-->
+        <!--Select Beacon View Controller-->
         <scene sceneID="INA-sh-H4I">
             <objects>
-                <viewController id="4iP-Ne-gyi" sceneMemberID="viewController">
+                <viewController id="4iP-Ne-gyi" customClass="SelectBeaconViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SHa-iR-XLA"/>
                         <viewControllerLayoutGuide type="bottom" id="hAc-7z-OIZ"/>
@@ -8586,10 +8586,10 @@ $480,000
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W0O-qg-fiZ">
-                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <rect key="frame" x="90" y="20" width="230" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Select A Beacon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BtE-Ag-UF2">
-                                        <rect key="frame" x="8" y="13" width="304" height="18"/>
+                                        <rect key="frame" x="26" y="13" width="178" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -8619,15 +8619,31 @@ $480,000
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="4iP-Ne-gyi" id="5Hv-mN-qMZ"/>
+                                    <outlet property="delegate" destination="4iP-Ne-gyi" id="cd6-qF-XX6"/>
+                                </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SOW-1R-nF9">
+                                <rect key="frame" x="0.0" y="20" width="90" height="44"/>
+                                <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <state key="normal" title="Close"/>
+                                <connections>
+                                    <action selector="btnBack:" destination="4iP-Ne-gyi" eventType="touchUpInside" id="dLc-z8-cvq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="tableView" destination="R5q-Nk-xsh" id="Fyl-8B-7Fu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z1a-rg-3uV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6202" y="2381"/>
+            <point key="canvasLocation" x="6202" y="2349"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="rhn-Db-HcG">
