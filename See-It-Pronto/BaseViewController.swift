@@ -137,7 +137,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         
         }else if (viewIdentifier == "ReadyToWorkViewController") {
             let vc:ReadyToWorkViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ReadyToWorkViewController") as! ReadyToWorkViewController
-            vc.pageTitle = "Making money status"
+            vc.pageTitle = "Making Money Status"
             viewController = vc
         }else if (viewIdentifier == "ConfigViewController") {
             let vc:ConfigViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ConfigViewController") as! ConfigViewController

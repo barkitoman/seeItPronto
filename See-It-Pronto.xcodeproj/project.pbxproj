@@ -27,6 +27,7 @@
 		109FF84A1C860A1000E20FC2 /* PropertyActionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109FF8491C860A1000E20FC2 /* PropertyActionManager.swift */; };
 		109FF84C1C861B1A00E20FC2 /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109FF84B1C861B1A00E20FC2 /* DatePickerDialog.swift */; };
 		10A3AC371CBFF167005AAD85 /* BuyerProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A3AC361CBFF167005AAD85 /* BuyerProfileViewController.swift */; };
+		10AADA361CF37E7A00EF8868 /* SelectBeaconViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10AADA351CF37E7A00EF8868 /* SelectBeaconViewController.swift */; };
 		10B360621CA3267600B73D01 /* BuyerForm5ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B360611CA3267600B73D01 /* BuyerForm5ViewController.swift */; };
 		10B360641CA9B3A900B73D01 /* FeedBacksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B360631CA9B3A900B73D01 /* FeedBacksViewController.swift */; };
 		10B360661CA9B45800B73D01 /* FeedBacksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B360651CA9B45800B73D01 /* FeedBacksTableViewCell.swift */; };
@@ -130,6 +131,7 @@
 		109FF8491C860A1000E20FC2 /* PropertyActionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyActionManager.swift; sourceTree = "<group>"; };
 		109FF84B1C861B1A00E20FC2 /* DatePickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerDialog.swift; sourceTree = "<group>"; };
 		10A3AC361CBFF167005AAD85 /* BuyerProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyerProfileViewController.swift; sourceTree = "<group>"; };
+		10AADA351CF37E7A00EF8868 /* SelectBeaconViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectBeaconViewController.swift; sourceTree = "<group>"; };
 		10B360611CA3267600B73D01 /* BuyerForm5ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyerForm5ViewController.swift; sourceTree = "<group>"; };
 		10B360631CA9B3A900B73D01 /* FeedBacksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBacksViewController.swift; sourceTree = "<group>"; };
 		10B360651CA9B45800B73D01 /* FeedBacksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBacksTableViewCell.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				10C08F251CBD4F6700956E17 /* ReadyToWorkViewController.swift */,
 				10A3AC361CBFF167005AAD85 /* BuyerProfileViewController.swift */,
 				10DA2E6E1CE4D56300EE8553 /* ConfigViewController.swift */,
+				10AADA351CF37E7A00EF8868 /* SelectBeaconViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -563,6 +566,7 @@
 				684D08481C6534B900BF086E /* MenuTableViewCell.swift in Sources */,
 				6811408B1C3AC3280068AE1C /* SelectRoleViewController.swift in Sources */,
 				686E8F431C3C2C2300F5FE01 /* BuyerHomeViewController.swift in Sources */,
+				10AADA361CF37E7A00EF8868 /* SelectBeaconViewController.swift in Sources */,
 				1040F5461CAC47CB0011E497 /* PastListingBuyerTableViewCell.swift in Sources */,
 				684D08491C6534B900BF086E /* ZFRippleButton.swift in Sources */,
 				6885E5F11C57021200CCCA19 /* SRWebClient.swift in Sources */,
