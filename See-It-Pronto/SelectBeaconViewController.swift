@@ -20,6 +20,7 @@ class SelectBeaconViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.findBeacons()
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,9 +30,47 @@ class SelectBeaconViewController: UIViewController {
     @IBAction func btnBack(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: {});
     }
+
     
-    func findPropertyBeacon() {
-        let url = AppConfig.APP_URL+"/get_property_beacons/"+User().getField("id")+"/"+self.propertyId
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return beacons.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell   = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        let beacon = JSON(self.beacons[indexPath.row])
+        cell.textLabel?.text = beacon["name"].stringValue
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //self.viewData = JSON(self.buyers[indexPath.row])
+        //self.performSegueWithIdentifier("showBuyerProfile", sender: self)
+        self.dismissViewControllerAnimated(true, completion: {});
+    }
+    
+    //Pagination
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath){
+        let row = indexPath.row
+        let lastRow = self.beacons.count - 1
+        let pageLimit = (((self.countPage+1) * (self.stepPage)) - 1)  //prevision of the page limit based on step and countPage
+        
+        // 1) The last rown and is the last
+        // 2) To avoid two calls in a short space from time, while the data is downloading
+        if (row == lastRow) && (row == pageLimit)  {
+            self.countPage++
+            print("Loading Page \(self.countPage) from \(self.maxPage)")
+            self.findBeacons()
+        }
+    }
+    
+    func findBeacons() {
+        let url = AppConfig.APP_URL+"/list_beacons/"+User().getField("id")+"/"+self.propertyId
+        print(url)
         Request().get(url, successHandler: {(response) in self.loadBeacons(response)})
     }
     
@@ -42,6 +81,7 @@ class SelectBeaconViewController: UIViewController {
                 let jsonObject: AnyObject = subJson.object
                 self.beacons.addObject(jsonObject)
             }
+            self.tableView.reloadData()
         }
     }
 
