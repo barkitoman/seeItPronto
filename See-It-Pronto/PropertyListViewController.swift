@@ -184,7 +184,7 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
                 BProgressHUD.dismissHUD(5)
             }else{
                 BProgressHUD.dismissHUD(0)
-                let msg = "¡No properties found!"
+                let msg = "No Properties Found"
                 Utility().displayAlert(self,title: "Notification", message:msg, performSegue:"")
             }
             

@@ -50,8 +50,7 @@ class SelectBeaconViewController: UIViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let beacon = JSON(self.beacons[indexPath.row])
-        addBeaconVC!.beaconId = beacon["id"].stringValue
-        addBeaconVC!.beaconName = beacon["beacon_id"].stringValue
+        addBeaconVC!.beaconId = beacon["beacon_id"].stringValue
         addBeaconVC!.reloadButtonTitle()
         self.dismissViewControllerAnimated(true, completion: {});
     }
@@ -79,11 +78,16 @@ class SelectBeaconViewController: UIViewController {
     func loadBeacons(let response: NSData) {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
-            for (_,subJson):(String, JSON) in result {
+        for (_,subJson):(String, JSON) in result["data"] {
                 let jsonObject: AnyObject = subJson.object
                 self.beacons.addObject(jsonObject)
             }
-            self.tableView.reloadData()
+            if self.beacons.count > 0 {
+                self.tableView.reloadData()
+            }else{
+                let msg = "No Beacons Found"
+                Utility().displayAlert(self,title: "Notification", message:msg, performSegue:"")
+            }
         }
     }
 

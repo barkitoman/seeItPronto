@@ -17,12 +17,10 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     var haveImage:Bool = false
     var propertyId:String = ""
     var beaconId = ""
-    var beaconName = "Select Beacon"
     var animateDistance: CGFloat!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.reloadButtonTitle()
         self.propertyId = self.viewData["property"]["id"].stringValue
         self.viewData["id"] = JSON("")
         self.selfDelegate()
@@ -31,14 +29,13 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     
     func reloadButtonTitle() {
         dispatch_async(dispatch_get_main_queue()) {
-            self.btnSelectBeacon.setTitle(self.beaconName, forState: .Normal)
+            self.btnSelectBeacon.setTitle(self.beaconId, forState: .Normal)
         }
     }
     
     override func viewWillAppear(animated: Bool) {
         navigationController?.navigationBarHidden = true
         super.viewWillAppear(animated)
-        self.btnSelectBeacon.setTitle(beaconName, forState: .Normal)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -154,6 +151,9 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
             if(!result["id"].stringValue.isEmpty) {
                 self.viewData = result
                 self.beaconId = result["beacon_id"].stringValue
+                if(!result["beacon_id"].stringValue.isEmpty) {
+                    self.btnSelectBeacon.setTitle(result["beacon_id"].stringValue, forState: .Normal)
+                }
                 self.txtLocation.text = result["location"].stringValue
                 if(!result["url_image"].stringValue.isEmpty) {
                     Utility().showPhoto(self.previewImage, imgPath: result["url_image"].stringValue)
