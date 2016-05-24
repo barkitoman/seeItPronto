@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -8471,7 +8471,7 @@ $480,000
         <!--Add Beacon View Controller-->
         <scene sceneID="nTk-qO-HZQ">
             <objects>
-                <viewController id="wVY-wx-4oP" customClass="AddBeaconViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="AddBeaconViewController" storyboardIdentifier="AddBeaconViewController" id="wVY-wx-4oP" customClass="AddBeaconViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jRx-b7-BBD"/>
                         <viewControllerLayoutGuide type="bottom" id="0GV-h5-dPv"/>
@@ -8637,6 +8637,7 @@ $480,000
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="btnSelectBeacon" destination="uNH-2k-ns1" id="SX9-Xx-cn0"/>
                         <outlet property="previewImage" destination="nni-3h-ONj" id="tQO-oS-sZy"/>
                         <outlet property="txtLocation" destination="f41-XD-FM6" id="nec-b1-mbK"/>
                     </connections>
@@ -8648,7 +8649,7 @@ $480,000
         <!--Select Beacon View Controller-->
         <scene sceneID="INA-sh-H4I">
             <objects>
-                <viewController id="4iP-Ne-gyi" customClass="SelectBeaconViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="SelectBeaconViewController" storyboardIdentifier="SelectBeaconViewController" id="4iP-Ne-gyi" customClass="SelectBeaconViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SHa-iR-XLA"/>
                         <viewControllerLayoutGuide type="bottom" id="hAc-7z-OIZ"/>

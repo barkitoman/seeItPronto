@@ -11,6 +11,8 @@ import CoreData
 
 class ViewController: UIViewController {
 
+    
+    
     private let internvalSeconds:NSTimeInterval = 4
     private var timer: NSTimer?
     

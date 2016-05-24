@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func intervalLocation() {
-        self.NotificationTimer = NSTimer.scheduledTimerWithTimeInterval(3,
+        self.NotificationTimer = NSTimer.scheduledTimerWithTimeInterval(3000,
             target:self,
             selector:Selector("findLocation"),
             userInfo:nil,

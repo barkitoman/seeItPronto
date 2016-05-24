@@ -10,26 +10,35 @@ import UIKit
 
 class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate   {
 
+    @IBOutlet weak var btnSelectBeacon: UIButton!
     var viewData:JSON = []
-    //@IBOutlet weak var txtBrand: UITextField!
     @IBOutlet weak var txtLocation: UITextField!
-    //@IBOutlet weak var txtBeaconId: UITextField!
     @IBOutlet weak var previewImage: UIImageView!
     var haveImage:Bool = false
     var propertyId:String = ""
+    var beaconId = ""
+    var beaconName = "Select Beacon"
     var animateDistance: CGFloat!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.reloadButtonTitle()
         self.propertyId = self.viewData["property"]["id"].stringValue
         self.viewData["id"] = JSON("")
         self.selfDelegate()
         self.findPropertyBeacon()
     }
     
+    func reloadButtonTitle() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.btnSelectBeacon.setTitle(self.beaconName, forState: .Normal)
+        }
+    }
+    
     override func viewWillAppear(animated: Bool) {
         navigationController?.navigationBarHidden = true
         super.viewWillAppear(animated)
+        self.btnSelectBeacon.setTitle(beaconName, forState: .Normal)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -64,7 +73,11 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     }
     
     @IBAction func btnSave(sender: AnyObject) {
-        self.save()
+        if(!self.beaconId.isEmpty) {
+            self.save()
+        } else {
+            Utility().displayAlert(self, title: "Error", message: "Please select a beacon", performSegue: "")
+        }
     }
     
     func save() {
@@ -73,7 +86,7 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
             propertyClass = self.viewData["property"]["class"].stringValue
         }
         var url = AppConfig.APP_URL+"/beacons"
-        var params = "brand=&beacon_id=&location=\(self.txtLocation.text!)"
+        var params = "beacon_id=\(self.beaconId)&location=\(self.txtLocation.text!)"
         params     = params+"&state_beacon=0&property_id=\(self.propertyId)&user_id=\(User().getField("id"))&property_class=\(propertyClass)"
         if(!self.viewData["id"].stringValue.isEmpty) {
             //if user is editing a beacon
@@ -140,13 +153,19 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
         dispatch_async(dispatch_get_main_queue()) {
             if(!result["id"].stringValue.isEmpty) {
                 self.viewData = result
-                //self.txtBrand.text    = result["brand"].stringValue
-                //self.txtBeaconId.text = result["beacon_id"].stringValue
+                self.beaconId = result["beacon_id"].stringValue
                 self.txtLocation.text = result["location"].stringValue
                 if(!result["url_image"].stringValue.isEmpty) {
                     Utility().showPhoto(self.previewImage, imgPath: result["url_image"].stringValue)
                 }
             }
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "chowSelectBeacon" {
+            let vc = segue.destinationViewController as! SelectBeaconViewController
+            vc.addBeaconVC = self
         }
     }
     

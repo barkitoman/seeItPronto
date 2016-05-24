@@ -16,7 +16,8 @@ class SelectBeaconViewController: UIViewController {
     var maxRow    = 0   //maximum limit records of your parse table class
     var maxPage   = 0   //maximum page
     var beacons:NSMutableArray! = NSMutableArray()
-    var propertyId:String = ""
+    weak var addBeaconVC : AddBeaconViewController?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,13 +44,15 @@ class SelectBeaconViewController: UIViewController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell   = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         let beacon = JSON(self.beacons[indexPath.row])
-        cell.textLabel?.text = beacon["name"].stringValue
+        cell.textLabel?.text = beacon["beacon_id"].stringValue
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //self.viewData = JSON(self.buyers[indexPath.row])
-        //self.performSegueWithIdentifier("showBuyerProfile", sender: self)
+        let beacon = JSON(self.beacons[indexPath.row])
+        addBeaconVC!.beaconId = beacon["id"].stringValue
+        addBeaconVC!.beaconName = beacon["beacon_id"].stringValue
+        addBeaconVC!.reloadButtonTitle()
         self.dismissViewControllerAnimated(true, completion: {});
     }
     
@@ -69,8 +72,7 @@ class SelectBeaconViewController: UIViewController {
     }
     
     func findBeacons() {
-        let url = AppConfig.APP_URL+"/list_beacons/"+User().getField("id")+"/"+self.propertyId
-        print(url)
+        let url = AppConfig.APP_URL+"/list_beacons/"+User().getField("id")
         Request().get(url, successHandler: {(response) in self.loadBeacons(response)})
     }
     
