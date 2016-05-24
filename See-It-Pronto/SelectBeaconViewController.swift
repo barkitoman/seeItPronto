@@ -16,6 +16,7 @@ class SelectBeaconViewController: UIViewController {
     var maxRow    = 0   //maximum limit records of your parse table class
     var maxPage   = 0   //maximum page
     var beacons:NSMutableArray! = NSMutableArray()
+    var canSelectBeacon  = false
     weak var addBeaconVC : AddBeaconViewController?
     
 
@@ -49,10 +50,27 @@ class SelectBeaconViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if(canSelectBeacon == true) {
+            let beacon = JSON(self.beacons[indexPath.row])
+                addBeaconVC!.beaconId = beacon["beacon_id"].stringValue
+            addBeaconVC!.reloadButtonTitle()
+            self.dismissViewControllerAnimated(true, completion: {});
+        }
+    }
+    
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete"){
+            (UITableViewRowAction,NSIndexPath) -> Void in
+            self.deleteBeacon(indexPath)
+        }
+        return [delete]
+    }
+    
+    func deleteBeacon(indexPath: NSIndexPath) {
         let beacon = JSON(self.beacons[indexPath.row])
-        addBeaconVC!.beaconId = beacon["beacon_id"].stringValue
-        addBeaconVC!.reloadButtonTitle()
-        self.dismissViewControllerAnimated(true, completion: {});
+        self.beacons.removeObjectAtIndex(indexPath.row)
+        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+        Request().delete("beacon_users/\(beacon["id"].stringValue)", params: "id=\(beacon["id"].stringValue)", successHandler: {(response) in })
     }
     
     //Pagination

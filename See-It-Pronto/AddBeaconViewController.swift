@@ -165,6 +165,7 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "chowSelectBeacon" {
             let vc = segue.destinationViewController as! SelectBeaconViewController
+            vc.canSelectBeacon = true
             vc.addBeaconVC = self
         }
     }

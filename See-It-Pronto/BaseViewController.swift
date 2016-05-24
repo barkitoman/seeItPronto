@@ -55,7 +55,10 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         addChildView("RealtorForm1ViewController",     titleOfChildren: "My Profile",     iconName: "edit_profile")
         addChildView("NotificationsViewController",    titleOfChildren: "Notifications",  iconName: "notification")
         addChildView("ReadyToWorkViewController",      titleOfChildren: "Making Money Status",  iconName: "making_money")
-        addChildView("ConfigViewController",      titleOfChildren: "Settings",  iconName: "settings")
+        addChildView("ConfigViewController",           titleOfChildren: "Settings",  iconName: "settings")
+        addChildView("CreateBeaconViewController",     titleOfChildren: "Add Beacon",  iconName: "add_beacon")
+        
+        
         addChildView("LoginViewController",            titleOfChildren: "Log Out",        iconName: "logout")
         //
     }
@@ -141,6 +144,10 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             viewController = vc
         }else if (viewIdentifier == "ConfigViewController") {
             let vc:ConfigViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ConfigViewController") as! ConfigViewController
+            viewController = vc
+        }
+        else if (viewIdentifier == "CreateBeaconViewController") {
+            let vc:CreateBeaconViewController = mainStoryboard.instantiateViewControllerWithIdentifier("CreateBeaconViewController") as! CreateBeaconViewController
             viewController = vc
         }
         

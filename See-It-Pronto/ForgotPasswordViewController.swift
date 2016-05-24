@@ -8,13 +8,14 @@
 
 import UIKit
 
-class ForgotPasswordViewController: UIViewController {
+class ForgotPasswordViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate  {
 
     var viewData:JSON = []
     @IBOutlet weak var txtEmail: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.txtEmail.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -27,6 +28,11 @@ class ForgotPasswordViewController: UIViewController {
             navigationController?.navigationBarHidden = false
         }
         super.viewWillDisappear(animated)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
 
     override func didReceiveMemoryWarning() {
