@@ -45,7 +45,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     
     func menuRealtor() {
         addChildView("RealtorHomeViewController",      titleOfChildren: "Home",           iconName: "home")
-        addChildView("PropertyListViewController",     titleOfChildren: "List Properties",iconName: "list_properties")
+        //addChildView("PropertyListViewController",     titleOfChildren: "List Properties",iconName: "list_properties")
         addChildView("CurrentShowingViewController",   titleOfChildren: "Current Showing",iconName: "current_showing")
         addChildView("AppointmentsViewController",     titleOfChildren: "Appointments",   iconName: "appoiments")
         addChildView("FeedBacksViewController",        titleOfChildren: "Feedback",      iconName: "feedbacks")
@@ -65,7 +65,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     
     func menuBuyer(){
         addChildView("RealtorHomeViewController",      titleOfChildren: "Home",           iconName: "home")
-        addChildView("PropertyListViewController",     titleOfChildren: "List Properties",iconName: "list_properties")
+        //addChildView("PropertyListViewController",     titleOfChildren: "List Properties",iconName: "list_properties")
         addChildView("ListRealtorsViewController",     titleOfChildren: "Agents",         iconName: "realtor")
         addChildView("SeeItLaterBuyerViewController",  titleOfChildren: "See It Later",   iconName: "my_listings")
         addChildView("PastListingsBuyerViewController",titleOfChildren: "Properties Viewed",  iconName: "properties_viewed")

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,UITextViewDelegate  {
+class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,UITextViewDelegate   {
 
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var tableView: UITableView!
@@ -90,7 +90,18 @@ class PropertyListViewController: UIViewController, UIWebViewDelegate, UITableVi
     }
     
     @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+        //navigationController?.popViewControllerAnimated(true)
+         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func btnMenu(sender: AnyObject) {
+        //self.textFieldShouldReturn(self.txtSearch)
+        self.onSlideMenuButtonPressed(sender as! UIButton)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,UITextViewDelegate {
+class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,UITextViewDelegate, UIPopoverPresentationControllerDelegate {
 
     var manager: OneShotLocationManager?
     var latitude   = "0"
@@ -105,6 +105,22 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     
     @IBAction func btnSearchMenu(sender: AnyObject) {
         self.onSlideSearchButtonPressed(sender as! UIButton)
+    }
+    
+    @IBAction func btnViewList(sender: AnyObject) {
+        let VC = storyboard?.instantiateViewControllerWithIdentifier("PropertyListViewController") as! PropertyListViewController
+        VC.preferredContentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.width)
+        let navController = UINavigationController(rootViewController: VC)
+        
+        let popOver = navController.popoverPresentationController
+        popOver?.delegate = self
+        popOver?.barButtonItem = sender as? UIBarButtonItem
+        
+        self.presentViewController(navController, animated: true, completion: nil)
+    }
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
