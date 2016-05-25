@@ -51,7 +51,7 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate 
     
     func showHideButtons() {
         let role = User().getField("role")
-        if(role == "realtor") {
+        if(role == "realtor" || User().getField("id") == "") {
             btnSearchAgain.hidden = true
             btnSeeItLater.hidden  = true
             btnSeeItNow.hidden    = true
