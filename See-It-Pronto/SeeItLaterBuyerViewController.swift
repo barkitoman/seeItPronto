@@ -24,6 +24,7 @@ class SeeItLaterBuyerViewController: UIViewController {
     var model = [Model]()
     var models = [String:Model]()
     var count = 0
+    var isAddingTocalendar = false;
     
     lazy var configuration : NSURLSessionConfiguration = {
         let config = NSURLSessionConfiguration.ephemeralSessionConfiguration()
@@ -136,11 +137,14 @@ class SeeItLaterBuyerViewController: UIViewController {
         let edit = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Reschedule"){(UITableViewRowAction,NSIndexPath) -> Void in
             self.showEditDatePicker(indexPath)
         }
-        var calendar = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Add\ncalendar"){(UITableViewRowAction,NSIndexPath) -> Void in
-            self.addShowingCalendar(indexPath)
+        var calendar = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Add\nEvent"){(UITableViewRowAction,NSIndexPath) -> Void in
+            if(self.isAddingTocalendar == false) {
+                self.isAddingTocalendar = true
+                self.addShowingCalendar(indexPath)
+            }
         }
         if(!showing["buyer_calendar_id"].stringValue.isEmpty) {
-            calendar = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "View\nCalendar"){(UITableViewRowAction,NSIndexPath) -> Void in
+            calendar = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "View\nEvent"){(UITableViewRowAction,NSIndexPath) -> Void in
                 let dateString = "\(showing["date"].stringValue) EST"
                 let dateFormatter = NSDateFormatter()
                 dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
@@ -222,7 +226,7 @@ class SeeItLaterBuyerViewController: UIViewController {
         store.requestAccessToEntityType(.Event) {(granted, error) in
             if !granted { return }
             let event = EKEvent(eventStore: store)
-            event.title = "See it pronto, showing request"
+            event.title = "See it pronto, showing request.\n \(showing["property"][0]["address"].stringValue)"
             let dateString = "\(showing["date"].stringValue) EST"
             let dateFormatter = NSDateFormatter()
             dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
@@ -240,10 +244,12 @@ class SeeItLaterBuyerViewController: UIViewController {
                     self.saveCalendarId(showing)
                     self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                     self.tableView.setEditing(false, animated: true)
+                    self.isAddingTocalendar = false
                     self.gotoAppleCalendar(event.startDate)
                 }
                 //save event id to access this particular event later
             } catch {
+                self.isAddingTocalendar = false
                 Utility().displayAlert(self, title: "Error", message: "Error saving, please try later", performSegue: "")
             }
         }

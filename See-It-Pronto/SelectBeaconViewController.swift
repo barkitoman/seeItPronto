@@ -70,7 +70,7 @@ class SelectBeaconViewController: UIViewController {
         let beacon = JSON(self.beacons[indexPath.row])
         self.beacons.removeObjectAtIndex(indexPath.row)
         self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-        Request().delete("beacon_users/\(beacon["id"].stringValue)", params: "id=\(beacon["id"].stringValue)", successHandler: {(response) in })
+        Request().delete("destroy_beacon/\(beacon["id"].stringValue)/\(User().getField("id"))", params: "", successHandler: {(response) in })
     }
     
     //Pagination

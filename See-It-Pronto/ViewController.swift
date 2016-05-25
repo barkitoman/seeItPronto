@@ -57,12 +57,12 @@ class ViewController: UIViewController {
         if(!userId.isEmpty && !role.isEmpty && !accessToken.isEmpty) {
             if(role == "realtor") {
                 let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                let viewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("RealtorHomeViewController") as UIViewController
+                let viewController : ReadyToWorkViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ReadyToWorkViewController") as! ReadyToWorkViewController
                 self.navigationController?.showViewController(viewController, sender: nil)
                 out = true
             } else if (role == "buyer") {
                 let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                let viewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as UIViewController
+                let viewController : BuyerHomeViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as! BuyerHomeViewController
                 self.navigationController?.showViewController(viewController, sender: nil)
                 out = true
             }

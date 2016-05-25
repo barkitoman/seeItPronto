@@ -115,6 +115,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        if (User().getField("id") != "" && User().getField("is_login") == "1" && User().getField("role") == "realtor") {
+            let rootViewController = self.window?.rootViewController as! UINavigationController
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let mvc = storyboard.instantiateViewControllerWithIdentifier("ReadyToWorkViewController") as! ReadyToWorkViewController
+            rootViewController.pushViewController(mvc, animated: true)
+        }
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
