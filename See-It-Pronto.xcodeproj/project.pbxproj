@@ -90,6 +90,7 @@
 		68C265861C7B5AC5006ADF61 /* ListBuyersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C265851C7B5AC5006ADF61 /* ListBuyersTableViewCell.swift */; };
 		68D64C561C443DF5006CBE2F /* Utitity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D64C551C443DF5006CBE2F /* Utitity.swift */; };
 		68FA964C1C3D9DD80023C292 /* SeeitLaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FA964B1C3D9DD80023C292 /* SeeitLaterViewController.swift */; };
+		A4048DD71CF7EFB10052EBB5 /* CustomPickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4048DD61CF7EFB10052EBB5 /* CustomPickerDialog.swift */; };
 		A4FDCA661CE544F600D18B88 /* BProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FDCA651CE544F600D18B88 /* BProgressHUD.swift */; };
 /* End PBXBuildFile section */
 
@@ -200,6 +201,7 @@
 		68C265851C7B5AC5006ADF61 /* ListBuyersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListBuyersTableViewCell.swift; sourceTree = "<group>"; };
 		68D64C551C443DF5006CBE2F /* Utitity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utitity.swift; sourceTree = "<group>"; };
 		68FA964B1C3D9DD80023C292 /* SeeitLaterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeitLaterViewController.swift; sourceTree = "<group>"; };
+		A4048DD61CF7EFB10052EBB5 /* CustomPickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPickerDialog.swift; sourceTree = "<group>"; };
 		A4FDCA651CE544F600D18B88 /* BProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BProgressHUD.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -316,6 +318,7 @@
 				6885E5F01C57021200CCCA19 /* SRWebClient.swift */,
 				A4FDCA651CE544F600D18B88 /* BProgressHUD.swift */,
 				10E46AE91CC1535300C5F8D5 /* UIColor.swift */,
+				A4048DD61CF7EFB10052EBB5 /* CustomPickerDialog.swift */,
 				109FF84B1C861B1A00E20FC2 /* DatePickerDialog.swift */,
 				686E8F3E1C3C096300F5FE01 /* SwiftyJSON.swift */,
 			);
@@ -612,6 +615,7 @@
 				681140A71C3AC7950068AE1C /* RealtorDashboardViewController.swift in Sources */,
 				68C265841C7B5608006ADF61 /* ListBuyersViewController.swift in Sources */,
 				1040F5441CAC47910011E497 /* PastListingsBuyerViewController.swift in Sources */,
+				A4048DD71CF7EFB10052EBB5 /* CustomPickerDialog.swift in Sources */,
 				683F7F211C3D62FA00CA0A0C /* AgentConfirmationViewController.swift in Sources */,
 				1084C7621CB6E108004690BC /* CurrentShowingViewController.swift in Sources */,
 				10B360641CA9B3A900B73D01 /* FeedBacksViewController.swift in Sources */,

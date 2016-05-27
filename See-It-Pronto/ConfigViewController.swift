@@ -42,49 +42,40 @@ class ConfigViewController: UIViewController {
     }
     
     @IBAction func gpsEnabled(sender: AnyObject) {
-        if btnGPS.enabled {
-            /*Notification.askPermission()
-            var manager: OneShotLocationManager?
-            manager = OneShotLocationManager()
-            manager!.fetchWithCompletion {location, error in
-                // fetch location or an error
-                if let loc = location {
-                    print(loc.coordinate.latitude)
-                    print(loc.coordinate.longitude)
-                } else if let _ = error {
-                    print("ERROR GETTING LOCATION")
-                }
-                // destroy the object immediately to save memory
-                manager = nil
-            }*/
-
-        }else
-        {
+        
+        let alertController = UIAlertController (title: "Title", message: "Go to Settings?", preferredStyle: .Alert)
+        
+        let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (_) -> Void in
+            //let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
+            
+                UIApplication.sharedApplication().openURL(NSURL(string:"prefs:root=LOCATION_SERVICES")!)
+                //UIApplication.sharedApplication().openURL(url)
             
         }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+        alertController.addAction(settingsAction)
+        alertController.addAction(cancelAction)
+        presentViewController(alertController, animated: true, completion: nil);
+        
+        
         
     }
     
     @IBAction func pushEnabled(sender: AnyObject) {
-        if btnPUSH.enabled {
-            
-        }else
-        {
+        let alertController = UIAlertController (title: "Title", message: "Go to Settings?", preferredStyle: .Alert)
+        
+        let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (_) -> Void in
+            //let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
+            UIApplication.sharedApplication().openURL(NSURL(string:"prefs:root=NOTIFICATIONS_ID")!)
+            //UIApplication.sharedApplication().openURL(url)
             
         }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+        alertController.addAction(settingsAction)
+        alertController.addAction(cancelAction)
+        
+        presentViewController(alertController, animated: true, completion: nil);
     }
     
-    //
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

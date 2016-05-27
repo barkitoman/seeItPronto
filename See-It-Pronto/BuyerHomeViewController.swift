@@ -13,13 +13,16 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     var manager: OneShotLocationManager?
     var latitude   = "0"
     var longintude = "0"
-    
+    var session:Bool = true
     var viewData:JSON     = []
     var propertyId:String = ""
     var propertyClass:String = ""
     var executeFind = true
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var txtSearch: UITextField!
+    @IBOutlet weak var btnLogin: UIButton!
+    @IBOutlet weak var btnSignUp: UIButton!
+    @IBOutlet weak var btnViewList: UIButton!
     
     let autocompleteTableView = UITableView(frame: CGRectMake(0,110,320,210), style: UITableViewStyle.Plain)
     var autocompleteUrls:NSMutableArray! = NSMutableArray()
@@ -27,6 +30,15 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
+        if !session{
+            btnViewList.hidden = true
+            btnSignUp.hidden = false
+            btnLogin.hidden = false
+        }else{
+            btnViewList.hidden = false
+            btnSignUp.hidden = true
+            btnLogin.hidden = true
+        }
         manager = OneShotLocationManager()
         manager!.fetchWithCompletion {location, error in
             // fetch location or an error
@@ -46,6 +58,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     override func viewWillAppear(animated: Bool) {
         navigationController?.navigationBarHidden = true
         super.viewWillAppear(animated)
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -55,6 +68,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
         super.viewWillDisappear(animated)
     }
 
+   
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -99,8 +113,10 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     }
     
     @IBAction func btnMenu(sender: AnyObject) {
-        self.textFieldShouldReturn(self.txtSearch)
-        self.onSlideMenuButtonPressed(sender as! UIButton)
+        if session {
+            self.textFieldShouldReturn(self.txtSearch)
+            self.onSlideMenuButtonPressed(sender as! UIButton)
+        }
     }
     
     @IBAction func btnSearchMenu(sender: AnyObject) {
@@ -118,6 +134,32 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
         
         self.presentViewController(navController, animated: true, completion: nil)
     }
+    
+    @IBAction func btnSingUP(sender: AnyObject) {
+        let VC = storyboard?.instantiateViewControllerWithIdentifier("SelectRoleViewController") as! SelectRoleViewController
+        VC.preferredContentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.width)
+        let navController = UINavigationController(rootViewController: VC)
+        
+        let popOver = navController.popoverPresentationController
+        popOver?.delegate = self
+        popOver?.barButtonItem = sender as? UIBarButtonItem
+        
+        self.presentViewController(navController, animated: true, completion: nil)
+        
+    }
+    
+    @IBAction func btnLogin(sender: AnyObject) {
+        let VC = storyboard?.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+        VC.preferredContentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.width)
+        let navController = UINavigationController(rootViewController: VC)
+        
+        let popOver = navController.popoverPresentationController
+        popOver?.delegate = self
+        popOver?.barButtonItem = sender as? UIBarButtonItem
+        
+        self.presentViewController(navController, animated: true, completion: nil)
+    }
+    
     
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return .None

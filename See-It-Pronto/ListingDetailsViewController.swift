@@ -13,6 +13,7 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
     var viewData:JSON = []
     var propertyId:String = ""
     
+    @IBOutlet weak var lbSelection: UILabel!
     @IBOutlet weak var propertyImage: UIImageView!
     @IBOutlet weak var propertyDescription: UILabel!
     @IBOutlet weak var txtShowingInstructions: UITextView!
@@ -79,6 +80,21 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
     @IBAction func btnUpdate(sender: AnyObject) {
         self.updateData()
     }
+    
+    @IBAction func btnSeletion(sender: AnyObject) {
+        
+        let pickerView = CustomPickerDialog.init()
+        let arrayDataSource:[String] = ["Supra","iBox","Combo","Other"]
+        pickerView.setDataSource(arrayDataSource)
+        pickerView.selectValue(self.lbSelection.text!)
+        
+        pickerView.showDialog("Select", doneButtonTitle: "done", cancelButtonTitle: "cancel") { (result) -> Void in
+            //self.lblResult.text = result
+            self.lbSelection.text! = result
+            
+        }
+    }
+    
     
     func updateData() {
         var propertyClass = self.viewData["property_class"].stringValue

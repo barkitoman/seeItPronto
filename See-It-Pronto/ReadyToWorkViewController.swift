@@ -11,20 +11,21 @@ import UIKit
 class ReadyToWorkViewController: UIViewController {
 
     var viewData:JSON = []
-    @IBOutlet weak var slShowingRate: UISlider!
-    @IBOutlet weak var slTravelRate: UISlider!
+    
     @IBOutlet weak var lblShowingRate: UILabel!
     @IBOutlet weak var lblTravelRate: UILabel!
     @IBOutlet weak var lblCurrentState: UILabel!
     @IBOutlet weak var lblTitle: UILabel!
     var pageTitle = "Ready to work?"
+    var numberShowingRate:String = "50"
+    var numberTravelRange:String = "100"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.lblTitle.text = pageTitle
         self.findUserInfo()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -50,13 +51,41 @@ class ReadyToWorkViewController: UIViewController {
     }
     
     @IBAction func editShowingRate(sender: AnyObject) {
-        let showingRate = Int(roundf(slShowingRate.value))
-        self.showRates(String(showingRate), traveRange: "")
+        
+        let pickerView = CustomPickerDialog.init()
+        var arrayDataSource:[String] = []
+        for i in 0...99 {
+            arrayDataSource.append(String(i))
+        }
+        pickerView.setDataSource(arrayDataSource)
+        print(numberShowingRate)
+        pickerView.selectValue(self.numberShowingRate)
+        
+        pickerView.showDialog("Select Showing Rate", doneButtonTitle: "done", cancelButtonTitle: "cancel") { (result) -> Void in
+            //self.lblResult.text = result
+            let showingRate = result
+            self.numberShowingRate = result
+            self.showRates(String(showingRate), traveRange: "")
+        }
+
     }
     
     @IBAction func editTravelRate(sender: AnyObject) {
-        let travelRange = Int(roundf(slTravelRate.value))
-        self.showRates("", traveRange: String(travelRange))
+        
+        let pickerView = CustomPickerDialog.init()
+        var arrayDataSource:[String] = []
+        for i in 0...200 {
+            arrayDataSource.append(String(i))
+        }
+        pickerView.setDataSource(arrayDataSource)
+        pickerView.selectValue(self.numberTravelRange)
+        
+        pickerView.showDialog("Select Travel Range", doneButtonTitle: "done", cancelButtonTitle: "cancel") { (result) -> Void in
+            //self.lblResult.text = result
+            let travelRange = result
+            self.numberTravelRange = result
+            self.showRates("", traveRange: String(travelRange))
+        }
     }
     
     func showRates(showingRate:String,traveRange:String) {
@@ -70,8 +99,8 @@ class ReadyToWorkViewController: UIViewController {
 
     func save(shoingStatus:String) {
         //create params
-        let showingRate = Utility().sliderValue(self.slShowingRate)
-        let travelRate  = Utility().sliderValue(self.slTravelRate)
+        let showingRate = numberShowingRate //Utility().sliderValue(self.slShowingRate)
+        let travelRate  = numberTravelRange //Utility().sliderValue(self.slTravelRate)
         let params = "id="+self.viewData["id"].stringValue+"&realtor_id="+self.viewData["realtor_id"].stringValue+"&showing_rate="+showingRate+"&travel_range="+travelRate+"&active_for_showing="+shoingStatus
         let url = AppConfig.APP_URL+"/users/"+User().getField("id")
         Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
@@ -107,11 +136,14 @@ class ReadyToWorkViewController: UIViewController {
             let result = JSON(data: response)
             self.viewData = result
             if(!result["showing_rate"].stringValue.isEmpty) {
-                self.slShowingRate.value = Float(result["showing_rate"].stringValue)!
+                //self.slShowingRate.value = Float(result["showing_rate"].stringValue)!
+                self.numberShowingRate = result["showing_rate"].stringValue
+                print(self.numberShowingRate)
                 self.showRates(result["showing_rate"].stringValue, traveRange: "")
             }
             if(!result["travel_range"].stringValue.isEmpty) {
-                self.slTravelRate.value = Float(result["travel_range"].stringValue)!
+                //self.slTravelRate.value = Float(result["travel_range"].stringValue)!
+                self.numberTravelRange = result["travel_range"].stringValue
                 self.showRates("", traveRange: result["travel_range"].stringValue)
             }
             if(result["active_for_showing"].int == 1) {

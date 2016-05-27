@@ -35,7 +35,8 @@ class SelectRoleViewController: UIViewController {
     }
     
     @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+        //navigationController?.popViewControllerAnimated(true)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
 }

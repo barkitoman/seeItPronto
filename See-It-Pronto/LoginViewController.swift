@@ -47,6 +47,10 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
         return false
     }
     
+    @IBAction func btnMap(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     @IBAction func btnLogin(sender: AnyObject) {
         BProgressHUD.showLoadingViewWithMessage("Loading")
         self.login()

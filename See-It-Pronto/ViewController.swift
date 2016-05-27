@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     
     private let internvalSeconds:NSTimeInterval = 4
     private var timer: NSTimer?
+    var login = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,9 +44,10 @@ class ViewController: UIViewController {
     
     func goToLogin() {
         if self.timer != nil { self.stopInterval()}
-        let login = automaticLogin()
+        login = automaticLogin()
         if (login == false) {
-            self.performSegueWithIdentifier("ShowLogin", sender: self)
+            self.performSegueWithIdentifier("showMap", sender: self)
+            //self.performSegueWithIdentifier("ShowLogin", sender: self)
         }
     }
     
@@ -84,6 +86,13 @@ class ViewController: UIViewController {
     
     func stopInterval() {
         self.timer!.invalidate()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "showMap") {
+            let view: BuyerHomeViewController = segue.destinationViewController as! BuyerHomeViewController
+            view.session  = login
+        }
     }
     
 }
