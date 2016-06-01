@@ -101,10 +101,15 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
         if(self.viewData["property_class"].stringValue.isEmpty && !self.viewData["property"]["class"].stringValue.isEmpty) {
             propertyClass = self.viewData["property"]["class"].stringValue
         }
+        var typeSelection = self.lbSelection.text!
+        if typeSelection == "Selected"{
+            typeSelection = ""
+        }
         var url = AppConfig.APP_URL+"/realtor_properties"
         var params = "showing_instruction=\(self.txtShowingInstructions.text!)&owner_email=\(self.txtEmail.text!)"
         params     = params+"&owner_phone=\(self.txtPhone.text!)&user_id=\(User().getField("id"))"
         params     = params+"&property_id=\(self.propertyId)&property_class=\(propertyClass)"
+        params     = params+"&type=\(typeSelection)"
         if(!self.viewData["id"].stringValue.isEmpty) {
             //if user is editing a beacon
             params = params+"&id="+self.viewData["id"].stringValue
