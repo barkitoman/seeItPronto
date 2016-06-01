@@ -17,8 +17,8 @@ class ReadyToWorkViewController: UIViewController {
     @IBOutlet weak var lblCurrentState: UILabel!
     @IBOutlet weak var lblTitle: UILabel!
     var pageTitle = "Ready to work?"
-    var numberShowingRate:String = "50"
-    var numberTravelRange:String = "100"
+    var numberShowingRate:String = "25"
+    var numberTravelRange:String = "50"
     
     override func viewDidLoad() {
         super.viewDidLoad()
