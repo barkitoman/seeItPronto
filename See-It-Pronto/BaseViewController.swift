@@ -100,7 +100,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             Request().get(url, successHandler: {(response) in })
             User().deleteAllData()
             SearchConfig().deleteAllData()
-            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as! BuyerHomeViewController
             
         } else if (viewIdentifier == "ListRealtorsViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("ListRealtorsViewController") as! ListRealtorsViewController

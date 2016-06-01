@@ -16,7 +16,10 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     @IBOutlet weak var txtFirstName: UITextField!
     @IBOutlet weak var txtLastName: UITextField!
     @IBOutlet weak var previewProfilePicture: UIImageView!
-    @IBOutlet weak var txtmlsid: UITextField!
+    @IBOutlet weak var zipCode1: UITextField!
+    @IBOutlet weak var zipCode2: UITextField!
+    @IBOutlet weak var zipCode3: UITextField!
+    //@IBOutlet weak var txtmlsid: UITextField!
     let imagePicker: UIImagePickerController! = UIImagePickerController()
     var haveImage:Bool = false
     var viewData:JSON = []
@@ -153,7 +156,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     func save() {
         //create params
-        var params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["id"].stringValue+"&mls_id="+self.txtmlsid.text!
+        var params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["id"].stringValue+"&mls_id="//+self.txtmlsid.text!
         params = params+"&role=realtor&brokerage="+txtBrokerage.text!+"&first_name="+txtFirstName.text!
         params = params+"&last_name="+txtLastName.text!+"&lisence="+txtLisence.text!+"&back_acc="+txtBankAcct.text!
         if(!self.viewData["realtor_id"].stringValue.isEmpty){
@@ -195,7 +198,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
             self.txtBrokerage.text = result["brokerage"].stringValue
             self.txtBankAcct.text  = result["bank_acct"].stringValue
             self.txtLisence.text   = result["license"].stringValue
-            self.txtmlsid.text     = result["mls_id"].stringValue
+            //self.txtmlsid.text     = result["mls_id"].stringValue
             if(!result["url_image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.previewProfilePicture, imgPath: result["url_image"].stringValue)
             }

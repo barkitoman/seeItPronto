@@ -17,8 +17,8 @@ class ReadyToWorkViewController: UIViewController {
     @IBOutlet weak var lblCurrentState: UILabel!
     @IBOutlet weak var lblTitle: UILabel!
     var pageTitle = "Ready to work?"
-    var numberShowingRate:String = "50"
-    var numberTravelRange:String = "100"
+    var numberShowingRate:String = "25"
+    var numberTravelRange:String = "50"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +54,7 @@ class ReadyToWorkViewController: UIViewController {
         
         let pickerView = CustomPickerDialog.init()
         var arrayDataSource:[String] = []
-        for i in 0...99 {
+        for i in 0...50 {
             arrayDataSource.append(String(i))
         }
         pickerView.setDataSource(arrayDataSource)
@@ -74,7 +74,7 @@ class ReadyToWorkViewController: UIViewController {
         
         let pickerView = CustomPickerDialog.init()
         var arrayDataSource:[String] = []
-        for i in 0...200 {
+        for i in 10...99 {
             arrayDataSource.append(String(i))
         }
         pickerView.setDataSource(arrayDataSource)
