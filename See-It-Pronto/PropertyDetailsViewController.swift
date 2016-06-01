@@ -63,9 +63,14 @@ class PropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func btnSeeItPronto(sender: AnyObject) {
-        let propertyActionData: JSON =  ["type":"see_it_pronto"]
-        PropertyAction().saveIfExists(propertyActionData)
-        self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+        print(self.viewData)
+        if(self.viewData["user"]["current_zip_code"].stringValue == self.viewData["zipcode"].stringValue) {
+            let propertyActionData: JSON =  ["type":"see_it_pronto"]
+            PropertyAction().saveIfExists(propertyActionData)
+            self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+        } else {
+            Utility().displayAlert(self, title: "Message", message: " \"See it pronto” is only available for nearby properties.", performSegue: "")
+        }
     }
     
     @IBAction func btnSeeItLater(sender: AnyObject) {
@@ -75,7 +80,7 @@ class PropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func findPropertyDetails(){
-        let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/\(Property().getField("id"))/\(Property().getField("property_class"))/\(User().getField("id"))"
+        let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/\(Property().getField("id"))/\(Property().getField("property_class"))/\(User().getField("id"))?user_info=1"
         print(url)
         Request().get(url, successHandler: {(response) in self.showPropertydetails(response)})
     }
@@ -83,6 +88,7 @@ class PropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
     func showPropertydetails(let response: NSData) {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
+            self.viewData = result
             let propertyId = result["id"].stringValue
             BProgressHUD.dismissHUD(3)
             if(propertyId.isEmpty) {

@@ -173,6 +173,12 @@ class Utility {
                 let viewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as UIViewController
                 controller.navigationController?.showViewController(viewController, sender: nil)
             }
+        } else if(User().getField("id") == "") {
+            dispatch_async(dispatch_get_main_queue()) {
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                let viewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as UIViewController
+                controller.navigationController?.showViewController(viewController, sender: nil)
+            }
         }
     }
     

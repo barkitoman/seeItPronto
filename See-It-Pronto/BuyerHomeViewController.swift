@@ -91,7 +91,8 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     }
     
     func loadMap() {
-        let url = AppConfig.APP_URL+"/map/\(User().getField("id"))?lat=\(self.latitude)&lon=\(self.longintude)&role=\(User().getField("role"))&property=\(self.propertyId)&property_class=\(self.propertyClass)"
+        let userId = (User().getField("id") != "") ? User().getField("id") : "0";
+        let url = AppConfig.APP_URL+"/map/\(userId)?lat=\(self.latitude)&lon=\(self.longintude)&role=\(User().getField("role"))&property=\(self.propertyId)&property_class=\(self.propertyClass)"
         self.propertyId = ""
         self.propertyClass = ""
         let requestURL = NSURL(string:url)
@@ -113,8 +114,8 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     }
     
     @IBAction func btnMenu(sender: AnyObject) {
-        if session {
-            self.textFieldShouldReturn(self.txtSearch)
+        self.textFieldShouldReturn(self.txtSearch)
+        if(User().getField("id") != "") {
             self.onSlideMenuButtonPressed(sender as! UIButton)
         }
     }

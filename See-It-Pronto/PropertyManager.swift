@@ -44,6 +44,7 @@ class PropertyEntity: NSManagedObject {
     @NSManaged var pool:String
     @NSManaged var remarks:String
     @NSManaged var spa:String
+    @NSManaged var zipcode:String
     
 
 }
@@ -126,6 +127,7 @@ class Property {
         newItem.pool          = propertyData["pool"].stringValue
         newItem.remarks       = propertyData["remarks"].stringValue //description
         newItem.spa           = propertyData["spa"].stringValue //spa
+        newItem.zipcode       = propertyData["zipcode"].stringValue
         newItem.property_class = propertyClass
         
         do {
