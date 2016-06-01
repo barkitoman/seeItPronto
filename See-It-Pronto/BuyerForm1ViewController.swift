@@ -91,7 +91,7 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
             } else {
                 //if user is registering
                 self.viewData = result["user"]
-                User().saveIfExists(result)
+                User().saveOne(result)
             }
             Utility().performSegue(self, performSegue: "FromBuyerForm1")
         } else {

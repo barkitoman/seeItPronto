@@ -159,24 +159,20 @@ class Utility {
         return out
     }
     
-    func goHome(controller:UIViewController){
+    func goHome(controller:UIViewController, viewData:JSON = []){
         let role   = User().getField("role")
         if(role == "realtor") {
             dispatch_async(dispatch_get_main_queue()) {
                 let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                let viewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("RealtorHomeViewController") as UIViewController
+                let viewController : RealtorHomeViewController = mainStoryboard.instantiateViewControllerWithIdentifier("RealtorHomeViewController") as! RealtorHomeViewController
+                viewController.viewData = viewData
                 controller.navigationController?.showViewController(viewController, sender: nil)
             }
-        } else if (role == "buyer") {
+        } else if (role == "buyer" || User().getField("id") == "") {
              dispatch_async(dispatch_get_main_queue()) {
                 let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                let viewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as UIViewController
-                controller.navigationController?.showViewController(viewController, sender: nil)
-            }
-        } else if(User().getField("id") == "") {
-            dispatch_async(dispatch_get_main_queue()) {
-                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                let viewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as UIViewController
+                let viewController : BuyerHomeViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as! BuyerHomeViewController
+                viewController.viewData = viewData
                 controller.navigationController?.showViewController(viewController, sender: nil)
             }
         }
@@ -184,7 +180,7 @@ class Utility {
     
     func goPropertyDetails(controller:UIViewController, propertyId:String, PropertyClass:String){
         let saveData: JSON =  ["id":propertyId,"property_class":PropertyClass]
-        Property().saveIfExists(saveData)
+        Property().saveOne(saveData)
         let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         let vc : PropertyDetailsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController
         controller.navigationController?.showViewController(vc, sender: nil)

@@ -168,7 +168,7 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
     @IBAction func viewDetails(sender:UIButton) {
         let property = JSON(self.properties[sender.tag])
         let saveData: JSON =  ["id":property["id"].stringValue,"property_class":property["class"].stringValue]
-        Property().saveIfExists(saveData)
+        Property().saveOne(saveData)
         
         let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         let vc : PropertyDetailsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController

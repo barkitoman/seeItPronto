@@ -63,10 +63,9 @@ class PropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func btnSeeItPronto(sender: AnyObject) {
-        print(self.viewData)
         if(self.viewData["user"]["current_zip_code"].stringValue == self.viewData["zipcode"].stringValue) {
             let propertyActionData: JSON =  ["type":"see_it_pronto"]
-            PropertyAction().saveIfExists(propertyActionData)
+            PropertyAction().saveOne(propertyActionData)
             self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
         } else {
             Utility().displayAlert(self, title: "Message", message: " \"See it pronto” is only available for nearby properties.", performSegue: "")
@@ -75,7 +74,7 @@ class PropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
     
     @IBAction func btnSeeItLater(sender: AnyObject) {
         let propertyActionData: JSON =  ["type":"see_it_later"]
-        PropertyAction().saveIfExists(propertyActionData)
+        PropertyAction().saveOne(propertyActionData)
         self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
     }
     
@@ -150,7 +149,7 @@ class PropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
             }
             self.lblLotSize.text    = result["lot_size"].stringValue
             self.lblYearBuilt.text  = result["year_built"].stringValue
-            Property().saveIfExists(result)
+            Property().saveOne(result)
         }
     }
     

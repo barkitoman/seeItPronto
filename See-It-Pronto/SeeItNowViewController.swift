@@ -68,9 +68,10 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
     }
     
     func loadMap() {
-        var url = AppConfig.APP_URL+"/calculate_distances/\(User().getField("id"))/\(String(self.stepPage))"
-        url     = url+"/?page=\(String(self.countPage + 1))"
+        var url = AppConfig.APP_URL+"/calculate_distances/\(User().getField("id"))/\(String(self.stepPage))/"
+        url     = url+"?page=\(String(self.countPage + 1))"
         url     = url+"&lat=\(self.latitude)&lon=\(self.longintude)"
+        url     = url+"&property_zipcode=\(Property().getField("zipcode"))"
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         self.webView.loadRequest(request)
@@ -132,6 +133,8 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
         if(!image.isEmpty) {
             cell.photo.image = nil
             Utility().showPhoto(cell.photo, imgPath: image)
+        } else {
+            cell.photo.image = UIImage(named: "choosePicture")
         }
         if(!realtor["rating"].stringValue.isEmpty) {
             cell.ratingImage.image = UIImage(named: realtor["rating"].stringValue+"stars")
@@ -156,7 +159,7 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
     
     @IBAction func openPropertyAction(sender:UIButton) {
         let realtor = JSON(self.realtors[sender.tag])
-        PropertyRealtor().saveIfExists(realtor)
+        PropertyRealtor().saveOne(realtor)
         let propertyTypeAction = PropertyAction().getField("type")
         if(propertyTypeAction == "see_it_later") {
             //open view for see it later process

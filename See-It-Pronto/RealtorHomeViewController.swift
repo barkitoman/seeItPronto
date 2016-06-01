@@ -107,7 +107,7 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
             let url:String = request.URL!.absoluteString
             if(url.containsString(AppConfig.APP_URL)) {
                 let saveData: JSON =  Utility().getIdFromUrl(url)
-                Property().saveIfExists(saveData)
+                Property().saveOne(saveData)
                 self.performSegueWithIdentifier("RealtorHomePropertyDetails", sender: self)
             }
             dispatch_async(dispatch_get_main_queue()) {

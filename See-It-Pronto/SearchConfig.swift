@@ -54,7 +54,7 @@ class SearchConfig {
         return out
     }
     
-    func saveIfExists(configData:JSON) {
+    func saveOne(configData:JSON) {
         //check if item exists
         if (SearchConfig().find().count >= 1) {
             //Remove if exists

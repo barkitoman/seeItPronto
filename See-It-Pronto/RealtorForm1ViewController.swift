@@ -91,7 +91,7 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
             } else {
                 //if user is registering
                 self.viewData = result["user"]
-                User().saveIfExists(result)
+                User().saveOne(result)
             }
             Utility().performSegue(self, performSegue: "RealtorForm1")
         } else {

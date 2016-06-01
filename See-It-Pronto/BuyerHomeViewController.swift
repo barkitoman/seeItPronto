@@ -91,8 +91,42 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     }
     
     func loadMap() {
-        let userId = (User().getField("id") != "") ? User().getField("id") : "0";
-        let url = AppConfig.APP_URL+"/map/\(userId)?lat=\(self.latitude)&lon=\(self.longintude)&role=\(User().getField("role"))&property=\(self.propertyId)&property_class=\(self.propertyClass)"
+        if(User().getField("id").isEmpty) {
+            self.loadNosessionMap()
+        } else {
+            self.loadSessionMap()
+        }
+    }
+    
+    
+    func loadSessionMap() {
+        let url = AppConfig.APP_URL+"/map/\(User().getField("id"))?lat=\(self.latitude)&lon=\(self.longintude)&role=\(User().getField("role"))&property=\(self.propertyId)&property_class=\(self.propertyClass)"
+        self.propertyId = ""
+        self.propertyClass = ""
+        let requestURL = NSURL(string:url)
+        let request = NSURLRequest(URL: requestURL!)
+        self.webView.loadRequest(request)
+    }
+    
+    func loadNosessionMap() {
+        var url = AppConfig.APP_URL+"/map/0"
+        url =  url+"?lat=\(self.latitude)"
+        url =  url+"&lon=\(self.longintude)"
+        url =  url+"&role=\(User().getField("role"))"
+        url =  url+"&property=\(self.propertyId)"
+        url =  url+"&type_property=\(SearchConfig().getField("type_property"))"
+        url =  url+"&area=\(SearchConfig().getField("area"))"
+        url =  url+"&beds=\(SearchConfig().getField("beds"))"
+        url =  url+"&baths=\(SearchConfig().getField("baths"))"
+        url =  url+"&pool=\(SearchConfig().getField("pool"))"
+        url =  url+"&price_range_less=\(SearchConfig().getField("price_range_less"))"
+        url =  url+"&price_range_higher=\(SearchConfig().getField("price_range_higher"))"
+        url =  url+"&property_class=\(SearchConfig().getField("property_class"))"
+        url =  url+"&no_session_search=1"
+        if(!self.propertyClass.isEmpty) {
+            url =  url+"&property_class=\(self.propertyClass)"
+        }
+        print(url)
         self.propertyId = ""
         self.propertyClass = ""
         let requestURL = NSURL(string:url)
@@ -105,7 +139,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
             let url:String = request.URL!.absoluteString
             if(url.containsString(AppConfig.APP_URL)) {
                 let saveData: JSON =  Utility().getIdFromUrl(url)
-                Property().saveIfExists(saveData)
+                Property().saveOne(saveData)
                 self.performSegueWithIdentifier("ViewBuyerHouse", sender: self)
             }
             return false

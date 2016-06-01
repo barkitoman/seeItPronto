@@ -57,7 +57,7 @@ class User {
         return out
     }
     
-    func saveIfExists(userData:JSON) {
+    func saveOne(userData:JSON) {
         //check if item exists
         if (self.find().count >= 1) {
             //Remove if exists

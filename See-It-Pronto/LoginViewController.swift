@@ -70,7 +70,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
         }
         if(result["user"]["result"].bool == true) {
             //is login is ok, store the user data
-            User().saveIfExists(result)
+            User().saveOne(result)
             self.goHomeView(result["user"]["role"].stringValue)
         } else {
             let msg = "Invalid login information, please try again"

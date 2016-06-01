@@ -239,7 +239,6 @@
 				109E6A471C80A95A00AD46EE /* PropertyManager.swift */,
 				107A40341C84C31A001C96A8 /* PropertyRealtorManager.swift */,
 				109FF8491C860A1000E20FC2 /* PropertyActionManager.swift */,
-				107934BC1CD7C7D500F07A14 /* MyDownloader.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -316,6 +315,7 @@
 			children = (
 				107DA4771C9328970069FD07 /* OneShotLocationManager.swift */,
 				6885E5F01C57021200CCCA19 /* SRWebClient.swift */,
+				107934BC1CD7C7D500F07A14 /* MyDownloader.swift */,
 				A4FDCA651CE544F600D18B88 /* BProgressHUD.swift */,
 				10E46AE91CC1535300C5F8D5 /* UIColor.swift */,
 				A4048DD61CF7EFB10052EBB5 /* CustomPickerDialog.swift */,

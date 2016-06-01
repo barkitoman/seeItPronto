@@ -55,7 +55,7 @@ class PropertyRealtor {
         return out
     }
     
-    func saveIfExists(propertyRealtorData:JSON) {
+    func saveOne(propertyRealtorData:JSON) {
         //check if item exists
         if (Property().find().count >= 1) {
             //Remove if exists

@@ -44,7 +44,7 @@ class PropertyAction {
         return out
     }
     
-    func saveIfExists(actionData:JSON) {
+    func saveOne(actionData:JSON) {
         //check if item exists
         if (self.find().count >= 1) {
             //Remove if exists

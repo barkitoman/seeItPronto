@@ -179,20 +179,24 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     
     @IBAction func btnSearch(sender: AnyObject) {
         let userId = User().getField("id")
-        var params = "type_property="+Utility().switchValue(self.swType, onValue: "rental", offValue: "sale")+"&area="+self.txtArea.text!
-        params = params+"&beds=\(self.bedRooms)&baths=\(self.bathRooms)"
-        params = params+"&pool=\(Utility().switchValue(self.swPool, onValue: "1", offValue: "0"))"
-        params = params+"&price_range_less=\(txtPriceFrom.text!)&price_range_higher=\(txtPriceTo.text!)"
-        params = params+"&user_id=\(userId)&property_class=\(self.propertySelectedClass)&property_class_name=\(self.propertySelectedClassName)"
-        
-        var url = AppConfig.APP_URL+"/user_config_searches"
-        let configSearchId = SearchConfig().getField("id")
-        if(!configSearchId.isEmpty) {
-            url = url+"/"+configSearchId
-            params = params+"&id="+configSearchId
-            Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
+        if(userId.isEmpty) {
+            self.saveLocalSearchConfiguration()
         } else {
-            Request().post(url, params:params,controller: self,successHandler: {(response) in self.afterPost(response)});
+            var params = "type_property="+Utility().switchValue(self.swType, onValue: "rental", offValue: "sale")+"&area="+self.txtArea.text!
+            params = params+"&beds=\(self.bedRooms)&baths=\(self.bathRooms)"
+            params = params+"&pool=\(Utility().switchValue(self.swPool, onValue: "1", offValue: "0"))"
+            params = params+"&price_range_less=\(txtPriceFrom.text!)&price_range_higher=\(txtPriceTo.text!)"
+            params = params+"&user_id=\(userId)&property_class=\(self.propertySelectedClass)&property_class_name=\(self.propertySelectedClassName)"
+        
+            var url = AppConfig.APP_URL+"/user_config_searches"
+            let configSearchId = SearchConfig().getField("id")
+            if(!configSearchId.isEmpty) {
+                url = url+"/"+configSearchId
+                params = params+"&id="+configSearchId
+                Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
+            } else {
+                Request().post(url, params:params,controller: self,successHandler: {(response) in self.afterPost(response)});
+            }
         }
     }
     
@@ -205,7 +209,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         let result = JSON(data: response)
         if(result["result"].bool == true ) {
             dispatch_async(dispatch_get_main_queue()) {
-                SearchConfig().saveIfExists(result)
+                SearchConfig().saveOne(result)
                 Utility().goHome(self)
             }
         } else {
@@ -219,7 +223,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     
     func findSearcConfig(){
         let configSearchId = SearchConfig().getField("id")
-        if(!configSearchId.isEmpty && 1 == 2) {
+        if(!configSearchId.isEmpty) {
             self.loadSearchConfig()
         } else {
             let url = AppConfig.APP_URL+"/get_search_config/\(User().getField("id"))"
@@ -263,7 +267,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     func afterGet(let response: NSData) {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
-            SearchConfig().saveIfExists(result)
+            SearchConfig().saveOne(result)
             self.loadSearchConfig()
         }
     }
@@ -340,6 +344,24 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.None
+    }
+    
+    func saveLocalSearchConfiguration(){
+        let saveData:JSON = [
+            "id":"99999999",
+            "type_property":Utility().switchValue(self.swType, onValue: "rental", offValue: "sale"),
+            "area":self.txtArea.text!,
+            "beds":self.bedRooms,
+            "baths":self.bathRooms,
+            "pool":Utility().switchValue(self.swPool, onValue: "1", offValue: "0"),
+            "price_range_less":txtPriceFrom.text!,
+            "price_range_higher":txtPriceTo.text!,
+            "user_id":"",
+            "property_class":self.propertySelectedClass,
+            "property_class_name":self.propertySelectedClassName,
+        ]
+        SearchConfig().saveOne(saveData)
+        Utility().goHome(self)
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {

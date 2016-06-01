@@ -89,13 +89,13 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate 
     
     @IBAction func btnSeeitPronto(sender: AnyObject) {
         let propertyActionData: JSON =  ["type":"see_it_pronto"]
-        PropertyAction().saveIfExists(propertyActionData)
+        PropertyAction().saveOne(propertyActionData)
         self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
     }
     
     @IBAction func btnSeeItLater(sender: AnyObject) {
         let propertyActionData: JSON =  ["type":"see_it_later"]
-        PropertyAction().saveIfExists(propertyActionData)
+        PropertyAction().saveOne(propertyActionData)
         self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
     }
     
