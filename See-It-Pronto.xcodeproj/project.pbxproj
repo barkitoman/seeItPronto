@@ -10,6 +10,7 @@
 		10058EDB1CB8447C008B0E97 /* PropertyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10058EDA1CB8447C008B0E97 /* PropertyListViewController.swift */; };
 		10058EDD1CB8449E008B0E97 /* PropertyListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10058EDC1CB8449E008B0E97 /* PropertyListTableViewCell.swift */; };
 		100797441CB3FDEF008C0492 /* NotificationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100797431CB3FDEF008C0492 /* NotificationDetailViewController.swift */; };
+		10208E071D00A12200714315 /* AddRealtorPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10208E061D00A12200714315 /* AddRealtorPropertyViewController.swift */; };
 		102526F11CA080FE00EE2DB0 /* SeeItLaterBuyerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102526F01CA080FE00EE2DB0 /* SeeItLaterBuyerViewController.swift */; };
 		102526F31CA082CD00EE2DB0 /* SeeItLaterBuyerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102526F21CA082CD00EE2DB0 /* SeeItLaterBuyerTableViewCell.swift */; };
 		1040F5441CAC47910011E497 /* PastListingsBuyerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1040F5431CAC47910011E497 /* PastListingsBuyerViewController.swift */; };
@@ -115,6 +116,7 @@
 		10058EDA1CB8447C008B0E97 /* PropertyListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListViewController.swift; sourceTree = "<group>"; };
 		10058EDC1CB8449E008B0E97 /* PropertyListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListTableViewCell.swift; sourceTree = "<group>"; };
 		100797431CB3FDEF008C0492 /* NotificationDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDetailViewController.swift; sourceTree = "<group>"; };
+		10208E061D00A12200714315 /* AddRealtorPropertyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRealtorPropertyViewController.swift; sourceTree = "<group>"; };
 		102526F01CA080FE00EE2DB0 /* SeeItLaterBuyerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeItLaterBuyerViewController.swift; sourceTree = "<group>"; };
 		102526F21CA082CD00EE2DB0 /* SeeItLaterBuyerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeItLaterBuyerTableViewCell.swift; sourceTree = "<group>"; };
 		1040F5431CAC47910011E497 /* PastListingsBuyerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastListingsBuyerViewController.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 				10DA2E6E1CE4D56300EE8553 /* ConfigViewController.swift */,
 				10AADA351CF37E7A00EF8868 /* SelectBeaconViewController.swift */,
 				1094FD2E1CF4E285009DCAF9 /* CreateBeaconViewController.swift */,
+				10208E061D00A12200714315 /* AddRealtorPropertyViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -578,6 +581,7 @@
 				10E46AEA1CC1535300C5F8D5 /* UIColor.swift in Sources */,
 				6811409F1C3AC6940068AE1C /* RealtorForm3ViewController.swift in Sources */,
 				683983211C74BCE900129EA5 /* ListRealtorsTableViewCell.swift in Sources */,
+				10208E071D00A12200714315 /* AddRealtorPropertyViewController.swift in Sources */,
 				102526F11CA080FE00EE2DB0 /* SeeItLaterBuyerViewController.swift in Sources */,
 				6897A12A1C244B5F00AB3A0A /* ViewController.swift in Sources */,
 				686E8F3F1C3C096300F5FE01 /* SwiftyJSON.swift in Sources */,

@@ -57,7 +57,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         addChildView("ReadyToWorkViewController",      titleOfChildren: "Making Money Status",  iconName: "making_money")
         addChildView("ConfigViewController",           titleOfChildren: "Settings",  iconName: "settings")
         addChildView("CreateBeaconViewController",     titleOfChildren: "Add Beacon",  iconName: "add_beacon")
-        
+        addChildView("AddRealtorPropertyViewController",     titleOfChildren: "Add property",  iconName: "add_realtor_property")
         
         addChildView("LoginViewController",            titleOfChildren: "Log Out",        iconName: "logout")
         //
@@ -148,6 +148,9 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         }
         else if (viewIdentifier == "CreateBeaconViewController") {
             let vc:CreateBeaconViewController = mainStoryboard.instantiateViewControllerWithIdentifier("CreateBeaconViewController") as! CreateBeaconViewController
+            viewController = vc
+        }else if (viewIdentifier == "AddRealtorPropertyViewController") {
+            let vc:AddRealtorPropertyViewController = mainStoryboard.instantiateViewControllerWithIdentifier("AddRealtorPropertyViewController") as! AddRealtorPropertyViewController
             viewController = vc
         }
         
