@@ -156,14 +156,17 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     func save() {
         //create params
-        var params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["id"].stringValue+"&mls_id="//+self.txtmlsid.text!
+        var params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["id"].stringValue
+        params = params+"&active_zip_code1=\(self.zipCode1.text!)"
+        params = params+"&active_zip_code2=\(self.zipCode2.text!)"
+        params = params+"&active_zip_code3=\(self.zipCode3.text!)"
         params = params+"&role=realtor&brokerage="+txtBrokerage.text!+"&first_name="+txtFirstName.text!
         params = params+"&last_name="+txtLastName.text!+"&lisence="+txtLisence.text!+"&back_acc="+txtBankAcct.text!
         if(!self.viewData["realtor_id"].stringValue.isEmpty){
             params = params+"&realtor_id="+self.viewData["realtor_id"].stringValue
         }
         let url = AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue
-        Request().put(url, params:params,successHandler: {(response) in self.afterPut(response)});
+        Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPut(response)});
     }
     
     func afterPut(let response: NSData) {
@@ -198,6 +201,9 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
             self.txtBrokerage.text = result["brokerage"].stringValue
             self.txtBankAcct.text  = result["bank_acct"].stringValue
             self.txtLisence.text   = result["license"].stringValue
+            self.zipCode1.text     = result["active_zip_code1"].stringValue
+            self.zipCode2.text     = result["active_zip_code2"].stringValue
+            self.zipCode3.text     = result["active_zip_code3"].stringValue
             //self.txtmlsid.text     = result["mls_id"].stringValue
             if(!result["url_image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.previewProfilePicture, imgPath: result["url_image"].stringValue)

@@ -107,7 +107,7 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
         params     = params+"&pre_qualified="+Utility().switchValue(self.swPreQualified, onValue: "1", offValue: "0")
         params     = params+"&like_pre_qualification="+Utility().switchValue(self.swLikeToBe, onValue: "1", offValue: "0")
         let url    = AppConfig.APP_URL+"/users/"+User().getField("id")
-        Request().put(url, params:params,successHandler: {(response) in self.afterPut(response)});
+        Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPut(response)});
     }
     
     //upload photo to server

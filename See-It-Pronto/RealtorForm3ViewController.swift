@@ -54,7 +54,7 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         let travelRate  = Utility().sliderValue(self.slTravelRate)
         let params = "id="+self.viewData["id"].stringValue+"&realtor_id="+self.viewData["realtor_id"].stringValue+"&showing_rate="+showingRate+"&travel_range="+travelRate
         let url = AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue
-        Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
+        Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPost(response)});
     }
     
     func afterPost(let response: NSData) {

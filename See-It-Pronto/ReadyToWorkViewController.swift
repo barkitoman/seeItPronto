@@ -103,7 +103,7 @@ class ReadyToWorkViewController: UIViewController {
         let travelRate  = numberTravelRange //Utility().sliderValue(self.slTravelRate)
         let params = "id="+self.viewData["id"].stringValue+"&realtor_id="+self.viewData["realtor_id"].stringValue+"&showing_rate="+showingRate+"&travel_range="+travelRate+"&active_for_showing="+shoingStatus
         let url = AppConfig.APP_URL+"/users/"+User().getField("id")
-        Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
+        Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPost(response)});
     }
     
     func afterPost(let response: NSData) {

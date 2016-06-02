@@ -212,7 +212,7 @@ class CurrentShowingViewController: UIViewController {
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         var params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3"
         params     = self.endNotificationParams(params)
-        Request().put(url, params:params,successHandler: {(response) in self.afterCancelRequest(response)});
+        Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterCancelRequest(response)});
     }
     
     func endNotificationParams(var params:String)->String {

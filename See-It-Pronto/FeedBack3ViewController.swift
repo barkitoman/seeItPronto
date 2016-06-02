@@ -40,7 +40,7 @@ class FeedBack3ViewController: UIViewController {
         var params = "id="+self.viewData["showing"]["id"].stringValue+"&buy_with_realtor=1"
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         params     = self.canceledNotificationParams(params)
-        Request().put(url, params:params,successHandler: {(response) in self.afterBuyWithAgentRequest(response)});
+        Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterBuyWithAgentRequest(response)});
     }
     
     func canceledNotificationParams(var params:String)->String {

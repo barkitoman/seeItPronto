@@ -169,7 +169,7 @@ class SeeItLaterBuyerViewController: UIViewController {
             let showing = JSON(self.myListings[indexPath.row])
             let params = self.editRequestParams(showing, dateTime:dateTime)
             let url = AppConfig.APP_URL+"/showings/"+showing["id"].stringValue
-            Request().put(url,params: params, successHandler: {(response) in })
+            Request().put(url,params: params, controller:self,successHandler: {(response) in })
             let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! SeeItLaterBuyerTableViewCell
             cell.lblNiceDate.text = Utility().millitaryToStandardTime(dateTime, format: "MMM dd, hh:mm a")
             self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -197,7 +197,7 @@ class SeeItLaterBuyerViewController: UIViewController {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
             let url = AppConfig.APP_URL+"/showings/"+showing["id"].stringValue
             let params = self.cancelParams(showing)
-            Request().put(url,params: params, successHandler: {(response) in })
+            Request().put(url,params: params, controller:self,successHandler: {(response) in })
             self.removeAppleCalendarEvent(showing["buyer_calendar_id"].stringValue)
         }
         let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
@@ -325,7 +325,7 @@ class SeeItLaterBuyerViewController: UIViewController {
     func saveCalendarId(showing:JSON) {
         let params = "id=\(showing["id"].stringValue)&buyer_calendar_id=\(self.savedEventId)"
         let url = AppConfig.APP_URL+"/showings/\(showing["id"].stringValue)"
-        Request().put(url,params: params, successHandler: {(response) in })
+        Request().put(url,params: params, controller:self,successHandler: {(response) in })
     }
     
     func gotoAppleCalendar(date: NSDate) {

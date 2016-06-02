@@ -54,7 +54,7 @@ class ShowingRequestViewController: UIViewController {
         let title        = "Showing request accepted"
         let description  = "User \(fullUsername) Accepted your showing request"
         params           = self.notificationParams(params,type: type,title: title,descripcion: description)
-        Request().put(url, params:params,successHandler: {(response) in self.afterYesRequest(response)});
+        Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterYesRequest(response)});
     }
     
     func afterYesRequest(let response: NSData) {
@@ -109,7 +109,7 @@ class ShowingRequestViewController: UIViewController {
         let title        = "Showing request rejected"
         let description  = "User \(fullUsername) is not available to show you the property at this time"
         params           = self.notificationParams(params,type: type,title: title,descripcion: description)
-        Request().put(url, params:params,successHandler: {(response) in self.afterNoRequest(response)});
+        Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterNoRequest(response)});
     }
     
     func afterNoRequest(let response: NSData) {

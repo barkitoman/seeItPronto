@@ -173,7 +173,7 @@ class AppointmentsViewController: UIViewController {
             let appoiment = JSON(self.appoiments[indexPath.row])
             let params = self.editRequestParams(appoiment, dateTime:dateTime)
             var url = AppConfig.APP_URL+"/showings/"+appoiment["id"].stringValue
-            Request().put(url,params: params, successHandler: {(response) in })
+            Request().put(url,params: params,controller:self, successHandler: {(response) in })
             let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! AppointmentsTableViewCell
             url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+appoiment["property"][0]["id"].stringValue+"/1"
             if cell.propertyImage.image == nil {
@@ -203,7 +203,7 @@ class AppointmentsViewController: UIViewController {
             var appoiment = JSON(self.appoiments[indexPath.row])
             let url = AppConfig.APP_URL+"/showings/"+appoiment["id"].stringValue
             let params = self.cancelParams(appoiment)
-            Request().put(url,params: params, successHandler: {(response) in })
+            Request().put(url,params: params,controller:self, successHandler: {(response) in })
             
             let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! AppointmentsTableViewCell
             cell.lblState.text = "Cancelled"

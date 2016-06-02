@@ -193,7 +193,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
             if(!configSearchId.isEmpty) {
                 url = url+"/"+configSearchId
                 params = params+"&id="+configSearchId
-                Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
+                Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPost(response)});
             } else {
                 Request().post(url, params:params,controller: self,successHandler: {(response) in self.afterPost(response)});
             }

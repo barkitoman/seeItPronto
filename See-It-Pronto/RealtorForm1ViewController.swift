@@ -75,7 +75,7 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
         if(!userId.isEmpty) {
             params = params+"&id="+userId
             url = AppConfig.APP_URL+"/users/"+userId
-            Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
+            Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPost(response)});
         } else {
             Request().post(url, params:params,controller: self,successHandler: {(response) in self.afterPost(response)});
         }

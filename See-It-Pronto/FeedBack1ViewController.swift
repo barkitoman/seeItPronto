@@ -79,7 +79,7 @@ class FeedBack1ViewController: UIViewController, UITextFieldDelegate, UITextView
     @IBAction func btnSkip(sender: AnyObject) {
         let params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3&notification_feedback=1"
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
-        Request().put(url, params:params,successHandler: {(response) in self.afterSkipRequest(response)});
+        Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterSkipRequest(response)});
     }
     
     func afterSkipRequest(let response: NSData) {
@@ -99,7 +99,7 @@ class FeedBack1ViewController: UIViewController, UITextFieldDelegate, UITextView
         params     = params+"&user_id="+User().getField("id")+"&realtor_id="+self.viewData["showing"]["realtor_id"].stringValue
         params     = params+"&notification_feedback=1&property_id=\(self.viewData["showing"]["property_id"].stringValue)"
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
-        Request().put(url, params:params,successHandler: {(response) in self.afterNextRequest(response)});
+        Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterNextRequest(response)});
     }
     
     func afterNextRequest(let response: NSData) {

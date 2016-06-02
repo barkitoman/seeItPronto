@@ -37,7 +37,7 @@ class Request {
             }
             task.resume();
         } else {
-            Utility().displayAlert(controller, title: "Alert", message: "No internet", performSegue: "")
+            Utility().displayAlert(controller, title: "Alert", message: "You are no longer connected to the internet. See It Pronto requires access to the internet to provide you with accurate information", performSegue: "")
         }
     }
     
@@ -61,28 +61,32 @@ class Request {
         return (isReachable && !needsConnection)
     }
  
-    func put(url : String, var params : String, successHandler: (response: NSData) -> Void) {
-        let url = NSURL(string: url)
-        params+="&_method=PUT"
-        let params = String(params);
-        let request = NSMutableURLRequest(URL: url!);
-        request.HTTPMethod = "POST"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+    func put(url : String, var params : String,controller:UIViewController, successHandler: (response: NSData) -> Void) {
+        if(self.internet()){
+            let url = NSURL(string: url)
+            params+="&_method=PUT"
+            let params = String(params);
+            let request = NSMutableURLRequest(URL: url!);
+            request.HTTPMethod = "POST"
+            request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
         
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
-            data, response, error in
-            //in case of error
-            if error != nil {
-                print("AN ERROR HAS OCURRED SENDING PUT REQUEST!")
-                print(error); return
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+                data, response, error in
+                //in case of error
+                if error != nil {
+                    print("AN ERROR HAS OCURRED SENDING PUT REQUEST!")
+                    print(error); return
+                }
+                if(self.debug == true) {
+                    let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
+                    print(responseString)
+                }
+                successHandler(response: data!)
             }
-            if(self.debug == true) {
-                let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
-                print(responseString)
-            }
-            successHandler(response: data!)
+            task.resume();
+        } else {
+            Utility().displayAlert(controller, title: "Alert", message: "You are no longer connected to the internet. See It Pronto requires access to the internet to provide you with accurate information", performSegue: "")
         }
-        task.resume();
     }
     
     func get(url : String, successHandler: (response: NSData) -> Void) {

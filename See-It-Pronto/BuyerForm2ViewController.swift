@@ -150,7 +150,7 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
         //create params
         let params = "id="+self.viewData["id"].stringValue+"&first_name="+txtFirstName.text!+"&last_name="+txtLastName.text!
         let url = AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue
-        Request().put(url, params:params,successHandler: {(response) in self.afterPut(response)});
+        Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPut(response)});
     }
 
     func afterPut(let response: NSData) {

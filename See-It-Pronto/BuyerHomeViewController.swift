@@ -30,8 +30,6 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
-        print(session)
-        print(User().getField("id") == "")
         if !session || User().getField("id") == ""{
             btnViewList.hidden = true
             btnSignUp.hidden = false
@@ -123,12 +121,12 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
         url =  url+"&pool=\(SearchConfig().getField("pool"))"
         url =  url+"&price_range_less=\(SearchConfig().getField("price_range_less"))"
         url =  url+"&price_range_higher=\(SearchConfig().getField("price_range_higher"))"
-        url =  url+"&property_class=\(SearchConfig().getField("property_class"))"
-        url =  url+"&no_session_search=1"
-        if(!self.propertyClass.isEmpty) {
+        url =  url+"&fast_search=1"
+        if(self.propertyClass != "") {
             url =  url+"&property_class=\(self.propertyClass)"
+        } else {
+            url =  url+"&property_class=\(SearchConfig().getField("property_class"))"
         }
-        print(url)
         self.propertyId = ""
         self.propertyClass = ""
         let requestURL = NSURL(string:url)
@@ -196,7 +194,6 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
         
         self.presentViewController(navController, animated: true, completion: nil)
     }
-    
     
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return .None

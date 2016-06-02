@@ -114,7 +114,7 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
             //if user is editing a beacon
             params = params+"&id="+self.viewData["id"].stringValue
             url = AppConfig.APP_URL+"/realtor_properties/"+self.viewData["id"].stringValue
-            Request().put(url, params:params,successHandler: {(response) in self.afterUpdateRequest(response)});
+            Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterUpdateRequest(response)});
         } else {
             //if user is registering a new beacon
             Request().post(url, params:params, controller: self, successHandler: {(response) in self.afterUpdateRequest(response)});

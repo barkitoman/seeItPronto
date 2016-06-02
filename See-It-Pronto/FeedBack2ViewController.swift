@@ -45,7 +45,7 @@ class FeedBack2ViewController: UIViewController,UITextFieldDelegate, UITextViewD
     @IBAction func btnBuyWithThisAgent(sender: AnyObject) {
         let params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3&feedback_realtor_comment="+self.txtAgentComments.text!
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
-        Request().put(url, params:params,successHandler: {(response) in self.afterBuyWithAgentButton(response)});
+        Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterBuyWithAgentButton(response)});
     }
     
     func afterBuyWithAgentButton(let response: NSData) {
@@ -70,7 +70,7 @@ class FeedBack2ViewController: UIViewController,UITextFieldDelegate, UITextViewD
     @IBAction func btnNext(sender: AnyObject) {
         let params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3&feedback_realtor_comment="+self.txtAgentComments.text!
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
-        Request().put(url, params:params,successHandler: {(response) in self.afterNextRequest(response)});
+        Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterNextRequest(response)});
     }
     
     func afterNextRequest(let response: NSData) {

@@ -53,7 +53,7 @@ class CongratulationsViewController: UIViewController {
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         var params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status="+AppConfig.SHOWING_CANCELED_STATUS
         params     = self.canceledNotificationParams(params)
-        Request().put(url, params:params,successHandler: {(response) in self.afterCancelRequest(response)});
+        Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterCancelRequest(response)});
     }
     
     func canceledNotificationParams(var params:String)->String {

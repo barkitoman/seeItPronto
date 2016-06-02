@@ -89,7 +89,7 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
             //if user is editing a beacon
             params = params+"&id="+self.viewData["id"].stringValue
             url = AppConfig.APP_URL+"/beacons/"+self.viewData["id"].stringValue
-            Request().put(url, params:params,successHandler: {(response) in self.afterPost(response)});
+            Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPost(response)});
         } else {
             //if user is registering a new beacon
             Request().post(url, params:params,controller: self,successHandler: {(response) in self.afterPost(response)});
