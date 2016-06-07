@@ -10,14 +10,14 @@ import UIKit
 
 class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate {
 
-    @IBOutlet weak var slShowingRate: UISlider!
-    @IBOutlet weak var slTravelRate: UISlider!
     @IBOutlet weak var lblShowingRate: UILabel!
     @IBOutlet weak var lblTravelRate: UILabel!
     
     
     var viewData:JSON = []
-
+    var numberShowingRate:String = "25"
+    var numberTravelRange:String = "50"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.findUserInfo()
@@ -39,6 +39,43 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         super.didReceiveMemoryWarning()
     }
     
+    @IBAction func editShowingRate(sender: AnyObject) {
+        
+        let pickerView = CustomPickerDialog.init()
+        var arrayDataSource:[String] = []
+        for i in 0...50 {
+            arrayDataSource.append(String(i))
+        }
+        pickerView.setDataSource(arrayDataSource)
+        pickerView.selectValue(self.numberShowingRate)
+        
+        pickerView.showDialog("Select Showing Rate", doneButtonTitle: "Done", cancelButtonTitle: "Cancel") { (result) -> Void in
+            //self.lblResult.text = result
+            let showingRate = result
+            self.numberShowingRate = result
+            self.showRates(String(showingRate), traveRange: "")
+        }
+        
+    }
+    
+    @IBAction func editTravelRate(sender: AnyObject) {
+        
+        let pickerView = CustomPickerDialog.init()
+        var arrayDataSource:[String] = []
+        for i in 10...99 {
+            arrayDataSource.append(String(i))
+        }
+        pickerView.setDataSource(arrayDataSource)
+        pickerView.selectValue(self.numberTravelRange)
+        
+        pickerView.showDialog("Select Travel Range", doneButtonTitle: "Done", cancelButtonTitle: "Cancel") { (result) -> Void in
+            //self.lblResult.text = result
+            let travelRange = result
+            self.numberTravelRange = result
+            self.showRates("", traveRange: String(travelRange))
+        }
+    }
+    
     @IBAction func btnBack(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
     }
@@ -50,8 +87,8 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     func save() {
         //create params
-        let showingRate = Utility().sliderValue(self.slShowingRate)
-        let travelRate  = Utility().sliderValue(self.slTravelRate)
+        let showingRate = self.numberShowingRate
+        let travelRate  = self.numberTravelRange
         let params = "id="+self.viewData["id"].stringValue+"&realtor_id="+self.viewData["realtor_id"].stringValue+"&showing_rate="+showingRate+"&travel_range="+travelRate
         let url = AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPost(response)});
@@ -71,7 +108,7 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         }
     }
     
-    @IBAction func editShowingRate(sender: AnyObject) {
+    /*@IBAction func editShowingRate(sender: AnyObject) {
         let showingRate = Int(roundf(slShowingRate.value))
         self.showRates(String(showingRate), traveRange: "")
     }
@@ -79,7 +116,7 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
     @IBAction func editTravelRate(sender: AnyObject) {
         let travelRange = Int(roundf(slTravelRate.value))
         self.showRates("", traveRange: String(travelRange))
-    }
+    }*/
     
     func findUserInfo() {
         let userId = User().getField("id")
@@ -94,11 +131,13 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         dispatch_async(dispatch_get_main_queue()) {
             let result = JSON(data: response)
             if(!result["showing_rate"].stringValue.isEmpty) {
-                self.slShowingRate.value = Float(result["showing_rate"].stringValue)!
+                self.numberShowingRate = result["showing_rate"].stringValue
+                //self.slShowingRate.value = Float(result["showing_rate"].stringValue)!
                 self.showRates(result["showing_rate"].stringValue, traveRange: "")
             }
             if(!result["travel_range"].stringValue.isEmpty) {
-                self.slTravelRate.value = Float(result["travel_range"].stringValue)!
+                self.numberTravelRange = result["travel_range"].stringValue
+                //self.slTravelRate.value = Float(result["travel_range"].stringValue)!
                 self.showRates("", traveRange: result["travel_range"].stringValue)
             }
         }

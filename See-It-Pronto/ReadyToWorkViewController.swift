@@ -61,7 +61,7 @@ class ReadyToWorkViewController: UIViewController {
         print(numberShowingRate)
         pickerView.selectValue(self.numberShowingRate)
         
-        pickerView.showDialog("Select Showing Rate", doneButtonTitle: "done", cancelButtonTitle: "cancel") { (result) -> Void in
+        pickerView.showDialog("Select Showing Rate", doneButtonTitle: "Done", cancelButtonTitle: "Cancel") { (result) -> Void in
             //self.lblResult.text = result
             let showingRate = result
             self.numberShowingRate = result
@@ -80,7 +80,7 @@ class ReadyToWorkViewController: UIViewController {
         pickerView.setDataSource(arrayDataSource)
         pickerView.selectValue(self.numberTravelRange)
         
-        pickerView.showDialog("Select Travel Range", doneButtonTitle: "done", cancelButtonTitle: "cancel") { (result) -> Void in
+        pickerView.showDialog("Select Travel Range", doneButtonTitle: "Done", cancelButtonTitle: "Cancel") { (result) -> Void in
             //self.lblResult.text = result
             let travelRange = result
             self.numberTravelRange = result
@@ -99,8 +99,8 @@ class ReadyToWorkViewController: UIViewController {
 
     func save(shoingStatus:String) {
         //create params
-        let showingRate = numberShowingRate //Utility().sliderValue(self.slShowingRate)
-        let travelRate  = numberTravelRange //Utility().sliderValue(self.slTravelRate)
+        let showingRate = self.numberShowingRate //Utility().sliderValue(self.slShowingRate)
+        let travelRate  = self.numberTravelRange //Utility().sliderValue(self.slTravelRate)
         let params = "id="+self.viewData["id"].stringValue+"&realtor_id="+self.viewData["realtor_id"].stringValue+"&showing_rate="+showingRate+"&travel_range="+travelRate+"&active_for_showing="+shoingStatus
         let url = AppConfig.APP_URL+"/users/"+User().getField("id")
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPost(response)});
