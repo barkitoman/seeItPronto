@@ -9262,13 +9262,13 @@ $480,000
         <image name="take_photo" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="uBa-RI-Zc4"/>
+        <segue reference="voO-kP-iEV"/>
+        <segue reference="cEt-sO-PDF"/>
+        <segue reference="4zV-ka-Aal"/>
         <segue reference="cgx-FP-sRH"/>
         <segue reference="qhl-sh-szs"/>
         <segue reference="eGo-7Q-bwm"/>
-        <segue reference="DJR-bZ-L3O"/>
-        <segue reference="Qtn-cj-pqK"/>
-        <segue reference="cEt-sO-PDF"/>
-        <segue reference="4zV-ka-Aal"/>
-        <segue reference="uBa-RI-Zc4"/>
+        <segue reference="vxA-X1-U6d"/>
     </inferredMetricsTieBreakers>
 </document>

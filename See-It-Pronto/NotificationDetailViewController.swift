@@ -16,12 +16,9 @@ class NotificationDetailViewController: UIViewController {
     @IBOutlet weak var propertyImage: UIImageView!
     @IBOutlet weak var lblPrice: UILabel!
     @IBOutlet weak var address: UILabel!
- 
     @IBOutlet weak var propertyDescription: UILabel!
-   
     @IBOutlet weak var showingDate: UILabel!
  
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.findShowing()
@@ -60,12 +57,12 @@ class NotificationDetailViewController: UIViewController {
             self.lblPrice.text = Utility().formatCurrency(result["property"]["price"].stringValue)
             var description = ""
             description += "Bed "+result["property"]["bedrooms"].stringValue+"/"
-            description += "Bath "+result["property"]["bathrooms"].stringValue+"/"
-            if(!result["property"]["property_type"].stringValue.isEmpty) {
-                description += result["property"]["property_type"].stringValue+"/"
+            description += "Bath "+result["property"]["bathrooms"].stringValue
+            if(!result["property"]["type"].stringValue.isEmpty) {
+                description = description+"/ "+result["property"]["type"].stringValue
             }
-            if(!result["property"]["lot_size"].stringValue.isEmpty) {
-                description += result["property"]["lot_size"].stringValue
+            if(!result["property"]["square_feed"].stringValue.isEmpty) {
+                description = description+"/ "+result["property"]["square_feed"].stringValue+" SqrFt"
             }
             self.propertyDescription.text = description
             self.showingDate.text = result["showing"]["nice_date"].stringValue

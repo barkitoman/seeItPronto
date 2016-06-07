@@ -53,6 +53,12 @@ class NotificationsViewController: UIViewController {
         let notification = JSON(self.notifications[indexPath.row])
         cell.detailTextLabel?.text = notification["created_at_nice"].stringValue
         cell.textLabel!.text = notification["title"].stringValue
+        cell.textLabel!.textColor = UIColor(rgba: "#000000")
+        cell.detailTextLabel!.textColor = UIColor(rgba: "#000000")
+        if(notification["seen"].stringValue == "0") {
+            cell.textLabel!.textColor = UIColor(rgba: "#5cb85c")
+            cell.detailTextLabel!.textColor = UIColor(rgba: "#5cb85c")
+        }
         if(notification["type"] == "see_it_later" || notification["type"] == "see_it_pronto") {
             cell.textLabel!.text = notification["title"].stringValue
         }
@@ -60,10 +66,19 @@ class NotificationsViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+
+        
         let notification = JSON(self.notifications[indexPath.row])
         let role   = User().getField("role")
         self.viewData = notification
-        
+        dispatch_async(dispatch_get_main_queue()) {
+            if(notification["seen"].stringValue == "0") {
+                let cell = self.tableView.cellForRowAtIndexPath(indexPath)! as UITableViewCell
+                cell.textLabel!.textColor = UIColor(rgba: "#000000")
+                cell.detailTextLabel!.textColor = UIColor(rgba: "#000000")
+                self.seenNotificationRequest(notification["id"].stringValue)
+            }
+        }
         if(role == "realtor" && (notification["type"] == "see_it_later" || notification["type"] == "see_it_pronto")) {
                 Utility().displayAlert(self,title: notification["title"].stringValue, message:notification["description"].stringValue, performSegue:"ShowingRequestDetail")
         } else {
@@ -131,6 +146,12 @@ class NotificationsViewController: UIViewController {
     
     @IBAction func btnBack(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func seenNotificationRequest(notificationId:String) {
+     Request().get("seen_notification/\(notificationId)") { (response) -> Void in
+        
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

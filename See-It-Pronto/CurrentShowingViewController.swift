@@ -85,12 +85,12 @@ class CurrentShowingViewController: UIViewController {
             self.lblPrice.text = Utility().formatCurrency(result["property"]["price"].stringValue)
             var description = ""
             description += "Bed "+result["property"]["bedrooms"].stringValue+"/"
-            description += "Bath "+result["property"]["bathrooms"].stringValue+"/"
-            if(!result["property"]["property_type"].stringValue.isEmpty) {
-                description += result["property"]["property_type"].stringValue+"/"
+            description += "Bath "+result["property"]["bathrooms"].stringValue
+            if(!result["property"]["type"].stringValue.isEmpty) {
+                description = description+"/ "+result["property"]["type"].stringValue
             }
             if(!result["property"]["square_feed"].stringValue.isEmpty) {
-                description += result["property"]["square_feed"].stringValue+" SqrFt"
+                description = description+"/ "+result["property"]["square_feed"].stringValue+" SqrFt"
             }
             self.propertyDescription.text = description
             if(!result["property"]["image"].stringValue.isEmpty) {
@@ -150,15 +150,14 @@ class CurrentShowingViewController: UIViewController {
         }
     }
     
-    
     @IBAction func btnViewDetails(sender: AnyObject) {
         Utility().goPropertyDetails(self,propertyId: self.viewData["showing"]["property_id"].stringValue, PropertyClass: self.viewData["showing"]["property_class"].stringValue)
     }
     
-    
     @IBAction func btnShowingInstrunctions(sender: AnyObject) {
-        let instructions = self.viewData["realtor_properties"]["showing_instruction"].stringValue
-        if(!instructions.isEmpty) {
+        if(!self.viewData["realtor_properties"]["showing_instruction"].stringValue.isEmpty) {
+            var instructions = self.viewData["realtor_properties"]["type"].stringValue+"\n"
+            instructions = instructions+self.viewData["realtor_properties"]["showing_instruction"].stringValue
             Utility().displayAlert(self, title: "Showing instructions", message: instructions, performSegue: "")
         } else {
             Utility().displayAlert(self, title: "Message", message: "You don't have showing instructions for this property", performSegue: "")
@@ -201,7 +200,6 @@ class CurrentShowingViewController: UIViewController {
         }
         let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
             UIAlertAction in
-            
         }
         alertController.addAction(yesAction)
         alertController.addAction(noAction)

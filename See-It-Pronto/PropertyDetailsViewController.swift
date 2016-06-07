@@ -80,7 +80,6 @@ class PropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
     
     func findPropertyDetails(){
         let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/\(Property().getField("id"))/\(Property().getField("property_class"))/\(User().getField("id"))?user_info=1"
-        print(url)
         Request().get(url, successHandler: {(response) in self.showPropertydetails(response)})
     }
     

@@ -140,13 +140,11 @@ class ShowingRequestViewController: UIViewController {
     
     func findShowing() {
         let url = AppConfig.APP_URL+"/get_showing_details/"+self.showingId+"/\(User().getField("id"))"
-        print(url)
         Request().get(url, successHandler: {(response) in self.loadShowingData(response)})
     }
     
     func loadShowingData(let response: NSData) {
         let result = JSON(data: response)
-        print(result)
         dispatch_async(dispatch_get_main_queue()) {
             self.viewData = result
             let name = result["buyer"]["first_name"].stringValue+" "+result["buyer"]["last_name"].stringValue
@@ -198,8 +196,9 @@ class ShowingRequestViewController: UIViewController {
     }
     
     @IBAction func btnViewShowingInstructions(sender: AnyObject) {
-        let instructions = self.viewData["realtor_properties"]["showing_instruction"].stringValue
-        if(!instructions.isEmpty) {
+        if(!self.viewData["realtor_properties"]["showing_instruction"].stringValue.isEmpty) {
+            var instructions = self.viewData["realtor_properties"]["type"].stringValue+"\n"
+            instructions = instructions+self.viewData["realtor_properties"]["showing_instruction"].stringValue
             Utility().displayAlert(self, title: "Showing instructions", message: instructions, performSegue: "")
         } else {
             Utility().displayAlert(self, title: "Message", message: "You don't have showing instructions for this property", performSegue: "")

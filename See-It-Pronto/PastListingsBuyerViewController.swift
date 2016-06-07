@@ -184,6 +184,7 @@ class PastListingsBuyerViewController: UIViewController {
     
     func findListings() {
         let url = AppConfig.APP_URL+"/past_listing_buyer/\(User().getField("id"))/\(self.stepPage)/?page="+String(self.countPage + 1)
+        print(url)
         Request().get(url, successHandler: {(response) in self.loadListings(response)})
     }
     
