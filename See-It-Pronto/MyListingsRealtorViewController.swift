@@ -10,7 +10,6 @@ import UIKit
 
 class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate{
 
-    let picker = UIImageView(image: UIImage(named: "picker"))
     @IBOutlet weak var tableView: UITableView!
     var countPage = 0    //number of current page
     var stepPage  = 20   //number of records by page
@@ -19,28 +18,6 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
     var myListings:NSMutableArray! = NSMutableArray()
     var viewData:JSON = []
     var propertyId:String = ""
-    struct properties {
-        static let moods = [
-            ["title" : "Single Family",             "class":"1"],
-            ["title" : "Condo/Coop/Villa/Twnhse",   "class":"2"],
-            ["title" : "Residential Rental",        "class":"6"],
-            ["title" : "Business Opportunity",      "class":"8"],
-            /*
-            ["title" : "Residential Income",        "class":"3"],
-            ["title" : "ResidentialLand/BoatDocks", "class":"4"],
-            ["title" : "Comm/Bus/Agr/Indust Land",  "class":"5"],
-            ["title" : "Improved Comm/Indust",      "class":"7"],
-            ["title" : "Business Opportunity",      "class":"8"],
-            ["title" : "Office",                    "class":"10"],
-            ["title" : "Open House",                "class":"13"]
-            */
-        ]
-    }
-    var propertySelectedClass:String = "1"
-    var propertySelectedClassName:String = "Single Family"
-    var defaultColor     = "#4870b7"
-    var selectedColor    = "#5cb85c"
-    var selectedIndex    = 0
     var cache = ImageLoadingWithCache()
     var model = [Model]()
     var models = [String:Model]()
@@ -57,16 +34,11 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
         return MyDownloader(configuration:self.configuration)
     }()
     
-    @IBOutlet weak var btnPropertyClass: UIButton!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         BProgressHUD.showLoadingViewWithMessage("Loading")
         self.tableView.delegate = self
-        
         self.findListings()
-        self.createPicker()
-        self.btnPropertyClass.setTitle(self.propertySelectedClassName, forState: .Normal)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -115,7 +87,7 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
         cell.btnEdit.tag = indexPath.row
         cell.btnEdit.addTarget(self, action: "openEditView:", forControlEvents: .TouchUpInside)
         cell.swBeacon.on = false
-        if(listing["state_beacon"].int == 1) {
+        if(listing["beacon"]["state_beacon"].int == 1) {
             cell.swBeacon.on = true
         }
         cell.swBeacon.tag = Int(listing["property"]["id"].stringValue)!
@@ -132,7 +104,33 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
         return cell
     }
     
-        
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Cancel"){(UITableViewRowAction,NSIndexPath) -> Void in
+            self.cancelShowingRequest(indexPath)
+        }
+        return [delete]
+    }
+    
+    func cancelShowingRequest(indexPath:NSIndexPath){
+        let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to delete this property listing?", preferredStyle: .Alert)
+        let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            
+            var listing = JSON(self.myListings[indexPath.row])
+            self.myListings.removeObjectAtIndex(indexPath.row)
+            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            let url = AppConfig.APP_URL+"/realtor_properties/"+listing["id"].stringValue
+            Request().delete(url,params:"", successHandler: {(response) in })
+        }
+        let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            
+        }
+        alertController.addAction(yesAction)
+        alertController.addAction(noAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     func showCell(cell:MyListingsRealtorTableViewCell, property:JSON,indexPath: NSIndexPath){
         // have we got a picture?
         if let im = self.models[property["id"].stringValue]!.im {
@@ -217,11 +215,7 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
     }
     
     func findListings() {
-        var mslId = User().getField("mls_id")
-        if mslId.isEmpty {
-            mslId = "0"
-        }
-        let url = AppConfig.APP_URL+"/my_listings/\(User().getField("id"))/\(self.stepPage)/\(self.propertySelectedClass)/\(mslId)/?page="+String(self.countPage + 1)
+        let url = AppConfig.APP_URL+"/my_listings/\(User().getField("id"))/\(self.stepPage)/?page="+String(self.countPage + 1)
         Request().get(url, successHandler: {(response) in self.loadListings(response)})
     }
     
@@ -243,62 +237,7 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
                 Utility().displayAlert(self,title: "Notification", message:msg, performSegue:"")
                 
             }
-            
         }
-    }
-    
-    func createPicker(){
-        picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 200, width: 286, height: 208)
-        picker.alpha = 0
-        picker.hidden = true
-        picker.userInteractionEnabled = true
-        var offset = 21
-        for (index, feeling) in properties.moods.enumerate() {
-            let button = UIButton()
-            button.tag = index
-            button.frame = CGRect(x: 13, y: offset, width: 260, height: 43)
-            var color = self.defaultColor
-            if(feeling["title"] == self.propertySelectedClassName) {
-                color = self.selectedColor
-                self.selectedIndex = index
-            }
-            button.setTitleColor(UIColor(rgba: color), forState: .Normal)
-            button.setTitle(feeling["title"], forState: .Normal)
-            button.addTarget(self, action: "clickPicker:", forControlEvents: .TouchUpInside)
-            picker.addSubview(button)
-            offset += 44
-        }
-        view.addSubview(picker)
-    }
-    
-    func openPicker() {
-        for v in self.picker.subviews {
-            if (v is UIButton) {
-                let button = v as! UIButton
-                button.setTitleColor(UIColor(rgba: self.defaultColor), forState: .Normal)
-                if(v.tag == self.selectedIndex) {
-                    button.setTitleColor(UIColor(rgba: "#5cb85c"), forState: .Normal)
-                }
-            }
-        }
-        self.picker.hidden = false
-        UIView.animateWithDuration(0.3,
-            animations: {
-                self.picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 100, width: 286, height: 208)
-                self.picker.alpha = 1
-        })
-    }
-    
-    func closePicker(){
-        UIView.animateWithDuration(0.3,
-            animations: {
-                self.picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 200, width: 286, height: 208)
-                self.picker.alpha = 0
-            },
-            completion: { finished in
-                self.picker.hidden = true
-            }
-        )
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -310,31 +249,9 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
             let view: ListingDetailsViewController = segue.destinationViewController as! ListingDetailsViewController
             view.viewData = self.viewData
         }
-        let popupView = segue.destinationViewController
-        if let popup = popupView.popoverPresentationController {
-            popup.delegate = self
-        }
     }
     
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.None
-    }
-    
-    @IBAction func btnOpenPropertyClass(sender: AnyObject) {
-            picker.hidden ? openPicker() : closePicker()
-    }
-    
-    @IBAction func clickPicker(sender:UIButton) {
-        let index = sender.tag
-        self.selectedIndex = index
-        self.btnPropertyClass.setTitle(properties.moods[index]["title"], forState: .Normal)
-        self.propertySelectedClass = properties.moods[index]["class"]!
-        self.propertySelectedClassName = properties.moods[index]["title"]!
-        closePicker()
-        self.myListings.removeAllObjects()
-        self.tableView.reloadData()
-        self.countPage = 0
-        BProgressHUD.showLoadingViewWithMessage("Loading")
-        self.findListings()
     }
 }
