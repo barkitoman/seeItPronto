@@ -30,14 +30,15 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
-        if !session || User().getField("id") == ""{
-            btnViewList.hidden = true
-            btnSignUp.hidden = false
-            btnLogin.hidden = false
-        }else{
+        print("USER ID \(User().getField("id"))")
+        if User().getField("id") != "" {
             btnViewList.hidden = false
             btnSignUp.hidden = true
             btnLogin.hidden = true
+        } else {
+            btnViewList.hidden = true
+            btnSignUp.hidden = false
+            btnLogin.hidden = false
         }
         manager = OneShotLocationManager()
         manager!.fetchWithCompletion {location, error in

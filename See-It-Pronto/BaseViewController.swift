@@ -94,13 +94,15 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             
         } else if (viewIdentifier == "LoginViewController") {
             //LOGOUT ========================================
-            var url   = AppConfig.APP_URL+"/destroy_token"
-            let token = User().getField("access_token")
-            url = url+"/"+token
-            Request().get(url, successHandler: {(response) in })
+            dispatch_async(dispatch_get_main_queue()) {
+                var url   = AppConfig.APP_URL+"/destroy_token"
+                let token = User().getField("access_token")
+                url = url+"/"+token
+                Request().get(url, successHandler: {(response) in })
+            }
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as! BuyerHomeViewController
             User().deleteAllData()
             SearchConfig().deleteAllData()
-            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as! BuyerHomeViewController
             
         } else if (viewIdentifier == "ListRealtorsViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("ListRealtorsViewController") as! ListRealtorsViewController
