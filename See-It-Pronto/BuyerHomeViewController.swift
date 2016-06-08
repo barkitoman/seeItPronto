@@ -30,7 +30,6 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
-        print("USER ID \(User().getField("id"))")
         if User().getField("id") != "" {
             btnViewList.hidden = false
             btnSignUp.hidden = true

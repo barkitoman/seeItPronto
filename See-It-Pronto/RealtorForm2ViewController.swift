@@ -23,7 +23,6 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     let imagePicker: UIImagePickerController! = UIImagePickerController()
     var haveImage:Bool = false
     var viewData:JSON = []
-    var isTakenImage = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,74 +60,39 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     }
     
     @IBAction func btnchoosePicture(sender: AnyObject) {
-        let myPickerController = UIImagePickerController()
-        myPickerController.delegate = self;
-        myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        self.presentViewController(myPickerController, animated: true, completion: nil)
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
+            imagePicker.allowsEditing = true
+            self.presentViewController(imagePicker, animated: true, completion: nil)
+        }
     }
     
     @IBAction func btnTakePhoto(sender: AnyObject) {
-        self.isTakenImage = true
-        if (UIImagePickerController.isSourceTypeAvailable(.Camera)) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
             if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
+                let imagePicker = UIImagePickerController()
+                imagePicker.delegate = self
+                imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
                 imagePicker.allowsEditing = false
-                imagePicker.sourceType = .Camera
-                imagePicker.cameraCaptureMode = .Photo
-                presentViewController(imagePicker, animated: true, completion: {})
+                self.presentViewController(imagePicker, animated: true, completion: nil)
             } else {
                 Utility().displayAlert(self, title: "Rear camera doesn't exist", message:  "Application cannot access the camera.", performSegue: "")
-                self.isTakenImage = false
             }
         } else {
             Utility().displayAlert(self, title: "Camera inaccessable", message: "Application cannot access the camera.", performSegue: "")
-            self.isTakenImage = false
         }
     }
     
     //display image after select
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        if(self.isTakenImage == true) {
-            if let pickedImage:UIImage = (info[UIImagePickerControllerOriginalImage]) as? UIImage {
-                let selectorToCall = Selector("imageWasSavedSuccessfully:didFinishSavingWithError:context:")
-                UIImageWriteToSavedPhotosAlbum(pickedImage, self, selectorToCall, nil)
-            }
-        } else {
-            self.previewProfilePicture.image = info[UIImagePickerControllerOriginalImage] as? UIImage
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         self.haveImage = true
-        imagePicker.dismissViewControllerAnimated(true, completion: {
-            // Anything you want to happen when the user saves an image
-            self.isTakenImage = false
-        })
+        self.previewProfilePicture.image = image
+        self.saveTakenPhoto()
+        self.dismissViewControllerAnimated(true, completion: nil);
     }
-    
-    func documentPicker(controller: UIDocumentPickerViewController, didPickDocumentAtURL url: NSURL) {
-        if controller.documentPickerMode == UIDocumentPickerMode.Import {
-            // This is what it should be
-            print(url.path)
-            //self.newNoteBody.text = String(contentsOfFile: url.path!)
-        }
-    }
-    
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        print("User canceled image")
-        dismissViewControllerAnimated(true, completion: {
-            // Anything you want to happen when the user selects cancel
-        })
-    }
-    
-    func imageWasSavedSuccessfully(image: UIImage, didFinishSavingWithError error: NSError!, context: UnsafeMutablePointer<()>){
-        if let theError = error {
-            print("An error happened while saving the image = \(theError)")
-        } else {
-            print("Displaying")
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.previewProfilePicture.image = image
-            })
-        }
-    }
-    
+
     //upload photo to server
     func uploadImage() {
         if (self.previewProfilePicture.image != nil && self.haveImage == true) {
@@ -209,6 +173,12 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
                 Utility().showPhoto(self.previewProfilePicture, imgPath: result["url_image"].stringValue)
             }
         }
+    }
+    
+    func saveTakenPhoto() {
+        let imageData = UIImageJPEGRepresentation(previewProfilePicture.image!, 0.6)
+        let compressedJPGImage = UIImage(data: imageData!)
+        UIImageWriteToSavedPhotosAlbum(compressedJPGImage!, nil, nil, nil)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

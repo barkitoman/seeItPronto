@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -715,17 +715,6 @@
                                                     <constraint firstAttribute="height" constant="37" id="oTZ-C2-m20"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFi-nL-er5">
-                                                <rect key="frame" x="41" y="0.0" width="96" height="37"/>
-                                                <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <state key="normal" title="Choose Picture">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="btnChoosePicture:" destination="6VJ-KH-B8x" eventType="touchUpInside" id="qu3-Nr-8P0"/>
-                                                </connections>
-                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Qx-CM-Bfz">
                                                 <rect key="frame" x="145" y="0.0" width="41" height="37"/>
                                                 <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -735,6 +724,17 @@
                                                 <state key="normal" image="take_photo"/>
                                                 <connections>
                                                     <action selector="btnTakePicture:" destination="6VJ-KH-B8x" eventType="touchUpInside" id="c6K-cO-8Id"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFi-nL-er5">
+                                                <rect key="frame" x="41" y="0.0" width="96" height="37"/>
+                                                <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <state key="normal" title="Choose Picture">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="btnChoosePicture:" destination="6VJ-KH-B8x" eventType="touchUpInside" id="qu3-Nr-8P0"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1196,26 +1196,30 @@
                                 <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zlu-2e-XWL">
-                                <rect key="frame" x="20" y="314" width="142" height="30"/>
-                                <color key="backgroundColor" red="0.27058823529999998" green="0.70980392160000005" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="142" id="GEu-9p-1bS"/>
-                                    <constraint firstAttribute="height" constant="30" id="P7e-0G-6wv"/>
-                                </constraints>
-                                <state key="normal" title="Take Picture">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="choosePicture" translatesAutoresizingMaskIntoConstraints="NO" id="jS6-XJ-dgk">
+                                <rect key="frame" x="20" y="352" width="142" height="101"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X9J-cD-ei2">
+                                <rect key="frame" x="20" y="310" width="96" height="37"/>
+                                <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <state key="normal" title="Choose Picture">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnChoosePicture:" destination="mKG-ad-rWV" eventType="touchUpInside" id="515-cb-v6j"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zlu-2e-XWL">
+                                <rect key="frame" x="119" y="310" width="41" height="37"/>
+                                <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="take_photo">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="btnTakePicture:" destination="mKG-ad-rWV" eventType="touchUpInside" id="uTA-Bu-pie"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="choosePicture" translatesAutoresizingMaskIntoConstraints="NO" id="jS6-XJ-dgk">
-                                <rect key="frame" x="20" y="352" width="142" height="101"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="jS6-XJ-dgk" secondAttribute="height" multiplier="142:101" id="QjK-Ud-VSQ"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.8862745098" green="0.88235294119999996" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -1229,8 +1233,6 @@
                             <constraint firstAttribute="trailing" secondItem="RH5-TM-wSv" secondAttribute="trailing" id="8Me-oA-uyR"/>
                             <constraint firstItem="u5v-cP-gOT" firstAttribute="centerY" secondItem="IMF-qN-yKI" secondAttribute="centerY" id="APe-Sn-Lqa"/>
                             <constraint firstItem="k8B-I7-Xwb" firstAttribute="top" secondItem="8GT-Xg-ctl" secondAttribute="bottom" constant="15" id="Ah6-cW-oFg"/>
-                            <constraint firstItem="jS6-XJ-dgk" firstAttribute="trailing" secondItem="Zlu-2e-XWL" secondAttribute="trailing" id="Cha-0p-Bz9"/>
-                            <constraint firstItem="jS6-XJ-dgk" firstAttribute="leading" secondItem="Zlu-2e-XWL" secondAttribute="leading" id="DEe-Tw-bTm"/>
                             <constraint firstItem="eTg-Jq-JBg" firstAttribute="centerY" secondItem="k8B-I7-Xwb" secondAttribute="centerY" id="DW0-2K-6w6"/>
                             <constraint firstItem="kB1-PJ-xqX" firstAttribute="top" secondItem="Koh-gm-tNZ" secondAttribute="bottom" constant="30" id="E33-KW-Aby"/>
                             <constraint firstItem="Dqn-Zt-zn4" firstAttribute="leading" secondItem="u5v-cP-gOT" secondAttribute="leading" id="EfH-KJ-7lS"/>
@@ -1242,19 +1244,15 @@
                             <constraint firstItem="f4R-oS-u83" firstAttribute="leading" secondItem="IMF-qN-yKI" secondAttribute="trailing" constant="15" id="QWt-HY-APE"/>
                             <constraint firstItem="8GT-Xg-ctl" firstAttribute="top" secondItem="IMF-qN-yKI" secondAttribute="bottom" constant="22" id="TXn-R3-IWN"/>
                             <constraint firstItem="f4R-oS-u83" firstAttribute="centerY" secondItem="IMF-qN-yKI" secondAttribute="centerY" id="Uo2-Gl-DUZ"/>
-                            <constraint firstItem="jS6-XJ-dgk" firstAttribute="centerX" secondItem="Zlu-2e-XWL" secondAttribute="centerX" id="XGV-Te-z4w"/>
                             <constraint firstItem="RH5-TM-wSv" firstAttribute="leading" secondItem="kOH-YR-ZbT" secondAttribute="trailing" id="aND-nk-yMK"/>
                             <constraint firstItem="Uoj-Ii-BrA" firstAttribute="top" secondItem="k8B-I7-Xwb" secondAttribute="bottom" constant="15" id="aNY-5j-tzG"/>
                             <constraint firstItem="Uoj-Ii-BrA" firstAttribute="leading" secondItem="8GT-Xg-ctl" secondAttribute="leading" id="bV0-cy-PKb"/>
                             <constraint firstItem="8GT-Xg-ctl" firstAttribute="trailing" secondItem="kB1-PJ-xqX" secondAttribute="trailing" id="d3N-3z-XIP"/>
                             <constraint firstItem="Dqn-Zt-zn4" firstAttribute="centerX" secondItem="u5v-cP-gOT" secondAttribute="centerX" id="fPo-j9-XTG"/>
-                            <constraint firstItem="jS6-XJ-dgk" firstAttribute="top" secondItem="Zlu-2e-XWL" secondAttribute="bottom" constant="8" id="fcI-Wc-lIw"/>
                             <constraint firstItem="kOH-YR-ZbT" firstAttribute="leading" secondItem="aqn-rI-EMl" secondAttribute="leading" id="iYy-88-Z80"/>
-                            <constraint firstItem="Zlu-2e-XWL" firstAttribute="top" secondItem="Uoj-Ii-BrA" secondAttribute="bottom" constant="20" id="jrl-Oh-G8L"/>
                             <constraint firstAttribute="trailing" secondItem="Koh-gm-tNZ" secondAttribute="trailing" id="k6R-Rv-56l"/>
                             <constraint firstItem="k8B-I7-Xwb" firstAttribute="centerX" secondItem="IMF-qN-yKI" secondAttribute="centerX" id="pht-Vt-8jX"/>
                             <constraint firstItem="eTg-Jq-JBg" firstAttribute="trailing" secondItem="f4R-oS-u83" secondAttribute="trailing" id="r4t-0D-5Yh"/>
-                            <constraint firstItem="Zlu-2e-XWL" firstAttribute="leading" secondItem="Uoj-Ii-BrA" secondAttribute="leading" id="s1o-1U-46N"/>
                             <constraint firstItem="8GT-Xg-ctl" firstAttribute="centerX" secondItem="kB1-PJ-xqX" secondAttribute="centerX" id="sIC-oU-TDs"/>
                             <constraint firstItem="Koh-gm-tNZ" firstAttribute="leading" secondItem="aqn-rI-EMl" secondAttribute="leading" id="sem-2A-l0Y"/>
                             <constraint firstItem="Uoj-Ii-BrA" firstAttribute="trailing" secondItem="8GT-Xg-ctl" secondAttribute="trailing" id="tcR-nd-pFn"/>
@@ -1265,6 +1263,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="btnScan" destination="Zlu-2e-XWL" id="Lek-AD-ZYQ"/>
+                        <outlet property="choosePicture" destination="X9J-cD-ei2" id="gWO-eQ-Xb7"/>
                         <outlet property="currentImage" destination="jS6-XJ-dgk" id="eXs-ow-yhC"/>
                         <outlet property="lblIfYesText" destination="Uoj-Ii-BrA" id="sam-84-Nh9"/>
                         <outlet property="lblLikeTobe" destination="8GT-Xg-ctl" id="VvW-Tg-Zgx"/>
@@ -9318,16 +9317,13 @@ $480,000
         <image name="take_photo" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="uBa-RI-Zc4"/>
-        <segue reference="voO-kP-iEV"/>
-        <segue reference="cEt-sO-PDF"/>
-        <segue reference="4zV-ka-Aal"/>
-        <segue reference="qhl-sh-szs"/>
         <segue reference="cgx-FP-sRH"/>
-        <segue reference="vxA-X1-U6d"/>
+        <segue reference="qhl-sh-szs"/>
         <segue reference="eGo-7Q-bwm"/>
         <segue reference="vxA-X1-U6d"/>
+        <segue reference="voO-kP-iEV"/>
         <segue reference="CcM-Cn-vPF"/>
         <segue reference="cEt-sO-PDF"/>
+        <segue reference="4zV-ka-Aal"/>
     </inferredMetricsTieBreakers>
 </document>

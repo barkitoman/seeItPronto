@@ -21,6 +21,8 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
     let imagePicker: UIImagePickerController! = UIImagePickerController()
     @IBOutlet weak var currentImage: UIImageView!
     var haveImage:Bool = false
+    var isTakenPhoto:Bool = false
+    @IBOutlet weak var choosePicture: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,12 +54,14 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     @IBAction func btnTakePicture(sender: AnyObject) {
-        if (UIImagePickerController.isSourceTypeAvailable(.Camera)) {
+        self.isTakenPhoto = true
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
             if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
+                let imagePicker = UIImagePickerController()
+                imagePicker.delegate = self
+                imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
                 imagePicker.allowsEditing = false
-                imagePicker.sourceType = .Camera
-                imagePicker.cameraCaptureMode = .Photo
-                presentViewController(imagePicker, animated: true, completion: {})
+                self.presentViewController(imagePicker, animated: true, completion: nil)
             } else {
                 Utility().displayAlert(self, title: "Rear camera doesn't exist", message:  "Application cannot access the camera.", performSegue: "")
             }
@@ -66,40 +70,23 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
         }
     }
     
-    func documentPicker(controller: UIDocumentPickerViewController, didPickDocumentAtURL url: NSURL) {
-        if controller.documentPickerMode == UIDocumentPickerMode.Import {
-            // This is what it should be
-            print(url.path)
-            //self.newNoteBody.text = String(contentsOfFile: url.path!)
+    @IBAction func btnChoosePicture(sender: AnyObject) {
+        self.isTakenPhoto = false
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
+            imagePicker.allowsEditing = true
+            self.presentViewController(imagePicker, animated: true, completion: nil)
         }
-    }
-
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        if let pickedImage:UIImage = (info[UIImagePickerControllerOriginalImage]) as? UIImage {
-            let selectorToCall = Selector("imageWasSavedSuccessfully:didFinishSavingWithError:context:")
-            UIImageWriteToSavedPhotosAlbum(pickedImage, self, selectorToCall, nil)
-        }
-        imagePicker.dismissViewControllerAnimated(true, completion: {
-            // Anything you want to happen when the user saves an image
-        })
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        print("User canceled image")
-        dismissViewControllerAnimated(true, completion: {
-            // Anything you want to happen when the user selects cancel
-        })
-    }
-    
-    func imageWasSavedSuccessfully(image: UIImage, didFinishSavingWithError error: NSError!, context: UnsafeMutablePointer<()>){
-        if let theError = error {
-            print("An error happened while saving the image = \(theError)")
-        } else {
-            print("Displaying")
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.currentImage.image = image
-            })
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        self.currentImage.image = image
+        if(self.isTakenPhoto == true) {
+            self.saveTakenPhoto()
         }
+        self.dismissViewControllerAnimated(true, completion: nil);
     }
     
     @IBAction func btnNext(sender: AnyObject) {
@@ -121,7 +108,7 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
                     },failure:{(error:NSError!) -> Void in
                         print("ERROR UPLOADING PHOTO")
                 })
-         }
+            }
         }
     }
     
@@ -173,6 +160,7 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
     
     func preQualificationFields(preQuealificationIsEnabled:Bool){
         if(preQuealificationIsEnabled == false) {
+            self.choosePicture.hidden  = false
             self.btnScan.hidden        = false
             self.currentImage.hidden   = false
             self.lblLikeTobe.hidden    = true
@@ -181,6 +169,7 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
             self.swLikeToBe.hidden     = true
             self.lblIfYesText.hidden   = false
         } else {
+            self.choosePicture.hidden  = true
             self.btnScan.hidden        = true
             self.currentImage.hidden   = true
             self.lblLikeTobe.hidden    = false
@@ -189,5 +178,11 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
             self.swLikeToBe.hidden     = false
             self.lblIfYesText.hidden   = true
         }
+    }
+    
+    func saveTakenPhoto() {
+        let imageData = UIImageJPEGRepresentation(self.currentImage.image!, 0.6)
+        let compressedJPGImage = UIImage(data: imageData!)
+        UIImageWriteToSavedPhotosAlbum(compressedJPGImage!, nil, nil, nil)
     }
 }
