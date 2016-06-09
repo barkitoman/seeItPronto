@@ -91,17 +91,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        Notification.askPermission()
+        
+        
+        let notificationTypes : UIUserNotificationType = [.Alert, .Badge, .Sound]
+        let notificationSettings : UIUserNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+        
+        
+        
         self.intervalLocation()
         return true
     }
     
-    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
-        var userInfo = [NSObject: AnyObject]()
-        userInfo["text"] = responseInfo[UIUserNotificationActionResponseTypedTextKey]
-        NSNotificationCenter.defaultCenter().postNotificationName("text", object: nil, userInfo: userInfo)
-        completionHandler()
+    
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings)
+    {
+        UIApplication.sharedApplication().registerForRemoteNotifications()
     }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        print("Device token")
+        print(deviceToken)
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print("ERROR")
+        print(error.localizedDescription)
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        
+    }
+    
+//    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
+//        var userInfo = [NSObject: AnyObject]()
+//        userInfo["text"] = responseInfo[UIUserNotificationActionResponseTypedTextKey]
+//        NSNotificationCenter.defaultCenter().postNotificationName("text", object: nil, userInfo: userInfo)
+//        completionHandler()
+//    }
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
