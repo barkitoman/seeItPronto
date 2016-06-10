@@ -58,7 +58,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
     
     func login() {
         //create params
-        let params = "client_id="+txtUsername.text!+"&client_secret="+txtPassword.text!+"&grant_type="+AppConfig.GRANT_TYPE
+        let params = "client_id=\(txtUsername.text!)&client_secret=\(txtPassword.text!)&device_token_id=\(Utility().deviceTokenId())&grant_type="+AppConfig.GRANT_TYPE
         let url = AppConfig.APP_URL+"/phone_login"
         Request().post(url, params:params, controller: self, successHandler: {(response) in self.afterLoginRequest(response)});
     }

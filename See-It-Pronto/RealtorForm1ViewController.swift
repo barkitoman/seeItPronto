@@ -69,11 +69,11 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
     func save() {
         //create params
         let userId = User().getField("id")
-        var params = "role=realtor&client_id="+txtEmail.text!+"&phone="+txtPhone.text!+"&client_secret="+txtPassword.text!
+        var params = "role=realtor&client_id=\(txtEmail.text!)&phone=\(txtPhone.text!)&client_secret=\(txtPassword.text!)"
         params     = params+"&biography=\(self.txtBiography.text)&grant_type="+AppConfig.GRANT_TYPE
         var url = AppConfig.APP_URL+"/users"
         if(!userId.isEmpty) {
-            params = params+"&id="+userId
+            params = params+"&id=\(userId)&device_token_id=\(Utility().deviceTokenId())"
             url = AppConfig.APP_URL+"/users/"+userId
             Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPost(response)});
         } else {

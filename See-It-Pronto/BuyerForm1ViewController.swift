@@ -71,7 +71,7 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
         if(!userId.isEmpty) {
             //if user is editing
             var params = "role=buyer&email="+txtEmail.text!+"&phone="+txtPhone.text!+"&password="+txtPassword.text!
-            params = params+"&id="+userId
+            params = params+"&id=\(userId)&device_token_id=\(Utility().deviceTokenId())"
             url = AppConfig.APP_URL+"/users/"+userId
             Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPost(response)});
         } else {
@@ -126,5 +126,7 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
             view.viewData  = self.viewData
         }
     }
+    
+
 
 }

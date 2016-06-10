@@ -198,4 +198,11 @@ class Utility {
         return standardTime
     }
     
+    func deviceTokenId()->String {
+        var out = ""
+        if let UUID = UIDevice.currentDevice().identifierForVendor {
+            out = UUID.UUIDString
+        }
+        return out;
+    }
 }

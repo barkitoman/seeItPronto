@@ -86,17 +86,13 @@ class NotificationsViewController: UIViewController {
             if(!notification["description"].stringValue.isEmpty) {
                 title = notification["title"].stringValue
             }
-            print(notification)
             if(notification["type"] == "showing_completed" && notification["feedback"].stringValue != "1") {
-                print("was here 1")
                 self.viewData = ["showing":["id":notification["parent_id"].stringValue,"property_id":notification["property_id"].stringValue, "realtor_id":notification["from_user_id"].stringValue,"notification_id":notification["id"].stringValue]]
                 Utility().displayAlert(self,title: title, message:notification["description"].stringValue, performSegue:"showFeedback1")
             } else {
                 if(notification["feedback"].stringValue == "1") {
-                    print("was here 2")
                     self.performSegueWithIdentifier("NotificationDetail", sender: self)
                 } else {
-                    print("was here 3")
                     Utility().displayAlert(self,title: title, message:notification["description"].stringValue, performSegue:"NotificationDetail")
                 }
             }
@@ -149,7 +145,8 @@ class NotificationsViewController: UIViewController {
     }
     
     func seenNotificationRequest(notificationId:String) {
-     Request().get("seen_notification/\(notificationId)") { (response) -> Void in
+        let url = AppConfig.APP_URL+"/seen_notification/\(notificationId)"
+        Request().get(url) { (response) -> Void in
         
         }
     }
