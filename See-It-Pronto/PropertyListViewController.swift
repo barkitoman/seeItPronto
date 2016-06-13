@@ -182,6 +182,7 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
     
     func loadProperties(let response: NSData){
         let result = JSON(data: response)
+        self.properties.removeAllObjects()
         dispatch_async(dispatch_get_main_queue()) {
             for (_,subJson):(String, JSON) in result {
                 if(!subJson["id"].stringValue.isEmpty) {
@@ -200,5 +201,39 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
             }
             
         }
+    }
+    
+    var pickSeletion: String = "unfiltered"
+    
+    @IBAction func filter(sender: AnyObject) {
+        let pickerView = CustomPickerDialog.init()
+        var arrayDataSource:[String] = ["unfiltered","Higher Price", "Low price",  "Greater nº bedrooms" ," Smaller nº bedrooms","Greater nº bathrooms" ," Smaller nº bathrooms","More sq.ft." ,"less sq.ft."]
+        let array_name:[String] = ["-", "price","price", "bedrooms", "bedrooms", "bathrooms", "bathrooms", "square_feed", "square_feed"]
+        let array_asc_desc:[String] = ["-","desc","asc","desc","asc","desc", "asc","desc","asc"]
+        
+        pickerView.setDataSource(arrayDataSource)
+        pickerView.selectValue(self.pickSeletion)
+       
+        pickerView.showDialog("Filter property", doneButtonTitle: "Done", cancelButtonTitle: "Cancel")
+        { (result) -> Void in
+            BProgressHUD.showLoadingViewWithMessage("Loading")
+            self.pickSeletion = result
+            var url:String = ""
+            if result == "unfiltered"
+            {
+                url = AppConfig.APP_URL+"/property_list/\(User().getField("id"))"
+            }else
+            {
+                for var i=0; i < array_name.count; i++
+                {
+                    if arrayDataSource[i] == result
+                    {
+                      url = AppConfig.APP_URL+"/map_properties_list/\(User().getField("id"))?orderby=\(array_name[i])&order=\(array_asc_desc[i])"
+                    }
+                }
+            }
+            Request().get(url, successHandler: {(response) in self.loadProperties(response)})
+        }
+        
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -2992,14 +2992,30 @@ $480,000
                                     <action selector="btnYes:" destination="raK-gI-tYf" eventType="touchUpInside" id="YPC-hV-o3C"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMz-Uw-OVK">
+                                <rect key="frame" x="263" y="463" width="37" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="cMz-Uw-OVK" secondAttribute="height" multiplier="1:1" id="9Nu-mt-pI1"/>
+                                    <constraint firstAttribute="height" constant="37" id="qPR-H8-Ryc"/>
+                                </constraints>
+                                <color key="tintColor" red="0.76078431369999999" green="0.16078431369999999" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="Filter">
+                                    <color key="titleColor" red="0.64705882349999999" green="0.066666666669999999" blue="0.1019607843" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="filter:" destination="aq2-IT-9S6" eventType="touchUpInside" id="Inh-ux-Ff3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="7GM-gG-QRr" firstAttribute="leading" secondItem="zVD-q7-1Xf" secondAttribute="leading" id="2gk-4G-mvV"/>
                             <constraint firstItem="rV2-ET-UAX" firstAttribute="top" secondItem="Aca-AZ-Zn6" secondAttribute="bottom" id="7oT-XZ-8y1"/>
+                            <constraint firstItem="7GM-gG-QRr" firstAttribute="top" secondItem="cMz-Uw-OVK" secondAttribute="bottom" constant="8" id="C4t-py-gMU"/>
                             <constraint firstAttribute="trailing" secondItem="rV2-ET-UAX" secondAttribute="trailing" id="GbO-f7-s5f"/>
                             <constraint firstItem="3WM-5c-3hW" firstAttribute="top" secondItem="7GM-gG-QRr" secondAttribute="bottom" id="I1t-KS-jc4"/>
                             <constraint firstItem="N3c-8e-Nmh" firstAttribute="top" secondItem="rae-5n-XEU" secondAttribute="bottom" constant="8" symbolic="YES" id="K33-MO-Lvy"/>
+                            <constraint firstAttribute="trailing" secondItem="cMz-Uw-OVK" secondAttribute="trailing" constant="20" symbolic="YES" id="Mgk-SN-651"/>
                             <constraint firstAttribute="trailing" secondItem="Aca-AZ-Zn6" secondAttribute="trailing" id="NZm-Af-QG6"/>
                             <constraint firstItem="Aca-AZ-Zn6" firstAttribute="top" secondItem="N3c-8e-Nmh" secondAttribute="bottom" id="XGu-cA-RFG"/>
                             <constraint firstItem="Aca-AZ-Zn6" firstAttribute="leading" secondItem="zVD-q7-1Xf" secondAttribute="leading" id="XWO-D8-yGh"/>
@@ -9307,6 +9323,7 @@ $480,000
         <image name="0stars" width="132" height="28"/>
         <image name="0stars_alone" width="24" height="24"/>
         <image name="Circled Chevron Right" width="26" height="26"/>
+        <image name="Filter" width="50" height="50"/>
         <image name="background" width="664" height="1183"/>
         <image name="blank-back" width="96" height="40"/>
         <image name="calendar" width="165" height="119"/>
