@@ -26,6 +26,7 @@ class UserEntity: NSManagedObject {
     @NSManaged var realtor_id:String
     @NSManaged var mls_id:String
     @NSManaged var is_login:String
+    @NSManaged var device_token_id:String
  
 }
 
@@ -74,19 +75,20 @@ class User {
         //create instance of pur data model and inicilize
         let newItem = UserEntity(entity:en!, insertIntoManagedObjectContext:contxt)
         //map our properties
-        newItem.id            = userData["user"]["id"].stringValue
-        newItem.role          = userData["user"]["role"].stringValue
-        newItem.first_name    = userData["user"]["first_name"].stringValue
-        newItem.last_name     = userData["user"]["last_name"].stringValue
-        newItem.email         = userData["user"]["email"].stringValue
-        newItem.password      = userData["user"]["password"].stringValue
-        newItem.expires_in    = userData["expires_in"].stringValue
-        newItem.access_token  = userData["access_token"].stringValue
-        newItem.scope         = userData["scope"].stringValue
-        newItem.token_type    = userData["token_type"].stringValue
-        newItem.realtor_id    = userData["realtor_id"].stringValue
-        newItem.mls_id        = userData["user"]["mls_id"].stringValue
-        newItem.is_login      = userData["user"]["is_login"].stringValue
+        newItem.id              = userData["user"]["id"].stringValue
+        newItem.role            = userData["user"]["role"].stringValue
+        newItem.first_name      = userData["user"]["first_name"].stringValue
+        newItem.last_name       = userData["user"]["last_name"].stringValue
+        newItem.email           = userData["user"]["email"].stringValue
+        newItem.password        = userData["user"]["password"].stringValue
+        newItem.expires_in      = userData["expires_in"].stringValue
+        newItem.access_token    = userData["access_token"].stringValue
+        newItem.scope           = userData["scope"].stringValue
+        newItem.token_type      = userData["token_type"].stringValue
+        newItem.realtor_id      = userData["realtor_id"].stringValue
+        newItem.mls_id          = userData["user"]["mls_id"].stringValue
+        newItem.is_login        = userData["user"]["is_login"].stringValue
+        newItem.device_token_id = userData["user"]["device_token_id"].stringValue
         do {
             try contxt.save()
         } catch let error as NSError {
