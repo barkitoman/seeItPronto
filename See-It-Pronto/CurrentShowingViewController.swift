@@ -184,11 +184,31 @@ class CurrentShowingViewController: UIViewController {
     
     @IBAction func btnStartEndShowing(sender: AnyObject) {
         if(self.startEndButtonAction == "start") {
+            self.startShowing()
+        } else {
+            self.endShowing()
+        }
+    }
+    
+    func startShowing() {
+        let url = AppConfig.APP_URL+"/start_showing/"+self.viewData["showing"]["id"].stringValue
+        Request().get(url) { (response) -> Void in
+            self.afterStartShowing(response)
+        }
+    }
+    
+    func afterStartShowing(let response: NSData) {
+        let result = JSON(data: response)
+        if(result["result"].bool == true ) {
             self.startEndButtonAction = "end"
             self.btnStartEndShowing.setTitle("End showing", forState: .Normal)
             self.btnStartEndShowing.backgroundColor = UIColor(rgba: "#45B5DC")
         } else {
-         self.endShowing()
+            var msg = "Failed to start the showing request, please try later"
+            if(result["msg"].stringValue != "") {
+                msg = result["msg"].stringValue
+            }
+            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
         }
     }
     

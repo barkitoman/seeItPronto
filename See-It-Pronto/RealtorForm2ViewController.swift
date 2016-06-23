@@ -19,6 +19,8 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     @IBOutlet weak var zipCode1: UITextField!
     @IBOutlet weak var zipCode2: UITextField!
     @IBOutlet weak var zipCode3: UITextField!
+    
+    @IBOutlet weak var txtRoutingNumber: NSLayoutConstraint!
     //@IBOutlet weak var txtmlsid: UITextField!
     let imagePicker: UIImagePickerController! = UIImagePickerController()
     var haveImage:Bool = false
