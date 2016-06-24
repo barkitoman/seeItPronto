@@ -99,6 +99,7 @@ class ReadyToWorkViewController: UIViewController {
 
     func save(shoingStatus:String) {
         //create params
+        BProgressHUD.showLoadingViewWithMessage("Loading")
         let showingRate = self.numberShowingRate //Utility().sliderValue(self.slShowingRate)
         let travelRate  = self.numberTravelRange //Utility().sliderValue(self.slTravelRate)
         let params = "id="+self.viewData["id"].stringValue+"&realtor_id="+self.viewData["realtor_id"].stringValue+"&showing_rate="+showingRate+"&travel_range="+travelRate+"&active_for_showing="+shoingStatus
@@ -108,6 +109,9 @@ class ReadyToWorkViewController: UIViewController {
     
     func afterPost(let response: NSData) {
         let result = JSON(data: response)
+        dispatch_async(dispatch_get_main_queue()) {
+            BProgressHUD.dismissHUD(0)
+        }
         if(result["result"].bool == true) {
             self.viewData = result
             dispatch_async(dispatch_get_main_queue()) {

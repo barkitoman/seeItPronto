@@ -160,10 +160,52 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         self.txtPriceTo.delegate = self
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return false
+    //MARK: - Helper Methods
+    
+    // This is called to remove the first responder for the text field.
+    func resign() {
+        self.resignFirstResponder()
     }
+    
+    // This triggers the textFieldDidEndEditing method that has the textField within it.
+    //  This then triggers the resign() method to remove the keyboard.
+    //  We use this in the "done" button action.
+    func endEditingNow(){
+        self.view.endEditing(true)
+    }
+    
+    
+    //MARK: - Delegate Methods
+    
+    // When clicking on the field, use this method.
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        
+        
+        // Create a button bar for the number pad
+        let keyboardDoneButtonView = UIToolbar()
+        keyboardDoneButtonView.sizeToFit()
+        
+        // Setup the buttons to be put in the system.
+        let item = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("endEditingNow") )
+        let toolbarButtons = [item]
+        
+        //Put the buttons into the ToolBar and display the tool bar
+        keyboardDoneButtonView.setItems(toolbarButtons, animated: false)
+        textField.inputAccessoryView = keyboardDoneButtonView
+        
+        return true
+    }
+    
+    // called when 'return' key pressed. return NO to ignore.
+    // Requires having the text fields using the view controller as the delegate.
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        // Sends the keyboard away when pressing the "done" button
+        resign()
+        return true
+        
+    }
+    
+
     
     @IBAction func btnClass(sender: AnyObject) {
         picker.hidden ? openPicker() : closePicker()

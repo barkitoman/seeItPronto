@@ -99,9 +99,12 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
         tableViewMenu = UITableView(frame: view.bounds)
         tableViewMenu.dataSource = self
         tableViewMenu.delegate = self
+        tableViewMenu.showsHorizontalScrollIndicator = false
+        tableViewMenu.showsVerticalScrollIndicator = false
         tableViewMenu.separatorStyle = .None
+
         tableViewMenu.registerClass(MenuTableViewCell.self, forCellReuseIdentifier: "Cell")
-        tableViewMenu.tableFooterView = UIView()
+       // tableViewMenu.tableFooterView = UIView()
         tableViewMenu.clipsToBounds = false
         tableViewMenu.layer.masksToBounds = false
         tableViewMenu.layer.shadowColor = UIColor.blackColor().CGColor
@@ -143,12 +146,12 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return self.view.frame.height/10
+        return self.view.frame.height/13
     }
     
     //MARK: - Those two methods are used for image on header tableView
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.view.frame.height/3
+        return self.view.frame.height/8
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -172,14 +175,16 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
         }
         
         var newFrame: CGRect = self.view.frame;
+        newFrame.origin.y = self.view.frame.origin.y
+        newFrame.origin.x = self.view.frame.origin.x
         newFrame.size.height = self.view.frame.size.height
         newFrame.size.width = (self.view.frame.size.width) * widthPurcentage
         
         self.tableViewMenu.frame = newFrame
-        
+        //self.tableViewMenu.bounds = newFrame
         //Set Table View under TopLayoutGuide
         let topLayoutGuide: CGFloat = self.topLayoutGuide.length;
-        tableViewMenu.contentInset = UIEdgeInsetsMake(topLayoutGuide, 0, 0, 0);
+        tableViewMenu.contentInset = UIEdgeInsetsMake(topLayoutGuide, 0, 00, 0);
         
     }
     

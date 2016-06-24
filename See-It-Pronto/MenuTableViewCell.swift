@@ -29,7 +29,7 @@ class MenuTableViewCell: UITableViewCell {
         newFrameForLabel.size.width = self.frame.width*0.8
         
         label.frame = newFrameForLabel
-        label.textColor = UIColor.blackColor()
+        label.textColor = UIColor(red:0.00, green:0.46, blue:0.78, alpha:1.0)
         label.font = UIFont(name: "Avenir", size: 15)
         
         
@@ -37,7 +37,7 @@ class MenuTableViewCell: UITableViewCell {
         newFrameForImage.size.height = self.frame.height*0.8
         newFrameForImage.size.width = self.frame.height*0.8
         img = UIImageView(frame: newFrameForImage)
-        
+       
         self.contentView.addSubview(img)
         self.contentView.addSubview(label)
         
