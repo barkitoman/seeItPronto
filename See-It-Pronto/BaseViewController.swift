@@ -15,7 +15,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     var tabOfChildViewControllerName: [String] = []
     var tabOfChildViewControllerIconName: [String] = []
     var menuToReturn = [Dictionary<String,String>]()
-    var imageNameHeaderMenu: String = "background_menu"
+    var imageNameHeaderMenu: String = "logoFondoBlanco"
     
     var objMenu : TableViewMenuController!
     var objSearch : UIViewController!
@@ -200,7 +200,6 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         if (sender.tag == 10){
             // Menu is already displayed, no need to display it twice, otherwise we hide the menu
             sender.tag = 0;
-            
             //Remove Menu View Controller
             objMenu.animateWhenViewDisappear()
             return
@@ -215,6 +214,9 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         objMenu.setImageName(imageNameHeaderMenu)
         objMenu.btnMenu = sender
         objMenu.delegate = self
+        
+        //objMenu.view.frame = newFrame
+        //objMenu.view.bounds = newFrame
         self.view.addSubview(objMenu.view)
         self.addChildViewController(objMenu)
         
@@ -234,6 +236,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         //Create View
         let containerViews = UIView()
         containerViews.translatesAutoresizingMaskIntoConstraints = false
+        
         self.view.addSubview(containerViews)
         self.view.sendSubviewToBack(containerViews)
         
