@@ -237,22 +237,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
     
     func devicesManager(manager: KTKDevicesManager, didDiscoverDevices devices: [KTKNearbyDevice]?) {
         if(devices?.count > 0) {
-            let userId   = User().getField("id")
-            let role     = User().getField("role")
+
             for device in devices! {
-                let deviceId = "\(device.uniqueID),"
-                if (!foundDevices.containsString(deviceId) && userId != "" && role == "realtor") {
+                if let deviceId = device.uniqueID {
+                if (!foundDevices.containsString(deviceId)) {
                     foundDevices = foundDevices+"\(deviceId),"
                     dispatch_async(dispatch_get_main_queue()) {
-                        let url = AppConfig.APP_URL+"/get_beacon_property/\(userId)/\(device.uniqueID)"
+                        let url = AppConfig.APP_URL+"/get_beacon_property/\(deviceId)"
+                        print("url \(url)")
                         Request().get(url, successHandler: { (response) -> Void in
                           self.showPropertyBeaconDetail(response)
                         })
                     }
+                
+                    }
                 }
-            }
-            if(role != "" && role != "realtor") {
-                self.devicesManager.stopDevicesDiscovery()
             }
         } else {
             foundDevices = ""
@@ -263,14 +262,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             dispatch_async(dispatch_get_main_queue()) {
-                let saveData: JSON =  ["id":result["property"]["property_id"].stringValue,"property_class":result["property"]["property_class"].stringValue]
+                let saveData: JSON =  ["id":result["property"]["id"].stringValue,"property_class":result["property"]["class"].stringValue]
                 Property().saveOne(saveData)
                 let rootViewController = self.window?.rootViewController as! UINavigationController
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let mvc = storyboard.instantiateViewControllerWithIdentifier("ReadyToWorkViewController") as! ReadyToWorkViewController
+                let mvc = storyboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController
                 rootViewController.pushViewController(mvc, animated: true)
             }
         }
+//                var userInfo = [NSObject: AnyObject]()
+//                userInfo["text"] = "A See-It-Pronto property has been detected. This property is equipped with a pronto beacon that provides you with updated information."
+//                NSNotificationCenter.defaultCenter().postNotificationName("text", object: nil, userInfo: userInfo)
     }
 
 }
