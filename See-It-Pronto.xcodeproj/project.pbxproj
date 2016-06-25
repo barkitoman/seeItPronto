@@ -24,6 +24,8 @@
 		108795971C97069D00B3D6FA /* AppointmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108795961C97069D00B3D6FA /* AppointmentsViewController.swift */; };
 		108795991C970A7500B3D6FA /* AppointmentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108795981C970A7500B3D6FA /* AppointmentsTableViewCell.swift */; };
 		1087959B1C97367A00B3D6FA /* MyListingsRealtorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1087959A1C97367A00B3D6FA /* MyListingsRealtorTableViewCell.swift */; };
+		108B96921D1DBCAE000CA586 /* KontaktSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 108B96901D1DBBC5000CA586 /* KontaktSDK.framework */; };
+		108B96931D1DBCAE000CA586 /* KontaktSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 108B96901D1DBBC5000CA586 /* KontaktSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1094FD2F1CF4E285009DCAF9 /* CreateBeaconViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1094FD2E1CF4E285009DCAF9 /* CreateBeaconViewController.swift */; };
 		109E6A481C80A95A00AD46EE /* PropertyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109E6A471C80A95A00AD46EE /* PropertyManager.swift */; };
 		109FF84A1C860A1000E20FC2 /* PropertyActionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109FF8491C860A1000E20FC2 /* PropertyActionManager.swift */; };
@@ -112,6 +114,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		108B96941D1DBCAE000CA586 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				108B96931D1DBCAE000CA586 /* KontaktSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		10058EDA1CB8447C008B0E97 /* PropertyListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListViewController.swift; sourceTree = "<group>"; };
 		10058EDC1CB8449E008B0E97 /* PropertyListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListTableViewCell.swift; sourceTree = "<group>"; };
@@ -130,6 +146,7 @@
 		108795961C97069D00B3D6FA /* AppointmentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentsViewController.swift; sourceTree = "<group>"; };
 		108795981C970A7500B3D6FA /* AppointmentsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentsTableViewCell.swift; sourceTree = "<group>"; };
 		1087959A1C97367A00B3D6FA /* MyListingsRealtorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyListingsRealtorTableViewCell.swift; sourceTree = "<group>"; };
+		108B96901D1DBBC5000CA586 /* KontaktSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KontaktSDK.framework; sourceTree = "<group>"; };
 		1094FD2E1CF4E285009DCAF9 /* CreateBeaconViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateBeaconViewController.swift; sourceTree = "<group>"; };
 		109E6A471C80A95A00AD46EE /* PropertyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyManager.swift; sourceTree = "<group>"; };
 		109FF8491C860A1000E20FC2 /* PropertyActionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyActionManager.swift; sourceTree = "<group>"; };
@@ -212,6 +229,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				108B96921D1DBCAE000CA586 /* KontaktSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +250,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		108B968F1D1DBB90000CA586 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				108B96901D1DBBC5000CA586 /* KontaktSDK.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		680842DF1C3EAC5E00AF7F8E /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -351,6 +377,7 @@
 		6897A1261C244B5F00AB3A0A /* See-It-Pronto */ = {
 			isa = PBXGroup;
 			children = (
+				108B968F1D1DBB90000CA586 /* Frameworks */,
 				6839831F1C74BC8200129EA5 /* Cell */,
 				68C2932D1C63C6C70031C41A /* Menu */,
 				680842DF1C3EAC5E00AF7F8E /* Model */,
@@ -420,6 +447,8 @@
 				6897A1201C244B5F00AB3A0A /* Sources */,
 				6897A1211C244B5F00AB3A0A /* Frameworks */,
 				6897A1221C244B5F00AB3A0A /* Resources */,
+				108B96941D1DBCAE000CA586 /* Embed Frameworks */,
+				108B96951D1DBCE4000CA586 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -536,6 +565,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		108B96951D1DBCE4000CA586 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/KontaktSDK.framework/strip-frameworks.sh\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6897A1201C244B5F00AB3A0A /* Sources */ = {
@@ -768,13 +813,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Deyson Bejarano (VK5G4694EY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/See-It-Pronto",
+				);
 				INFOPLIST_FILE = "See-It-Pronto/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "NyxentCorp.See-It-Pronto";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d11080ee-0a2e-4f46-8523-986ef5a90bd8";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -782,13 +831,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Deyson Bejarano (VK5G4694EY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/See-It-Pronto",
+				);
 				INFOPLIST_FILE = "See-It-Pronto/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "NyxentCorp.See-It-Pronto";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d11080ee-0a2e-4f46-8523-986ef5a90bd8";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

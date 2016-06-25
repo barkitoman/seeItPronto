@@ -8,10 +8,14 @@
 
 import UIKit
 import CoreData
+import KontaktSDK
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate {
 
+    var devicesManager: KTKDevicesManager!
+    var connection: KTKDeviceConnection?
+    
     var window: UIWindow?
     let NotificationTimeoutInSeconds:NSTimeInterval = 10
     var NotificationTimer: NSTimer?
@@ -19,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var manager: OneShotLocationManager?
     var latitude: String = ""
     var longintude: String = ""
+    var foundDevices = ""
     
     //interval for get new notifications
     func intervalNotifications() {
@@ -91,15 +96,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        
-        
         let notificationTypes : UIUserNotificationType = [.Alert, .Badge, .Sound]
         let notificationSettings : UIUserNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
         UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
-        
-        
-        
+        //send location
         self.intervalLocation()
+        // Initiate Devices Manager
+        self.devicesManager = KTKDevicesManager(delegate: self)
+        
+        // Start Discovery
+        self.devicesManager.startDevicesDiscoveryWithInterval(AppConfig.FIND_BEACONS_INTERVAL)
         return true
     }
     
@@ -114,7 +120,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        print("ERROR")
+        print("ERROR GETTING DEVICE TOKEN")
         print(error.localizedDescription)
     }
     
@@ -224,6 +230,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    func devicesManagerDidFailToStartDiscovery(manager: KTKDevicesManager, withError error: NSError?) {
+        
+    }
+    
+    func devicesManager(manager: KTKDevicesManager, didDiscoverDevices devices: [KTKNearbyDevice]?) {
+        if(devices?.count > 0) {
+            let userId   = User().getField("id")
+            let role     = User().getField("role")
+            for device in devices! {
+                let deviceId = "\(device.uniqueID),"
+                if (!foundDevices.containsString(deviceId) && userId != "" && role == "realtor") {
+                    foundDevices = foundDevices+"\(deviceId),"
+                    dispatch_async(dispatch_get_main_queue()) {
+                        let url = AppConfig.APP_URL+"/get_beacon_property/\(userId)/\(device.uniqueID)"
+                        Request().get(url, successHandler: { (response) -> Void in
+                          self.showPropertyBeaconDetail(response)
+                        })
+                    }
+                }
+            }
+            if(role != "" && role != "realtor") {
+                self.devicesManager.stopDevicesDiscovery()
+            }
+        } else {
+            foundDevices = ""
+        }
+    }
+    
+    func showPropertyBeaconDetail(let response: NSData) {
+        let result = JSON(data: response)
+        if(result["result"].bool == true) {
+            dispatch_async(dispatch_get_main_queue()) {
+                let saveData: JSON =  ["id":result["property"]["property_id"].stringValue,"property_class":result["property"]["property_class"].stringValue]
+                Property().saveOne(saveData)
+                let rootViewController = self.window?.rootViewController as! UINavigationController
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let mvc = storyboard.instantiateViewControllerWithIdentifier("ReadyToWorkViewController") as! ReadyToWorkViewController
+                rootViewController.pushViewController(mvc, animated: true)
+            }
+        }
+    }
 
 }
+
 

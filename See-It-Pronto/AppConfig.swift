@@ -14,12 +14,13 @@ struct AppConfig {
     static var GRANT_TYPE              = "client_credentials"
     //0 en espera, 1 aceptado, 2 rechazado, 3 completado, 4 cancelado
     static var SHOWING_CANCELED_STATUS = "4"
-    static var SHOWING_WAIT_SECONDS    = 20
+    static var SHOWING_WAIT_SECONDS    = 60
+    static var FIND_BEACONS_INTERVAL   = 10.0
     static var MODE                    = "DEVELOP" //PROD, DEVELOP
 
 }
 
-//model for avoid repeat images no table lists
+//model configuration for avoid repeat images on table lists
 class Model {
     var property : JSON = []
     var im : UIImage!

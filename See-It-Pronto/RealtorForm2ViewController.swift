@@ -20,7 +20,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     @IBOutlet weak var zipCode2: UITextField!
     @IBOutlet weak var zipCode3: UITextField!
     
-    @IBOutlet weak var txtRoutingNumber: NSLayoutConstraint!
+    @IBOutlet weak var txtRoutingNumber: UITextField!
     //@IBOutlet weak var txtmlsid: UITextField!
     let imagePicker: UIImagePickerController! = UIImagePickerController()
     var haveImage:Bool = false
@@ -125,7 +125,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
         var params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["id"].stringValue
         params = params+"&active_zip_code1=\(self.zipCode1.text!)"
         params = params+"&active_zip_code2=\(self.zipCode2.text!)"
-        params = params+"&active_zip_code3=\(self.zipCode3.text!)"
+        params = params+"&active_zip_code3=\(self.zipCode3.text!)&routing_number=\(self.txtRoutingNumber.text!)"
         params = params+"&role=realtor&brokerage="+txtBrokerage.text!+"&first_name="+txtFirstName.text!
         params = params+"&last_name="+txtLastName.text!+"&lisence="+txtLisence.text!+"&back_acc="+txtBankAcct.text!
         if(!self.viewData["realtor_id"].stringValue.isEmpty){
@@ -162,14 +162,15 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     func loadDataToEdit(let response: NSData) {
         dispatch_async(dispatch_get_main_queue()) {
             let result = JSON(data: response)
-            self.txtFirstName.text = result["first_name"].stringValue
-            self.txtLastName.text  = result["last_name"].stringValue
-            self.txtBrokerage.text = result["brokerage"].stringValue
-            self.txtBankAcct.text  = result["bank_acct"].stringValue
-            self.txtLisence.text   = result["license"].stringValue
-            self.zipCode1.text     = result["active_zip_code1"].stringValue
-            self.zipCode2.text     = result["active_zip_code2"].stringValue
-            self.zipCode3.text     = result["active_zip_code3"].stringValue
+            self.txtFirstName.text     = result["first_name"].stringValue
+            self.txtLastName.text      = result["last_name"].stringValue
+            self.txtBrokerage.text     = result["brokerage"].stringValue
+            self.txtRoutingNumber.text = result["routing_number"].stringValue
+            self.txtBankAcct.text      = result["bank_acct"].stringValue
+            self.txtLisence.text       = result["license"].stringValue
+            self.zipCode1.text         = result["active_zip_code1"].stringValue
+            self.zipCode2.text         = result["active_zip_code2"].stringValue
+            self.zipCode3.text         = result["active_zip_code3"].stringValue
             //self.txtmlsid.text     = result["mls_id"].stringValue
             if(!result["url_image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.previewProfilePicture, imgPath: result["url_image"].stringValue)
