@@ -508,6 +508,11 @@
 					6897A1231C244B5F00AB3A0A = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = CWV23TUPF4;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					6897A13A1C244B6000AB3A0A = {
 						CreatedOnToolsVersion = 7.2;

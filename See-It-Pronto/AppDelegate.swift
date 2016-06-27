@@ -115,12 +115,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        print("Device token")
-        print(deviceToken)
+        print("Device token for push notifications")
+        print(Utility().convertDeviceTokenToString(deviceToken))
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        print("ERROR GETTING DEVICE TOKEN")
+        print("Error getting device token on emulator")
         print(error.localizedDescription)
     }
     
