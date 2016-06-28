@@ -96,15 +96,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        let notificationTypes : UIUserNotificationType = [.Alert, .Badge, .Sound]
-        let notificationSettings : UIUserNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+        let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
+        let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
+        application.registerUserNotificationSettings(pushNotificationSettings)
+        application.registerForRemoteNotifications()
+        
         //send location
         self.intervalLocation()
-        // Initiate Devices Manager
+        // Initiate Beacon Devices Manager
         self.devicesManager = KTKDevicesManager(delegate: self)
         
-        // Start Discovery
+        // Start Discovery Beacons
         self.devicesManager.startDevicesDiscoveryWithInterval(AppConfig.FIND_BEACONS_INTERVAL)
         return true
     }
@@ -116,7 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         print("Device token for push notifications")
-        print(Utility().convertDeviceTokenToString(deviceToken))
+        print(deviceToken)
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
@@ -131,12 +133,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
         rootViewController.pushViewController(mvc, animated: true)
     }
     
-//    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
-//        var userInfo = [NSObject: AnyObject]()
-//        userInfo["text"] = responseInfo[UIUserNotificationActionResponseTypedTextKey]
-//        NSNotificationCenter.defaultCenter().postNotificationName("text", object: nil, userInfo: userInfo)
-//        completionHandler()
-//    }
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
+        var userInfo = [NSObject: AnyObject]()
+        userInfo["text"] = responseInfo[UIUserNotificationActionResponseTypedTextKey]
+        NSNotificationCenter.defaultCenter().postNotificationName("text", object: nil, userInfo: userInfo)
+        completionHandler()
+    }
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

@@ -191,6 +191,12 @@ class CurrentShowingViewController: UIViewController {
     }
     
     func startShowing() {
+        self.startEndButtonAction = "end"
+        self.btnStartEndShowing.setTitle("End showing", forState: .Normal)
+        self.btnStartEndShowing.backgroundColor = UIColor(rgba: "#45B5DC")
+    }
+    
+    func startShowingSendingMoney() {
         let url = AppConfig.APP_URL+"/start_showing/"+self.viewData["showing"]["id"].stringValue
         Request().get(url) { (response) -> Void in
             self.afterStartShowing(response)
