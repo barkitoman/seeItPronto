@@ -96,10 +96,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
-        let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
-        application.registerUserNotificationSettings(pushNotificationSettings)
-        application.registerForRemoteNotifications()
+        let notificationTypes : UIUserNotificationType = [.Alert, .Badge, .Sound]
+        let notificationSettings : UIUserNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+        
+//        let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
+//        let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
+//        application.registerUserNotificationSettings(pushNotificationSettings)
+//        application.registerForRemoteNotifications()
         
         //send location
         self.intervalLocation()
@@ -126,12 +130,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
         print(error.localizedDescription)
     }
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        let rootViewController = self.window?.rootViewController as! UINavigationController
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mvc = storyboard.instantiateViewControllerWithIdentifier("NotificationsViewController") as! NotificationsViewController
-        rootViewController.pushViewController(mvc, animated: true)
+    // Called when a notification is received and the app is in the
+    // foreground (or if the app was in the background and the user clicks on the notification).
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        // display the userInfo
+        if let notification = userInfo["aps"] as? NSDictionary,
+            let _ = notification["alert"] as? String {
+                let rootViewController = self.window?.rootViewController as! UINavigationController
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let mvc = storyboard.instantiateViewControllerWithIdentifier("NotificationsViewController") as! NotificationsViewController
+                rootViewController.pushViewController(mvc, animated: true)
+                
+                // call the completion handler
+                // -- pass in NoData, since no new data was fetched from the server.
+                completionHandler(UIBackgroundFetchResult.NoData)
+        }
     }
+    
+//    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+//        
+//        let rootViewController = self.window?.rootViewController as! UINavigationController
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let mvc = storyboard.instantiateViewControllerWithIdentifier("NotificationsViewController") as! NotificationsViewController
+//        rootViewController.pushViewController(mvc, animated: true)
+//    }
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
         var userInfo = [NSObject: AnyObject]()
