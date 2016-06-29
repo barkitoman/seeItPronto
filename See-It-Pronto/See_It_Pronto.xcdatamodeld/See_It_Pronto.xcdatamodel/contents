@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Automatic">
+    <entity name="DeviceManager" syncable="YES">
+        <attribute name="device_token_id" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Property" syncable="YES">
         <attribute name="added_on" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
@@ -85,5 +88,6 @@
         <element name="PropertyRealtor" positionX="-54" positionY="108" width="128" height="210"/>
         <element name="SearchConfig" positionX="-63" positionY="54" width="128" height="210"/>
         <element name="User" positionX="-63" positionY="-18" width="128" height="255"/>
+        <element name="DeviceManager" positionX="-54" positionY="135" width="128" height="60"/>
     </elements>
 </model>

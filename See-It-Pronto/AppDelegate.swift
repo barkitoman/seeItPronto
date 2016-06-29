@@ -121,8 +121,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        print("Device token for push notifications")
-        print(deviceToken)
+        let saveData = JSON(["device_token_id":Utility().convertDeviceTokenToString(deviceToken)])
+        DeviceManager().saveOne(saveData)
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {

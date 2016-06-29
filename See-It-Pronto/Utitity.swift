@@ -199,11 +199,8 @@ class Utility {
     }
     
     func deviceTokenId()->String {
-        var out = ""
-        if let UUID = UIDevice.currentDevice().identifierForVendor {
-            out = UUID.UUIDString
-        }
-        return out;
+        let deviceId = DeviceManager().getField("id")
+        return deviceId;
     }
     
     func convertDeviceTokenToString(deviceToken:NSData) -> String {
@@ -211,10 +208,6 @@ class Utility {
         var deviceTokenStr = deviceToken.description.stringByReplacingOccurrencesOfString(">", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString("<", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString(" ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        
-        // Our API returns token in all uppercase, regardless how it was originally sent.
-        // To make the two consistent, I am uppercasing the token string here.
-        deviceTokenStr = deviceTokenStr.uppercaseString
         return deviceTokenStr
     }
 }

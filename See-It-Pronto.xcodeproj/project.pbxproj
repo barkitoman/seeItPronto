@@ -37,6 +37,7 @@
 		10B360641CA9B3A900B73D01 /* FeedBacksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B360631CA9B3A900B73D01 /* FeedBacksViewController.swift */; };
 		10B360661CA9B45800B73D01 /* FeedBacksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B360651CA9B45800B73D01 /* FeedBacksTableViewCell.swift */; };
 		10C08F261CBD4F6700956E17 /* ReadyToWorkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C08F251CBD4F6700956E17 /* ReadyToWorkViewController.swift */; };
+		10C282F61D245DD100CF78D3 /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C282F51D245DD100CF78D3 /* DeviceManager.swift */; };
 		10DA2E6F1CE4D56300EE8553 /* ConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10DA2E6E1CE4D56300EE8553 /* ConfigViewController.swift */; };
 		10E46AEA1CC1535300C5F8D5 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E46AE91CC1535300C5F8D5 /* UIColor.swift */; };
 		680842E31C3EB0C700AF7F8E /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680842E21C3EB0C700AF7F8E /* AppConfig.swift */; };
@@ -158,6 +159,7 @@
 		10B360631CA9B3A900B73D01 /* FeedBacksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBacksViewController.swift; sourceTree = "<group>"; };
 		10B360651CA9B45800B73D01 /* FeedBacksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBacksTableViewCell.swift; sourceTree = "<group>"; };
 		10C08F251CBD4F6700956E17 /* ReadyToWorkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyToWorkViewController.swift; sourceTree = "<group>"; };
+		10C282F51D245DD100CF78D3 /* DeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
 		10DA2E6E1CE4D56300EE8553 /* ConfigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigViewController.swift; sourceTree = "<group>"; };
 		10E46AE91CC1535300C5F8D5 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		680842E21C3EB0C700AF7F8E /* AppConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				109E6A471C80A95A00AD46EE /* PropertyManager.swift */,
 				107A40341C84C31A001C96A8 /* PropertyRealtorManager.swift */,
 				109FF8491C860A1000E20FC2 /* PropertyActionManager.swift */,
+				10C282F51D245DD100CF78D3 /* DeviceManager.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -624,6 +627,7 @@
 				68C265861C7B5AC5006ADF61 /* ListBuyersTableViewCell.swift in Sources */,
 				681140A31C3AC7010068AE1C /* RealtorProfileViewController.swift in Sources */,
 				681140951C3AC60D0068AE1C /* BuyerForm1ViewController.swift in Sources */,
+				10C282F61D245DD100CF78D3 /* DeviceManager.swift in Sources */,
 				684D08481C6534B900BF086E /* MenuTableViewCell.swift in Sources */,
 				6811408B1C3AC3280068AE1C /* SelectRoleViewController.swift in Sources */,
 				686E8F431C3C2C2300F5FE01 /* BuyerHomeViewController.swift in Sources */,
