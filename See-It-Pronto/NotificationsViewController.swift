@@ -17,10 +17,16 @@ class NotificationsViewController: UIViewController {
     var maxPage   = 0    //maximum page
     var notifications:NSMutableArray! = NSMutableArray()
     var viewData:JSON = []
+    var showNewNotificationMsg = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    BProgressHUD.showLoadingViewWithMessage("Loading")
+        if(self.showNewNotificationMsg == true) {
+            Utility().displayAlert(self, title: "New Notification", message: "New notification received", performSegue: "")
+            BProgressHUD.showLoadingViewWithMessage("Loading")
+        } else {
+            BProgressHUD.showLoadingViewWithMessage("Loading")
+        }
         self.findNotifications()
     }
 

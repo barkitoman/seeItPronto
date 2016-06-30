@@ -114,6 +114,7 @@ class ShowingRequestViewController: UIViewController {
     
     func afterNoRequest(let response: NSData) {
         let result = JSON(data: response)
+        print(result)
         if(result["result"].bool == true ) {
             dispatch_async(dispatch_get_main_queue()) {
                 let alertController = UIAlertController(title:"Success", message: "The request has been rejected", preferredStyle: .Alert)

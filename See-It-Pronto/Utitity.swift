@@ -199,7 +199,7 @@ class Utility {
     }
     
     func deviceTokenId()->String {
-        let deviceId = DeviceManager().getField("id")
+        let deviceId = DeviceManager().getField("device_token_id")
         return deviceId;
     }
     

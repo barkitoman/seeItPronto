@@ -138,8 +138,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
             let _ = notification["alert"] as? String {
                 let rootViewController = self.window?.rootViewController as! UINavigationController
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let mvc = storyboard.instantiateViewControllerWithIdentifier("NotificationsViewController") as! NotificationsViewController
-                rootViewController.pushViewController(mvc, animated: true)
+                let vc = storyboard.instantiateViewControllerWithIdentifier("NotificationsViewController") as! NotificationsViewController
+                vc.showNewNotificationMsg = true
+                rootViewController.pushViewController(vc, animated: true)
                 
                 // call the completion handler
                 // -- pass in NoData, since no new data was fetched from the server.
