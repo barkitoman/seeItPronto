@@ -54,7 +54,7 @@ class ReadyToWorkViewController: UIViewController {
         
         let pickerView = CustomPickerDialog.init()
         var arrayDataSource:[String] = []
-        for i in 0...50 {
+        for i in 10...50 {
             arrayDataSource.append(String(i))
         }
         pickerView.setDataSource(arrayDataSource)
@@ -74,7 +74,7 @@ class ReadyToWorkViewController: UIViewController {
         
         let pickerView = CustomPickerDialog.init()
         var arrayDataSource:[String] = []
-        for i in 10...99 {
+        for i in 5...25 {
             arrayDataSource.append(String(i))
         }
         pickerView.setDataSource(arrayDataSource)

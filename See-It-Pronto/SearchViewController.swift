@@ -50,16 +50,16 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         static let moods = [
             ["title" : "Single Family",             "class":"1"],
             ["title" : "Condo/Coop/Villa/Twnhse",   "class":"2"],
-            ["title" : "Residential Rental",        "class":"6"],
-            ["title" : "Business Opportunity",      "class":"8"],
             /*
-            ["title" : "Residential Income",        "class":"3"],
-            ["title" : "ResidentialLand/BoatDocks", "class":"4"],
-            ["title" : "Comm/Bus/Agr/Indust Land",  "class":"5"],
-            ["title" : "Improved Comm/Indust",      "class":"7"],
-            ["title" : "Business Opportunity",      "class":"8"],
-            ["title" : "Office",                    "class":"10"],
-            ["title" : "Open House",                "class":"13"]
+                ["title" : "Residential Rental",        "class":"6"],
+                ["title" : "Business Opportunity",      "class":"8"],
+                ["title" : "Residential Income",        "class":"3"],
+                ["title" : "ResidentialLand/BoatDocks", "class":"4"],
+                ["title" : "Comm/Bus/Agr/Indust Land",  "class":"5"],
+                ["title" : "Improved Comm/Indust",      "class":"7"],
+                ["title" : "Business Opportunity",      "class":"8"],
+                ["title" : "Office",                    "class":"10"],
+                ["title" : "Open House",                "class":"13"]
             */
         ]
     }

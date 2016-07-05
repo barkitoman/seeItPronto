@@ -71,8 +71,9 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         addChildView("PastListingsBuyerViewController",titleOfChildren: "Properties Viewed",  iconName: "properties_viewed")
         addChildView("BuyerForm1ViewController",       titleOfChildren: "My Profile",     iconName: "edit_profile")
         addChildView("NotificationsViewController",    titleOfChildren: "Notifications",  iconName: "notification")
-        addChildView("ConfigViewController",           titleOfChildren: "Settings",       iconName: "settings")
         addChildView("LoginViewController",            titleOfChildren: "Log Out",        iconName: "logout")
+        addChildView("ConfigViewController",           titleOfChildren: "Settings",       iconName: "settings")
+        
     }
     
     //MARK: Functions for Container

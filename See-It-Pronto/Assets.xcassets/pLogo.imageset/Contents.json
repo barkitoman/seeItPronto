@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "p-logo-flecha.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "p-logo.png",
       "scale" : "2x"
     },
     {

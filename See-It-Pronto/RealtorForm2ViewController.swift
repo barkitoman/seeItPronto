@@ -49,17 +49,25 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     }
     
     func selfDelegate() {
+        self.txtLisence.delegate = self
+        self.txtBankAcct.delegate = self
         self.txtBrokerage.delegate = self
         self.txtFirstName.delegate = self
-        self.txtLisence.delegate = self
         self.txtLastName.delegate = self
-        self.txtBankAcct.delegate = self
+        self.txtRoutingNumber.delegate = self
+        self.zipCode1.delegate = self
+        self.zipCode2.delegate = self
+        self.zipCode3.delegate = self
+        self.zipCode1.tag = 1
+        self.zipCode2.tag = 1
+        self.zipCode3.tag = 1
+
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return false
-    }
+//    func textFieldShouldReturn(textField: UITextField) -> Bool {
+//        self.view.endEditing(true)
+//        return false
+//    }
     
     @IBAction func btnchoosePicture(sender: AnyObject) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
@@ -190,5 +198,61 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
             view.viewData  = self.viewData
         }
     }
+    
+    //MARK: - Helper Methods
+    
+    // This is called to remove the first responder for the text field.
+    func resign() {
+        self.resignFirstResponder()
+    }
+    
+    // This triggers the textFieldDidEndEditing method that has the textField within it.
+    //  This then triggers the resign() method to remove the keyboard.
+    //  We use this in the "done" button action.
+    func endEditingNow(){
+        self.view.endEditing(true)
+    }
+    
+    
+    //MARK: - Delegate Methods
+    
+    // When clicking on the field, use this method.
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        
+        // Create a button bar for the number pad
+        let keyboardDoneButtonView = UIToolbar()
+        keyboardDoneButtonView.sizeToFit()
+        
+        // Setup the buttons to be put in the system.
+        let item = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("endEditingNow") )
+        let toolbarButtons = [item]
+        
+        //Put the buttons into the ToolBar and display the tool bar
+        keyboardDoneButtonView.setItems(toolbarButtons, animated: false)
+        
+        if textField.tag == 1{
+            textField.inputAccessoryView = keyboardDoneButtonView
+        }
+        
+        return true
+    }
+    
+    // called when 'return' key pressed. return NO to ignore.
+    // Requires having the text fields using the view controller as the delegate.
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        // Sends the keyboard away when pressing the "done" button
+        if textField.tag != 1
+        {
+            self.view.endEditing(true)
+            return false
+        }else{
+            resign()
+            return true
+        }
+       
+        
+    }
+    
+
     
 }
