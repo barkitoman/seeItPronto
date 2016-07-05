@@ -1054,7 +1054,7 @@
                         <outlet property="txtCardNumber" destination="Z9g-E2-nvt" id="q47-MF-bso"/>
                         <outlet property="txtExpDate" destination="6qA-Lk-qVv" id="ekf-n3-Rvd"/>
                         <outlet property="txtPromoCode" destination="e9s-tP-87N" id="LXg-nx-voa"/>
-                        <segue destination="mKG-ad-rWV" kind="show" identifier="FromBuyerForm3" id="tGP-BE-8jl"/>
+                        <segue destination="PC2-Jj-2kL" kind="show" identifier="FromBuyerForm3" id="hcE-p4-akP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ri-RZ-d13" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1273,7 +1273,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PIw-ji-X21" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4447" y="-978"/>
+            <point key="canvasLocation" x="2846" y="-2102"/>
         </scene>
         <!--Buyer Form4 View Controller-->
         <scene sceneID="BoG-K6-vOw">
@@ -1388,13 +1388,10 @@
                             <constraint firstAttribute="trailingMargin" secondItem="oPa-ZG-Y6u" secondAttribute="trailing" constant="-20" id="q2r-lC-Sk2"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <segue destination="PC2-Jj-2kL" kind="show" identifier="FormBuyer4" id="Ejg-Xi-KK2"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ld5-wb-2DE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4879" y="-978"/>
+            <point key="canvasLocation" x="3204" y="-2102"/>
         </scene>
         <!--Notifications View Controller-->
         <scene sceneID="qFP-JV-zNW">
@@ -2842,7 +2839,7 @@ From</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tsj-Gs-Edg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5335" y="-978"/>
+            <point key="canvasLocation" x="4485" y="-988"/>
         </scene>
         <!--Property List View Controller-->
         <scene sceneID="kaf-Of-Q9l">
@@ -6256,8 +6253,8 @@ $480,000
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="igw-be-s5N">
-                                                <rect key="frame" x="19" y="350" width="89" height="21"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <rect key="frame" x="19" y="351" width="89" height="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" red="0.0039215686269999999" green="0.45882352939999999" blue="0.79215686269999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -6269,8 +6266,8 @@ $480,000
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zmk-sf-ESP">
-                                                <rect key="frame" x="19" y="388" width="89" height="21"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <rect key="frame" x="19" y="389" width="89" height="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" red="0.0039215686269999999" green="0.45882352939999999" blue="0.79215686269999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -6291,8 +6288,8 @@ $480,000
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0eB-Fo-yJv">
-                                                <rect key="frame" x="19" y="312" width="89" height="21"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <rect key="frame" x="19" y="313" width="89" height="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" red="0.0039215686269999999" green="0.45882352939999999" blue="0.79215686269999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -9491,13 +9488,13 @@ Provide a detailed description of your problem, suggestion or bug-report</string
         <image name="take_photo" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gRd-bz-hb9"/>
         <segue reference="vxA-X1-U6d"/>
-        <segue reference="7AY-Fz-Bqm"/>
+        <segue reference="hcE-p4-akP"/>
+        <segue reference="qhl-sh-szs"/>
         <segue reference="U05-Ui-KM7"/>
         <segue reference="DJR-bZ-L3O"/>
-        <segue reference="uBa-RI-Zc4"/>
-        <segue reference="cEt-sO-PDF"/>
         <segue reference="4zV-ka-Aal"/>
+        <segue reference="CcM-Cn-vPF"/>
+        <segue reference="cEt-sO-PDF"/>
     </inferredMetricsTieBreakers>
 </document>
