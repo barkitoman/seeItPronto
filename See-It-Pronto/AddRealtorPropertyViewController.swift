@@ -71,7 +71,6 @@ class AddRealtorPropertyViewController: UIViewController {
     }
     
     func save() {
-        print(self.selectedIndex)
         if(self.selectedIndex != 0) {
             if(self.txtPropertyId.text != "") {
                 let url = AppConfig.APP_URL+"/add_property_realtor"
