@@ -13,6 +13,7 @@
 		10208E071D00A12200714315 /* AddRealtorPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10208E061D00A12200714315 /* AddRealtorPropertyViewController.swift */; };
 		102526F11CA080FE00EE2DB0 /* SeeItLaterBuyerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102526F01CA080FE00EE2DB0 /* SeeItLaterBuyerViewController.swift */; };
 		102526F31CA082CD00EE2DB0 /* SeeItLaterBuyerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102526F21CA082CD00EE2DB0 /* SeeItLaterBuyerTableViewCell.swift */; };
+		103013171D26F67C00DF331B /* BugReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103013161D26F67C00DF331B /* BugReportViewController.swift */; };
 		1040F5441CAC47910011E497 /* PastListingsBuyerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1040F5431CAC47910011E497 /* PastListingsBuyerViewController.swift */; };
 		1040F5461CAC47CB0011E497 /* PastListingBuyerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1040F5451CAC47CB0011E497 /* PastListingBuyerTableViewCell.swift */; };
 		107934BB1CD7AC6700F07A14 /* ImageLoadingWithCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107934BA1CD7AC6700F07A14 /* ImageLoadingWithCache.swift */; };
@@ -136,6 +137,7 @@
 		10208E061D00A12200714315 /* AddRealtorPropertyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRealtorPropertyViewController.swift; sourceTree = "<group>"; };
 		102526F01CA080FE00EE2DB0 /* SeeItLaterBuyerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeItLaterBuyerViewController.swift; sourceTree = "<group>"; };
 		102526F21CA082CD00EE2DB0 /* SeeItLaterBuyerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeItLaterBuyerTableViewCell.swift; sourceTree = "<group>"; };
+		103013161D26F67C00DF331B /* BugReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BugReportViewController.swift; sourceTree = "<group>"; };
 		1040F5431CAC47910011E497 /* PastListingsBuyerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastListingsBuyerViewController.swift; sourceTree = "<group>"; };
 		1040F5451CAC47CB0011E497 /* PastListingBuyerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastListingBuyerTableViewCell.swift; sourceTree = "<group>"; };
 		107934BA1CD7AC6700F07A14 /* ImageLoadingWithCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoadingWithCache.swift; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 				10AADA351CF37E7A00EF8868 /* SelectBeaconViewController.swift */,
 				1094FD2E1CF4E285009DCAF9 /* CreateBeaconViewController.swift */,
 				10208E061D00A12200714315 /* AddRealtorPropertyViewController.swift */,
+				103013161D26F67C00DF331B /* BugReportViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -661,6 +664,7 @@
 				681140AF1C3AC8360068AE1C /* BeaconStoreViewController.swift in Sources */,
 				681140A91C3AC7C30068AE1C /* MyListingsRealtorViewController.swift in Sources */,
 				683F7F291C3D7EC100CA0A0C /* FeedBack3ViewController.swift in Sources */,
+				103013171D26F67C00DF331B /* BugReportViewController.swift in Sources */,
 				10AD7A471CF0B171005EDFE4 /* SearchViewController.swift in Sources */,
 				683F7F251C3D7D3C00CA0A0C /* FeedBack1ViewController.swift in Sources */,
 				68663D311C3C9B2700460D42 /* SeeItNowViewController.swift in Sources */,
