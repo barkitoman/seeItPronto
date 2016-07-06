@@ -44,37 +44,35 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     }
     
     func menuRealtor() {
-        addChildView("RealtorHomeViewController",      titleOfChildren: "Home",           iconName: "home")
-        //addChildView("PropertyListViewController",     titleOfChildren: "List Properties",iconName: "list_properties")
-        addChildView("CurrentShowingViewController",   titleOfChildren: "Current Showing",iconName: "current_showing")
-        addChildView("AppointmentsViewController",     titleOfChildren: "Appointments",   iconName: "appoiments")
-        addChildView("FeedBacksViewController",        titleOfChildren: "Feedback",      iconName: "feedbacks")
-        addChildView("MyListingsRealtorViewController",titleOfChildren: "My Listings",    iconName: "my_listings")
-        //addChildView("RealtorProfileViewController",  titleOfChildren: "My Profile",    iconName: "my_profile")
-        addChildView("ListBuyersViewController",       titleOfChildren: "Buyers",         iconName: "buyer")
-        addChildView("RealtorForm1ViewController",     titleOfChildren: "My Profile",     iconName: "edit_profile")
-        addChildView("NotificationsViewController",    titleOfChildren: "Notifications",  iconName: "notification")
-        addChildView("ReadyToWorkViewController",      titleOfChildren: "Making Money Status",  iconName: "making_money")
-        addChildView("ConfigViewController",           titleOfChildren: "Settings",  iconName: "settings")
-        addChildView("CreateBeaconViewController",     titleOfChildren: "Add Beacon",  iconName: "add_beacon")
-        addChildView("AddRealtorPropertyViewController",     titleOfChildren: "Add property",  iconName: "add_realtor_property")
-        
-        addChildView("LoginViewController",            titleOfChildren: "Log Out",        iconName: "logout")
-        addChildView("BugReportViewController",            titleOfChildren: "Send Us Your Feedback",        iconName: "send_us_your_feedback")
+        addChildView("RealtorHomeViewController",       titleOfChildren: "Home",                   iconName: "home")
+        //addChildView("PropertyListViewController",    titleOfChildren: "List Properties",        iconName: "list_properties")
+        addChildView("CurrentShowingViewController",    titleOfChildren: "Current Showing",        iconName: "current_showing")
+        addChildView("AppointmentsViewController",      titleOfChildren: "Appointments",           iconName: "appoiments")
+        addChildView("FeedBacksViewController",         titleOfChildren: "Feedback",               iconName: "feedbacks")
+        addChildView("MyListingsRealtorViewController", titleOfChildren: "My Listings",            iconName: "my_listings")
+        //addChildView("RealtorProfileViewController",  titleOfChildren: "My Profile",             iconName: "my_profile")
+        addChildView("ListBuyersViewController",        titleOfChildren: "Buyers",                 iconName: "buyer")
+        addChildView("RealtorForm1ViewController",      titleOfChildren: "My Profile",             iconName: "edit_profile")
+        addChildView("NotificationsViewController",     titleOfChildren: "Notifications",          iconName: "notification")
+        addChildView("ReadyToWorkViewController",       titleOfChildren: "Making Money Status",    iconName: "making_money")
+        addChildView("ConfigViewController",            titleOfChildren: "Settings",               iconName: "settings")
+        addChildView("CreateBeaconViewController",      titleOfChildren: "Add Beacon",             iconName: "add_beacon")
+        addChildView("LoginViewController",             titleOfChildren: "Log Out",                iconName: "logout")
+        addChildView("BugReportViewController",         titleOfChildren: "Send Us Your Feedback",  iconName: "send_us_your_feedback")
         //
     }
     
     func menuBuyer(){
-        addChildView("RealtorHomeViewController",      titleOfChildren: "Home",           iconName: "home")
-        //addChildView("PropertyListViewController",     titleOfChildren: "List Properties",iconName: "list_properties")
-        addChildView("ListRealtorsViewController",     titleOfChildren: "Agents",         iconName: "realtor")
-        addChildView("SeeItLaterBuyerViewController",  titleOfChildren: "See It Later",   iconName: "my_listings")
-        addChildView("PastListingsBuyerViewController",titleOfChildren: "Properties Viewed",  iconName: "properties_viewed")
-        addChildView("BuyerForm1ViewController",       titleOfChildren: "My Profile",     iconName: "edit_profile")
-        addChildView("NotificationsViewController",    titleOfChildren: "Notifications",  iconName: "notification")
-        addChildView("LoginViewController",            titleOfChildren: "Log Out",        iconName: "logout")
-        addChildView("ConfigViewController",           titleOfChildren: "Settings",       iconName: "settings")
-        addChildView("BugReportViewController",            titleOfChildren: "Send Us Your Feedback",        iconName: "send_us_your_feedback")
+        addChildView("RealtorHomeViewController",      titleOfChildren: "Home",                  iconName: "home")
+        //addChildView("PropertyListViewController",   titleOfChildren: "List Properties",       iconName: "list_properties")
+        addChildView("ListRealtorsViewController",     titleOfChildren: "Agents",                iconName: "realtor")
+        addChildView("SeeItLaterBuyerViewController",  titleOfChildren: "See It Later",          iconName: "my_listings")
+        addChildView("PastListingsBuyerViewController",titleOfChildren: "Properties Viewed",     iconName: "properties_viewed")
+        addChildView("BuyerForm1ViewController",       titleOfChildren: "My Profile",            iconName: "edit_profile")
+        addChildView("NotificationsViewController",    titleOfChildren: "Notifications",         iconName: "notification")
+        addChildView("LoginViewController",            titleOfChildren: "Log Out",               iconName: "logout")
+        addChildView("ConfigViewController",           titleOfChildren: "Settings",              iconName: "settings")
+        addChildView("BugReportViewController",        titleOfChildren: "Send Us Your Feedback", iconName: "send_us_your_feedback")
     }
     
     //MARK: Functions for Container

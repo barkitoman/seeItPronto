@@ -28,8 +28,7 @@ class Request {
                     print("AN ERROR HAS OCURRED SENDING POST REQUEST!")
                     print(error); return
                 }
-                let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
-                print(responseString)
+
                 if(self.debug == true) {
                     let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
                     print(responseString)

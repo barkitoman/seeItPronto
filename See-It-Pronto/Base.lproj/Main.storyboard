@@ -1061,6 +1061,85 @@
             </objects>
             <point key="canvasLocation" x="4009" y="-988"/>
         </scene>
+        <!--Bug Report View Controller-->
+        <scene sceneID="DqZ-6f-dCc">
+            <objects>
+                <viewController restorationIdentifier="BugReportViewController" storyboardIdentifier="BugReportViewController" id="Mgp-aB-5Jb" customClass="BugReportViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cuQ-1t-wzG"/>
+                        <viewControllerLayoutGuide type="bottom" id="jnJ-9R-nZc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Y4m-25-99f">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DuH-41-ZBj">
+                                <rect key="frame" x="0.0" y="20" width="90" height="44"/>
+                                <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="&lt; Back"/>
+                                <connections>
+                                    <action selector="btnBack:" destination="Mgp-aB-5Jb" eventType="touchUpInside" id="8Rm-dl-Tis"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cbr-8S-aqm">
+                                <rect key="frame" x="90" y="20" width="230" height="44"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Send Us Your Feedback" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Flk-Zr-bzx">
+                                        <rect key="frame" x="13" y="13" width="196" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.56862745100000001" green="0.56078431370000004" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5yM-fI-clp">
+                                <rect key="frame" x="160" y="508" width="160" height="60"/>
+                                <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="0.81176470590000005" green="0.88235294119999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnCancel:" destination="Mgp-aB-5Jb" eventType="touchUpInside" id="jTm-dp-PDj"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="y3O-V2-hkz">
+                                <rect key="frame" x="20" y="176" width="280" height="215"/>
+                                <color key="backgroundColor" red="0.8862745098" green="0.88235294119999996" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVk-TF-aWk">
+                                <rect key="frame" x="20" y="99" width="280" height="62"/>
+                                <string key="text">What do you think about our App?
+Provide a detailed description of your problem, suggestion or bug-report</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B5y-sO-KPu">
+                                <rect key="frame" x="0.0" y="508" width="160" height="60"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.88235294119999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Submit">
+                                    <color key="titleColor" red="0.0" green="0.45882352939999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnSubmit:" destination="Mgp-aB-5Jb" eventType="touchUpInside" id="eQs-or-GEW"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="txtComments" destination="y3O-V2-hkz" id="q4p-rG-pEi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jSK-79-bNM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2407" y="-2102"/>
+        </scene>
         <!--Buyer Form5 View Controller-->
         <scene sceneID="0R2-GJ-vgS">
             <objects>
@@ -2834,7 +2913,7 @@ From</string>
                         <outlet property="btnViewList" destination="Hor-jn-IFM" id="Enx-WX-IV2"/>
                         <outlet property="txtSearch" destination="cGg-8z-HJr" id="Vz2-Am-rDF"/>
                         <outlet property="webView" destination="3Xs-aS-9Ya" id="Fi8-6l-WNB"/>
-                        <segue destination="KJN-E7-Sc1" kind="show" identifier="ViewBuyerHouse" id="NB6-2s-gsf"/>
+                        <segue destination="KJN-E7-Sc1" kind="show" identifier="ViewBuyerHouse" id="bS0-SP-Jq6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tsj-Gs-Edg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4013,7 +4092,7 @@ $480,000
         <!--Full Property Details View Controller-->
         <scene sceneID="TxV-BQ-cE8">
             <objects>
-                <viewController restorationIdentifier="FullPropertyDetailsViewController" storyboardIdentifier="FullPropertyDetailsViewController" id="KJN-E7-Sc1" customClass="FullPropertyDetailsViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="KJN-E7-Sc1" customClass="FullPropertyDetailsViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bBA-ey-wcl"/>
                         <viewControllerLayoutGuide type="bottom" id="4Lv-jr-y4K"/>
@@ -7133,7 +7212,7 @@ $480,000
                     <connections>
                         <outlet property="searchTextField" destination="3bj-M7-XgI" id="aS1-Fq-a1g"/>
                         <outlet property="webView" destination="hQZ-eR-NXJ" id="1kH-tk-gzg"/>
-                        <segue destination="KJN-E7-Sc1" kind="show" identifier="RealtorHomePropertyDetails" id="fTt-fU-oW0"/>
+                        <segue destination="KJN-E7-Sc1" kind="show" identifier="RealtorHomePropertyDetails" id="enq-aK-awn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ySX-bN-fhi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -9395,85 +9474,6 @@ $480,000
             </objects>
             <point key="canvasLocation" x="3599" y="-2102"/>
         </scene>
-        <!--Bug Report View Controller-->
-        <scene sceneID="TH1-ah-rj5">
-            <objects>
-                <viewController restorationIdentifier="BugReportViewController" storyboardIdentifier="BugReportViewController" id="kK3-sa-Srg" customClass="BugReportViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="qkQ-9M-rqx"/>
-                        <viewControllerLayoutGuide type="bottom" id="j1J-zU-y6s"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="w60-xk-dfT">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GiG-W8-L5a">
-                                <rect key="frame" x="86" y="20" width="234" height="42"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Send Us Your FeedBack" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Jk-rG-dKf">
-                                        <rect key="frame" x="21" y="12" width="170" height="18"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.56862745100000001" green="0.56078431370000004" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8eH-Hh-Ipq">
-                                <rect key="frame" x="0.0" y="20" width="86" height="42"/>
-                                <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="&lt;Back"/>
-                                <connections>
-                                    <action selector="btnBack:" destination="kK3-sa-Srg" eventType="touchUpInside" id="jFT-94-YnU"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4jO-LS-Pvb">
-                                <rect key="frame" x="15" y="102" width="285" height="66"/>
-                                <string key="text">What do you think about our App?
-Provide a detailed description of your problem, suggestion or bug-report</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="H3d-Hw-B8k">
-                                <rect key="frame" x="15" y="176" width="285" height="208"/>
-                                <color key="backgroundColor" red="0.9137254901960784" green="0.9137254901960784" blue="0.9137254901960784" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
-                            </textView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="js2-nJ-BuM">
-                                <rect key="frame" x="0.0" y="508" width="160" height="60"/>
-                                <color key="backgroundColor" red="0.81176470590000005" green="0.88235294119999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Submit">
-                                    <color key="titleColor" red="0.0" green="0.45882352939999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="btnSubmit:" destination="kK3-sa-Srg" eventType="touchUpInside" id="Eok-b3-og6"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="maO-uP-Ru3">
-                                <rect key="frame" x="160" y="508" width="160" height="60"/>
-                                <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleColor" red="0.81176470590000005" green="0.88235294119999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="btnCancel:" destination="kK3-sa-Srg" eventType="touchUpInside" id="7mL-pW-M9X"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <connections>
-                        <outlet property="txtComments" destination="H3d-Hw-B8k" id="REy-yZ-039"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Pfy-uA-Viy" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2425" y="-1019"/>
-        </scene>
     </scenes>
     <resources>
         <image name="0stars" width="132" height="28"/>
@@ -9489,14 +9489,13 @@ Provide a detailed description of your problem, suggestion or bug-report</string
         <image name="take_photo" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="cEt-sO-PDF"/>
-        <segue reference="NB6-2s-gsf"/>
-        <segue reference="qhl-sh-szs"/>
-        <segue reference="U05-Ui-KM7"/>
-        <segue reference="DJR-bZ-L3O"/>
+        <segue reference="hcE-p4-akP"/>
         <segue reference="vxA-X1-U6d"/>
-        <segue reference="4zV-ka-Aal"/>
-        <segue reference="uBa-RI-Zc4"/>
         <segue reference="cEt-sO-PDF"/>
+        <segue reference="CcM-Cn-vPF"/>
+        <segue reference="DJR-bZ-L3O"/>
+        <segue reference="eGo-7Q-bwm"/>
+        <segue reference="pE4-BO-WoU"/>
+        <segue reference="4zV-ka-Aal"/>
     </inferredMetricsTieBreakers>
 </document>
