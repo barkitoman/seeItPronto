@@ -13,10 +13,17 @@ class FeedBack2ViewController: UIViewController,UITextFieldDelegate, UITextViewD
     var viewData:JSON = []
     @IBOutlet weak var txtAgentComments: UITextView!
     var animateDistance: CGFloat!
+    var userRating:String = ""
+    @IBOutlet weak var agentRate1: UIButton!
+    @IBOutlet weak var agentRate2: UIButton!
+    @IBOutlet weak var agentRate3: UIButton!
+    @IBOutlet weak var agentRate4: UIButton!
+    @IBOutlet weak var agentRate5: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.txtAgentComments.delegate = self
+        addRatingTarget()
     }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
@@ -24,6 +31,54 @@ class FeedBack2ViewController: UIViewController,UITextFieldDelegate, UITextViewD
             textView.resignFirstResponder()
         }
         return true
+    }
+    
+    func addRatingTarget() {
+        agentRate1.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
+        agentRate2.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
+        agentRate3.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
+        agentRate4.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
+        agentRate5.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
+    }
+    
+    @IBAction func setRating(button:UIButton) {
+        let description = (button.titleLabel?.text)! as String
+        let typeRating = description.characters.split{$0 == "="}.map(String.init)
+        let type   = typeRating[0] as String
+        let rating = typeRating[1] as String
+        if(type == "user") {
+            self.userRating = rating
+            agentRatingButtons(rating)
+        }
+    }
+    
+    func agentRatingButtons(rating:String) {
+        agentRate1.setImage(UIImage(named: "0stars_alone"), forState: UIControlState.Normal)
+        agentRate2.setImage(UIImage(named: "0stars_alone"), forState: UIControlState.Normal)
+        agentRate3.setImage(UIImage(named: "0stars_alone"), forState: UIControlState.Normal)
+        agentRate4.setImage(UIImage(named: "0stars_alone"), forState: UIControlState.Normal)
+        agentRate5.setImage(UIImage(named: "0stars_alone"), forState: UIControlState.Normal)
+        if(rating == "1"){
+            agentRate1.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
+        }else if(rating == "2") {
+            agentRate1.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
+            agentRate2.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
+        }else if(rating == "3") {
+            agentRate1.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
+            agentRate2.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
+            agentRate3.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
+        } else if(rating == "4") {
+            agentRate1.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
+            agentRate2.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
+            agentRate3.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
+            agentRate4.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
+        } else if(rating == "5") {
+            agentRate1.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
+            agentRate2.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
+            agentRate3.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
+            agentRate4.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
+            agentRate5.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -43,7 +98,8 @@ class FeedBack2ViewController: UIViewController,UITextFieldDelegate, UITextViewD
     }
     
     @IBAction func btnBuyWithThisAgent(sender: AnyObject) {
-        let params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3&feedback_realtor_comment="+self.txtAgentComments.text!
+        var params = "id=\(self.viewData["showing"]["id"].stringValue)&showing_status=3&realtor_id=\(self.viewData["showing"]["realtor_id"].stringValue)"
+        params     = params+"&feedback_realtor_comment=\(self.txtAgentComments.text!)&user_rating_value=\(self.userRating)&user_id\(User().getField("id"))"
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterBuyWithAgentButton(response)});
     }
@@ -68,7 +124,7 @@ class FeedBack2ViewController: UIViewController,UITextFieldDelegate, UITextViewD
     }
 
     @IBAction func btnNext(sender: AnyObject) {
-        let params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3&feedback_realtor_comment="+self.txtAgentComments.text!
+        let params = "id=\(self.viewData["showing"]["id"].stringValue)&showing_status=3&realtor_id=\(self.viewData["showing"]["realtor_id"].stringValue)&feedback_realtor_comment=\(self.txtAgentComments.text!)&user_rating_value=\(self.userRating)&user_id\(User().getField("id"))"
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterNextRequest(response)});
     }

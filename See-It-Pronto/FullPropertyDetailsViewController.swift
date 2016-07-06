@@ -89,9 +89,13 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate 
     
     
     @IBAction func btnSeeitPronto(sender: AnyObject) {
-        let propertyActionData: JSON =  ["type":"see_it_pronto"]
-        PropertyAction().saveOne(propertyActionData)
-        self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+        if(self.viewData["user"]["current_zip_code"].stringValue == self.viewData["zipcode"].stringValue) {
+            let propertyActionData: JSON =  ["type":"see_it_pronto"]
+            PropertyAction().saveOne(propertyActionData)
+            self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+        } else {
+            Utility().displayAlert(self, title: "Message", message: " \"See it pronto” is only available for nearby properties.", performSegue: "")
+        }
     }
     
     @IBAction func btnSeeItLater(sender: AnyObject) {

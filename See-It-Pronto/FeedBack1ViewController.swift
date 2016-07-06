@@ -14,7 +14,6 @@ class FeedBack1ViewController: UIViewController, UITextFieldDelegate, UITextView
     var showStartMessage:Bool = false
     var showingRating:String  = ""
     var homeRating:String     = ""
-    var userRating:String     = ""
     
     @IBOutlet weak var showingComments: UITextView!
     @IBOutlet weak var showingRate1: UIButton!
@@ -29,11 +28,6 @@ class FeedBack1ViewController: UIViewController, UITextFieldDelegate, UITextView
     @IBOutlet weak var homeRate4: UIButton!
     @IBOutlet weak var homeRate5: UIButton!
     
-    @IBOutlet weak var agentRate1: UIButton!
-    @IBOutlet weak var agentRate2: UIButton!
-    @IBOutlet weak var agentRate3: UIButton!
-    @IBOutlet weak var agentRate4: UIButton!
-    @IBOutlet weak var agentRate5: UIButton!
     var animateDistance: CGFloat!
 
     override func viewDidLoad() {
@@ -95,7 +89,7 @@ class FeedBack1ViewController: UIViewController, UITextFieldDelegate, UITextView
     
     @IBAction func btnNext(sender: AnyObject) {
         var params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3&feedback_showing_comment="+self.showingComments.text!
-        params     = params+"&showing_rating_value="+self.showingRating+"&user_rating_value="+self.userRating+"&home_rating_value="+self.homeRating
+        params     = params+"&showing_rating_value="+self.showingRating+"&home_rating_value="+self.homeRating
         params     = params+"&user_id="+User().getField("id")+"&realtor_id="+self.viewData["showing"]["realtor_id"].stringValue
         params     = params+"&notification_feedback=1&property_id=\(self.viewData["showing"]["property_id"].stringValue)"
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
@@ -136,12 +130,6 @@ class FeedBack1ViewController: UIViewController, UITextFieldDelegate, UITextView
         homeRate3.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
         homeRate4.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
         homeRate5.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
-        
-        agentRate1.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
-        agentRate2.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
-        agentRate3.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
-        agentRate4.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
-        agentRate5.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
     }
     
     @IBAction func setRating(button:UIButton) {
@@ -155,9 +143,6 @@ class FeedBack1ViewController: UIViewController, UITextFieldDelegate, UITextView
         }else if(type == "home") {
             self.homeRating = rating
             homeRatingButtons(rating)
-        }else if(type == "user") {
-            self.userRating = rating
-            agentRatingButtons(rating)
         }
     }
     
@@ -216,35 +201,6 @@ class FeedBack1ViewController: UIViewController, UITextFieldDelegate, UITextView
             homeRate3.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
             homeRate4.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
             homeRate5.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-        }
-    }
-    
-    func agentRatingButtons(rating:String) {
-        agentRate1.setImage(UIImage(named: "0stars_alone"), forState: UIControlState.Normal)
-        agentRate2.setImage(UIImage(named: "0stars_alone"), forState: UIControlState.Normal)
-        agentRate3.setImage(UIImage(named: "0stars_alone"), forState: UIControlState.Normal)
-        agentRate4.setImage(UIImage(named: "0stars_alone"), forState: UIControlState.Normal)
-        agentRate5.setImage(UIImage(named: "0stars_alone"), forState: UIControlState.Normal)
-        if(rating == "1"){
-            agentRate1.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-        }else if(rating == "2") {
-            agentRate1.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            agentRate2.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-        }else if(rating == "3") {
-            agentRate1.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            agentRate2.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            agentRate3.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-        } else if(rating == "4") {
-            agentRate1.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            agentRate2.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            agentRate3.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            agentRate4.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-        } else if(rating == "5") {
-            agentRate1.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            agentRate2.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            agentRate3.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            agentRate4.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            agentRate5.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
         }
     }
     
