@@ -108,7 +108,8 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "FromBuyerForm3") {
-            let view: BuyerForm5ViewController = segue.destinationViewController as! BuyerForm5ViewController
+            User().updateField("is_login", value: "1")
+            let view: BuyerHomeViewController = segue.destinationViewController as! BuyerHomeViewController
             view.viewData  = self.viewData
         }
     }

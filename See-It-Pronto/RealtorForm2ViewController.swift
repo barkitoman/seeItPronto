@@ -133,9 +133,9 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
         var params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["id"].stringValue
         params = params+"&active_zip_code1=\(self.zipCode1.text!)"
         params = params+"&active_zip_code2=\(self.zipCode2.text!)"
-        params = params+"&active_zip_code3=\(self.zipCode3.text!)&routing_number=\(self.txtRoutingNumber.text!)"
+        params = params+"&active_zip_code3=\(self.zipCode3.text!)&broker_email=\(self.txtRoutingNumber.text!)"
         params = params+"&role=realtor&brokerage="+txtBrokerage.text!+"&first_name="+txtFirstName.text!
-        params = params+"&last_name="+txtLastName.text!+"&lisence="+txtLisence.text!+"&back_acc="+txtBankAcct.text!
+        params = params+"&last_name="+txtLastName.text!+"&lisence="+txtLisence.text!+"&broker_name="+txtBankAcct.text!
         if(!self.viewData["realtor_id"].stringValue.isEmpty){
             params = params+"&realtor_id="+self.viewData["realtor_id"].stringValue
         }
@@ -173,8 +173,8 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
             self.txtFirstName.text     = result["first_name"].stringValue
             self.txtLastName.text      = result["last_name"].stringValue
             self.txtBrokerage.text     = result["brokerage"].stringValue
-            self.txtRoutingNumber.text = result["routing_number"].stringValue
-            self.txtBankAcct.text      = result["bank_acct"].stringValue
+            self.txtRoutingNumber.text = result["broker_email"].stringValue
+            self.txtBankAcct.text      = result["broker_name"].stringValue
             self.txtLisence.text       = result["license"].stringValue
             self.zipCode1.text         = result["active_zip_code1"].stringValue
             self.zipCode2.text         = result["active_zip_code2"].stringValue
