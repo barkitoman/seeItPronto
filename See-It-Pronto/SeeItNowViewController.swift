@@ -130,12 +130,10 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
         cell.btnViewDetails.tag  = indexPath.row
         cell.btnViewDetails.addTarget(self, action: "openPropertyAction:", forControlEvents: .TouchUpInside)
         let image = (!realtor["image"].stringValue.isEmpty) ? realtor["image"].stringValue : realtor["url_image"].stringValue
-        if(!image.isEmpty) {
-            cell.photo.image = nil
-            Utility().showPhoto(cell.photo, imgPath: image)
-        } else {
-            cell.photo.image = UIImage(named: "choosePicture")
-        }
+        
+        cell.photo.image = nil
+        Utility().showPhoto(cell.photo, imgPath: image, defaultImg: "default_user_photo")
+        
         if(!realtor["rating"].stringValue.isEmpty) {
             cell.ratingImage.image = UIImage(named: realtor["rating"].stringValue+"stars")
         }

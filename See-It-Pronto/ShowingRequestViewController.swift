@@ -154,9 +154,9 @@ class ShowingRequestViewController: UIViewController {
             description = description+" "+result["property"]["bedrooms"].stringValue+"Bd / "+result["property"]["bathrooms"].stringValue+"Ba"
             self.lblPropertyDescription.text = description
             self.btnConvenienceFee.setTitle("$"+result["information_realtor"]["showing_rate"].stringValue+" convenience fee", forState: .Normal)
-            if(!result["buyer"]["url_image"].stringValue.isEmpty) {
-                Utility().showPhoto(self.buyerPhoto, imgPath: result["buyer"]["url_image"].stringValue)
-            }
+            
+            Utility().showPhoto(self.buyerPhoto, imgPath: result["buyer"]["url_image"].stringValue, defaultImg: "default_user_photo")
+            
             if(!result["property"]["image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.propertyPhoto, imgPath: result["property"]["image"].stringValue)
             }

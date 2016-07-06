@@ -291,13 +291,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
                 Property().saveOne(saveData)
                 let rootViewController = self.window?.rootViewController as! UINavigationController
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let mvc = storyboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController
+                let mvc = storyboard.instantiateViewControllerWithIdentifier("FullPropertyDetailsViewController") as! FullPropertyDetailsViewController
                 rootViewController.pushViewController(mvc, animated: true)
             }
         }
-//                var userInfo = [NSObject: AnyObject]()
-//                userInfo["text"] = "A See-It-Pronto property has been detected. This property is equipped with a pronto beacon that provides you with updated information."
-//                NSNotificationCenter.defaultCenter().postNotificationName("text", object: nil, userInfo: userInfo)
     }
 
 }

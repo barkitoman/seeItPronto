@@ -44,7 +44,7 @@ class Utility {
         }
     }
     
-    func showPhoto(img:UIImageView, imgPath:String){
+    func showPhoto(img:UIImageView, imgPath:String, defaultImg:String = ""){
         var url = NSURL(string: AppConfig.APP_URL+"/"+imgPath)
         if (imgPath.rangeOfString("http://") != nil || imgPath.rangeOfString("https://") != nil ){
             url = NSURL(string: imgPath)
@@ -58,6 +58,10 @@ class Utility {
                         dispatch_async(dispatch_get_main_queue()) {
                             img.image = UIImage(data: data!)
                         }
+                    } else if(defaultImg != "") {
+                        dispatch_async(dispatch_get_main_queue()) {
+                            img.image = UIImage(named: defaultImg)
+                         }
                     }
                 }
             }
@@ -179,11 +183,13 @@ class Utility {
     }
     
     func goPropertyDetails(controller:UIViewController, propertyId:String, PropertyClass:String){
-        let saveData: JSON =  ["id":propertyId,"property_class":PropertyClass]
-        Property().saveOne(saveData)
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let vc : PropertyDetailsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController
-        controller.navigationController?.showViewController(vc, sender: nil)
+        dispatch_async(dispatch_get_main_queue()) {
+            let saveData: JSON =  ["id":propertyId,"property_class":PropertyClass]
+            Property().saveOne(saveData)
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let vc : FullPropertyDetailsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("FullPropertyDetailsViewController") as! FullPropertyDetailsViewController
+            controller.navigationController?.showViewController(vc, sender: nil)
+        }
     }
     
     func millitaryToStandardTime(militaryTime:String, format:String="MM/dd/yyyy hh:mm a")->String {

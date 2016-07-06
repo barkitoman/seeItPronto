@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -2837,7 +2837,7 @@ From</string>
                         <outlet property="btnViewList" destination="Hor-jn-IFM" id="Enx-WX-IV2"/>
                         <outlet property="txtSearch" destination="cGg-8z-HJr" id="Vz2-Am-rDF"/>
                         <outlet property="webView" destination="3Xs-aS-9Ya" id="Fi8-6l-WNB"/>
-                        <segue destination="IrI-DG-f7l" kind="show" identifier="ViewBuyerHouse" id="qhl-sh-szs"/>
+                        <segue destination="KJN-E7-Sc1" kind="show" identifier="ViewBuyerHouse" id="NB6-2s-gsf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tsj-Gs-Edg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3350,6 +3350,7 @@ $480,000
                             </mask>
                         </variation>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="btnSeeItLater" destination="5SL-9X-ckp" id="M4d-tF-TY1"/>
                         <outlet property="btnSeeItPronto" destination="Df7-Mi-bBu" id="3Vr-i9-1uh"/>
@@ -4015,7 +4016,7 @@ $480,000
         <!--Full Property Details View Controller-->
         <scene sceneID="TxV-BQ-cE8">
             <objects>
-                <viewController id="KJN-E7-Sc1" customClass="FullPropertyDetailsViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="FullPropertyDetailsViewController" storyboardIdentifier="FullPropertyDetailsViewController" id="KJN-E7-Sc1" customClass="FullPropertyDetailsViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bBA-ey-wcl"/>
                         <viewControllerLayoutGuide type="bottom" id="4Lv-jr-y4K"/>
@@ -7135,7 +7136,7 @@ $480,000
                     <connections>
                         <outlet property="searchTextField" destination="3bj-M7-XgI" id="aS1-Fq-a1g"/>
                         <outlet property="webView" destination="hQZ-eR-NXJ" id="1kH-tk-gzg"/>
-                        <segue destination="IrI-DG-f7l" kind="show" identifier="RealtorHomePropertyDetails" id="7AY-Fz-Bqm"/>
+                        <segue destination="KJN-E7-Sc1" kind="show" identifier="RealtorHomePropertyDetails" id="fTt-fU-oW0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ySX-bN-fhi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -9491,13 +9492,13 @@ Provide a detailed description of your problem, suggestion or bug-report</string
         <image name="take_photo" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="cEt-sO-PDF"/>
         <segue reference="gRd-bz-hb9"/>
-        <segue reference="vxA-X1-U6d"/>
-        <segue reference="7AY-Fz-Bqm"/>
+        <segue reference="NB6-2s-gsf"/>
         <segue reference="U05-Ui-KM7"/>
         <segue reference="DJR-bZ-L3O"/>
-        <segue reference="uBa-RI-Zc4"/>
-        <segue reference="cEt-sO-PDF"/>
+        <segue reference="vxA-X1-U6d"/>
         <segue reference="4zV-ka-Aal"/>
+        <segue reference="uBa-RI-Zc4"/>
     </inferredMetricsTieBreakers>
 </document>

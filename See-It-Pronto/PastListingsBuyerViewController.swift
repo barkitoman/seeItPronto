@@ -138,12 +138,7 @@ class PastListingsBuyerViewController: UIViewController {
         }
         let viewDetails = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "View\nDetails"){(UITableViewRowAction,NSIndexPath) -> Void in
             let showing = JSON(self.myListings[indexPath.row])
-            let saveData: JSON =  ["id":showing["property"][0]["id"].stringValue,"property_class":showing["property_class"].stringValue]
-            print(saveData)
-            Property().saveOne(saveData)
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            let vc : PropertyDetailsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController
-            self.navigationController?.showViewController(vc, sender: nil)
+            Utility().goPropertyDetails(self,propertyId: showing["property"][0]["id"].stringValue, PropertyClass: showing["property_class"].stringValue)
         }
         return [seeItAgain,comments,viewDetails]
     }

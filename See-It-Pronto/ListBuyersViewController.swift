@@ -60,7 +60,7 @@ class ListBuyersViewController: UIViewController {
         cell.lblName.text = name
         if(!buyer["url_image"].stringValue.isEmpty) {
             cell.photo.image = nil
-            Utility().showPhoto(cell.photo, imgPath: buyer["url_image"].stringValue)
+            Utility().showPhoto(cell.photo, imgPath: buyer["url_image"].stringValue, defaultImg: "default_user_photo")
         }
         return cell
     }
@@ -101,8 +101,9 @@ class ListBuyersViewController: UIViewController {
                 BProgressHUD.dismissHUD(0)
                 Utility().displayAlertBack(self, title: "Message", message: "There are no buyers to show")
             }
-            self.tableView.reloadData()
             BProgressHUD.dismissHUD(4)
+            self.tableView.reloadData()
+            
         }
     }
     

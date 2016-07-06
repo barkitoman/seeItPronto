@@ -75,9 +75,8 @@ class RealtorProfileViewController: UIViewController {
             self.lblLastName.text  = result["last_name"].stringValue
             self.lblBrokerage.text = result["brokerage"].stringValue
             self.lblBiography.text = result["biography"].stringValue
-            if(!result["url_image"].stringValue.isEmpty) {
-                Utility().showPhoto(self.previewPhoto, imgPath: result["url_image"].stringValue)
-            }
+            Utility().showPhoto(self.previewPhoto, imgPath: result["url_image"].stringValue, defaultImg: "default_user_photo")
+            
             if(!result["rating"].stringValue.isEmpty) {
                 self.rating.image = UIImage(named: result["rating"].stringValue+"stars")
             }

@@ -169,12 +169,7 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
     
     @IBAction func viewDetails(sender:UIButton) {
         let property = JSON(self.properties[sender.tag])
-        let saveData: JSON =  ["id":property["id"].stringValue,"property_class":property["class"].stringValue]
-        Property().saveOne(saveData)
-        
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let vc : PropertyDetailsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyDetailsViewController") as! PropertyDetailsViewController
-        self.navigationController?.showViewController(vc, sender: nil)
+        Utility().goPropertyDetails(self,propertyId: property["id"].stringValue, PropertyClass:property["class"].stringValue)
     }
     
     func findProperties() {

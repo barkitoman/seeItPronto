@@ -69,7 +69,6 @@ class AgentConfirmationViewController: UIViewController, UITextFieldDelegate, UI
         var params = "buyer_id="+User().getField("id")+"&realtor_id="+PropertyRealtor().getField("id")+"&property_id="+Property().getField("id")
         params     = params+"&type=\(PropertyAction().getField("type"))&coupon_code=\(self.txtCouponCode.text!)"
         params     = params+"&date=\(Utility().getCurrentDate("-"))&property_class=\(Property().getField("property_class"))"
-        print(params)
         let url    = AppConfig.APP_URL+"/seeitpronto"
         Request().post(url, params:params,controller: self,successHandler: {(response) in self.afterPostRequest(response)});
     }
@@ -113,9 +112,8 @@ class AgentConfirmationViewController: UIViewController, UITextFieldDelegate, UI
         self.lblShowingRate.text = (!showingRate.isEmpty) ? "$"+showingRate : ""
         self.lblDistance.text    = (!distance.isEmpty) ? distance+" mi" : ""
         self.lblRaringLabel.text = (!rating.isEmpty) ? rating+" of 5" : ""
-        if(!image.isEmpty) {
-            Utility().showPhoto(self.agentPhoto, imgPath: image)
-        }
+        Utility().showPhoto(self.agentPhoto, imgPath: image,defaultImg: "default_user_photo")
+        
         if(!rating.isEmpty) {
             ratingImage.image = UIImage(named: rating+"stars")
         }

@@ -101,7 +101,7 @@ class ListRealtorsViewController: UIViewController,UIWebViewDelegate {
         cell.lblStaring.text     = (!realtor["rating"].stringValue.isEmpty) ? realtor["rating"].stringValue+" of 5" : ""
         if(!realtor["image"].stringValue.isEmpty) {
             cell.photo.image = nil
-            Utility().showPhoto(cell.photo, imgPath: realtor["image"].stringValue)
+            Utility().showPhoto(cell.photo, imgPath: realtor["image"].stringValue, defaultImg: "default_user_photo")
         }
         if(!realtor["rating"].stringValue.isEmpty) {
             cell.ratingImage.image = UIImage(named: realtor["rating"].stringValue+"stars")

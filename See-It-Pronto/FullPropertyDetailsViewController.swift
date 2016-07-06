@@ -45,7 +45,8 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.scrollImages.frame = CGRectMake(0, 0, self.view.frame.width, self.scrollImages.frame.height)
-        self.showPropertydetails()
+        self.findPropertyDetails()
+        BProgressHUD.showLoadingViewWithMessage("Loading")
         self.showHideButtons()
     }
     
@@ -97,6 +98,35 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate 
         let propertyActionData: JSON =  ["type":"see_it_later"]
         PropertyAction().saveOne(propertyActionData)
         self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+    }
+    
+    func findPropertyDetails(){
+        let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/\(Property().getField("id"))/\(Property().getField("property_class"))/\(User().getField("id"))?user_info=1"
+        Request().get(url, successHandler: {(response) in self.loadPropertyDetails(response)})
+    }
+    
+    func loadPropertyDetails(let response: NSData) {
+        let result = JSON(data: response)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.viewData = result
+            let propertyId = result["id"].stringValue
+            BProgressHUD.dismissHUD(3)
+            if(propertyId.isEmpty) {
+                self.propertyNoExistMessage()
+            }
+            Property().saveOne(result)
+            self.showPropertydetails()
+        }
+    }
+    
+    func propertyNoExistMessage() {
+        let alertController = UIAlertController(title:"Message", message: "The property is not available at this time", preferredStyle: .Alert)
+        let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            Utility().goHome(self)
+        }
+        alertController.addAction(homeAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func showPropertydetails() {
