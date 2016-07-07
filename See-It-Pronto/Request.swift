@@ -77,8 +77,6 @@ class Request {
                     print("AN ERROR HAS OCURRED SENDING PUT REQUEST!")
                     print(error); return
                 }
-                let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
-                print(responseString)
                 if(self.debug == true) {
                     let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
                     print(responseString)
@@ -134,5 +132,37 @@ class Request {
             successHandler(response: data!)
         }
         task.resume();
+    }
+    
+    func homePost(url : String, params : String,controller:UIViewController, successHandler: (response: NSData) -> Void) {
+        if(self.internet()){
+            let url = NSURL(string: url)
+            let params = String(params);
+            let request = NSMutableURLRequest(URL: url!);
+            request.HTTPMethod = "POST"
+            request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+            
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+                data, response, error in
+                //in case of error
+                if error != nil {
+                    print("AN ERROR HAS OCURRED SENDING REQUEST FOR FIND PROPERTIES!")
+                    print(error);
+                }
+                
+                if let _ = data {
+                    let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
+                    print(responseString)
+                    if(self.debug == true) {
+                        let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
+                        print(responseString)
+                    }
+                    successHandler(response: data!)
+                }
+            }
+            task.resume();
+        } else {
+            Utility().displayAlert(controller, title: "Alert", message: "You are no longer connected to the internet. See It Pronto requires access to the internet to provide you with accurate information", performSegue: "")
+        }
     }
 }

@@ -24,7 +24,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     @IBOutlet weak var btnSignUp: UIButton!
     @IBOutlet weak var btnViewList: UIButton!
     
-    let autocompleteTableView = UITableView(frame: CGRectMake(0,110,320,210), style: UITableViewStyle.Plain)
+    var autocompleteTableView = UITableView(frame: CGRectMake(0,110,320,210), style: UITableViewStyle.Plain)
     var autocompleteUrls:NSMutableArray! = NSMutableArray()
     
     override func viewDidLoad() {
@@ -78,6 +78,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
         self.txtSearch.delegate = self
             
         //autocomplete tableview configuration
+        self.autocompleteTableView = UITableView(frame: CGRectMake(0,75,self.view.frame.size.width, 210), style: UITableViewStyle.Plain)
         autocompleteTableView.delegate = self
         autocompleteTableView.dataSource = self
         autocompleteTableView.scrollEnabled = true
@@ -212,12 +213,16 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     }
     
     func findproperties(substring:String) {
-        if(self.executeFind == true) {
-            self.executeFind = false
-            let urlString = "\(AppConfig.APP_URL)/real_state_property_basics/find_by_address/\(substring)"
-            let url = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-            Request().get(url!, successHandler: {(response) in self.loadProperties(response)})
-        }
+        //if(self.executeFind == true) {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.executeFind = false
+                let params = "q=\(substring)"
+                let url = AppConfig.APP_URL+"/real_state_property_basics/find_by_address/\(User().getField("id"))"
+                Request().homePost(url, params: params, controller: self, successHandler: { (response) -> Void in
+                    self.loadProperties(response)
+                })
+            }
+        //}
     }
     
     func loadProperties(let response: NSData) {
@@ -229,8 +234,13 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
                     let jsonObject: AnyObject = subJson.object
                     self.autocompleteUrls.addObject(jsonObject)
                 }
-                self.autocompleteTableView.reloadData()
+            } else {
+                let objet:JSON = ["id":"","class":"", "description":"No Results Found!"]
+                let obj: AnyObject = objet.object
+                print(obj)
+                self.autocompleteUrls.addObject(obj)
             }
+            self.autocompleteTableView.reloadData()
             self.executeFind = true
         }
     }
@@ -251,12 +261,16 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedCell : UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-        self.txtSearch.text = selectedCell.textLabel!.text
-        self.autocompleteTableView.hidden = true
-        let item = JSON(self.autocompleteUrls[indexPath.row])
-        self.propertyId = item["id"].stringValue
-        self.propertyClass = item["class"].stringValue
-        self.loadMap()
+        if let _ = tableView.cellForRowAtIndexPath(indexPath) {
+            let selectedCell : UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+            self.txtSearch.text = selectedCell.textLabel!.text
+            self.autocompleteTableView.hidden = true
+            let item = JSON(self.autocompleteUrls[indexPath.row])
+            if(!item["id"].stringValue.isEmpty) {
+                self.propertyId = item["id"].stringValue
+                self.propertyClass = item["class"].stringValue
+                self.loadMap()
+            }
+        }
     }
 }

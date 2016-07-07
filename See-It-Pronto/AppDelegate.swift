@@ -262,19 +262,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
     
     func devicesManager(manager: KTKDevicesManager, didDiscoverDevices devices: [KTKNearbyDevice]?) {
         if(devices?.count > 0) {
-
             for device in devices! {
                 if let deviceId = device.uniqueID {
-                if (!foundDevices.containsString(deviceId)) {
-                    foundDevices = foundDevices+"\(deviceId),"
-                    dispatch_async(dispatch_get_main_queue()) {
-                        let url = AppConfig.APP_URL+"/get_beacon_property/\(deviceId)"
-                        print("url \(url)")
-                        Request().get(url, successHandler: { (response) -> Void in
-                          self.showPropertyBeaconDetail(response)
-                        })
-                    }
-                
+                    if (!foundDevices.containsString(deviceId)) {
+                        foundDevices = foundDevices+"\(deviceId),"
+                        dispatch_async(dispatch_get_main_queue()) {
+                            let url = AppConfig.APP_URL+"/get_beacon_property/\(deviceId)"
+                            Request().get(url, successHandler: { (response) -> Void in
+                                self.showPropertyBeaconDetail(response)
+                            })
+                        }
                     }
                 }
             }
