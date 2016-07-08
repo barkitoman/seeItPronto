@@ -213,7 +213,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     }
     
     func findproperties(substring:String) {
-        //if(self.executeFind == true) {
+        if(self.executeFind == true) {
             dispatch_async(dispatch_get_main_queue()) {
                 self.executeFind = false
                 let params = "q=\(substring)"
@@ -222,11 +222,12 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
                     self.loadProperties(response)
                 })
             }
-        //}
+        }
     }
     
     func loadProperties(let response: NSData) {
         self.autocompleteUrls = NSMutableArray()
+        self.autocompleteTableView.reloadData()
         dispatch_async(dispatch_get_main_queue()) {
             let properties = JSON(data: response)
             if(properties["result"].stringValue.isEmpty) {
@@ -263,10 +264,10 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let _ = tableView.cellForRowAtIndexPath(indexPath) {
             let selectedCell : UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-            self.txtSearch.text = selectedCell.textLabel!.text
-            self.autocompleteTableView.hidden = true
             let item = JSON(self.autocompleteUrls[indexPath.row])
+            self.autocompleteTableView.hidden = true
             if(!item["id"].stringValue.isEmpty) {
+                self.txtSearch.text = selectedCell.textLabel!.text
                 self.propertyId = item["id"].stringValue
                 self.propertyClass = item["class"].stringValue
                 self.loadMap()

@@ -158,6 +158,7 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     
     func loadProperties(let response: NSData) {
         self.autocompleteUrls = NSMutableArray()
+        self.autocompleteTableView.reloadData()
         dispatch_async(dispatch_get_main_queue()) {
             let properties = JSON(data: response)
             if(properties["result"].stringValue.isEmpty) {
