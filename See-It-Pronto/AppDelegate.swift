@@ -17,26 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
     var connection: KTKDeviceConnection?
     
     var window: UIWindow?
-    let NotificationTimeoutInSeconds:NSTimeInterval = 10
-    var NotificationTimer: NSTimer?
+    var LocationTimer: NSTimer?
     var userId:String = ""
     var manager: OneShotLocationManager?
     var latitude: String = ""
     var longintude: String = ""
     var foundDevices = ""
     
-    //interval for get new notifications
-    func intervalNotifications() {
-        self.NotificationTimer = NSTimer.scheduledTimerWithTimeInterval(NotificationTimeoutInSeconds,
-            target:self,
-            selector:Selector("findNotifications"),
-            userInfo:nil,
-            repeats:true
-        )
-    }
-    
     func intervalLocation() {
-        self.NotificationTimer = NSTimer.scheduledTimerWithTimeInterval(3000,
+        self.LocationTimer = NSTimer.scheduledTimerWithTimeInterval(600,
             target:self,
             selector:Selector("findLocation"),
             userInfo:nil,
@@ -45,8 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
     }
     
     func stopIntervalNotifications() {
-        if(self.NotificationTimer != nil) {
-            self.NotificationTimer!.invalidate()
+        if(self.LocationTimer != nil) {
+            self.LocationTimer!.invalidate()
         }
     }
     
@@ -73,25 +62,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
     func sendPosition(latitude: String, longitude: String) {
         let urlString = "\(AppConfig.APP_URL)/save_current_location/\(User().getField("id"))/\(latitude)/\(longitude)/"
         let url = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-        Request().get(url!, successHandler: {(response) in self.response(response)})
+        Request().get(url!, successHandler: {(response) in self.sendPositionResponse(response)})
     }
     
-    func response(let response: NSData){
+    func sendPositionResponse(let response: NSData){
         //print("\(response)")
-    }
-    
-    func findNotifications() {
-        if(!self.userId.isEmpty) {
-            self.stopIntervalNotifications()
-            let url = AppConfig.APP_URL+"/push_notifications/"+self.userId
-            Request().get(url, successHandler: {(response) in
-                let notifications = JSON(data: response)
-                for (_,subJson):(String, JSON) in notifications {
-                     Notification.scheduleNotification(subJson["description"].stringValue)
-                }
-                self.intervalNotifications()
-            })
-        }
     }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -100,16 +75,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
         let notificationSettings : UIUserNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
         UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
         
-//        let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
-//        let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
-//        application.registerUserNotificationSettings(pushNotificationSettings)
-//        application.registerForRemoteNotifications()
-        
         //send location
         self.intervalLocation()
+        
         // Initiate Beacon Devices Manager
         self.devicesManager = KTKDevicesManager(delegate: self)
-        
         // Start Discovery Beacons
         self.devicesManager.startDevicesDiscoveryWithInterval(AppConfig.FIND_BEACONS_INTERVAL)
         return true
@@ -147,14 +117,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
                 completionHandler(UIBackgroundFetchResult.NoData)
         }
     }
-    
-//    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-//        
-//        let rootViewController = self.window?.rootViewController as! UINavigationController
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let mvc = storyboard.instantiateViewControllerWithIdentifier("NotificationsViewController") as! NotificationsViewController
-//        rootViewController.pushViewController(mvc, animated: true)
-//    }
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
         var userInfo = [NSObject: AnyObject]()

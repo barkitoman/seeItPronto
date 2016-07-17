@@ -27,6 +27,7 @@ class UserEntity: NSManagedObject {
     @NSManaged var mls_id:String
     @NSManaged var is_login:String
     @NSManaged var device_token_id:String
+    @NSManaged var broker_email:String
  
 }
 
@@ -89,6 +90,8 @@ class User {
         newItem.mls_id          = userData["user"]["mls_id"].stringValue
         newItem.is_login        = userData["user"]["is_login"].stringValue
         newItem.device_token_id = userData["user"]["device_token_id"].stringValue
+        newItem.broker_email    = userData["user"]["broker_email"].stringValue
+        
         do {
             try contxt.save()
         } catch let error as NSError {

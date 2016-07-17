@@ -91,7 +91,7 @@ class FeedBack1ViewController: UIViewController, UITextFieldDelegate, UITextView
         var params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3&feedback_showing_comment="+self.showingComments.text!
         params     = params+"&showing_rating_value="+self.showingRating+"&home_rating_value="+self.homeRating
         params     = params+"&user_id="+User().getField("id")+"&realtor_id="+self.viewData["showing"]["realtor_id"].stringValue
-        params     = params+"&notification_feedback=1&property_id=\(self.viewData["showing"]["property_id"].stringValue)"
+        params     = params+"&notification_feedback=1&property_id=\(self.viewData["showing"]["property_id"].stringValue)&send_broker_email=1&broker_email=\(User().getField("broker_email"))"
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterNextRequest(response)});
     }

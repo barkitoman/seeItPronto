@@ -20,6 +20,7 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     var propertyClass:String = ""
     var executeFind = true
     @IBOutlet weak var webView: UIWebView!
+    var typeTimer: NSTimer? = nil
     
     var autocompleteTableView = UITableView(frame: CGRectMake(0,75,320,210), style: UITableViewStyle.Plain)
     var autocompleteUrls:NSMutableArray! = NSMutableArray()
@@ -131,34 +132,37 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         self.onSlideSearchButtonPressed(sender as! UIButton)
     }
     
-    //MARK autocomplete text
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
-        let substring = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
-        if(substring.isEmpty) {
-            autocompleteTableView.hidden = true
-        }else {
-            autocompleteTableView.hidden = false
-            self.findproperties(substring)
-        }
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        typeTimer?.invalidate()
+        typeTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: Selector("stopTypingSearch:"), userInfo: textField, repeats: false)
         return true
     }
     
+    func stopTypingSearch(timer: NSTimer) {
+        self.clearSearchTable()
+        let substring = searchTextField.text
+        if(substring!.isEmpty) {
+            autocompleteTableView.hidden = true
+            self.loadMap()
+        }else {
+            autocompleteTableView.hidden = false
+            self.findproperties(substring!)
+        }
+    }
+    
     func findproperties(substring:String) {
-        //if(self.executeFind == true) {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.executeFind = false
-                let params = "q=\(substring)"
-                let url = AppConfig.APP_URL+"/real_state_property_basics/find_by_address/\(User().getField("id"))"
-                Request().homePost(url, params: params, controller: self, successHandler: { (response) -> Void in
-                    self.loadProperties(response)
-                })
-            }
-        //}
+        self.clearSearchTable()
+        dispatch_async(dispatch_get_main_queue()) {
+            let params = "q=\(substring)"
+            let url = AppConfig.APP_URL+"/real_state_property_basics/find_by_address/\(User().getField("id"))"
+            Request().homePost(url, params: params, controller: self, successHandler: { (response) -> Void in
+                self.loadProperties(response)
+            })
+        }
     }
     
     func loadProperties(let response: NSData) {
-        self.autocompleteUrls = NSMutableArray()
-        self.autocompleteTableView.reloadData()
+        self.clearSearchTable()
         dispatch_async(dispatch_get_main_queue()) {
             let properties = JSON(data: response)
             if(properties["result"].stringValue.isEmpty) {
@@ -169,11 +173,9 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
             } else {
                 let objet:JSON = ["id":"","class":"", "description":"No Results Found!"]
                 let obj: AnyObject = objet.object
-                print(obj)
                 self.autocompleteUrls.addObject(obj)
             }
             self.autocompleteTableView.reloadData()
-            self.executeFind = true
         }
     }
     
@@ -187,18 +189,20 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCellStyle.Default , reuseIdentifier: "Cell")
-        let item = JSON(self.autocompleteUrls[indexPath.row])
-        cell.textLabel!.text = item["description"].stringValue
+        if let _:AnyObject = self.autocompleteUrls[indexPath.row] {
+            let item = JSON(self.autocompleteUrls[indexPath.row])
+            cell.textLabel!.text = item["description"].stringValue
+        }
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let _ = tableView.cellForRowAtIndexPath(indexPath) {
             let selectedCell : UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-            self.searchTextField.text = selectedCell.textLabel!.text
-            self.autocompleteTableView.hidden = true
             let item = JSON(self.autocompleteUrls[indexPath.row])
+            self.autocompleteTableView.hidden = true
             if(!item["id"].stringValue.isEmpty) {
+                self.searchTextField.text = selectedCell.textLabel!.text
                 self.propertyId = item["id"].stringValue
                 self.propertyClass = item["class"].stringValue
                 self.loadMap()
@@ -206,4 +210,9 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         }
     }
     
+    func clearSearchTable() {
+        self.autocompleteUrls.removeAllObjects()
+        self.autocompleteTableView.reloadData()
+    }
+
 }

@@ -11,9 +11,7 @@ import CoreData
 
 class ViewController: UIViewController {
 
-    
-    
-    private let internvalSeconds:NSTimeInterval = 4
+    private let internvalSeconds:NSTimeInterval = 3
     private var timer: NSTimer?
     var login = false
     

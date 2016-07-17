@@ -68,6 +68,7 @@
     </entity>
     <entity name="User" syncable="YES">
         <attribute name="access_token" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="broker_email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="device_token_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="expires_in" optional="YES" attributeType="String" syncable="YES"/>
@@ -83,11 +84,11 @@
         <attribute name="token_type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
+        <element name="DeviceManager" positionX="-54" positionY="135" width="128" height="60"/>
         <element name="Property" positionX="-54" positionY="117" width="128" height="525"/>
         <element name="PropertyAction" positionX="-54" positionY="135" width="128" height="60"/>
         <element name="PropertyRealtor" positionX="-54" positionY="108" width="128" height="210"/>
         <element name="SearchConfig" positionX="-63" positionY="54" width="128" height="210"/>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="255"/>
-        <element name="DeviceManager" positionX="-54" positionY="135" width="128" height="60"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="270"/>
     </elements>
 </model>

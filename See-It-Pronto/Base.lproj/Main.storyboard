@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -1062,6 +1062,84 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ri-RZ-d13" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4009" y="-988"/>
+        </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="Oog-UI-eLl">
+            <objects>
+                <viewController restorationIdentifier="ChatViewController" storyboardIdentifier="ChatViewController" id="d55-kp-YkT" customClass="ChatViewController" customModule="See_It_Pronto" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PVr-gi-EDA"/>
+                        <viewControllerLayoutGuide type="bottom" id="tzo-pP-ad9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zP9-0n-3eQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ClF-SF-cON">
+                                <rect key="frame" x="0.0" y="20" width="90" height="44"/>
+                                <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="&lt; Back"/>
+                                <connections>
+                                    <action selector="btnBack:" destination="d55-kp-YkT" eventType="touchUpInside" id="cLT-Aa-9vb"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wJ3-mG-ddP">
+                                <rect key="frame" x="90" y="20" width="230" height="44"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Chat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gt1-oa-Fcf">
+                                        <rect key="frame" x="8" y="13" width="189" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.56862745100000001" green="0.56078431370000004" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Write message..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H3a-lc-Zh6">
+                                <rect key="frame" x="0.0" y="527" width="254" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dg-WD-i1J">
+                                <rect key="frame" x="254" y="527" width="66" height="41"/>
+                                <color key="backgroundColor" red="0.27058823529999998" green="0.70980392160000005" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Send"/>
+                                <connections>
+                                    <action selector="btnSend:" destination="d55-kp-YkT" eventType="touchUpInside" id="CBt-fP-5HJ"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="43" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="E7F-O4-yo2">
+                                <rect key="frame" x="0.0" y="65" width="320" height="461"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="43" id="T57-G4-mC6" customClass="LGChatMessageCell" customModule="See_It_Pronto" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="43"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="T57-G4-mC6" id="LwH-ck-AYH">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="42"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="d55-kp-YkT" id="5Ya-hi-1vR"/>
+                                    <outlet property="delegate" destination="d55-kp-YkT" id="7Mi-cP-je3"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="btnSend" destination="9dg-WD-i1J" id="YLl-ah-jpo"/>
+                        <outlet property="tableView" destination="E7F-O4-yo2" id="AmU-ZU-CJw"/>
+                        <outlet property="txtMessage" destination="H3a-lc-Zh6" id="QA3-YW-sBQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wKU-Z4-99v" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2022" y="-2102"/>
         </scene>
         <!--Bug Report View Controller-->
         <scene sceneID="DqZ-6f-dCc">
