@@ -142,7 +142,7 @@ class Utility {
         return out
     }
     
-    func getCurrentDate(separator:String)->String {
+    func getCurrentDate(separator:String = "-")->String {
         let date       = NSDate()
         let calendar   = NSCalendar.currentCalendar()
         let components = calendar.components([.Day , .Month , .Year], fromDate: date)
@@ -161,6 +161,16 @@ class Utility {
         
         let out   = String(year)+separator+stringMonth+separator+stringDay
         return out
+    }
+    
+    func getTime(separator:String = ":") -> String {
+        let currentDateTime = NSDate()
+        let calendar   = NSCalendar.currentCalendar()
+        let components = calendar.components([.Hour,.Minute,.Second], fromDate: currentDateTime)
+        let hour       = components.hour
+        let min        = components.minute
+        let sec        = components.second
+        return "\(hour)\(separator)\(min)\(separator)\(sec)"
     }
     
     func goHome(controller:UIViewController, viewData:JSON = []){

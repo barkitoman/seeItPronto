@@ -14,7 +14,14 @@ class ChatViewController: UIViewController, LGChatControllerDelegate, UITextFiel
     @IBOutlet weak var btnSend: UIButton!
     var animateDistance: CGFloat!
     var messages: [LGChatMessage] = []
-    var toUserId = "2"
+    var from = ""
+    var to   = "2"
+    var lastToMessageDate = ""
+    var oponentImageName  = ""
+    var isTheFirstMessage = true
+    
+    private let kTimeoutInSeconds:NSTimeInterval = 8
+    private var loadMessagesTimer: NSTimer?
     
     private let sizingCell = LGChatMessageCell()
     var opponentImage: UIImage?
@@ -28,6 +35,11 @@ class ChatViewController: UIViewController, LGChatControllerDelegate, UITextFiel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.from = User().getField("id")
+        self.lastToMessageDate = "\(Utility().getCurrentDate()) \(Utility().getTime())"
+        self.findConversation()
+        self.internalNewMessages()
+        print(lastToMessageDate)
         self.txtMessage.delegate = self
         tableView.separatorStyle = UITableViewCellSeparatorStyle.None 
         // Keep message field visible
@@ -149,11 +161,12 @@ class ChatViewController: UIViewController, LGChatControllerDelegate, UITextFiel
             self.addNewMessage(newMessage)
             self.saveMessage()
             self.txtMessage.text = ""
+            self.isTheFirstMessage = false
         }
     }
     
     func saveMessage(){
-        let params = "from_user_id=\(User().getField("id"))&to_user_id=\(self.toUserId)&message=\(self.txtMessage.text!)"
+        let params = "from_user_id=\(User().getField("id"))&to_user_id=\(self.to)&message=\(self.txtMessage.text!)&is_first_message=\(self.isTheFirstMessage))"
         let url = AppConfig.APP_URL+"/messages"
         Request().post(url, params: params, controller: self) { (response) -> Void in
             
@@ -182,6 +195,68 @@ class ChatViewController: UIViewController, LGChatControllerDelegate, UITextFiel
         cell.opponentImageView.image = message.sentBy == .Opponent ? self.opponentImage : nil
         cell.setupWithMessage(message)
         return cell;
+    }
+    
+    func findConversation() {
+        let url    = AppConfig.APP_URL+"/find_conversation"
+        let params = "from=\(self.from)&to=\(self.to)"
+        Request().post(url, params: params, controller: self) { (response) -> Void in
+            self.loadConversations(response);
+        }
+    }
+    
+    func loadConversations(let response: NSData) {
+        let result = JSON(data: response)
+        dispatch_async(dispatch_get_main_queue()) {
+            if(result["result"].stringValue == "true") {
+                for (_,subJson):(String, JSON) in result["messages"] {
+                    if(subJson["from_user_id"].stringValue == self.from) {
+                        let newMessage = LGChatMessage(content: subJson["message"].stringValue, sentBy: .User)
+                        self.addNewMessage(newMessage)
+                    } else {
+                        self.lastToMessageDate = subJson["created_at"].stringValue
+                        let newMessage = LGChatMessage(content: subJson["message"].stringValue, sentBy: .Opponent)
+                        self.addNewMessage(newMessage)
+                    }
+                }
+            }
+        }
+    }
+    
+    //interval for call new messages
+    func internalNewMessages() {
+        self.loadMessagesTimer = NSTimer.scheduledTimerWithTimeInterval(kTimeoutInSeconds,
+            target:self,
+            selector:Selector("findNewMessages"),
+            userInfo:nil,
+            repeats:true)
+    }
+    
+    func stopInterval() {
+        self.loadMessagesTimer!.invalidate()
+    }
+    
+    func findNewMessages() {
+        self.stopInterval()
+        let url    = AppConfig.APP_URL+"/find_new_messages"
+        let params = "from=\(self.from)&to=\(self.to)&date=\(self.lastToMessageDate)"
+        Request().post(url, params: params, controller: self) { (response) -> Void in
+            self.loadNewMessages(response);
+        }
+    }
+    
+    func loadNewMessages(let response: NSData) {
+        let result = JSON(data: response)
+        dispatch_async(dispatch_get_main_queue()) {
+            if(result["result"].stringValue == "true") {
+                for (_,subJson):(String, JSON) in result["messages"] {
+                    self.lastToMessageDate = subJson["created_at"].stringValue
+                    let newMessage = LGChatMessage(content: subJson["message"].stringValue, sentBy: .Opponent)
+                    self.addNewMessage(newMessage)
+                }
+            }
+            self.internalNewMessages()
+        }
     }
 
 }
