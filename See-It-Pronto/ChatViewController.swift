@@ -166,7 +166,7 @@ class ChatViewController: UIViewController, LGChatControllerDelegate, UITextFiel
     }
     
     func saveMessage(){
-        let params = "from_user_id=\(User().getField("id"))&to_user_id=\(self.to)&message=\(self.txtMessage.text!)&is_first_message=\(self.isTheFirstMessage))"
+        let params = "from_user_id=\(self.from)&to_user_id=\(self.to)&message=\(self.txtMessage.text!)&is_first_message=\(self.isTheFirstMessage))"
         let url = AppConfig.APP_URL+"/messages"
         Request().post(url, params: params, controller: self) { (response) -> Void in
             
