@@ -87,16 +87,15 @@ class CongratulationsViewController: UIViewController {
     }
     
     @IBAction func btnCallAgent(sender: AnyObject) {
-        self.callAgent()
+        self.chatAgent()
     }
     
-    func callAgent() {
-        let phoneNumber = PropertyRealtor().getField("phone")
-        if(phoneNumber.isEmpty) {
-            Utility().displayAlert(self,title: "Message", message:"The call can't be made at this time, because the agent hasn't confirmed his/her phone number.", performSegue:"")
-        } else {
-            callNumber(phoneNumber)
-        }
+    func chatAgent() {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+        vc.to = self.viewData["realtor"]["id"].stringValue
+        vc.oponentImageName = self.viewData["realtor"]["url_image"].stringValue
+        self.navigationController?.showViewController(vc, sender: nil)
     }
     
     private func callNumber(phoneNumber:String) {
@@ -205,14 +204,9 @@ class CongratulationsViewController: UIViewController {
             self.startCongratulationTimer()
         }
         
-        let callAction = UIAlertAction(title: "Call Agent", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            self.callAgent()
-        }
         alertController.addAction(homeAction)
         alertController.addAction(cancelAction)
         alertController.addAction(waitAction)
-        alertController.addAction(callAction)
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
@@ -232,9 +226,11 @@ class CongratulationsViewController: UIViewController {
     }
     
     func gotoSelectAnotherAgent() {
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let viewController : SeeItNowViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SeeItNowViewController") as! SeeItNowViewController
-        self.navigationController?.showViewController(viewController, sender: nil)
+        dispatch_async(dispatch_get_main_queue()) {
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let viewController : SeeItNowViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SeeItNowViewController") as! SeeItNowViewController
+            self.navigationController?.showViewController(viewController, sender: nil)
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

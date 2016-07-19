@@ -104,18 +104,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
     // foreground (or if the app was in the background and the user clicks on the notification).
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
         // display the userInfo
-        if let notification = userInfo["aps"] as? NSDictionary,
-            let _ = notification["alert"] as? String {
-                let rootViewController = self.window?.rootViewController as! UINavigationController
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = storyboard.instantiateViewControllerWithIdentifier("NotificationsViewController") as! NotificationsViewController
-                vc.showNewNotificationMsg = true
-                rootViewController.pushViewController(vc, animated: true)
-                
-                // call the completion handler
-                // -- pass in NoData, since no new data was fetched from the server.
-                completionHandler(UIBackgroundFetchResult.NoData)
+        if let aps = userInfo["aps"] as? NSDictionary {
+            if let category = aps["category"] as? String {
+                if category == "NEW_MESSAGE" {
+                    if let alert = aps["alert"] as? NSDictionary {
+                        if let userIds = alert["loc-args"] as? NSDictionary {
+                            let fromUserId = userIds[0] as! String
+                            self.goToChat(fromUserId)
+                        }
+                    }
+                }else {
+                    self.goToNotifications()
+                }
+            } else if let _ = aps["alert"] as? NSString {
+                self.goToNotifications()
+            }
+            completionHandler(UIBackgroundFetchResult.NoData)
         }
+    }
+    
+    func goToChat(fromUserId:String = "") {
+        let rootViewController = self.window?.rootViewController as! UINavigationController
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let vc = storyboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+        vc.to = fromUserId
+        vc.oponentImageName = ""
+        rootViewController.pushViewController(vc, animated: true)
+    }
+    
+    func goToNotifications() {
+        let rootViewController = self.window?.rootViewController as! UINavigationController
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let vc = storyboard.instantiateViewControllerWithIdentifier("NotificationsViewController") as! NotificationsViewController
+        vc.showNewNotificationMsg = true
+        rootViewController.pushViewController(vc, animated: true)
     }
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {

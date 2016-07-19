@@ -174,12 +174,11 @@ class CurrentShowingViewController: UIViewController {
     }
     
     private func callNumber(phoneNumber:String) {
-        if let phoneCallURL:NSURL = NSURL(string: "tel://\(phoneNumber)") {
-            let application:UIApplication = UIApplication.sharedApplication()
-            if (application.canOpenURL(phoneCallURL)) {
-                application.openURL(phoneCallURL);
-            }
-        }
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+        vc.to = self.viewData["buyer"]["id"].stringValue
+        vc.oponentImageName = self.viewData["buyer"]["url_image"].stringValue
+        self.navigationController?.showViewController(vc, sender: nil)
     }
     
     @IBAction func btnStartEndShowing(sender: AnyObject) {
