@@ -84,7 +84,7 @@ class CurrentShowingViewController: UIViewController {
             self.address.text  = result["property"]["address"].stringValue
             self.lblPrice.text = Utility().formatCurrency(result["property"]["price"].stringValue)
             var description = ""
-            description += "Bed "+result["property"]["bedrooms"].stringValue+"/"
+            description += "Bed "+result["property"]["bedrooms"].stringValue+"/ "
             description += "Bath "+result["property"]["bathrooms"].stringValue
             if(!result["property"]["type"].stringValue.isEmpty) {
                 description = description+"/ "+result["property"]["type"].stringValue

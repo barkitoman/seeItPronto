@@ -124,7 +124,10 @@ class FeedBack2ViewController: UIViewController,UITextFieldDelegate, UITextViewD
     }
 
     @IBAction func btnNext(sender: AnyObject) {
-        let params = "id=\(self.viewData["showing"]["id"].stringValue)&showing_status=3&realtor_id=\(self.viewData["showing"]["realtor_id"].stringValue)&feedback_realtor_comment=\(self.txtAgentComments.text!)&user_rating_value=\(self.userRating)&user_id\(User().getField("id"))"
+        var params = "id=\(self.viewData["showing"]["id"].stringValue)&showing_status=3&realtor_id=\(self.viewData["showing"]["realtor_id"].stringValue)"
+        params = params+"&feedback_realtor_comment=\(self.txtAgentComments.text!)&user_rating_value=\(self.userRating)&user_id\(User().getField("id"))"
+        params = params+"&send_broker_email=1"
+        //&send_broker_email=1&broker_email=\(User().getField("broker_email"))
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterNextRequest(response)});
     }

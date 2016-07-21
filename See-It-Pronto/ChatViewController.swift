@@ -19,6 +19,7 @@ class ChatViewController: UIViewController, LGChatControllerDelegate, UITextFiel
     var lastToMessageDate = ""
     var oponentImageName  = ""
     var isTheFirstMessage = true
+    var isFromPushNotification = false
     
     private let kTimeoutInSeconds:NSTimeInterval = 8
     private var loadMessagesTimer: NSTimer?
@@ -74,6 +75,9 @@ class ChatViewController: UIViewController, LGChatControllerDelegate, UITextFiel
                 NSForegroundColorAttributeName: UIColor( red: 0, green: 0, blue: 0, alpha: 0.40 )
             ]
         )
+        if(self.isFromPushNotification == true){
+            self.isTheFirstMessage = false
+        }
     }
     
     deinit {

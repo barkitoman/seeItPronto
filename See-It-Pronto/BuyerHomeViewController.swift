@@ -23,6 +23,7 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     @IBOutlet weak var btnSignUp: UIButton!
     @IBOutlet weak var btnViewList: UIButton!
     var typeTimer: NSTimer? = nil
+    var logOutMenu = false
     
     var autocompleteTableView = UITableView(frame: CGRectMake(0,110,320,210), style: UITableViewStyle.Plain)
     var autocompleteUrls:NSMutableArray! = NSMutableArray()
@@ -30,7 +31,10 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
-        if User().getField("id") != "" {
+        if logOutMenu == true {
+            User().deleteAllData()
+        }
+        if User().getField("id") != "" && logOutMenu == false {
             btnViewList.hidden = false
             btnSignUp.hidden = true
             btnLogin.hidden = true

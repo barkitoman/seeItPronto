@@ -73,7 +73,6 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         addChildView("LoginViewController",            titleOfChildren: "Log Out",               iconName: "logout")
         addChildView("ConfigViewController",           titleOfChildren: "Settings",              iconName: "settings")
         addChildView("BugReportViewController",        titleOfChildren: "Send Us Your Feedback", iconName: "send_us_your_feedback")
-        addChildView("ChatViewController",        titleOfChildren: "Chat", iconName: "send_us_your_feedback")
     }
     
     //MARK: Functions for Container
@@ -81,6 +80,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         let viewIdentifier = subViewNew.restorationIdentifier
         let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         var viewController : UIViewController = UIViewController()
+        var showView = true
         if(viewIdentifier == "BuyerForm1ViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerForm1ViewController") as! BuyerForm1ViewController
             
@@ -101,9 +101,13 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
                 url = url+"/"+token
                 Request().get(url, successHandler: {(response) in })
             }
-            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as! BuyerHomeViewController
+            
+            showView = false
+            let vc : BuyerHomeViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as! BuyerHomeViewController
+            vc.logOutMenu = true
             User().deleteAllData()
             SearchConfig().deleteAllData()
+            self.navigationController?.pushViewController(vc, animated: true)
             
         } else if (viewIdentifier == "ListRealtorsViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("ListRealtorsViewController") as! ListRealtorsViewController
@@ -164,11 +168,12 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         }
         
         //
-        
-        if(viewIdentifier != nil && viewIdentifier!.isEmpty) {
-            self.navigationController?.pushViewController(viewController, animated: true)
-        } else {
-            self.navigationController?.showViewController(viewController, sender: nil)
+        if(showView == true) {
+            if(viewIdentifier != nil && viewIdentifier!.isEmpty) {
+                self.navigationController?.pushViewController(viewController, animated: true)
+            } else {
+                self.navigationController?.showViewController(viewController, sender: nil)
+            }
         }
     }
     

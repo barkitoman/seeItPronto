@@ -166,6 +166,7 @@ class ShowingRequestViewController: UIViewController {
     
     func statusMessage() {
         var message = ""
+        print(self.viewData)
         if(self.viewData == nil) {
             message = "Sorry, the request has been removed"
             
