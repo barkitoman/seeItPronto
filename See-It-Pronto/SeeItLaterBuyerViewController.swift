@@ -314,7 +314,6 @@ class SeeItLaterBuyerViewController: UIViewController {
             }else{
                 BProgressHUD.dismissHUD(0)
                 let msg = "¡No properties found!"
-                
                 Utility().displayAlert(self,title: "Notification", message:msg, performSegue:"")
             }
             

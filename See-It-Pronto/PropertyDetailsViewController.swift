@@ -29,7 +29,7 @@ class PropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.scrollImages.frame = CGRectMake(0, 0, self.view.frame.width, self.scrollImages.frame.height)
-    BProgressHUD.showLoadingViewWithMessage("Loading")
+        BProgressHUD.showLoadingViewWithMessage("Loading")
         self.findPropertyDetails()
         self.showHideButtons()
     }
