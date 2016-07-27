@@ -28,10 +28,6 @@ class Request {
                     print("AN ERROR HAS OCURRED SENDING POST REQUEST!")
                     print(error); return
                 }
-                if(self.debug == true) {
-                    let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
-                    print(responseString)
-                }
                 successHandler(response: data!)
             }
             task.resume();
@@ -76,10 +72,6 @@ class Request {
                     print("AN ERROR HAS OCURRED SENDING PUT REQUEST!")
                     print(error); return
                 }
-                if(self.debug == true) {
-                    let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
-                    print(responseString)
-                }
                 successHandler(response: data!)
             }
             task.resume();
@@ -100,10 +92,6 @@ class Request {
                 print("AN ERROR HAS OCURRED SENDING GET REQUEST!")
                 print(error); return
             }
-            if(self.debug == true) {
-                let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
-                print(responseString)
-            }
             successHandler(response: data!)
         }
         task.resume();
@@ -123,10 +111,6 @@ class Request {
             if error != nil {
                 print("AN ERROR HAS OCURRED SENDING DELETE REQUEST!")
                 print(error); return
-            }
-            if(self.debug == true) {
-                let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
-                print(responseString)
             }
             successHandler(response: data!)
         }
@@ -150,12 +134,6 @@ class Request {
                 }
                 
                 if let _ = data {
-                    let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
-                    print(responseString)
-                    if(self.debug == true) {
-                        let responseString : String = String(data: data!, encoding: NSUTF8StringEncoding)!
-                        print(responseString)
-                    }
                     successHandler(response: data!)
                 }
             }

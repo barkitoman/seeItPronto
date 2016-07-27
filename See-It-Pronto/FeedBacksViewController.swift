@@ -20,6 +20,7 @@ class FeedBacksViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        BProgressHUD.showLoadingViewWithMessage("Loading")
         self.findFeedBacks()
     }
 
@@ -94,6 +95,7 @@ class FeedBacksViewController: UIViewController {
                 self.feedbacks.addObject(jsonObject)
             }
             self.tableView.reloadData()
+            BProgressHUD.dismissHUD(0)
         }
     }
 

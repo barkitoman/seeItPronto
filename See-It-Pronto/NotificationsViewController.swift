@@ -72,9 +72,7 @@ class NotificationsViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
-        
-        let notification = JSON(self.notifications[indexPath.row])
+        var notification = JSON(self.notifications[indexPath.row])
         let role   = User().getField("role")
         self.viewData = notification
         dispatch_async(dispatch_get_main_queue()) {
@@ -82,6 +80,8 @@ class NotificationsViewController: UIViewController {
                 let cell = self.tableView.cellForRowAtIndexPath(indexPath)! as UITableViewCell
                 cell.textLabel!.textColor = UIColor(rgba: "#000000")
                 cell.detailTextLabel!.textColor = UIColor(rgba: "#000000")
+                notification["seen"].string = "1"
+                self.notifications[indexPath.row] = notification.object
                 self.seenNotificationRequest(notification["id"].stringValue)
             }
         }

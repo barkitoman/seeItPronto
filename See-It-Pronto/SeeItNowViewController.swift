@@ -26,10 +26,10 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
     var manager: OneShotLocationManager?
     var latitude   = "0"
     var longintude = "0"
-    var cache = ImageLoadingWithCache()
-    var model = [Model]()
-    var models = [String:Model]()
-    var count = 0
+    var cache      = ImageLoadingWithCache()
+    var model      = [Model]()
+    var models     = [String:Model]()
+    var count      = 0
     
     lazy var configuration : NSURLSessionConfiguration = {
         let config = NSURLSessionConfiguration.ephemeralSessionConfiguration()
@@ -68,6 +68,7 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
     }
     
     func loadMap() {
+        BProgressHUD.showLoadingViewWithMessage("Loading")
         var url = AppConfig.APP_URL+"/calculate_distances/\(User().getField("id"))/\(String(self.stepPage))/"
         url     = url+"?page=\(String(self.countPage + 1))"
         url     = url+"&lat=\(self.latitude)&lon=\(self.longintude)"
@@ -78,7 +79,6 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
-        BProgressHUD.showLoadingViewWithMessage("Loading")
         self.findPropertyRealtors()
     }
     
@@ -185,12 +185,11 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
                 }
             }
             if(self.realtors.count == 0 && self.countPage == 0) {
-                
                 BProgressHUD.dismissHUD(0)
                 Utility().displayAlert(self, title: "Message", message: "There are no agents available to show this property", performSegue: "")
             }
             self.tableView.reloadData()
-            BProgressHUD.dismissHUD(4)
+            BProgressHUD.dismissHUD(0)
         }
     }
     
