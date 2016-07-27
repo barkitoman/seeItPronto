@@ -70,9 +70,11 @@ class PastListingsBuyerViewController: UIViewController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PastListingBuyerTableViewCell
         let showing = JSON(self.myListings[indexPath.row])
-        let property = showing["property"][0]
-        cell.lblAddress.text  = showing["property"][0]["address"].stringValue
-        cell.lblPrice.text = Utility().formatCurrency(showing["property"][0]["price"].stringValue)
+        let address = showing["property"][0]["address"].stringValue
+        let price   = (showing["property"][0]["price"].stringValue.isEmpty) ? showing["property_price"].stringValue : showing["property"][0]["price"].stringValue
+        
+        cell.lblAddress.text  = (address.isEmpty) ? showing["property_address"].stringValue  : address
+        cell.lblPrice.text    = Utility().formatCurrency(price)
         cell.lblNiceDate.text = showing["nice_date"].stringValue
         if(!showing["showing_rating_value"].stringValue.isEmpty) {
             cell.showingRating.image = UIImage(named: showing["showing_rating_value"].stringValue+"stars")
@@ -83,24 +85,24 @@ class PastListingsBuyerViewController: UIViewController {
         if(!showing["user_rating_value"].stringValue.isEmpty) {
             cell.agentRating.image = UIImage(named: showing["user_rating_value"].stringValue+"stars")
         }
-        if let _ = self.models[property["id"].stringValue] {
-            self.showCell(cell, property: property, indexPath: indexPath)
+        if let _ = self.models[showing["property_id"].stringValue] {
+            self.showCell(cell, showing: showing, indexPath: indexPath)
         } else {
             cell.propertyImage.image = nil
-            self.models[property["id"].stringValue] = Model()
-            self.showCell(cell, property: property, indexPath: indexPath)
+            self.models[showing["property_id"].stringValue] = Model()
+            self.showCell(cell, showing: showing, indexPath: indexPath)
         }
         return cell
     }
     
-    func showCell(cell:PastListingBuyerTableViewCell, property:JSON,indexPath: NSIndexPath){
+    func showCell(cell:PastListingBuyerTableViewCell, showing:JSON, indexPath: NSIndexPath){
         // have we got a picture?
-        if let im = self.models[property["id"].stringValue]!.im {
+        if let im = self.models[showing["property_id"].stringValue]!.im {
             cell.propertyImage.image = im
         } else {
-            if self.models[property["id"].stringValue]!.task == nil &&  self.models[property["id"].stringValue]!.reloaded == false {
+            if self.models[showing["property_id"].stringValue]!.task == nil &&  self.models[showing["property_id"].stringValue]!.reloaded == false {
                 // no task? start one!
-                let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+property["id"].stringValue+"/1"
+                let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+showing["property_id"].stringValue+"/1"
                 Request().get(url, successHandler: {(response) in self.imageCell(indexPath, img:cell.propertyImage, response: response)})
             }
         }
@@ -108,21 +110,26 @@ class PastListingsBuyerViewController: UIViewController {
     
     func imageCell(indexPath: NSIndexPath, img:UIImageView,let response: NSData) {
         let showing = JSON(self.myListings[indexPath.row])
-        let property = showing["property"][0]
         let result = JSON(data: response)
         let url = AppConfig.APP_URL+"/"+result[0]["url"].stringValue
-        self.models[property["id"].stringValue]!.task = self.downloader.download(url) {
+        self.models[showing["property_id"].stringValue]!.task = self.downloader.download(url) {
             [weak self] url in // *
-            if let _ = self?.models[property["id"].stringValue] {
-                self!.models[property["id"].stringValue]!.task = nil
+            if let _ = self?.models[showing["property_id"].stringValue] {
+                self!.models[showing["property_id"].stringValue]!.task = nil
                 if url == nil {
                     return
                 }
                 let data = NSData(contentsOfURL: url)!
-                let im = UIImage(data:data)
-                self!.models[property["id"].stringValue]!.im = im
+                //if photo is empty
+                if data.length <= 116 {
+                    let im = UIImage(named: "default_property_photo")
+                    self!.models[showing["property_id"].stringValue]!.im = im
+                }else {
+                    let im = UIImage(data:data)
+                    self!.models[showing["property_id"].stringValue]!.im = im
+                }
                 dispatch_async(dispatch_get_main_queue()) {
-                    self!.models[property["id"].stringValue]!.reloaded = true
+                    self!.models[showing["property_id"].stringValue]!.reloaded = true
                     self!.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                 }
             }
@@ -138,14 +145,14 @@ class PastListingsBuyerViewController: UIViewController {
         }
         let viewDetails = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "View\nDetails"){(UITableViewRowAction,NSIndexPath) -> Void in
             let showing = JSON(self.myListings[indexPath.row])
-            Utility().goPropertyDetails(self,propertyId: showing["property"][0]["id"].stringValue, PropertyClass: showing["property_class"].stringValue)
+            Utility().goPropertyDetails(self,propertyId: showing["property_id"].stringValue, PropertyClass: showing["property_class"].stringValue)
         }
         return [seeItAgain,comments,viewDetails]
     }
     
     func openPropertyDetailView(indexPath: NSIndexPath) {
         let showing = JSON(self.myListings[indexPath.row])
-        Utility().goPropertyDetails(self,propertyId: showing["property"][0]["id"].stringValue, PropertyClass: showing["property_class"].stringValue)
+        Utility().goPropertyDetails(self,propertyId: showing["property_id"].stringValue, PropertyClass: showing["property_class"].stringValue)
     }
     
     func viewShowingComments(indexPath: NSIndexPath) {
@@ -179,7 +186,6 @@ class PastListingsBuyerViewController: UIViewController {
     
     func findListings() {
         let url = AppConfig.APP_URL+"/past_listing_buyer/\(User().getField("id"))/\(self.stepPage)/?page="+String(self.countPage + 1)
-        print(url)
         Request().get(url, successHandler: {(response) in self.loadListings(response)})
     }
     
@@ -187,10 +193,8 @@ class PastListingsBuyerViewController: UIViewController {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
             for (_,subJson):(String, JSON) in result["data"] {
-                if(!subJson["property"][0]["id"].stringValue.isEmpty) {
-                    let jsonObject: AnyObject = subJson.object
-                    self.myListings.addObject(jsonObject)
-                }
+                let jsonObject: AnyObject = subJson.object
+                self.myListings.addObject(jsonObject)
             }
             if self.myListings.count > 0 {
                 self.tableView.reloadData()
@@ -198,9 +202,7 @@ class PastListingsBuyerViewController: UIViewController {
             }else {
                 BProgressHUD.dismissHUD(0)
                 let msg = "¡No properties found!"
-                
                 Utility().displayAlert(self,title: "Notification", message:msg, performSegue:"")
-                
             }
             
         }
