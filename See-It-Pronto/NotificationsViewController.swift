@@ -22,7 +22,7 @@ class NotificationsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if(self.showNewNotificationMsg == true) {
-            Utility().displayAlert(self, title: "New Notification", message: "New notification received", performSegue: "")
+            Utility().displayAlert(self, title: "Message", message: "New notification received", performSegue: "")
             BProgressHUD.showLoadingViewWithMessage("Loading")
         } else {
             BProgressHUD.showLoadingViewWithMessage("Loading")
