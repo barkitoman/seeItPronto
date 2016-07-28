@@ -114,7 +114,6 @@ class ShowingRequestViewController: UIViewController {
     
     func afterNoRequest(let response: NSData) {
         let result = JSON(data: response)
-        print(result)
         if(result["result"].bool == true ) {
             dispatch_async(dispatch_get_main_queue()) {
                 let alertController = UIAlertController(title:"Success", message: "The request has been rejected", preferredStyle: .Alert)
@@ -215,8 +214,8 @@ class ShowingRequestViewController: UIViewController {
     func chatAgent() {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
-        vc.to = self.viewData["realtor"]["id"].stringValue
-        vc.oponentImageName = self.viewData["realtor"]["url_image"].stringValue
+        vc.to = self.viewData["showing"]["buyer_id"].stringValue
+        vc.oponentImageName = self.viewData["buyer"]["url_image"].stringValue
         self.navigationController?.showViewController(vc, sender: nil)
     }
     
