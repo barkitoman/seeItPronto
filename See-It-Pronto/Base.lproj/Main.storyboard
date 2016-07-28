@@ -5947,7 +5947,7 @@ $480,000
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="lFI-Ha-tV7"/>
                                         </constraints>
-                                        <state key="normal" title="Buy With This Agent?">
+                                        <state key="normal" title="Share My Info">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -6144,7 +6144,7 @@ $480,000
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tzl-pf-lZv">
                                 <rect key="frame" x="0.0" y="100" width="320" height="342"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Buying With This Agent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZY5-A1-Yvs">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share My Info With Agent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZY5-A1-Yvs">
                                         <rect key="frame" x="20" y="20" width="280" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="pZZ-Py-xBY"/>
@@ -6233,7 +6233,7 @@ $480,000
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IqD-D7-E0q">
                                 <rect key="frame" x="0.0" y="508" width="160" height="60"/>
                                 <color key="backgroundColor" red="0.81176470590000005" green="0.88235294119999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Buy With This Agent">
+                                <state key="normal" title="Share My Info">
                                     <color key="titleColor" red="0.0" green="0.45882352939999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
