@@ -108,7 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
             if let category = aps["category"] as? String {
                 if category == "NEW_MESSAGE" {
                     if let alert = aps["alert"] as? NSDictionary {
-                        if let userIds = alert["loc-args"] as? NSDictionary {
+                        if let userIds = alert["loc-args"] as? NSArray {
                             let fromUserId = userIds[0] as! String
                             self.goToChat(fromUserId)
                         }

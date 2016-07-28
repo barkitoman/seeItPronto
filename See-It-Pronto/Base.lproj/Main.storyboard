@@ -7533,7 +7533,7 @@ $480,000
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="abE-kb-3Jj"/>
                                 </constraints>
-                                <state key="normal" title="Call Customer">
+                                <state key="normal" title="Chat With Customer">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>

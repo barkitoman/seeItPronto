@@ -146,6 +146,7 @@ class ShowingRequestViewController: UIViewController {
     
     func loadShowingData(let response: NSData) {
         let result = JSON(data: response)
+        print(result)
         dispatch_async(dispatch_get_main_queue()) {
             self.viewData = result
             let name = result["buyer"]["first_name"].stringValue+" "+result["buyer"]["last_name"].stringValue
@@ -208,12 +209,15 @@ class ShowingRequestViewController: UIViewController {
     }
     
     @IBAction func btnCallCustomer(sender: AnyObject) {
-        let phoneNumber = self.viewData["buyer"]["phone"].stringValue
-        if(phoneNumber.isEmpty) {
-            Utility().displayAlert(self,title: "Message", message:"The call can't be made at this time, because the customer hasn't confirmed his/her phone number.", performSegue:"")
-        } else {
-            callNumber(phoneNumber)
-        }
+        self.chatAgent()
+    }
+    
+    func chatAgent() {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+        vc.to = self.viewData["realtor"]["id"].stringValue
+        vc.oponentImageName = self.viewData["realtor"]["url_image"].stringValue
+        self.navigationController?.showViewController(vc, sender: nil)
     }
     
     private func callNumber(phoneNumber:String) {

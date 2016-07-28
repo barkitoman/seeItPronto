@@ -73,6 +73,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         addChildView("LoginViewController",            titleOfChildren: "Log Out",               iconName: "logout")
         addChildView("ConfigViewController",           titleOfChildren: "Settings",              iconName: "settings")
         addChildView("BugReportViewController",        titleOfChildren: "Send Us Your Feedback", iconName: "send_us_your_feedback")
+        addChildView("ChatViewController",        titleOfChildren: "Chat", iconName: "send_us_your_feedback")
     }
     
     //MARK: Functions for Container
