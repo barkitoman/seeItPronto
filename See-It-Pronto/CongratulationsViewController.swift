@@ -126,13 +126,13 @@ class CongratulationsViewController: UIViewController {
         self.lblAddress.text = Property().getField("address")
         var description = ""
         if(!Property().getField("bedrooms").isEmpty) {
-            description += "Bed "+Property().getField("bedrooms")+"/"
+            description += Property().getField("bedrooms")+" Bed / "
         }
         if(!Property().getField("bathrooms").isEmpty) {
-            description += "Bath "+Property().getField("bathrooms")+"/"
+            description += Property().getField("bathrooms")+" Bath / "
         }
         if(!Property().getField("property_type").isEmpty) {
-            description += Property().getField("property_type")+"/"
+            description += Property().getField("property_type")+" / "
         }
         if(!Property().getField("lot_size").isEmpty) {
             description += Property().getField("lot_size")

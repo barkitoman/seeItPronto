@@ -80,13 +80,13 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
             self.lblAddress.text = Property().getField("address")
             var description = ""
             if(!Property().getField("bedrooms").isEmpty) {
-                description += "Bed "+Property().getField("bedrooms")+"/"
+                description += Property().getField("bedrooms")+" Bed / "
             }
             if(!Property().getField("bathrooms").isEmpty) {
-                description += "Bath "+Property().getField("bathrooms")+"/"
+                description += Property().getField("bathrooms")+" Bath / "
             }
             if(!Property().getField("property_type").isEmpty) {
-                description += Property().getField("property_type")+"/"
+                description += Property().getField("property_type")+" / "
             }
             if(!Property().getField("lot_size").isEmpty) {
                 description += Property().getField("lot_size")
@@ -120,7 +120,7 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
     
     func sendRequest() {
         //create params
-        let propertyDescription = "\(Property().getField("bedrooms")) Bd/ \(Property().getField("bathrooms")) Ba"
+        let propertyDescription = "\(Property().getField("bedrooms")) Bd / \(Property().getField("bathrooms")) Ba /"
         var params = "buyer_id="+User().getField("id")+"&realtor_id="+PropertyRealtor().getField("id")+"&property_id="+Property().getField("id")
         params     = params+"&type=see_it_later&date=\(self.seeItLaterDate)&property_class=\(Property().getField("property_class"))"
         params     = params+"&property_price=\(Property().getField("price"))&property_address=\(Property().getField("address"))&property_description=\(propertyDescription)"

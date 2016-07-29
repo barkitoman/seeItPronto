@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="smG-aq-mRD">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -4582,7 +4582,7 @@ $480,000
                                                                     <rect key="frame" x="15" y="12" width="29" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aGa-hN-XbM">
@@ -4714,7 +4714,7 @@ $480,000
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="r68-a6-UGQ"/>
                                 </constraints>
-                                <state key="normal" title="See it now">
+                                <state key="normal" title="See It Pronto">
                                     <color key="titleColor" red="0.0" green="0.45882352939999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -4734,7 +4734,7 @@ $480,000
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vmN-m5-vt4">
                                 <rect key="frame" x="107" y="508" width="106" height="60"/>
                                 <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="See it later">
+                                <state key="normal" title="See It Later">
                                     <color key="titleColor" red="0.81176470590000005" green="0.88235294119999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -9703,13 +9703,13 @@ $480,000
         <image name="take_photo" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="CcM-Cn-vPF"/>
         <segue reference="cgx-FP-sRH"/>
-        <segue reference="vxA-X1-U6d"/>
+        <segue reference="Qtn-cj-pqK"/>
         <segue reference="pE4-BO-WoU"/>
         <segue reference="U05-Ui-KM7"/>
         <segue reference="DJR-bZ-L3O"/>
         <segue reference="cEt-sO-PDF"/>
         <segue reference="emA-ye-QEi"/>
+        <segue reference="CcM-Cn-vPF"/>
     </inferredMetricsTieBreakers>
 </document>
