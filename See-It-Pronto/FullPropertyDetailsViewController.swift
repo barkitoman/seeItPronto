@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
+class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate {
 
     var viewData:JSON = []
     
@@ -42,12 +42,15 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate 
     @IBOutlet weak var btnSeeItLater: UIButton!
     @IBOutlet weak var btnSearchAgain: UIButton!
     
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.scrollImages.frame = CGRectMake(0, 0, self.view.frame.width, self.scrollImages.frame.height)
         self.findPropertyDetails()
         BProgressHUD.showLoadingViewWithMessage("Loading")
         self.showHideButtons()
+        self.tableView.delegate = self
     }
     
     func showHideButtons() {
@@ -109,6 +112,8 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate 
         Request().get(url, successHandler: {(response) in self.loadPropertyDetails(response)})
     }
     
+    var sections = [String]()
+    var dataSection:NSMutableArray = NSMutableArray()
     func loadPropertyDetails(let response: NSData) {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
@@ -118,6 +123,15 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate 
             if(propertyId.isEmpty) {
                 self.propertyNoExistMessage()
             }
+            
+            for res in result["extra_fields"]{
+               self.sections.append(res.0)
+               self.dataSection.addObject(res.1.arrayObject!)
+            }
+            self.tableView.reloadData()
+//            print(self.sections)
+//            let dat = self.dataSection[0][0]
+//            print(dat["field"])
             Property().saveOne(result)
             self.showPropertydetails()
         }
@@ -215,5 +229,34 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate 
         self.pageControl.currentPage = Int(currentPage);
         
     }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.dataSection[section].count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell   = UITableViewCell.init(style: UITableViewCellStyle.Value1, reuseIdentifier: "Cell")
+        cell.textLabel?.font = UIFont.systemFontOfSize(14, weight: UIFontWeightRegular)
+        cell.detailTextLabel?.font = UIFont.systemFontOfSize(14, weight: UIFontWeightRegular)
+        let dat = JSON(self.dataSection[indexPath.section][indexPath.row])
+        
+        cell.textLabel?.text = dat["label"].stringValue
+        cell.detailTextLabel?.text = dat["value"].stringValue
+        //let tema  = self.sections[indexPath.row]
+        //cell.imgLogo.tag = indexPath.row
+        //cell.imgLogo.setImage(UIImage(named: tema.url_logo), forState: UIControlState.Normal)
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.sections[section]
+        
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return self.sections.count
+    }
+
     
 }
