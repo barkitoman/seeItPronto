@@ -407,6 +407,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     }
     
     @IBAction func clearDataFilter(sender: AnyObject) {
+        self.clearFields()
         var userId = User().getField("id")
         if(userId.isEmpty) {
             userId = "99999999"
@@ -424,6 +425,29 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         self.txtPriceFrom.text = ""
         self.txtPriceTo.text = ""
         
+    }
+    
+    func clearFields() {
+        self.txtArea.text      = ""
+        self.txtPriceFrom.text = ""
+        self.txtPriceTo.text   = ""
+        self.beds1.backgroundColor = UIColor(rgba: "#45B5DC")
+        self.beds2.backgroundColor = UIColor(rgba: "#45B5DC")
+        self.beds3.backgroundColor = UIColor(rgba: "#45B5DC")
+        self.beds4.backgroundColor = UIColor(rgba: "#45B5DC")
+        self.beds5.backgroundColor = UIColor(rgba: "#45B5DC")
+        
+        self.baths1.backgroundColor = UIColor(rgba: "#45B5DC")
+        self.baths2.backgroundColor = UIColor(rgba: "#45B5DC")
+        self.baths3.backgroundColor = UIColor(rgba: "#45B5DC")
+        self.baths4.backgroundColor = UIColor(rgba: "#45B5DC")
+        self.baths5.backgroundColor = UIColor(rgba: "#45B5DC")
+        
+        self.bedRooms  = ""
+        self.bathRooms = ""
+        
+        self.swPool.on = false
+        self.swType.on = false
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
