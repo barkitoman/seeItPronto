@@ -192,7 +192,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "RealtorForm2") {
-            let view: RealtorForm3ViewController = segue.destinationViewController as! RealtorForm3ViewController
+            let view: RealtorForm4ViewController = segue.destinationViewController as! RealtorForm4ViewController
             view.viewData  = self.viewData
         }
     }

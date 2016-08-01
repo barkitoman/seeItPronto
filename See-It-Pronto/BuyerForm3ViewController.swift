@@ -102,7 +102,6 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
             self.txtExpDate.text    = result["expiration_date"].stringValue
             self.txtCVC.text        = result["csv"].stringValue
             self.txtPromoCode.text  = result["promo_code"].stringValue
-            //Utility().showPhoto(self.previewProfilePicture, imgPath: result["url_image"].stringValue)
         }
     }
     
