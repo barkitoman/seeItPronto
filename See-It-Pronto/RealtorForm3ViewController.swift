@@ -10,7 +10,7 @@ import UIKit
 
 class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate {
 
-    @IBOutlet weak var lblShowingRate: UILabel!
+    
     @IBOutlet weak var lblTravelRate: UILabel!
     
     
@@ -39,24 +39,24 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func editShowingRate(sender: AnyObject) {
-        
-        let pickerView = CustomPickerDialog.init()
-        var arrayDataSource:[String] = []
-        for i in 0...50 {
-            arrayDataSource.append(String(i))
-        }
-        pickerView.setDataSource(arrayDataSource)
-        pickerView.selectValue(self.numberShowingRate)
-        
-        pickerView.showDialog("Select Showing Rate", doneButtonTitle: "Done", cancelButtonTitle: "Cancel") { (result) -> Void in
-            //self.lblResult.text = result
-            let showingRate = result
-            self.numberShowingRate = result
-            self.showRates(String(showingRate), traveRange: "")
-        }
-        
-    }
+//    @IBAction func editShowingRate(sender: AnyObject) {
+//        
+//        let pickerView = CustomPickerDialog.init()
+//        var arrayDataSource:[String] = []
+//        for i in 0...50 {
+//            arrayDataSource.append(String(i))
+//        }
+//        pickerView.setDataSource(arrayDataSource)
+//        pickerView.selectValue(self.numberShowingRate)
+//        
+//        pickerView.showDialog("Select Showing Rate", doneButtonTitle: "Done", cancelButtonTitle: "Cancel") { (result) -> Void in
+//            //self.lblResult.text = result
+//            let showingRate = result
+//            self.numberShowingRate = result
+//            self.showRates(String(showingRate), traveRange: "")
+//        }
+//        
+//    }
     
     @IBAction func editTravelRate(sender: AnyObject) {
         
@@ -87,9 +87,9 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     func save() {
         //create params
-        let showingRate = self.numberShowingRate
+        //let showingRate = self.numberShowingRate
         let travelRate  = self.numberTravelRange
-        let params = "id="+self.viewData["id"].stringValue+"&realtor_id="+self.viewData["realtor_id"].stringValue+"&showing_rate="+showingRate+"&travel_range="+travelRate
+        let params = "id="+self.viewData["id"].stringValue+"&realtor_id="+self.viewData["realtor_id"].stringValue+"&travel_range="+travelRate
         let url = AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPost(response)});
     }
@@ -144,9 +144,9 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
     }
     
     func showRates(showingRate:String,traveRange:String) {
-        if(!showingRate.isEmpty){
-            self.lblShowingRate.text = "Your Rate: $\(showingRate) per showing"
-        }
+//        if(!showingRate.isEmpty){
+//            self.lblShowingRate.text = "Your Rate: $\(showingRate) per showing"
+//        }
         if(!traveRange.isEmpty){
             self.lblTravelRate.text  = "You are willing to travel up to \(traveRange) miles to show a property"
         }

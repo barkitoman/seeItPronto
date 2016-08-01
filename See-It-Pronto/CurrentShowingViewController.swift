@@ -261,4 +261,12 @@ class CurrentShowingViewController: UIViewController {
             Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
         }
     }
+    @IBAction func CallPanic(sender: AnyObject) {
+        if let phoneCallURL:NSURL = NSURL(string: "tel://911") {
+            let application:UIApplication = UIApplication.sharedApplication()
+            if (application.canOpenURL(phoneCallURL)) {
+                application.openURL(phoneCallURL);
+            }
+        }
+    }
 }

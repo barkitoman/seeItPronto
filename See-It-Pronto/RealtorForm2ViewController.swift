@@ -19,8 +19,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     @IBOutlet weak var zipCode1: UITextField!
     @IBOutlet weak var zipCode2: UITextField!
     @IBOutlet weak var zipCode3: UITextField!
-    
-    @IBOutlet weak var txtRoutingNumber: UITextField!
+
 
     let imagePicker: UIImagePickerController! = UIImagePickerController()
     var haveImage:Bool = false
@@ -54,7 +53,6 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
         self.txtBrokerage.delegate = self
         self.txtFirstName.delegate = self
         self.txtLastName.delegate = self
-        self.txtRoutingNumber.delegate = self
         self.zipCode1.delegate = self
         self.zipCode2.delegate = self
         self.zipCode3.delegate = self
@@ -133,7 +131,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
         var params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["id"].stringValue
         params = params+"&active_zip_code1=\(self.zipCode1.text!)"
         params = params+"&active_zip_code2=\(self.zipCode2.text!)"
-        params = params+"&active_zip_code3=\(self.zipCode3.text!)&broker_email=\(self.txtRoutingNumber.text!)"
+        params = params+"&active_zip_code3=\(self.zipCode3.text!)"
         params = params+"&role=realtor&brokerage="+txtBrokerage.text!+"&first_name="+txtFirstName.text!
         params = params+"&last_name="+txtLastName.text!+"&lisence="+txtLisence.text!+"&broker_name="+txtBankAcct.text!
         if(!self.viewData["realtor_id"].stringValue.isEmpty){
@@ -173,7 +171,6 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
             self.txtFirstName.text     = result["first_name"].stringValue
             self.txtLastName.text      = result["last_name"].stringValue
             self.txtBrokerage.text     = result["brokerage"].stringValue
-            self.txtRoutingNumber.text = result["broker_email"].stringValue
             self.txtBankAcct.text      = result["broker_name"].stringValue
             self.txtLisence.text       = result["license"].stringValue
             self.zipCode1.text         = result["active_zip_code1"].stringValue
