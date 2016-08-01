@@ -79,7 +79,7 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
         
         var listing = JSON(self.myListings[indexPath.row])
         var description = listing["property"]["address"].stringValue+"\n"+Utility().formatCurrency(listing["property"]["price"].stringValue)
-        description = description+" "+listing["property"]["bedrooms"].stringValue+"Bd / "+listing["property"]["bathrooms"].stringValue+"Ba"
+        description = description+" "+listing["property"]["bedrooms"].stringValue+" Bd / "+listing["property"]["bathrooms"].stringValue+" Ba "
         cell.lblInformation.text = description
         cell.btnBeacon.tag = indexPath.row
         cell.btnBeacon.addTarget(self, action: "openBeaconView:", forControlEvents: .TouchUpInside)
@@ -87,7 +87,7 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
         cell.btnEdit.tag = indexPath.row
         cell.btnEdit.addTarget(self, action: "openEditView:", forControlEvents: .TouchUpInside)
         cell.swBeacon.on = false
-        if(listing["beacon"]["state_beacon"].int == 1) {
+        if(listing["state_beacon"].int == 1) {
             cell.swBeacon.on = true
         }
         cell.swBeacon.tag = Int(listing["property"]["id"].stringValue)!

@@ -146,8 +146,8 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
         dispatch_async(dispatch_get_main_queue()) {
             let result = JSON(data: response)
             var description = result["address"].stringValue+Utility().formatCurrency(result["price"].stringValue)
-            description     = description+" "+result["bedrooms"].stringValue+"Bd / "
-            description     = description+result["bathrooms"].stringValue+"Ba"
+            description     = description+" \n"+result["bedrooms"].stringValue+" Bd / "
+            description     = description+result["bathrooms"].stringValue+" Ba"
             self.propertyDescription.text = description
             if(!result["images"][0].stringValue.isEmpty) {
                 Utility().showPhoto(self.propertyImage, imgPath: result["images"][0].stringValue)

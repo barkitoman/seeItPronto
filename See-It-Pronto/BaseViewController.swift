@@ -65,7 +65,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     func menuBuyer(){
         addChildView("RealtorHomeViewController",      titleOfChildren: "Home",                  iconName: "home")
         //addChildView("PropertyListViewController",   titleOfChildren: "List Properties",       iconName: "list_properties")
-        addChildView("ListRealtorsViewController",     titleOfChildren: "Agents",                iconName: "realtor")
+        //addChildView("ListRealtorsViewController",     titleOfChildren: "Agents",                iconName: "realtor")
         addChildView("SeeItLaterBuyerViewController",  titleOfChildren: "See It Later",          iconName: "my_listings")
         addChildView("PastListingsBuyerViewController",titleOfChildren: "Properties Viewed",     iconName: "properties_viewed")
         addChildView("BuyerForm1ViewController",       titleOfChildren: "My Profile",            iconName: "edit_profile")
@@ -73,7 +73,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         addChildView("LoginViewController",            titleOfChildren: "Log Out",               iconName: "logout")
         addChildView("ConfigViewController",           titleOfChildren: "Settings",              iconName: "settings")
         addChildView("BugReportViewController",        titleOfChildren: "Send Us Your Feedback", iconName: "send_us_your_feedback")
-        addChildView("ChatViewController",        titleOfChildren: "Chat", iconName: "send_us_your_feedback")
+        //addChildView("ChatViewController",        titleOfChildren: "Chat", iconName: "send_us_your_feedback")
     }
     
     //MARK: Functions for Container
@@ -100,15 +100,15 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             dispatch_async(dispatch_get_main_queue()) {
                 var url   = AppConfig.APP_URL+"/logout_phone"
                 url = url+"/"+userId
-                print(url)
                 Request().get(url, successHandler: {(response) in })
             }
             
             showView = false
             let vc : BuyerHomeViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as! BuyerHomeViewController
             vc.logOutMenu = true
-            User().deleteAllData()
-            SearchConfig().deleteAllData()
+            let saveData: JSON =  ["id":""]
+            User().saveOne(saveData)
+            SearchConfig().saveOne(saveData)
             self.navigationController?.pushViewController(vc, animated: true)
             
         } else if (viewIdentifier == "ListRealtorsViewController") {

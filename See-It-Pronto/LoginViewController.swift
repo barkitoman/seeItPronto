@@ -70,6 +70,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
         }
         if(result["user"]["result"].bool == true) {
             //is login is ok, store the user data
+            User().deleteAllData()
             User().saveOne(result)
             self.goHomeView(result["user"]["role"].stringValue)
         } else {

@@ -82,7 +82,7 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     @IBAction func btnMakeSomeMoney(sender: AnyObject) {
         User().updateField("is_login", value: "1")
-        save()
+        self.save()
     }
     
     func save() {
@@ -128,8 +128,9 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
     }
     
     func loadDataToEdit(let response: NSData) {
+        let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
-            let result = JSON(data: response)
+            self.viewData = result
             if(!result["showing_rate"].stringValue.isEmpty) {
                 self.numberShowingRate = result["showing_rate"].stringValue
                 //self.slShowingRate.value = Float(result["showing_rate"].stringValue)!

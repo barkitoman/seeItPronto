@@ -113,8 +113,9 @@ class RealtorForm1ViewController: UIViewController,UITextFieldDelegate, UITextVi
     }
     
     func loadDataToEdit(let response: NSData) {
+        let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
-            let result = JSON(data: response)
+            self.viewData = result
             self.txtEmail.text = result["email"].stringValue
             self.txtPhone.text = result["phone"].stringValue
             self.txtBiography.text = result["biography"].stringValue

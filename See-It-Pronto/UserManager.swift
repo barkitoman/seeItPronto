@@ -72,6 +72,7 @@ class User {
     func save(userData:JSON) {
         let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let contxt: NSManagedObjectContext = appDel.managedObjectContext
+        contxt.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         let en = NSEntityDescription.entityForName("User", inManagedObjectContext: contxt)
         //create instance of pur data model and inicilize
         let newItem = UserEntity(entity:en!, insertIntoManagedObjectContext:contxt)
@@ -95,7 +96,7 @@ class User {
         do {
             try contxt.save()
         } catch let error as NSError {
-            print("Error when save user. error : \(error) \(error.userInfo)")
+            print("Error when save user. error : \(error.userInfo)")
         }
     }
     
@@ -110,6 +111,7 @@ class User {
     func deleteAllData() {
         let appDel        = UIApplication.sharedApplication().delegate as! AppDelegate
         let context       = appDel.managedObjectContext
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         let coord         = appDel.persistentStoreCoordinator
         let fetchRequest  = NSFetchRequest(entityName: "User")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
@@ -117,7 +119,7 @@ class User {
         do {
             try coord.executeRequest(deleteRequest, withContext: context)
         } catch let error as NSError {
-            debugPrint(error)
+            print("Error deleting user. error : \(error.userInfo)")
         }
     }
 }
