@@ -132,14 +132,31 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
         let image = (!realtor["image"].stringValue.isEmpty) ? realtor["image"].stringValue : realtor["url_image"].stringValue
         
         cell.photo.image = nil
+        cell.photo.tag = indexPath.row
+        let tap = UITapGestureRecognizer(target: self, action: "imageClickOpenProfile:")
+        cell.photo.addGestureRecognizer(tap)
+        cell.photo.userInteractionEnabled = true
         Utility().showPhoto(cell.photo, imgPath: image, defaultImg: "default_user_photo")
         
         if(!realtor["rating"].stringValue.isEmpty) {
             cell.ratingImage.image = UIImage(named: realtor["rating"].stringValue+"stars")
         }
+        
         return cell
     }
     
+    func imageClickOpenProfile(gesture: UIGestureRecognizer) {
+        // if the tapped view is a UIImageView then set it to imageview
+        if let imageView = gesture.view as? UIImageView {
+            let realtor = JSON(self.realtors[imageView.tag])
+            
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let vc : RealtorProfileViewController = mainStoryboard.instantiateViewControllerWithIdentifier("RealtorProfileViewController") as! RealtorProfileViewController
+            vc.viewData = realtor
+            self.navigationController?.showViewController(vc, sender: nil)
+        }
+    }
+
     //Pagination
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath){
         let row = indexPath.row
@@ -166,7 +183,6 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
             //open view for see it pronto process
             self.performSegueWithIdentifier("SeeItNowAgentConfirmation", sender: self)
         }
-        
     }
 
     func findPropertyRealtors() {
