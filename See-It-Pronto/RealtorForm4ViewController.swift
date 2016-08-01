@@ -1,25 +1,28 @@
 //
-//  BuyerForm3ViewController.swift
+//  RealtorForm4ViewController.swift
 //  See-It-Pronto
 //
-//  Created by Deyson on 1/4/16.
-//  Copyright © 2016 Deyson. All rights reserved.
+//  Created by Deyson on 8/1/16.
+//  Copyright © 2016 user114136. All rights reserved.
 //
 
 import UIKit
 
-class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate {
+class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate  {
+    
+    var animateDistance: CGFloat!
+    var viewData:JSON = []
     
     @IBOutlet weak var txtCardNumber: UITextField!
+    
     @IBOutlet weak var txtExpDate: UITextField!
-    @IBOutlet weak var txtCVC: UITextField!
-    @IBOutlet weak var txtPromoCode: UITextField!
-    var viewData:JSON  = []
+    
+    @IBOutlet weak var txtCvc: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.findUserInfo()
         self.selfDelegate()
-        findUserInfo()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -38,19 +41,10 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
-    }
-    
-    @IBAction func btnPrevious(sender: AnyObject) {
-         navigationController?.popViewControllerAnimated(true)     
-    }
-    
     func selfDelegate() {
         self.txtCardNumber.delegate = self
         self.txtExpDate.delegate = self
-        self.txtCVC.delegate = self
-        self.txtPromoCode.delegate = self
+        self.txtCvc.delegate = self
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -58,13 +52,21 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
         return false
     }
     
-    @IBAction func btnSave(sender: AnyObject) {
-        save()
+    @IBAction func btnBack(sender: AnyObject) {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func btnPrevious(sender: AnyObject) {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func btnNext(sender: AnyObject) {
+        self.save()
     }
     
     func save() {
         //create params
-        var params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["id"].stringValue+"&number_card="+txtCardNumber.text!+"&expiration_date="+txtExpDate.text!+"&csv="+txtCVC.text!+"&promo_code="+txtPromoCode.text!
+        var params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["id"].stringValue+"&number_card="+txtCardNumber.text!+"&expiration_date="+txtExpDate.text!+"&csv="+self.txtCvc.text!
         if(!self.viewData["card_id"].stringValue.isEmpty) {
             params = params+"&card_id="+self.viewData["card_id"].stringValue
         }
@@ -76,7 +78,7 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result
-            Utility().performSegue(self, performSegue: "FromBuyerForm3")
+            Utility().performSegue(self, performSegue: "RealtorForm3")
         } else {
             var msg = "Error saving, please try later"
             if(result["msg"].stringValue != "") {
@@ -100,17 +102,16 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
         dispatch_async(dispatch_get_main_queue()) {
             self.txtCardNumber.text = result["number_card"].stringValue
             self.txtExpDate.text    = result["expiration_date"].stringValue
-            self.txtCVC.text        = result["csv"].stringValue
-            self.txtPromoCode.text  = result["promo_code"].stringValue
+            self.txtCvc.text        = result["csv"].stringValue
         }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "FromBuyerForm3") {
-            User().updateField("is_login", value: "1")
-            let view: BuyerHomeViewController = segue.destinationViewController as! BuyerHomeViewController
+        if (segue.identifier == "RealtorForm3") {
+            let view: RealtorForm3ViewController = segue.destinationViewController as! RealtorForm3ViewController
             view.viewData  = self.viewData
         }
     }
+    
 
 }
