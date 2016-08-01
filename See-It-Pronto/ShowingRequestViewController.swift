@@ -151,7 +151,7 @@ class ShowingRequestViewController: UIViewController {
             let name = result["buyer"]["first_name"].stringValue+" "+result["buyer"]["last_name"].stringValue
             self.lblBuyerName.text = "User \(name) want to see it on \(result["showing"]["date"].stringValue)"
             var description = result["property"]["address"].stringValue+" \(Utility().formatCurrency(result["property"]["price"].stringValue))"
-            description = description+" "+result["property"]["bedrooms"].stringValue+"Bd / "+result["property"]["bathrooms"].stringValue+"Ba"
+            description = description+" \(result["property"]["bedrooms"].stringValue) Bd / \(result["property"]["bathrooms"].stringValue) Ba / "
             self.lblPropertyDescription.text = description
             self.btnConvenienceFee.setTitle("$"+result["information_realtor"]["showing_rate"].stringValue+" convenience fee", forState: .Normal)
             

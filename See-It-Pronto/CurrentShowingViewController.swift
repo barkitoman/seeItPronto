@@ -84,13 +84,13 @@ class CurrentShowingViewController: UIViewController {
             self.address.text  = result["property"]["address"].stringValue
             self.lblPrice.text = Utility().formatCurrency(result["property"]["price"].stringValue)
             var description = ""
-            description += "Bed "+result["property"]["bedrooms"].stringValue+"/ "
-            description += "Bath "+result["property"]["bathrooms"].stringValue
+            description += result["property"]["bedrooms"].stringValue+" Bed / "
+            description += result["property"]["bathrooms"].stringValue+" Bath / "
             if(!result["property"]["type"].stringValue.isEmpty) {
-                description = description+"/ "+result["property"]["type"].stringValue
+                description = description+result["property"]["type"].stringValue+" / "
             }
             if(!result["property"]["square_feed"].stringValue.isEmpty) {
-                description = description+"/ "+result["property"]["square_feed"].stringValue+" SqrFt"
+                description = description+result["property"]["square_feed"].stringValue+" SqrFt"
             }
             self.propertyDescription.text = description
             if(!result["property"]["image"].stringValue.isEmpty) {
@@ -259,6 +259,14 @@ class CurrentShowingViewController: UIViewController {
                 msg = result["msg"].stringValue
             }
             Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
+        }
+    }
+    @IBAction func CallPanic(sender: AnyObject) {
+        if let phoneCallURL:NSURL = NSURL(string: "tel://911") {
+            let application:UIApplication = UIApplication.sharedApplication()
+            if (application.canOpenURL(phoneCallURL)) {
+                application.openURL(phoneCallURL);
+            }
         }
     }
 }

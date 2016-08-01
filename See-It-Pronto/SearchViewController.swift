@@ -406,6 +406,26 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         Utility().goHome(self)
     }
     
+    @IBAction func clearDataFilter(sender: AnyObject) {
+        var userId = User().getField("id")
+        if(userId.isEmpty) {
+            userId = "99999999"
+        }
+        let url = AppConfig.APP_URL+"/delete_search_config/\(userId)"
+        Request().get(url, successHandler: {(response) in self.afterSend(response)})
+    }
+    
+    func afterSend(let response: NSData) {
+        SearchConfig().deleteAllData()
+        self.txtArea.text = ""
+        self.btnClass.setTitle("-----------------------", forState: .Normal)
+        setBedsAndBaths("bedrooms", value: "0")
+        setBedsAndBaths("bathrooms", value: "0")
+        self.txtPriceFrom.text = ""
+        self.txtPriceTo.text = ""
+        
+    }
+    
     func textFieldDidBeginEditing(textField: UITextField) {
         let textFieldRect : CGRect = self.view.window!.convertRect(textField.bounds, fromView: textField)
         let viewRect : CGRect = self.view.window!.convertRect(self.view.bounds, fromView: self.view)

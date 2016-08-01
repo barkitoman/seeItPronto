@@ -54,7 +54,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         addChildView("ListBuyersViewController",        titleOfChildren: "Buyers",                 iconName: "buyer")
         addChildView("RealtorForm1ViewController",      titleOfChildren: "My Profile",             iconName: "edit_profile")
         addChildView("NotificationsViewController",     titleOfChildren: "Notifications",          iconName: "notification")
-        addChildView("ReadyToWorkViewController",       titleOfChildren: "Making Money Status",    iconName: "making_money")
+        addChildView("ReadyToWorkViewController",       titleOfChildren: "Make Myself Active",    iconName: "making_money")
         addChildView("ConfigViewController",            titleOfChildren: "Settings",               iconName: "settings")
         addChildView("CreateBeaconViewController",      titleOfChildren: "Add Beacon",             iconName: "add_beacon")
         addChildView("LoginViewController",             titleOfChildren: "Log Out",                iconName: "logout")
