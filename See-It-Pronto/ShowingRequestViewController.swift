@@ -147,9 +147,9 @@ class ShowingRequestViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue()) {
             self.viewData = result
             let name = result["buyer"]["first_name"].stringValue+" "+result["buyer"]["last_name"].stringValue
-            self.lblBuyerName.text = "\(name) wants to see it on \(result["showing"]["date"].stringValue)"
-            var description = result["property"]["address"].stringValue+" \(Utility().formatCurrency(result["property"]["price"].stringValue))"
-            description = description+" \(result["property"]["bedrooms"].stringValue) Bd / \(result["property"]["bathrooms"].stringValue) Ba / "
+            self.lblBuyerName.text = "\(name) wants to see it on \(result["showing"]["showing_date"].stringValue)"
+            var description = result["property"]["address"].stringValue+"\n \(Utility().formatCurrency(result["property"]["price"].stringValue))"
+            description = description+"\n \(result["property"]["bedrooms"].stringValue) Bd / \(result["property"]["bathrooms"].stringValue) Ba / "
             self.lblPropertyDescription.text = description
             
             Utility().showPhoto(self.buyerPhoto, imgPath: result["buyer"]["url_image"].stringValue, defaultImg: "default_user_photo")
