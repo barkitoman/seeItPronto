@@ -18,8 +18,6 @@ class ShowingRequestViewController: UIViewController {
     @IBOutlet weak var showingInstructions: UILabel!
     var showingId:String = ""
     
-    @IBOutlet weak var btnConvenienceFee: UIButton!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.findShowing()
@@ -52,7 +50,7 @@ class ShowingRequestViewController: UIViewController {
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         let type         = "showing_acepted"
         let title        = "Showing request accepted"
-        let description  = "User \(fullUsername) Accepted your showing request"
+        let description  = "\(fullUsername) Accepted your showing request"
         params           = self.notificationParams(params,type: type,title: title,descripcion: description)
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterYesRequest(response)});
     }
@@ -107,7 +105,7 @@ class ShowingRequestViewController: UIViewController {
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         let type         = "showing_rejected"
         let title        = "Showing request rejected"
-        let description  = "User \(fullUsername) is not available to show you the property at this time"
+        let description  = "\(fullUsername) is not available to show you the property at this time"
         params           = self.notificationParams(params,type: type,title: title,descripcion: description)
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterNoRequest(response)});
     }
@@ -149,11 +147,10 @@ class ShowingRequestViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue()) {
             self.viewData = result
             let name = result["buyer"]["first_name"].stringValue+" "+result["buyer"]["last_name"].stringValue
-            self.lblBuyerName.text = "User \(name) want to see it on \(result["showing"]["date"].stringValue)"
+            self.lblBuyerName.text = "\(name) wants to see it on \(result["showing"]["date"].stringValue)"
             var description = result["property"]["address"].stringValue+" \(Utility().formatCurrency(result["property"]["price"].stringValue))"
             description = description+" \(result["property"]["bedrooms"].stringValue) Bd / \(result["property"]["bathrooms"].stringValue) Ba / "
             self.lblPropertyDescription.text = description
-            self.btnConvenienceFee.setTitle("$"+result["information_realtor"]["showing_rate"].stringValue+" convenience fee", forState: .Normal)
             
             Utility().showPhoto(self.buyerPhoto, imgPath: result["buyer"]["url_image"].stringValue, defaultImg: "default_user_photo")
             

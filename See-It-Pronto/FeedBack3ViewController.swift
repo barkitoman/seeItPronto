@@ -47,7 +47,7 @@ class FeedBack3ViewController: UIViewController {
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+self.viewData["showing"]["realtor_id"].stringValue
         params = params+"&title=A user wants to buy&property_id=\(self.viewData["showing"]["property_id"].stringValue)"
-        params = params+"&description=User \(fullUsername) wants to buy a property with you"
+        params = params+"&description=\(fullUsername) wants to buy a property with you"
         params = params+"&parent_id="+self.viewData["showing"]["id"].stringValue+"&type=user_wants_buy&parent_type=showings"
         return params
     }
