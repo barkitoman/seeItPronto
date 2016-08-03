@@ -7436,17 +7436,6 @@ $480,000
                                     </mask>
                                 </variation>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1A-uM-HqI">
-                                <rect key="frame" x="20" y="443" width="280" height="30"/>
-                                <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="rya-em-d2s"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="$15 Convenience Fee">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QXV-Tp-GTO">
                                 <rect key="frame" x="0.0" y="508" width="160" height="60"/>
                                 <color key="backgroundColor" red="0.81176470590000005" green="0.88235294119999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -7552,11 +7541,9 @@ $480,000
                         <constraints>
                             <constraint firstItem="yjx-RH-VYj" firstAttribute="centerY" secondItem="yaM-VF-biO" secondAttribute="centerY" id="05p-aH-Xb9"/>
                             <constraint firstItem="d4V-Ss-XcE" firstAttribute="leading" secondItem="vJ1-qB-bMb" secondAttribute="trailing" id="0ri-hY-0mz"/>
-                            <constraint firstItem="h1A-uM-HqI" firstAttribute="trailing" secondItem="QMU-Sg-y1c" secondAttribute="trailing" id="5uK-5f-Z4L"/>
                             <constraint firstItem="Qi9-ZA-bIa" firstAttribute="leading" secondItem="QXV-Tp-GTO" secondAttribute="trailing" id="8zq-jc-o1w"/>
                             <constraint firstItem="vJ1-qB-bMb" firstAttribute="top" secondItem="d5f-0G-gVw" secondAttribute="bottom" constant="8" symbolic="YES" id="9ga-rJ-8P4"/>
                             <constraint firstItem="d4V-Ss-XcE" firstAttribute="centerY" secondItem="vJ1-qB-bMb" secondAttribute="centerY" id="CBN-Og-ORY"/>
-                            <constraint firstItem="Qi9-ZA-bIa" firstAttribute="top" secondItem="h1A-uM-HqI" secondAttribute="bottom" constant="35" id="EFZ-1f-z8I"/>
                             <constraint firstItem="Qi9-ZA-bIa" firstAttribute="height" secondItem="QXV-Tp-GTO" secondAttribute="height" id="Eow-Mo-ZsN"/>
                             <constraint firstItem="QXV-Tp-GTO" firstAttribute="leading" secondItem="A1H-L6-rOp" secondAttribute="leading" id="GLn-vt-u6k"/>
                             <constraint firstItem="xmN-ny-h8v" firstAttribute="top" secondItem="QXV-Tp-GTO" secondAttribute="bottom" id="HcU-uR-QlH"/>
@@ -7570,11 +7557,9 @@ $480,000
                             <constraint firstItem="yaM-VF-biO" firstAttribute="leading" secondItem="A1H-L6-rOp" secondAttribute="leading" constant="20" id="ZuU-4Y-Q2v"/>
                             <constraint firstItem="yaM-VF-biO" firstAttribute="top" secondItem="vJ1-qB-bMb" secondAttribute="bottom" constant="8" symbolic="YES" id="a0o-NQ-j1U"/>
                             <constraint firstItem="qz8-Tz-Ltu" firstAttribute="leading" secondItem="ScR-zU-6t2" secondAttribute="leading" id="caL-od-PrW"/>
-                            <constraint firstItem="h1A-uM-HqI" firstAttribute="width" secondItem="qz8-Tz-Ltu" secondAttribute="width" id="d73-TG-N2B"/>
                             <constraint firstItem="QMU-Sg-y1c" firstAttribute="top" secondItem="qz8-Tz-Ltu" secondAttribute="bottom" constant="16" id="dtO-bm-Mpf"/>
                             <constraint firstItem="qz8-Tz-Ltu" firstAttribute="trailing" secondItem="ScR-zU-6t2" secondAttribute="trailing" id="few-F3-Ran"/>
                             <constraint firstItem="Nup-tL-Yle" firstAttribute="leading" secondItem="A1H-L6-rOp" secondAttribute="leading" id="gV8-ks-tMq"/>
-                            <constraint firstItem="h1A-uM-HqI" firstAttribute="leading" secondItem="QMU-Sg-y1c" secondAttribute="leading" id="hKK-Oe-uSp"/>
                             <constraint firstItem="vJ1-qB-bMb" firstAttribute="leading" secondItem="A1H-L6-rOp" secondAttribute="leading" id="jFS-c9-Pu1"/>
                             <constraint firstItem="d4V-Ss-XcE" firstAttribute="trailing" secondItem="Nup-tL-Yle" secondAttribute="trailing" id="onD-A9-u6x"/>
                             <constraint firstItem="Nup-tL-Yle" firstAttribute="top" secondItem="yaM-VF-biO" secondAttribute="bottom" constant="8" id="pQF-g6-ok3"/>
@@ -7586,12 +7571,10 @@ $480,000
                             <constraint firstItem="qz8-Tz-Ltu" firstAttribute="top" secondItem="ScR-zU-6t2" secondAttribute="bottom" constant="25" id="weC-HB-K2B"/>
                             <constraint firstItem="QMU-Sg-y1c" firstAttribute="trailing" secondItem="qz8-Tz-Ltu" secondAttribute="trailing" id="y00-We-1IZ"/>
                             <constraint firstAttribute="trailing" secondItem="yjx-RH-VYj" secondAttribute="trailing" constant="20" id="yfL-tO-4MF"/>
-                            <constraint firstItem="h1A-uM-HqI" firstAttribute="top" secondItem="QMU-Sg-y1c" secondAttribute="bottom" constant="14" id="zOv-CE-eOF"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="btnConvenienceFee" destination="h1A-uM-HqI" id="7Bc-5W-iec"/>
                         <outlet property="buyerPhoto" destination="yaM-VF-biO" id="YsD-EE-CuF"/>
                         <outlet property="lblBuyerName" destination="yjx-RH-VYj" id="Hur-LZ-DXy"/>
                         <outlet property="lblPropertyDescription" destination="EAF-YQ-mUP" id="7G0-k3-zRx"/>
