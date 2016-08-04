@@ -98,6 +98,7 @@
 		68C265861C7B5AC5006ADF61 /* ListBuyersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C265851C7B5AC5006ADF61 /* ListBuyersTableViewCell.swift */; };
 		68D64C561C443DF5006CBE2F /* Utitity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D64C551C443DF5006CBE2F /* Utitity.swift */; };
 		68FA964C1C3D9DD80023C292 /* SeeitLaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FA964B1C3D9DD80023C292 /* SeeitLaterViewController.swift */; };
+		A40081931D53AE9700BBFF91 /* MoreImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40081921D53AE9700BBFF91 /* MoreImageViewController.swift */; };
 		A4048DD71CF7EFB10052EBB5 /* CustomPickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4048DD61CF7EFB10052EBB5 /* CustomPickerDialog.swift */; };
 		A4FDCA661CE544F600D18B88 /* BProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FDCA651CE544F600D18B88 /* BProgressHUD.swift */; };
 /* End PBXBuildFile section */
@@ -230,6 +231,7 @@
 		68C265851C7B5AC5006ADF61 /* ListBuyersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListBuyersTableViewCell.swift; sourceTree = "<group>"; };
 		68D64C551C443DF5006CBE2F /* Utitity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utitity.swift; sourceTree = "<group>"; };
 		68FA964B1C3D9DD80023C292 /* SeeitLaterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeitLaterViewController.swift; sourceTree = "<group>"; };
+		A40081921D53AE9700BBFF91 /* MoreImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreImageViewController.swift; sourceTree = "<group>"; };
 		A4048DD61CF7EFB10052EBB5 /* CustomPickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPickerDialog.swift; sourceTree = "<group>"; };
 		A4FDCA651CE544F600D18B88 /* BProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BProgressHUD.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -349,6 +351,7 @@
 				1094FD2E1CF4E285009DCAF9 /* CreateBeaconViewController.swift */,
 				10208E061D00A12200714315 /* AddRealtorPropertyViewController.swift */,
 				103013161D26F67C00DF331B /* BugReportViewController.swift */,
+				A40081921D53AE9700BBFF91 /* MoreImageViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -612,6 +615,7 @@
 			files = (
 				109E6A481C80A95A00AD46EE /* PropertyManager.swift in Sources */,
 				682EF3571C528960007176BF /* RealtorForm1ViewController.swift in Sources */,
+				A40081931D53AE9700BBFF91 /* MoreImageViewController.swift in Sources */,
 				681140B11C3AC8760068AE1C /* ListingDetailsViewController.swift in Sources */,
 				68598DF31C2AF44F00E104C9 /* LoginViewController.swift in Sources */,
 				A4FDCA661CE544F600D18B88 /* BProgressHUD.swift in Sources */,

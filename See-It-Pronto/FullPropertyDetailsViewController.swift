@@ -13,8 +13,8 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     var viewData:JSON = []
     
     @IBOutlet weak var lbAddress: UILabel!
-    @IBOutlet weak var lbCity: UILabel!
-    @IBOutlet weak var lbZipCode: UILabel!
+    //@IBOutlet weak var lbCity: UILabel!
+    //@IBOutlet weak var lbZipCode: UILabel!
     @IBOutlet weak var lbTypeProperty: UILabel!
     @IBOutlet weak var lbPrice: UILabel!
     @IBOutlet weak var lbRemarks: UILabel!
@@ -40,7 +40,7 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     
     @IBOutlet weak var btnSeeItNow: UIButton!
     @IBOutlet weak var btnSeeItLater: UIButton!
-    @IBOutlet weak var btnSearchAgain: UIButton!
+    //@IBOutlet weak var btnSearchAgain: UIButton!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -56,7 +56,7 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     func showHideButtons() {
         let role = User().getField("role")
         if(role == "realtor" || User().getField("id") == "") {
-            btnSearchAgain.hidden = true
+            //btnSearchAgain.hidden = true
             btnSeeItLater.hidden  = true
             btnSeeItNow.hidden    = true
         }
@@ -78,17 +78,13 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
         super.didReceiveMemoryWarning()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
-    }
-    
     @IBAction func btnBack(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func btnSearchAgain(sender: AnyObject) {
-        Utility().goHome(self)
-    }
+//    @IBAction func btnSearchAgain(sender: AnyObject) {
+//        Utility().goHome(self)
+//    }
     
     
     @IBAction func btnSeeitPronto(sender: AnyObject) {
@@ -205,8 +201,8 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
             self.lblLocation.text     = Property().getField("location")
             
             self.lbAddress.text       = Property().getField("address")
-            self.lbCity.text          = Property().getField("location")
-            self.lbZipCode.text       = Property().getField("lot")
+//            self.lbCity.text          = Property().getField("location")
+//            self.lbZipCode.text       = Property().getField("lot")
             self.lbTypeProperty.text  = Property().getField("rs")
             self.lbPrice.text         = Utility().formatCurrency(Property().getField("price"))
             self.lbRemarks.text       = Property().getField("remarks")
@@ -252,9 +248,31 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
         
     }
     
+    @IBAction func btnMoreImage(sender: AnyObject) {
+        print(self.viewData)
+        self.performSegueWithIdentifier("showImages", sender: self)
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return self.sections.count
     }
 
+    func goHomeView(role:String) {
+        dispatch_async(dispatch_get_main_queue()) {
+            if(role == "realtor") {
+                self.performSegueWithIdentifier("LoginRealtor", sender: self)
+            } else {
+                self.performSegueWithIdentifier("LoginBuyer", sender: self)
+            }
+        }
+    }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "showImages") {
+            let view: MoreImageViewController = segue.destinationViewController as! MoreImageViewController
+                view.viewData  = self.viewData
+            
+        }
+    }
+
 }
