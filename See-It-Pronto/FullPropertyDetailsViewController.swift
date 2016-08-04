@@ -109,6 +109,7 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     
     func findPropertyDetails(){
         let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/\(Property().getField("id"))/\(Property().getField("property_class"))/\(User().getField("id"))?user_info=1&role=\(User().getField("role"))"
+        print(url)
         Request().get(url, successHandler: {(response) in self.loadPropertyDetails(response)})
     }
     
@@ -123,15 +124,12 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
             if(propertyId.isEmpty) {
                 self.propertyNoExistMessage()
             }
-            
-            for res in result["extra_fields"]{
-               self.sections.append(res.0)
-               self.dataSection.addObject(res.1.arrayObject!)
+            for (_,category):(String, JSON) in result["order"] {
+                print(result["extra_fields"][category.stringValue])
+                self.sections.append(category.stringValue)
+                self.dataSection.addObject(result["extra_fields"][category.stringValue].object)
             }
             self.tableView.reloadData()
-//            print(self.sections)
-//            let dat = self.dataSection[0][0]
-//            print(dat["field"])
             Property().saveOne(result)
             self.showPropertydetails()
         }
