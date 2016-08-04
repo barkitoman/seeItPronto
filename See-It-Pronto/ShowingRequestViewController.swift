@@ -165,7 +165,7 @@ class ShowingRequestViewController: UIViewController {
         var message = ""
         print(self.viewData)
         if(self.viewData == nil) {
-            message = "Sorry, the request has been removed"
+            message = "Sorry, this showing request is not available at this time"
             
         }else if(self.viewData["showing"]["showing_status"].int == 4) {
             message = "This showing request has been canceled"

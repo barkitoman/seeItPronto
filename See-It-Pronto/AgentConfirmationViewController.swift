@@ -67,10 +67,11 @@ class AgentConfirmationViewController: UIViewController, UITextFieldDelegate, UI
     
     func sendRequest() {
         //create params
+        let currentDate = "\(Utility().getCurrentDate("-")) \(Utility().getTime(":"))"
         let propertyDescription = "\(Property().getField("bedrooms")) Bd/ \(Property().getField("bathrooms")) Ba"
         var params = "buyer_id="+User().getField("id")+"&realtor_id="+PropertyRealtor().getField("id")+"&property_id="+Property().getField("id")
         params     = params+"&type=\(PropertyAction().getField("type"))&coupon_code=\(self.txtCouponCode.text!)"
-        params     = params+"&date=\(Utility().getCurrentDate("-"))&property_class=\(Property().getField("property_class"))"
+        params     = params+"&date=\(currentDate)&property_class=\(Property().getField("property_class"))"
         params     = params+"&property_price=\(Property().getField("price"))&property_address=\(Property().getField("address"))&property_description=\(propertyDescription)"
         let url    = AppConfig.APP_URL+"/seeitpronto"
         Request().post(url, params:params,controller: self,successHandler: {(response) in self.afterPostRequest(response)});
