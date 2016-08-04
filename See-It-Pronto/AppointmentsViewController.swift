@@ -189,7 +189,7 @@ class AppointmentsViewController: UIViewController {
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         var params = "id=\(appoiment["id"].stringValue)&date="+dateTime
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+appoiment["buyer_id"].stringValue
-        params = params+"&title=Showing request edited&property_id="+appoiment["property_id"].stringValue
+        params = params+"&title=Showing Request Edited&property_id="+appoiment["property_id"].stringValue
         params = params+"&description=Agent \(fullUsername) has requested a change on the showing date/time for a property"
         params = params+"&parent_id="+appoiment["id"].stringValue+"&notification_type=showing_cancelled&parent_type=showings"
         return params
@@ -224,7 +224,7 @@ class AppointmentsViewController: UIViewController {
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         var params = "id=\(appoiment["id"].stringValue)&showing_status="+AppConfig.SHOWING_CANCELED_STATUS
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+appoiment["buyer_id"].stringValue
-        params = params+"&title=Showing request cancelled&property_id="+appoiment["property_id"].stringValue
+        params = params+"&title=Showing Request Cancelled&property_id="+appoiment["property_id"].stringValue
         params = params+"&description=Agent \(fullUsername) has cancelled the showing for a property"
         params = params+"&parent_id="+appoiment["id"].stringValue+"&notification_type=showing_cancelled&parent_type=showings"
         return params

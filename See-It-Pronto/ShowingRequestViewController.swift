@@ -49,8 +49,8 @@ class ShowingRequestViewController: UIViewController {
         params           = params+"&user_id="+User().getField("id")
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         let type         = "showing_acepted"
-        let title        = "Showing request accepted"
-        let description  = "\(fullUsername) Accepted your showing request"
+        let title        = "Showing Request Accepted"
+        let description  = "Agent \(fullUsername) Accepted your showing request"
         params           = self.notificationParams(params,type: type,title: title,descripcion: description)
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterYesRequest(response)});
     }
@@ -104,8 +104,8 @@ class ShowingRequestViewController: UIViewController {
         var params       = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=2"
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         let type         = "showing_rejected"
-        let title        = "Showing request rejected"
-        let description  = "\(fullUsername) is not available to show you the property at this time"
+        let title        = "Showing Request Rejected"
+        let description  = "Agent \(fullUsername) is not available to show you the property at this time"
         params           = self.notificationParams(params,type: type,title: title,descripcion: description)
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterNoRequest(response)});
     }

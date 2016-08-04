@@ -241,7 +241,7 @@ class CurrentShowingViewController: UIViewController {
     func endNotificationParams(var params:String)->String {
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+self.viewData["showing"]["buyer_id"].stringValue
-        params = params+"&title=Showing request completed&property_id="+self.viewData["showing"]["property_id"].stringValue
+        params = params+"&title=Showing Request Completed&property_id="+self.viewData["showing"]["property_id"].stringValue
         params = params+"&description=You have completed a showing with \(fullUsername) please give us your feedback"
         params = params+"&parent_id="+self.viewData["showing"]["id"].stringValue+"&notification_type=showing_completed&parent_type=showings"
         return params

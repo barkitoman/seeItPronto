@@ -10,7 +10,7 @@ import UIKit
 
 class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIPopoverPresentationControllerDelegate  {
     
-    let picker = UIImageView(image: UIImage(named: "picker"))
+    let picker = UIImageView(image: UIImage(named: "picker_white"))
     @IBOutlet weak var btnClass: UIButton!
     
     @IBOutlet weak var beds1: UIButton!
@@ -360,7 +360,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         self.picker.hidden = false
         UIView.animateWithDuration(0.3,
             animations: {
-                self.picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 120, width: 286, height: 208)
+                self.picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 120, width: 286, height: 120)
                 self.picker.alpha = 1
         })
     }
@@ -368,7 +368,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     func closePicker(){
         UIView.animateWithDuration(0.3,
             animations: {
-                self.picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 200, width: 286, height: 291)
+                self.picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 200, width: 286, height: 120)
                 self.picker.alpha = 0
             },
             completion: { finished in

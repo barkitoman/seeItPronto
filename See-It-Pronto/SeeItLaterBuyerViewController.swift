@@ -181,7 +181,7 @@ class SeeItLaterBuyerViewController: UIViewController {
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         var params = "id=\(showing["id"].stringValue)&date="+dateTime
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+showing["realtor_id"].stringValue
-        params = params+"&title=Showing request edited&property_id="+showing["property_id"].stringValue
+        params = params+"&title=Showing Request Edited&property_id="+showing["property_id"].stringValue
         params = params+"&description=Customer \(fullUsername) has requested a change on the showing date/time for a property"
         params = params+"&parent_id="+showing["id"].stringValue+"&notification_type=showing_cancelled&parent_type=showings"
         return params
@@ -213,7 +213,7 @@ class SeeItLaterBuyerViewController: UIViewController {
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         var params = "id=\(showing["id"].stringValue)&showing_status="+AppConfig.SHOWING_CANCELED_STATUS
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+showing["realtor_id"].stringValue
-        params = params+"&title=Showing request cancelled&property_id="+showing["property_id"].stringValue
+        params = params+"&title=Showing Request Cancelled&property_id="+showing["property_id"].stringValue
         params = params+"&description=  The customer \(fullUsername) has cancelled the showing for a property"
         params = params+"&parent_id="+showing["id"].stringValue+"&notification_type=showing_cancelled&parent_type=showings&property_class=\(Property().getField("property_class"))"
         return params
