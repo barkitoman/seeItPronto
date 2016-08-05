@@ -101,7 +101,7 @@ class ShowingRequestViewController: UIViewController {
     
     @IBAction func btnNo(sender: AnyObject) {
         let url          = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
-        var params       = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=2"
+        var params       = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=2&refund=1"
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         let type         = "showing_rejected"
         let title        = "Showing Request Rejected"

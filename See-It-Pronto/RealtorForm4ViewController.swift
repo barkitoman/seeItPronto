@@ -14,15 +14,25 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
     var viewData:JSON = []
     
     @IBOutlet weak var txtCardNumber: UITextField!
-    
     @IBOutlet weak var txtExpDate: UITextField!
-    
     @IBOutlet weak var txtCvc: UITextField!
+    @IBOutlet weak var btnCancelSubscription: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.findUserInfo()
         self.selfDelegate()
+        self.hideBtnSubscription()
+    }
+    
+    func hideBtnSubscription() {
+        if(User().getField("id") == "") {
+            self.btnCancelSubscription.hidden = true;
+        } else if(self.viewData["stripe_subscription_id"].stringValue == "") {
+            self.btnCancelSubscription.hidden = true;
+        } else if(self.viewData["stripe_subscription_id"].stringValue == "0") {
+            self.btnCancelSubscription.hidden = true;
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -69,6 +79,8 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
         var params = "id=\(self.viewData["id"].stringValue)&user_id=\(self.viewData["id"].stringValue)&number_card=\(txtCardNumber.text!)"
         params = params+"&expiration_date=\(txtExpDate.text!)&csv=\(self.txtCvc.text!)"
         params = params+"&subscription=1&subscription_id=\(self.viewData["stripe_subscription_id"].stringValue)"
+        params = params+"&email=\(self.viewData["email"].stringValue)"
+        params = params+"&first_name=\(self.viewData["first_name"].stringValue)&last_name=\(self.viewData["last_name"].stringValue)"
         if(!self.viewData["card_id"].stringValue.isEmpty) {
             params = params+"&card_id="+self.viewData["card_id"].stringValue
         }
@@ -102,6 +114,8 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
     func loadDataToEdit(let response: NSData) {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
+            self.viewData = result
+            self.hideBtnSubscription()
             self.txtCardNumber.text = result["number_card"].stringValue
             self.txtExpDate.text    = result["expiration_date"].stringValue
             self.txtCvc.text        = result["csv"].stringValue
@@ -116,6 +130,31 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
     }
     
     @IBAction func cancelSubscription(sender: AnyObject) {
+        let userId = User().getField("id")
+        if(!userId.isEmpty) {
+            self.viewData["id"] = JSON(userId)
+            let url = AppConfig.APP_URL+"/cancel_subscription/"+userId
+            Request().get(url, successHandler: {(response) in self.afterCancelSubscription(response)})
+        } else {
+            Utility().displayAlert(self, title: "Message", message: "Cancel subscription is not available at this time", performSegue: "")
+        }
+    }
+    
+    func afterCancelSubscription(let response: NSData) {
+        let result = JSON(data: response)
+        print(result)
+        if(result["result"].bool == true) {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.btnCancelSubscription.hidden = true
+            }
+            Utility().displayAlert(self, title: "Success!", message: "The subscription has been cancelled", performSegue: "")
+        } else {
+            var msg = "Error cancelling the subscription, please try later"
+            if(result["msg"].stringValue != "") {
+                msg = result["msg"].stringValue
+            }
+            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
+        }
     }
 
 }
