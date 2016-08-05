@@ -12,7 +12,8 @@ class FeedBacksTableViewCell: UITableViewCell {
 
     @IBOutlet weak var rating: UIImageView!
     @IBOutlet weak var lblDescription: UILabel!
-    
+    @IBOutlet weak var imageFeedback: UIImageView!
+    @IBOutlet weak var lblDate: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
