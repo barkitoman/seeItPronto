@@ -124,7 +124,7 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
         let name    = realtor["first_name"].stringValue+" "+realtor["last_name"].stringValue
         cell.lblCompany.text     = realtor["brokerage"].stringValue
         cell.lblName.text        = name
-        cell.lblShowingRate.text = (!realtor["showing_rate"].stringValue.isEmpty) ? "$"+realtor["showing_rate"].stringValue  : ""
+        //cell.lblShowingRate.text = (!realtor["showing_rate"].stringValue.isEmpty) ? "$"+realtor["showing_rate"].stringValue  : ""
         cell.lblDistance.text    = realtor["distance"].stringValue
         cell.lblRating.text      = (!realtor["rating"].stringValue.isEmpty) ? realtor["rating"].stringValue+" of 5" : ""
         cell.btnViewDetails.tag  = indexPath.row

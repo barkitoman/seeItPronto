@@ -17,7 +17,7 @@ class AgentConfirmationViewController: UIViewController, UITextFieldDelegate, UI
     @IBOutlet weak var lblAgentName: UILabel!
     @IBOutlet weak var ratingImage: UIImageView!
     @IBOutlet weak var lblRaringLabel: UILabel!
-    @IBOutlet weak var lblShowingRate: UILabel!
+    //@IBOutlet weak var lblShowingRate: UILabel!
     @IBOutlet weak var lblDistance: UILabel!
     @IBOutlet weak var propertyImage: UIImageView!
     @IBOutlet weak var propertyAddress: UILabel!
@@ -103,7 +103,7 @@ class AgentConfirmationViewController: UIViewController, UITextFieldDelegate, UI
     func loadRealtorData(){
         let name          = PropertyRealtor().getField("first_name")+" "+PropertyRealtor().getField("last_name")
         lblAgentName.text = name
-        let showingRate   = PropertyRealtor().getField("showing_rate")
+        //let showingRate   = PropertyRealtor().getField("showing_rate")
         let rating        = PropertyRealtor().getField("rating")
         let image         = PropertyRealtor().getField("url_image")
         var distance      = PropertyRealtor().getField("travel_range")
@@ -112,7 +112,7 @@ class AgentConfirmationViewController: UIViewController, UITextFieldDelegate, UI
         }
         
         self.lblBrokerAgent.text = PropertyRealtor().getField("brokeragent")
-        self.lblShowingRate.text = (!showingRate.isEmpty) ? "$"+showingRate : ""
+        //self.lblShowingRate.text = (!showingRate.isEmpty) ? "$"+showingRate : ""
         self.lblDistance.text    = (!distance.isEmpty) ? distance+" mi" : ""
         self.lblRaringLabel.text = (!rating.isEmpty) ? rating+" of 5" : ""
         Utility().showPhoto(self.agentPhoto, imgPath: image,defaultImg: "default_user_photo")

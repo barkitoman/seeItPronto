@@ -13,7 +13,7 @@ class SeeitNowTableViewCell: UITableViewCell {
     
     @IBOutlet weak var photo: UIImageView!
     @IBOutlet weak var lblDistance: UILabel!
-    @IBOutlet weak var lblShowingRate: UILabel!
+    //@IBOutlet weak var lblShowingRate: UILabel!
     @IBOutlet weak var lblRating: UILabel!
     @IBOutlet weak var ratingImage: UIImageView!
     @IBOutlet weak var lblName: UILabel!
