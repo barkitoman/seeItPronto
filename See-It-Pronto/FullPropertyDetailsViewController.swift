@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate {
+class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIPopoverPresentationControllerDelegate {
 
     var viewData:JSON = []
     
@@ -269,10 +269,22 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "showImages") {
-            let view: MoreImageViewController = segue.destinationViewController as! MoreImageViewController
-                view.viewData  = self.viewData
+//            let view: MoreImageViewController = segue.destinationViewController as! MoreImageViewController
+//                view.viewData  = self.viewData
+            let view = segue.destinationViewController as! MoreImageViewController
+            let controller = view.popoverPresentationController
+            view.viewData  = self.viewData
+            if controller != nil
+            {
+                controller?.delegate = self
+            }
+
             
         }
+    }
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
     }
 
 }
