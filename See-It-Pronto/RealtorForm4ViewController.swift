@@ -66,7 +66,9 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     func save() {
         //create params
-        var params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["id"].stringValue+"&number_card="+txtCardNumber.text!+"&expiration_date="+txtExpDate.text!+"&csv="+self.txtCvc.text!
+        var params = "id=\(self.viewData["id"].stringValue)&user_id=\(self.viewData["id"].stringValue)&number_card=\(txtCardNumber.text!)"
+        params = params+"&expiration_date=\(txtExpDate.text!)&csv=\(self.txtCvc.text!)"
+        params = params+"&subscription=1&subscription_id=\(self.viewData["stripe_subscription_id"].stringValue)"
         if(!self.viewData["card_id"].stringValue.isEmpty) {
             params = params+"&card_id="+self.viewData["card_id"].stringValue
         }
