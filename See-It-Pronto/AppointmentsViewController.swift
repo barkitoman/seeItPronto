@@ -226,7 +226,7 @@ class AppointmentsViewController: UIViewController {
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+appoiment["buyer_id"].stringValue
         params = params+"&title=Showing Request Cancelled&property_id="+appoiment["property_id"].stringValue
         params = params+"&description=Agent \(fullUsername) has cancelled the showing for a property"
-        params = params+"&parent_id="+appoiment["id"].stringValue+"&notification_type=showing_cancelled&parent_type=showings"
+        params = params+"&parent_id="+appoiment["id"].stringValue+"&notification_type=showing_cancelled&parent_type=showings&refund=1"
         return params
     }
     

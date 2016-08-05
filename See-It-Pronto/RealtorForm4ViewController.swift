@@ -28,9 +28,7 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
     func hideBtnSubscription() {
         if(User().getField("id") == "") {
             self.btnCancelSubscription.hidden = true;
-        } else if(self.viewData["stripe_subscription_id"].stringValue == "") {
-            self.btnCancelSubscription.hidden = true;
-        } else if(self.viewData["stripe_subscription_id"].stringValue == "0") {
+        } else if(self.viewData["stripe_subscription_active"].stringValue == "0") {
             self.btnCancelSubscription.hidden = true;
         }
     }
@@ -78,8 +76,8 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
         //create params
         var params = "id=\(self.viewData["id"].stringValue)&user_id=\(self.viewData["id"].stringValue)&number_card=\(txtCardNumber.text!)"
         params = params+"&expiration_date=\(txtExpDate.text!)&csv=\(self.txtCvc.text!)"
-        params = params+"&subscription=1&subscription_id=\(self.viewData["stripe_subscription_id"].stringValue)"
-        params = params+"&email=\(self.viewData["email"].stringValue)"
+        params = params+"&subscription=1&stripe_subscription_active=\(self.viewData["stripe_subscription_active"].stringValue)"
+        params = params+"&email=\(self.viewData["email"].stringValue)&stripe_subscription_id=\(self.viewData["stripe_subscription_id"].stringValue)"
         params = params+"&first_name=\(self.viewData["first_name"].stringValue)&last_name=\(self.viewData["last_name"].stringValue)"
         if(!self.viewData["card_id"].stringValue.isEmpty) {
             params = params+"&card_id="+self.viewData["card_id"].stringValue
@@ -130,6 +128,20 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
     }
     
     @IBAction func cancelSubscription(sender: AnyObject) {
+        let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to cancel your subscription?", preferredStyle: .Alert)
+        let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            self.cancelSubscription()
+        }
+        let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+        }
+        alertController.addAction(yesAction)
+        alertController.addAction(noAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func cancelSubscription() {
         let userId = User().getField("id")
         if(!userId.isEmpty) {
             self.viewData["id"] = JSON(userId)
