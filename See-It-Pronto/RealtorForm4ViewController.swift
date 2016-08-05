@@ -113,5 +113,7 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
         }
     }
     
+    @IBAction func cancelSubscription(sender: AnyObject) {
+    }
 
 }
