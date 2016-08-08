@@ -186,7 +186,7 @@ class PropertyViewedViewController: UIViewController {
     }
     
     func findListings() {
-        let url = AppConfig.APP_URL+"/past_listing_buyer/\(User().getField("id"))/\(self.stepPage)/?page="+String(self.countPage + 1)
+        let url = AppConfig.APP_URL+"/properties_viewed/\(User().getField("id"))/\(self.stepPage)/?page="+String(self.countPage + 1)
         Request().get(url, successHandler: {(response) in self.loadListings(response)})
     }
     

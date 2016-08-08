@@ -10020,7 +10020,7 @@ $480,000
                                                     <rect key="frame" x="0.0" y="0.0" width="312" height="119"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S3y-Jq-HYE">
-                                                            <rect key="frame" x="117" y="23" width="195" height="105"/>
+                                                            <rect key="frame" x="117" y="23" width="195" height="87"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="1234 Main Street Anytown, FL,33123" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="St8-Ul-Stv">
                                                                     <rect key="frame" x="0.0" y="0.0" width="195" height="29"/>
@@ -10034,9 +10034,6 @@ $480,000
                                                                     <state key="normal" title="Refund">
                                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     </state>
-                                                                    <connections>
-                                                                        <action selector="btnRefund:" destination="xRX-pM-78f" eventType="touchUpInside" id="Ruv-Hs-QAu"/>
-                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -10081,6 +10078,7 @@ $480,000
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="btnRefund" destination="fyn-Rn-XwI" id="UEX-XD-21F"/>
                                             <outlet property="lblAddress" destination="St8-Ul-Stv" id="IVt-Bc-i4M"/>
                                             <outlet property="propertyImage" destination="QzL-Gh-CVC" id="Nya-eB-5UL"/>
                                         </connections>

@@ -12,6 +12,7 @@ class PastListingBuyerTableViewCell: UITableViewCell {
     
     @IBOutlet weak var lblAddress: UILabel!
     @IBOutlet weak var propertyImage: UIImageView!
+    @IBOutlet weak var btnRefund: UIButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,6 +22,4 @@ class PastListingBuyerTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    @IBAction func btnRefund(sender: AnyObject) {
-    }
 }

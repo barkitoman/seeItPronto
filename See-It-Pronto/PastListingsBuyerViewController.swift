@@ -73,7 +73,9 @@ class PastListingsBuyerViewController: UIViewController {
         let address = showing["property"][0]["address"].stringValue
  
         cell.lblAddress.text  = (address.isEmpty) ? showing["property_address"].stringValue  : address
-       
+        cell.btnRefund.tag    = indexPath.row
+        cell.btnRefund.addTarget(self, action: "refundShowingRequest:", forControlEvents: .TouchUpInside)
+        
         if let _ = self.models[showing["property_id"].stringValue] {
             self.showCell(cell, showing: showing, indexPath: indexPath)
         } else {
@@ -82,6 +84,30 @@ class PastListingsBuyerViewController: UIViewController {
             self.showCell(cell, showing: showing, indexPath: indexPath)
         }
         return cell
+    }
+    
+    @IBAction func refundShowingRequest(sender:UIButton) {
+       let showing = JSON(self.myListings[sender.tag])
+        let indexPath = NSIndexPath(forRow: sender.tag, inSection: 0)
+        let url = AppConfig.APP_URL+"/refund_showing/\(showing["id"].stringValue)"
+        Request().get(url, successHandler: {(response) in self.afterRefundRequest(response, indexPath: indexPath)})
+    }
+    
+    func afterRefundRequest(let response: NSData, indexPath:NSIndexPath) {
+        let result = JSON(data: response)
+        if(result["result"].bool == true) {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.myListings.removeObjectAtIndex(indexPath.row)
+                self.tableView.deleteRowsAtIndexPaths([indexPath],  withRowAnimation: UITableViewRowAnimation.Automatic)
+                Utility().displayAlert(self, title: "Success!", message: "The showing request has been refunded", performSegue: "")
+            }
+        } else {
+            var msg = "Error sending your request, please try later"
+            if(!result["msg"].stringValue.isEmpty) {
+                msg = result["msg"].stringValue
+            }
+            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
+        }
     }
     
     func showCell(cell:PastListingBuyerTableViewCell, showing:JSON, indexPath: NSIndexPath){
@@ -126,17 +152,11 @@ class PastListingsBuyerViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-        let seeItAgain = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "See It Again"){(UITableViewRowAction,NSIndexPath) -> Void in
-            self.openPropertyDetailView(indexPath)
-        }
-        let comments = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Comments"){(UITableViewRowAction,NSIndexPath) -> Void in
-            self.viewShowingComments(indexPath)
-        }
         let viewDetails = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "View\nDetails"){(UITableViewRowAction,NSIndexPath) -> Void in
             let showing = JSON(self.myListings[indexPath.row])
             Utility().goPropertyDetails(self,propertyId: showing["property_id"].stringValue, PropertyClass: showing["property_class"].stringValue)
         }
-        return [seeItAgain,comments,viewDetails]
+        return [viewDetails]
     }
     
     func openPropertyDetailView(indexPath: NSIndexPath) {
