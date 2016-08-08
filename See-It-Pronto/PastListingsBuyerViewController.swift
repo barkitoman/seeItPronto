@@ -76,9 +76,6 @@ class PastListingsBuyerViewController: UIViewController {
         cell.lblAddress.text  = (address.isEmpty) ? showing["property_address"].stringValue  : address
         cell.lblPrice.text    = Utility().formatCurrency(price)
         cell.lblNiceDate.text = showing["nice_date"].stringValue
-        if(!showing["showing_rating_value"].stringValue.isEmpty) {
-            cell.showingRating.image = UIImage(named: showing["showing_rating_value"].stringValue+"stars")
-        }
         if(!showing["home_rating_value"].stringValue.isEmpty) {
             cell.propertyRating.image = UIImage(named: showing["home_rating_value"].stringValue+"stars")
         }

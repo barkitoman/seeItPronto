@@ -16,7 +16,6 @@ class PastListingBuyerTableViewCell: UITableViewCell {
     @IBOutlet weak var propertyImage: UIImageView!
     @IBOutlet weak var propertyRating: UIImageView!
     @IBOutlet weak var agentRating: UIImageView!
-    @IBOutlet weak var showingRating: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

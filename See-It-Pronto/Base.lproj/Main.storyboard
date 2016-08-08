@@ -3924,18 +3924,6 @@ $480,000
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0stars" translatesAutoresizingMaskIntoConstraints="NO" id="Dg3-aS-TRm">
-                                                                    <rect key="frame" x="92" y="143" width="103" height="21"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" secondItem="Dg3-aS-TRm" secondAttribute="height" multiplier="103:21" id="liu-LW-S1s"/>
-                                                                    </constraints>
-                                                                </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Showing Rating:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tf6-lZ-AZa">
-                                                                    <rect key="frame" x="0.0" y="147" width="85" height="14"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0stars" translatesAutoresizingMaskIntoConstraints="NO" id="hFY-Jq-Obf">
                                                                     <rect key="frame" x="92" y="85" width="103" height="21"/>
                                                                     <constraints>
@@ -3946,22 +3934,17 @@ $480,000
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
-                                                                <constraint firstItem="Dg3-aS-TRm" firstAttribute="top" secondItem="Lpc-Vn-wKY" secondAttribute="bottom" constant="8" id="1bQ-TY-IVi"/>
                                                                 <constraint firstItem="IwT-f6-EWs" firstAttribute="top" secondItem="Fq7-E2-buj" secondAttribute="top" id="3Vw-vb-03M"/>
                                                                 <constraint firstItem="Lpc-Vn-wKY" firstAttribute="top" secondItem="hFY-Jq-Obf" secondAttribute="bottom" constant="8" id="4Ej-Zg-v0S"/>
                                                                 <constraint firstItem="I8G-5d-jrC" firstAttribute="top" secondItem="hKK-l3-oRC" secondAttribute="bottom" constant="12" id="4To-EC-L8E"/>
                                                                 <constraint firstAttribute="trailing" secondItem="Xhu-dk-oWy" secondAttribute="trailing" id="7wD-t9-WPV"/>
                                                                 <constraint firstItem="hKK-l3-oRC" firstAttribute="top" secondItem="Xhu-dk-oWy" secondAttribute="bottom" constant="8" symbolic="YES" id="9Xq-O9-IDw"/>
                                                                 <constraint firstItem="Lpc-Vn-wKY" firstAttribute="leading" secondItem="hFY-Jq-Obf" secondAttribute="leading" id="Fbx-gs-09N"/>
-                                                                <constraint firstItem="Dg3-aS-TRm" firstAttribute="height" secondItem="Lpc-Vn-wKY" secondAttribute="height" id="IQW-fh-KNF"/>
-                                                                <constraint firstItem="Dg3-aS-TRm" firstAttribute="leading" secondItem="Lpc-Vn-wKY" secondAttribute="leading" id="IdI-LQ-xyq"/>
                                                                 <constraint firstItem="hKK-l3-oRC" firstAttribute="leading" secondItem="Fq7-E2-buj" secondAttribute="leading" id="Jqv-gQ-YJG"/>
                                                                 <constraint firstItem="I8G-5d-jrC" firstAttribute="centerY" secondItem="hFY-Jq-Obf" secondAttribute="centerY" id="NTh-Af-UeO"/>
                                                                 <constraint firstItem="I8G-5d-jrC" firstAttribute="leading" secondItem="hKK-l3-oRC" secondAttribute="leading" id="NuI-Mx-Ett"/>
-                                                                <constraint firstItem="tf6-lZ-AZa" firstAttribute="leading" secondItem="a7m-MN-ZAY" secondAttribute="leading" id="PjX-Cs-JUq"/>
                                                                 <constraint firstItem="Lpc-Vn-wKY" firstAttribute="height" secondItem="hFY-Jq-Obf" secondAttribute="height" id="Qde-Is-CuB"/>
                                                                 <constraint firstItem="hFY-Jq-Obf" firstAttribute="leading" secondItem="I8G-5d-jrC" secondAttribute="trailing" constant="6" id="R0N-8W-JJT"/>
-                                                                <constraint firstItem="tf6-lZ-AZa" firstAttribute="centerY" secondItem="Dg3-aS-TRm" secondAttribute="centerY" id="RkC-Cw-5zq"/>
                                                                 <constraint firstItem="hFY-Jq-Obf" firstAttribute="leading" secondItem="I8G-5d-jrC" secondAttribute="trailing" constant="6" id="SLR-xm-R6S"/>
                                                                 <constraint firstItem="Xhu-dk-oWy" firstAttribute="top" secondItem="IwT-f6-EWs" secondAttribute="bottom" constant="8" symbolic="YES" id="Yvn-J1-Hoa"/>
                                                                 <constraint firstItem="IwT-f6-EWs" firstAttribute="leading" secondItem="Fq7-E2-buj" secondAttribute="leading" id="aUX-C9-YTl"/>
@@ -4013,7 +3996,6 @@ $480,000
                                             <outlet property="lblPrice" destination="Xhu-dk-oWy" id="Dz0-3h-ftS"/>
                                             <outlet property="propertyImage" destination="mSE-nK-Amd" id="YpT-ll-Kfh"/>
                                             <outlet property="propertyRating" destination="hFY-Jq-Obf" id="Jsd-ji-3ak"/>
-                                            <outlet property="showingRating" destination="Dg3-aS-TRm" id="ewG-cQ-C2T"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
