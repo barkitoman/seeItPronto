@@ -11,12 +11,8 @@ import UIKit
 class PastListingBuyerTableViewCell: UITableViewCell {
     
     @IBOutlet weak var lblAddress: UILabel!
-    @IBOutlet weak var lblPrice: UILabel!
-    @IBOutlet weak var lblNiceDate: UILabel!
     @IBOutlet weak var propertyImage: UIImageView!
-    @IBOutlet weak var propertyRating: UIImageView!
-    @IBOutlet weak var agentRating: UIImageView!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -25,4 +21,6 @@ class PastListingBuyerTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
+    @IBAction func btnRefund(sender: AnyObject) {
+    }
 }

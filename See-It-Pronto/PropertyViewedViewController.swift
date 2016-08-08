@@ -1,15 +1,19 @@
 //
-//  PastListingsBuyerViewController.swift
+//  PropertyViewedViewController.swift
 //  See-It-Pronto
 //
-//  Created by Deyson on 3/30/16.
-//  Copyright © 2016 Deyson. All rights reserved.
+//  Created by Deyson on 8/8/16.
+//  Copyright © 2016 user114136. All rights reserved.
 //
 
 import UIKit
 
-class PastListingsBuyerViewController: UIViewController {
+import UIKit
 
+class PropertyViewedViewController: UIViewController {
+    
+    
+    
     @IBOutlet weak var tableView: UITableView!
     var countPage = 0    //number of current page
     var stepPage  = 6   //number of records by page
@@ -35,10 +39,10 @@ class PastListingsBuyerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    BProgressHUD.showLoadingViewWithMessage("Loading")
+        BProgressHUD.showLoadingViewWithMessage("Loading")
         self.findListings()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -68,12 +72,20 @@ class PastListingsBuyerViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PastListingBuyerTableViewCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PropertyViewedTableViewCell
         let showing = JSON(self.myListings[indexPath.row])
         let address = showing["property"][0]["address"].stringValue
- 
+        let price   = (showing["property"][0]["price"].stringValue.isEmpty) ? showing["property_price"].stringValue : showing["property"][0]["price"].stringValue
+        
         cell.lblAddress.text  = (address.isEmpty) ? showing["property_address"].stringValue  : address
-       
+        cell.lblPrice.text    = Utility().formatCurrency(price)
+        cell.lblNiceDate.text = showing["nice_date"].stringValue
+        if(!showing["home_rating_value"].stringValue.isEmpty) {
+            cell.propertyRating.image = UIImage(named: showing["home_rating_value"].stringValue+"stars")
+        }
+        if(!showing["user_rating_value"].stringValue.isEmpty) {
+            cell.agentRating.image = UIImage(named: showing["user_rating_value"].stringValue+"stars")
+        }
         if let _ = self.models[showing["property_id"].stringValue] {
             self.showCell(cell, showing: showing, indexPath: indexPath)
         } else {
@@ -84,7 +96,7 @@ class PastListingsBuyerViewController: UIViewController {
         return cell
     }
     
-    func showCell(cell:PastListingBuyerTableViewCell, showing:JSON, indexPath: NSIndexPath){
+    func showCell(cell:PropertyViewedTableViewCell, showing:JSON, indexPath: NSIndexPath){
         // have we got a picture?
         if let im = self.models[showing["property_id"].stringValue]!.im {
             cell.propertyImage.image = im
@@ -193,8 +205,7 @@ class PastListingsBuyerViewController: UIViewController {
                 let msg = "¡No properties found!"
                 Utility().displayAlert(self,title: "Notification", message:msg, performSegue:"")
             }
-            
         }
     }
-
+    
 }

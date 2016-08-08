@@ -67,9 +67,11 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         //addChildView("PropertyListViewController",   titleOfChildren: "List Properties",       iconName: "list_properties")
         //addChildView("ListRealtorsViewController",     titleOfChildren: "Agents",                iconName: "realtor")
         addChildView("SeeItLaterBuyerViewController",  titleOfChildren: "See It Later",          iconName: "my_listings")
-        addChildView("PastListingsBuyerViewController",titleOfChildren: "Properties Viewed",     iconName: "properties_viewed")
+        addChildView("PropertyViewedViewController",   titleOfChildren: "Properties Viewed",     iconName: "properties_viewed")
+
         addChildView("BuyerForm1ViewController",       titleOfChildren: "My Profile",            iconName: "edit_profile")
         addChildView("NotificationsViewController",    titleOfChildren: "Notifications",         iconName: "notification")
+        addChildView("PastListingsBuyerViewController",titleOfChildren: "Past Listings",     iconName: "properties_viewed")
         addChildView("LoginViewController",            titleOfChildren: "Log Out",               iconName: "logout")
         addChildView("ConfigViewController",           titleOfChildren: "Settings",              iconName: "settings")
         addChildView("BugReportViewController",        titleOfChildren: "Send Us Your Feedback", iconName: "send_us_your_feedback")
@@ -135,9 +137,12 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         }else if (viewIdentifier == "SeeItLaterBuyerViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("SeeItLaterBuyerViewController") as! SeeItLaterBuyerViewController
         
+        }else if (viewIdentifier == "PropertyViewedViewController") {
+            viewController = mainStoryboard.instantiateViewControllerWithIdentifier("PropertyViewedViewController") as! PropertyViewedViewController
+        
         }else if (viewIdentifier == "PastListingsBuyerViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("PastListingsBuyerViewController") as! PastListingsBuyerViewController
-        
+            
         }else if (viewIdentifier == "FeedBacksViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("FeedBacksViewController") as! FeedBacksViewController
         
