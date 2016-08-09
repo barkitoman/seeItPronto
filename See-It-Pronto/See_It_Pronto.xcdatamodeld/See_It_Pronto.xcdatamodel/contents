@@ -4,6 +4,7 @@
         <attribute name="device_token_id" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Property" syncable="YES">
+        <attribute name="active_for_showing" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="added_on" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bathrooms" optional="YES" attributeType="String" syncable="YES"/>
@@ -33,6 +34,7 @@
         <attribute name="size" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="spa" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="square_feed" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stripe_subscription_active" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="year_built" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="your_credits" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zipcode" optional="YES" attributeType="String" syncable="YES"/>
@@ -85,7 +87,7 @@
     </entity>
     <elements>
         <element name="DeviceManager" positionX="-54" positionY="135" width="128" height="60"/>
-        <element name="Property" positionX="-54" positionY="117" width="128" height="525"/>
+        <element name="Property" positionX="-54" positionY="117" width="128" height="555"/>
         <element name="PropertyAction" positionX="-54" positionY="135" width="128" height="60"/>
         <element name="PropertyRealtor" positionX="-54" positionY="108" width="128" height="210"/>
         <element name="SearchConfig" positionX="-63" positionY="54" width="128" height="210"/>

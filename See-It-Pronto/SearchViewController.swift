@@ -448,6 +448,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         
         self.swPool.on = false
         self.swType.on = false
+        self.propertySelectedClass = "1"
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {

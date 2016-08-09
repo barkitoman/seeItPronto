@@ -28,6 +28,8 @@ class UserEntity: NSManagedObject {
     @NSManaged var is_login:String
     @NSManaged var device_token_id:String
     @NSManaged var broker_email:String
+    @NSManaged var active_for_showing:String
+    @NSManaged var stripe_subscription_active:String
  
 }
 
@@ -92,6 +94,8 @@ class User {
         newItem.is_login        = userData["user"]["is_login"].stringValue
         newItem.device_token_id = userData["user"]["device_token_id"].stringValue
         newItem.broker_email    = userData["user"]["broker_email"].stringValue
+        newItem.active_for_showing    = userData["user"]["active_for_showing"].stringValue
+        newItem.stripe_subscription_active  = userData["user"]["stripe_subscription_active"].stringValue
         
         do {
             try contxt.save()

@@ -17,19 +17,35 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
     @IBOutlet weak var txtExpDate: UITextField!
     @IBOutlet weak var txtCvc: UITextField!
     @IBOutlet weak var btnCancelSubscription: UIButton!
+    var btnSuscriptionAction = "CANCEL"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.findUserInfo()
         self.selfDelegate()
-        self.hideBtnSubscription()
+        self.subscriptionButtonAction()
     }
     
-    func hideBtnSubscription() {
+    func subscriptionButtonAction() {
         if(User().getField("id") == "") {
             self.btnCancelSubscription.hidden = true;
-        } else if(self.viewData["stripe_subscription_active"].stringValue == "0") {
+        } else if(self.viewData["stripe_subscription_id"].stringValue == "0"
+            && self.viewData["stripe_subscription_active"].stringValue == "0") {
             self.btnCancelSubscription.hidden = true;
+                
+        } else if(self.viewData["stripe_subscription_id"].stringValue != "0"
+            && self.viewData["stripe_subscription_active"].stringValue == "1") {
+                //cancel suscription
+                self.btnCancelSubscription.hidden = false;
+                btnSuscriptionAction = "CANCEL"
+                self.btnCancelSubscription.setTitle("Cancel Subscription", forState: .Normal)
+                
+        } else if(self.viewData["stripe_subscription_id"].stringValue != "0"
+            && self.viewData["stripe_subscription_active"].stringValue == "0") {
+                //activate suscription
+                self.btnCancelSubscription.hidden = false;
+                btnSuscriptionAction = "ACTIVATE"
+                self.btnCancelSubscription.setTitle("Activate Subscription", forState: .Normal)
         }
     }
     
@@ -113,7 +129,7 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
             self.viewData = result
-            self.hideBtnSubscription()
+            self.subscriptionButtonAction()
             self.txtCardNumber.text = result["number_card"].stringValue
             self.txtExpDate.text    = result["expiration_date"].stringValue
             self.txtCvc.text        = result["csv"].stringValue
@@ -128,17 +144,35 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
     }
     
     @IBAction func cancelSubscription(sender: AnyObject) {
-        let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to cancel your subscription?", preferredStyle: .Alert)
-        let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            self.cancelSubscription()
+        if(btnSuscriptionAction == "CANCEL") {
+            let cancelMsg = "If you cancel the subscription you will have limited access, and you will not be listed for customers to schedule appointments"
+            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to cancel your subscription?\n \(cancelMsg)", preferredStyle: .Alert)
+            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                self.cancelSubscription()
+            }
+            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+            }
+            alertController.addAction(yesAction)
+            alertController.addAction(noAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+        } else if(btnSuscriptionAction == "ACTIVATE") {
+            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to activate your subscription", preferredStyle: .Alert)
+            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                self.activateSubscription()
+            }
+            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+            }
+            alertController.addAction(yesAction)
+            alertController.addAction(noAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        } else {
+            Utility().displayAlert(self, title: "Message", message: "This action is not available at this time", performSegue: "")
         }
-        let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-        }
-        alertController.addAction(yesAction)
-        alertController.addAction(noAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func cancelSubscription() {
@@ -154,14 +188,45 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     func afterCancelSubscription(let response: NSData) {
         let result = JSON(data: response)
-        print(result)
         if(result["result"].bool == true) {
             dispatch_async(dispatch_get_main_queue()) {
                 self.btnCancelSubscription.hidden = true
             }
+            btnSuscriptionAction = "ACTIVATE"
+            self.viewData["stripe_subscription_active"].string = "0"
             Utility().displayAlert(self, title: "Success!", message: "The subscription has been cancelled", performSegue: "")
         } else {
             var msg = "Error cancelling the subscription, please try later"
+            if(result["msg"].stringValue != "") {
+                msg = result["msg"].stringValue
+            }
+            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
+        }
+    }
+    
+    func activateSubscription() {
+        let userId = User().getField("id")
+        if(!userId.isEmpty) {
+            self.viewData["id"] = JSON(userId)
+            let url = AppConfig.APP_URL+"/reactive_subscription/"+userId
+            Request().get(url, successHandler: {(response) in self.afterActivateSubscription(response)})
+        } else {
+            Utility().displayAlert(self, title: "Message", message: "Activate subscription is not available at this time", performSegue: "")
+        }
+    }
+    
+    func afterActivateSubscription(let response: NSData) {
+        let result = JSON(data: response)
+        if(result["result"].bool == true) {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.btnCancelSubscription.hidden = true
+            }
+            btnSuscriptionAction = "CANCEL"
+            self.viewData["stripe_subscription_id"].string = result["subscription_id"].stringValue;
+            self.viewData["stripe_subscription_active"].string = "1"
+            Utility().displayAlert(self, title: "Success!", message: "The subscription has been activated.", performSegue: "")
+        } else {
+            var msg = "Error when activating your subscription, please try later"
             if(result["msg"].stringValue != "") {
                 msg = result["msg"].stringValue
             }
