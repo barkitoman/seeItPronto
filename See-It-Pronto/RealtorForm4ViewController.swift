@@ -194,6 +194,7 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
             }
             btnSuscriptionAction = "ACTIVATE"
             self.viewData["stripe_subscription_active"].string = "0"
+            User().updateField("stripe_subscription_active", value: "0")
             Utility().displayAlert(self, title: "Success!", message: "The subscription has been cancelled", performSegue: "")
         } else {
             var msg = "Error cancelling the subscription, please try later"
@@ -224,6 +225,7 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
             btnSuscriptionAction = "CANCEL"
             self.viewData["stripe_subscription_id"].string = result["subscription_id"].stringValue;
             self.viewData["stripe_subscription_active"].string = "1"
+            User().updateField("stripe_subscription_active", value: "1")
             Utility().displayAlert(self, title: "Success!", message: "The subscription has been activated.", performSegue: "")
         } else {
             var msg = "Error when activating your subscription, please try later"

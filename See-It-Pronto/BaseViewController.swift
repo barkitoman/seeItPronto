@@ -44,20 +44,24 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     }
     
     func menuRealtor() {
-        if(User().getField("role") == "1") {
-        addChildView("RealtorHomeViewController",       titleOfChildren: "Home",                   iconName: "home")
-        addChildView("CurrentShowingViewController",    titleOfChildren: "Current Showing",        iconName: "current_showing")
-        addChildView("AppointmentsViewController",      titleOfChildren: "Appointments",           iconName: "appoiments")
-        addChildView("FeedBacksViewController",         titleOfChildren: "Feedback",               iconName: "feedbacks")
-        addChildView("MyListingsRealtorViewController", titleOfChildren: "My Listings",            iconName: "my_listings")
-        addChildView("ListBuyersViewController",        titleOfChildren: "Buyers",                 iconName: "buyer")
-        addChildView("RealtorForm1ViewController",      titleOfChildren: "My Profile",             iconName: "edit_profile")
-        addChildView("NotificationsViewController",     titleOfChildren: "Notifications",          iconName: "notification")
-        addChildView("ReadyToWorkViewController",       titleOfChildren: "Make Myself Active",     iconName: "making_money")
-        addChildView("ConfigViewController",            titleOfChildren: "Settings",               iconName: "settings")
-        addChildView("CreateBeaconViewController",      titleOfChildren: "Add Beacon",             iconName: "add_beacon")
-        addChildView("LoginViewController",             titleOfChildren: "Log Out",                iconName: "logout")
-        addChildView("BugReportViewController",         titleOfChildren: "Send Us Your Feedback",  iconName: "send_us_your_feedback")
+        let subscriptionActive = User().getField("stripe_subscription_active")
+        if(subscriptionActive == "1") {
+            addChildView("RealtorHomeViewController",       titleOfChildren: "Home",                   iconName: "home")
+            addChildView("CurrentShowingViewController",    titleOfChildren: "Current Showing",        iconName: "current_showing")
+            addChildView("AppointmentsViewController",      titleOfChildren: "Appointments",           iconName: "appoiments")
+            addChildView("FeedBacksViewController",         titleOfChildren: "Feedback",               iconName: "feedbacks")
+            addChildView("MyListingsRealtorViewController", titleOfChildren: "My Listings",            iconName: "my_listings")
+            addChildView("ListBuyersViewController",        titleOfChildren: "Buyers",                 iconName: "buyer")
+            addChildView("RealtorForm1ViewController",      titleOfChildren: "My Profile",             iconName: "edit_profile")
+            addChildView("NotificationsViewController",     titleOfChildren: "Notifications",          iconName: "notification")
+            addChildView("ReadyToWorkViewController",       titleOfChildren: "Make Myself Active",     iconName: "making_money")
+            addChildView("ConfigViewController",            titleOfChildren: "Settings",               iconName: "settings")
+            addChildView("CreateBeaconViewController",      titleOfChildren: "Add Beacon",             iconName: "add_beacon")
+            addChildView("LoginViewController",             titleOfChildren: "Log Out",                iconName: "logout")
+            addChildView("BugReportViewController",         titleOfChildren: "Send Us Your Feedback",  iconName: "send_us_your_feedback")
+        } else {
+            addChildView("RealtorForm1ViewController",      titleOfChildren: "My Profile",             iconName: "edit_profile")
+             addChildView("LoginViewController",            titleOfChildren: "Log Out",                iconName: "logout")
         }
     }
     

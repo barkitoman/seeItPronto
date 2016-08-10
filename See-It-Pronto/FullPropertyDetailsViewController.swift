@@ -105,7 +105,6 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     
     func findPropertyDetails(){
         let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/\(Property().getField("id"))/\(Property().getField("property_class"))/\(User().getField("id"))?user_info=1&role=\(User().getField("role"))"
-        print(url)
         Request().get(url, successHandler: {(response) in self.loadPropertyDetails(response)})
     }
     
@@ -121,7 +120,6 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
                 self.propertyNoExistMessage()
             }
             for (_,category):(String, JSON) in result["order"] {
-                print(result["extra_fields"][category.stringValue])
                 self.sections.append(category.stringValue)
                 self.dataSection.addObject(result["extra_fields"][category.stringValue].object)
             }
@@ -274,8 +272,7 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
             let view = segue.destinationViewController as! MoreImageViewController
             let controller = view.popoverPresentationController
             view.viewData  = self.viewData
-            if controller != nil
-            {
+            if controller != nil {
                 controller?.delegate = self
             }
 
