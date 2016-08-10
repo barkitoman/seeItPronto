@@ -149,45 +149,7 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
             let images = self.viewData["images"].arrayObject
             self.cont = (images?.count)!
             
-            //                        if(!Property().getField("image").isEmpty) {
-            //                            let img = UIImageView(frame: CGRectMake(0, 0,scrollViewWidth, scrollViewHeight))
-            //                            Utility().showPhoto(img, imgPath: Property().getField("image"))
-            //                            self.scrollImages.addSubview(img)
-            //                            cont++
-            //                        }
-            //                        if(!Property().getField("image2").isEmpty) {
-            //                            let img1 = UIImageView(frame: CGRectMake(scrollViewWidth, 0,scrollViewWidth, scrollViewHeight))
-            //                            Utility().showPhoto(img1, imgPath: Property().getField("image2"))
-            //                            self.scrollImages.addSubview(img1)
-            //                            cont++
-            //                        }
-            //                        if(!Property().getField("image3").isEmpty) {
-            //                            let img2 = UIImageView(frame: CGRectMake(scrollViewWidth*2, 0,scrollViewWidth, scrollViewHeight))
-            //                            Utility().showPhoto(img2, imgPath: Property().getField("image3"))
-            //                            self.scrollImages.addSubview(img2)
-            //                            cont++
-            //                        }
-            //                        if(!Property().getField("image4").isEmpty) {
-            //                            let img3 = UIImageView(frame: CGRectMake(scrollViewWidth*3, 0,scrollViewWidth, scrollViewHeight))
-            //                            Utility().showPhoto(img3, imgPath: Property().getField("image4"))
-            //                            self.scrollImages.addSubview(img3)
-            //                            cont++
-            //                        }
-            //                        if(!Property().getField("image5").isEmpty) {
-            //                            let img4 = UIImageView(frame: CGRectMake(scrollViewWidth*4, 0,scrollViewWidth, scrollViewHeight))
-            //                            Utility().showPhoto(img4, imgPath: Property().getField("image5"))
-            //                            self.scrollImages.addSubview(img4)
-            //                            cont++
-            //                        }
-            //                        if(!Property().getField("image6").isEmpty) {
-            //                            let img4 = UIImageView(frame: CGRectMake(scrollViewWidth*5, 0,scrollViewWidth, scrollViewHeight))
-            //                            Utility().showPhoto(img4, imgPath: Property().getField("image6"))
-            //                            self.scrollImages.addSubview(img4)
-            //                            cont++
-            //                        }
-            //
-            //            print(self.viewData)
-            var numberImage:CGFloat = 0
+                        var numberImage:CGFloat = 0
             for img in images! {
                 let imgView = UIImageView(frame: CGRectMake(scrollViewWidth * numberImage, 0,scrollViewWidth, scrollViewHeight))
                 let property = JSON(img)
@@ -218,12 +180,13 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
             self.lbAddress.text       = Property().getField("address")
             //            self.lbCity.text          = Property().getField("location")
             //            self.lbZipCode.text       = Property().getField("lot")
+            print(Property().getField("rs"))
             if Property().getField("rs") == "For sale"{
                 self.lbTypeProperty.text  = "For Sale"
             }else if Property().getField("rs") == "For rental" {
                 self.lbTypeProperty.text  = "For Rental"
             }
-            self.lbTypeProperty.text  = Property().getField("rs")
+            //self.lbTypeProperty.text  = Property().getField("rs")
             
             self.lbPrice.text         = Utility().formatCurrency(Property().getField("price"))
             self.lbRemarks.text       = Property().getField("remarks")
