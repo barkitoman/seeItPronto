@@ -12,6 +12,7 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
 
     var viewData:JSON = []
     
+    @IBOutlet weak var lbContImage: UILabel!
     @IBOutlet weak var lbAddress: UILabel!
     //@IBOutlet weak var lbCity: UILabel!
     //@IBOutlet weak var lbZipCode: UILabel!
@@ -26,8 +27,8 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     @IBOutlet weak var scrollImages: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
     
-    @IBOutlet weak var lblEstPayment: UILabel!
-    @IBOutlet weak var lblYourCredits: UILabel!
+    //@IBOutlet weak var lblEstPayment: UILabel!
+    //@IBOutlet weak var lblYourCredits: UILabel!
     @IBOutlet weak var lblBedrooms: UILabel!
     @IBOutlet weak var lblBathrooms: UILabel!
     @IBOutlet weak var lblType: UILabel!
@@ -41,6 +42,8 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     @IBOutlet weak var btnSeeItNow: UIButton!
     @IBOutlet weak var btnSeeItLater: UIButton!
     //@IBOutlet weak var btnSearchAgain: UIButton!
+    
+    var cont = 0
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -143,51 +146,65 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
         dispatch_async(dispatch_get_main_queue()) {
             let scrollViewWidth:CGFloat = self.scrollImages.frame.width
             let scrollViewHeight:CGFloat = self.scrollImages.frame.height
-            var cont = 0
-            if(!Property().getField("image").isEmpty) {
-                let img = UIImageView(frame: CGRectMake(0, 0,scrollViewWidth, scrollViewHeight))
-                Utility().showPhoto(img, imgPath: Property().getField("image"))
-                self.scrollImages.addSubview(img)
-                cont++
-            }
-            if(!Property().getField("image2").isEmpty) {
-                let img1 = UIImageView(frame: CGRectMake(scrollViewWidth, 0,scrollViewWidth, scrollViewHeight))
-                Utility().showPhoto(img1, imgPath: Property().getField("image2"))
-                self.scrollImages.addSubview(img1)
-                cont++
-            }
-            if(!Property().getField("image3").isEmpty) {
-                let img2 = UIImageView(frame: CGRectMake(scrollViewWidth*2, 0,scrollViewWidth, scrollViewHeight))
-                Utility().showPhoto(img2, imgPath: Property().getField("image3"))
-                self.scrollImages.addSubview(img2)
-                cont++
-            }
-            if(!Property().getField("image4").isEmpty) {
-                let img3 = UIImageView(frame: CGRectMake(scrollViewWidth*3, 0,scrollViewWidth, scrollViewHeight))
-                Utility().showPhoto(img3, imgPath: Property().getField("image4"))
-                self.scrollImages.addSubview(img3)
-                cont++
-            }
-            if(!Property().getField("image5").isEmpty) {
-                let img4 = UIImageView(frame: CGRectMake(scrollViewWidth*4, 0,scrollViewWidth, scrollViewHeight))
-                Utility().showPhoto(img4, imgPath: Property().getField("image5"))
-                self.scrollImages.addSubview(img4)
-                cont++
-            }
-            if(!Property().getField("image6").isEmpty) {
-                let img4 = UIImageView(frame: CGRectMake(scrollViewWidth*5, 0,scrollViewWidth, scrollViewHeight))
-                Utility().showPhoto(img4, imgPath: Property().getField("image6"))
-                self.scrollImages.addSubview(img4)
-                cont++
-            }
+            let images = self.viewData["images"].arrayObject
+            self.cont = (images?.count)!
             
-            self.scrollImages.contentSize = CGSizeMake(self.scrollImages.frame.width * CGFloat(cont), self.scrollImages.frame.height)
+            //                        if(!Property().getField("image").isEmpty) {
+            //                            let img = UIImageView(frame: CGRectMake(0, 0,scrollViewWidth, scrollViewHeight))
+            //                            Utility().showPhoto(img, imgPath: Property().getField("image"))
+            //                            self.scrollImages.addSubview(img)
+            //                            cont++
+            //                        }
+            //                        if(!Property().getField("image2").isEmpty) {
+            //                            let img1 = UIImageView(frame: CGRectMake(scrollViewWidth, 0,scrollViewWidth, scrollViewHeight))
+            //                            Utility().showPhoto(img1, imgPath: Property().getField("image2"))
+            //                            self.scrollImages.addSubview(img1)
+            //                            cont++
+            //                        }
+            //                        if(!Property().getField("image3").isEmpty) {
+            //                            let img2 = UIImageView(frame: CGRectMake(scrollViewWidth*2, 0,scrollViewWidth, scrollViewHeight))
+            //                            Utility().showPhoto(img2, imgPath: Property().getField("image3"))
+            //                            self.scrollImages.addSubview(img2)
+            //                            cont++
+            //                        }
+            //                        if(!Property().getField("image4").isEmpty) {
+            //                            let img3 = UIImageView(frame: CGRectMake(scrollViewWidth*3, 0,scrollViewWidth, scrollViewHeight))
+            //                            Utility().showPhoto(img3, imgPath: Property().getField("image4"))
+            //                            self.scrollImages.addSubview(img3)
+            //                            cont++
+            //                        }
+            //                        if(!Property().getField("image5").isEmpty) {
+            //                            let img4 = UIImageView(frame: CGRectMake(scrollViewWidth*4, 0,scrollViewWidth, scrollViewHeight))
+            //                            Utility().showPhoto(img4, imgPath: Property().getField("image5"))
+            //                            self.scrollImages.addSubview(img4)
+            //                            cont++
+            //                        }
+            //                        if(!Property().getField("image6").isEmpty) {
+            //                            let img4 = UIImageView(frame: CGRectMake(scrollViewWidth*5, 0,scrollViewWidth, scrollViewHeight))
+            //                            Utility().showPhoto(img4, imgPath: Property().getField("image6"))
+            //                            self.scrollImages.addSubview(img4)
+            //                            cont++
+            //                        }
+            //
+            //            print(self.viewData)
+            var numberImage:CGFloat = 0
+            for img in images! {
+                let imgView = UIImageView(frame: CGRectMake(scrollViewWidth * numberImage, 0,scrollViewWidth, scrollViewHeight))
+                let property = JSON(img)
+                
+                Utility().showPhoto(imgView, imgPath: property.stringValue, defaultImg: "default_user_photo")
+                self.scrollImages.addSubview(imgView)
+                numberImage++
+                
+            }
+            self.lbContImage.text = "1 of \(self.cont)"
+            self.scrollImages.contentSize = CGSizeMake(self.scrollImages.frame.width * CGFloat(self.cont), self.scrollImages.frame.height)
             self.scrollImages.delegate = self
-            self.pageControl.numberOfPages = cont
+            self.pageControl.numberOfPages = self.cont
             self.pageControl.currentPage = 0
             
-            self.lblEstPayment.text   = Property().getField("est_payments")
-            self.lblYourCredits.text  = Property().getField("your_credits")
+            //self.lblEstPayment.text   = Property().getField("est_payments")
+            //self.lblYourCredits.text  = Property().getField("your_credits")
             self.lblBedrooms.text     = Property().getField("bedrooms")
             self.lblBathrooms.text    = Property().getField("bathrooms")
             self.lblType.text         = Property().getField("property_type")
@@ -199,9 +216,15 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
             self.lblLocation.text     = Property().getField("location")
             
             self.lbAddress.text       = Property().getField("address")
-//            self.lbCity.text          = Property().getField("location")
-//            self.lbZipCode.text       = Property().getField("lot")
+            //            self.lbCity.text          = Property().getField("location")
+            //            self.lbZipCode.text       = Property().getField("lot")
+            if Property().getField("rs") == "For sale"{
+                self.lbTypeProperty.text  = "For Sale"
+            }else if Property().getField("rs") == "For rental" {
+                self.lbTypeProperty.text  = "For Rental"
+            }
             self.lbTypeProperty.text  = Property().getField("rs")
+            
             self.lbPrice.text         = Utility().formatCurrency(Property().getField("price"))
             self.lbRemarks.text       = Property().getField("remarks")
             self.lbGarage.text        = Property().getField("garage")
@@ -219,6 +242,8 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
         let currentPage:CGFloat = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
         // Change the indicator
         self.pageControl.currentPage = Int(currentPage);
+        
+        self.lbContImage.text = "\(Int(currentPage)+1) of \(self.cont)"
         
     }
     

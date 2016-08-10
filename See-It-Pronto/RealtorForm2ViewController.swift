@@ -18,7 +18,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     @IBOutlet weak var previewProfilePicture: UIImageView!
     @IBOutlet weak var zipCode1: UITextField!
     @IBOutlet weak var zipCode2: UITextField!
-    @IBOutlet weak var zipCode3: UITextField!
+    //@IBOutlet weak var zipCode3: UITextField!
 
 
     let imagePicker: UIImagePickerController! = UIImagePickerController()
@@ -55,10 +55,10 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
         self.txtLastName.delegate = self
         self.zipCode1.delegate = self
         self.zipCode2.delegate = self
-        self.zipCode3.delegate = self
+        //self.zipCode3.delegate = self
         self.zipCode1.tag = 1
         self.zipCode2.tag = 1
-        self.zipCode3.tag = 1
+        //self.zipCode3.tag = 1
 
     }
     
@@ -131,7 +131,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
         var params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["id"].stringValue
         params = params+"&active_zip_code1=\(self.zipCode1.text!)"
         params = params+"&active_zip_code2=\(self.zipCode2.text!)"
-        params = params+"&active_zip_code3=\(self.zipCode3.text!)"
+        //params = params+"&active_zip_code3=\(self.zipCode3.text!)"
         params = params+"&role=realtor&brokerage="+txtBrokerage.text!+"&first_name="+txtFirstName.text!
         params = params+"&last_name="+txtLastName.text!+"&lisence="+txtLisence.text!+"&broker_name="+txtBankAcct.text!
         if(!self.viewData["realtor_id"].stringValue.isEmpty){
@@ -176,7 +176,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
             self.txtLisence.text       = result["license"].stringValue
             self.zipCode1.text         = result["active_zip_code1"].stringValue
             self.zipCode2.text         = result["active_zip_code2"].stringValue
-            self.zipCode3.text         = result["active_zip_code3"].stringValue
+            //self.zipCode3.text         = result["active_zip_code3"].stringValue
             //self.txtmlsid.text     = result["mls_id"].stringValue
             if(!result["url_image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.previewProfilePicture, imgPath: result["url_image"].stringValue)
