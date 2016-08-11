@@ -205,6 +205,9 @@ class Utility {
     func millitaryToStandardTime(militaryTime:String, format:String="MM/dd/yyyy hh:mm a")->String {
         let dateString = "\(militaryTime) EST"
         let dateFormatter = NSDateFormatter()
+        
+        dateFormatter.timeZone = NSTimeZone.localTimeZone()
+        //dateFormatter.timeZone = NSTimeZone(abbreviation: "GMT+0:00")
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
         let date = dateFormatter.dateFromString(dateString)

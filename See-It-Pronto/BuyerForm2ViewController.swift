@@ -91,6 +91,7 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
     //display image after select
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         self.haveImage = true
+        
         self.previewProfilePicture.image = image
         if(self.isTakenPhoto == true) {
             self.saveTakenPhoto()
@@ -158,7 +159,9 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
     }
     
     func saveTakenPhoto() {
-        let imageData = UIImageJPEGRepresentation(previewProfilePicture.image!, 0.6)
+        var takedPhoto = previewProfilePicture.image!
+        takedPhoto = takedPhoto.correctlyOrientedImage()
+        let imageData = UIImageJPEGRepresentation(takedPhoto, 0.6)
         let compressedJPGImage = UIImage(data: imageData!)
         UIImageWriteToSavedPhotosAlbum(compressedJPGImage!, nil, nil, nil)
     }

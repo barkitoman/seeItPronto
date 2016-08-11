@@ -79,7 +79,6 @@ class AgentConfirmationViewController: UIViewController, UITextFieldDelegate, UI
     
     func afterPostRequest(let response: NSData) {
         let result = JSON(data: response)
-        print(result)
         if(result["result"].bool == true) {
             self.viewData = result
             dispatch_async(dispatch_get_main_queue()) {

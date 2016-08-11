@@ -37,3 +37,18 @@ struct MoveKeyboard {
     static let PORTRAIT_KEYBOARD_HEIGHT : CGFloat = 216;
     static let LANDSCAPE_KEYBOARD_HEIGHT : CGFloat = 162;
 }
+
+extension UIImage {
+    func correctlyOrientedImage() -> UIImage {
+        if self.imageOrientation == UIImageOrientation.Up {
+            return self
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        self.drawInRect(CGRectMake(0, 0, self.size.width, self.size.height))
+        let normalizedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        return normalizedImage;
+    }
+}

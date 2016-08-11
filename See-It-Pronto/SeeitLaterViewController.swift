@@ -100,9 +100,7 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
             let name            = PropertyRealtor().getField("first_name")+" "+PropertyRealtor().getField("last_name")
             self.agentName.text = name
             let image           = PropertyRealtor().getField("url_image")
-            if(!image.isEmpty) {
-                Utility().showPhoto(self.agentPhoto, imgPath: image)
-            }
+            Utility().showPhoto(self.agentPhoto, imgPath: image,defaultImg: "default_user_photo")
         }
     }
     

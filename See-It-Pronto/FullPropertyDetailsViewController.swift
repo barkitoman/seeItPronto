@@ -92,11 +92,15 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     
     @IBAction func btnSeeitPronto(sender: AnyObject) {
         if(self.viewData["user"]["current_zip_code"].stringValue == self.viewData["zipcode"].stringValue) {
-            let propertyActionData: JSON =  ["type":"see_it_pronto"]
-            PropertyAction().saveOne(propertyActionData)
-            self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+            if(self.viewData["have_beacon"].stringValue == "1") {
+                let propertyActionData: JSON =  ["type":"see_it_pronto"]
+                PropertyAction().saveOne(propertyActionData)
+                self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+            } else {
+                Utility().displayAlert(self, title: "Message", message: " \"See it pronto\" is not available for this property.", performSegue: "")
+            }
         } else {
-            Utility().displayAlert(self, title: "Message", message: " \"See it pronto” is only available for nearby properties.", performSegue: "")
+            Utility().displayAlert(self, title: "Message", message: " \"See it pronto\" is only available for nearby properties.", performSegue: "")
         }
     }
     
@@ -107,7 +111,7 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     }
     
     func findPropertyDetails(){
-        let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/\(Property().getField("id"))/\(Property().getField("property_class"))/\(User().getField("id"))?user_info=1&role=\(User().getField("role"))"
+        let url = AppConfig.APP_URL+"/real_state_property_basics/get_property_details/\(Property().getField("id"))/\(Property().getField("property_class"))/\(User().getField("id"))?user_info=1&role=\(User().getField("role"))&verifi_icon=1"
         Request().get(url, successHandler: {(response) in self.loadPropertyDetails(response)})
     }
     
@@ -178,13 +182,11 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
             self.lblLocation.text     = Property().getField("location")
             
             self.lbAddress.text       = Property().getField("address")
-            //            self.lbCity.text          = Property().getField("location")
-            //            self.lbZipCode.text       = Property().getField("lot")
-            print(Property().getField("rs"))
-            if Property().getField("rs") == "For sale"{
-                self.lbTypeProperty.text  = "For Sale"
-            }else if Property().getField("rs") == "For rental" {
+
+            if(Property().getField("property_class") == "6") {
                 self.lbTypeProperty.text  = "For Rental"
+            } else {
+                self.lbTypeProperty.text  = "For Sale"
             }
             //self.lbTypeProperty.text  = Property().getField("rs")
             
@@ -195,6 +197,10 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
             self.lbPets.text          = Property().getField("petsAllowed")
             self.lbPool.text          = Property().getField("pool")
             self.lbSpa.text           = Property().getField("spa")
+            //
+            dispatch_async(dispatch_get_main_queue()) {
+                self.btnSeeItNow.backgroundColor = UIColor(rgba: "#DCDCDC")
+            }
             
         }
     }

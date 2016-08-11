@@ -3,6 +3,9 @@
     <entity name="DeviceManager" syncable="YES">
         <attribute name="device_token_id" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="NotificationCount" syncable="YES">
+        <attribute name="count_number" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Property" syncable="YES">
         <attribute name="added_on" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
@@ -92,5 +95,6 @@
         <element name="PropertyRealtor" positionX="-54" positionY="108" width="128" height="210"/>
         <element name="SearchConfig" positionX="-63" positionY="54" width="128" height="210"/>
         <element name="User" positionX="-63" positionY="-18" width="128" height="300"/>
+        <element name="NotificationCount" positionX="-54" positionY="135" width="128" height="60"/>
     </elements>
 </model>

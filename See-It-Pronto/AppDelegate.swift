@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
     var latitude: String = ""
     var longintude: String = ""
     var foundDevices = ""
+    var currentBadgeCount = 0;
     
     func intervalLocation() {
         self.LocationTimer = NSTimer.scheduledTimerWithTimeInterval(600,
@@ -74,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
         let notificationTypes : UIUserNotificationType = [.Alert, .Badge, .Sound]
         let notificationSettings : UIUserNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
         UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
-        
+        self.setIconBadgeNumber()
         //send location
         self.intervalLocation()
         
@@ -105,6 +106,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
         // display the userInfo
         if let aps = userInfo["aps"] as? NSDictionary {
+            NotificationCount().increaseCount("1")
+            self.setIconBadgeNumber()
             if let category = aps["category"] as? String {
                 if category == "NEW_MESSAGE" {
                     if let alert = aps["alert"] as? NSDictionary {
@@ -121,9 +124,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
             }
             completionHandler(UIBackgroundFetchResult.NoData)
         }
+  
     }
     
     func goToChat(fromUserId:String = "") {
+        NotificationCount().decreaseCount("1")
         let rootViewController = self.window?.rootViewController as! UINavigationController
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
@@ -134,12 +139,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
     }
     
     func goToNotifications() {
+        NotificationCount().decreaseCount("1")
         let rootViewController = self.window?.rootViewController as! UINavigationController
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         let vc = storyboard.instantiateViewControllerWithIdentifier("NotificationsViewController") as! NotificationsViewController
         vc.showNewNotificationMsg = true
         rootViewController.pushViewController(vc, animated: true)
+    }
+    
+    func setIconBadgeNumber(){
+        let currentBadgeCount = NotificationCount().getField("count_number")
+        if let currentInt = Int(currentBadgeCount) {
+            UIApplication.sharedApplication().applicationIconBadgeNumber = currentInt
+        }else {
+            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        }
     }
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {

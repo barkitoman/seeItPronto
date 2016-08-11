@@ -169,15 +169,15 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
             self.viewData = result
-            self.txtFirstName.text     = result["first_name"].stringValue
-            self.txtLastName.text      = result["last_name"].stringValue
-            self.txtBrokerage.text     = result["brokerage"].stringValue
-            self.txtBankAcct.text      = result["broker_name"].stringValue
-            self.txtLisence.text       = result["license"].stringValue
-            self.zipCode1.text         = result["active_zip_code1"].stringValue
-            self.zipCode2.text         = result["active_zip_code2"].stringValue
-            //self.zipCode3.text         = result["active_zip_code3"].stringValue
-            //self.txtmlsid.text     = result["mls_id"].stringValue
+            self.txtFirstName.text  = result["first_name"].stringValue
+            self.txtLastName.text   = result["last_name"].stringValue
+            self.txtBrokerage.text  = result["brokerage"].stringValue
+            self.txtBankAcct.text   = result["broker_name"].stringValue
+            self.txtLisence.text    = result["license"].stringValue
+            self.zipCode1.text      = result["active_zip_code1"].stringValue
+            self.zipCode2.text      = result["active_zip_code2"].stringValue
+            //self.zipCode3.text    = result["active_zip_code3"].stringValue
+            //self.txtmlsid.text    = result["mls_id"].stringValue
             if(!result["url_image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.previewProfilePicture, imgPath: result["url_image"].stringValue)
             }
@@ -185,7 +185,9 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     }
     
     func saveTakenPhoto() {
-        let imageData = UIImageJPEGRepresentation(previewProfilePicture.image!, 0.6)
+        var takedPhoto = previewProfilePicture.image!
+        takedPhoto = takedPhoto.correctlyOrientedImage()
+        let imageData = UIImageJPEGRepresentation(takedPhoto, 0.6)
         let compressedJPGImage = UIImage(data: imageData!)
         UIImageWriteToSavedPhotosAlbum(compressedJPGImage!, nil, nil, nil)
     }
@@ -239,16 +241,13 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     // Requires having the text fields using the view controller as the delegate.
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         // Sends the keyboard away when pressing the "done" button
-        if textField.tag != 1
-        {
+        if textField.tag != 1 {
             self.view.endEditing(true)
             return false
         }else{
             resign()
             return true
         }
-       
-        
     }
     
 
