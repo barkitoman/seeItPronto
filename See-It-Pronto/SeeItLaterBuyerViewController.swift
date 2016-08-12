@@ -74,33 +74,36 @@ class SeeItLaterBuyerViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! SeeItLaterBuyerTableViewCell
+        let cell    = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! SeeItLaterBuyerTableViewCell
         let showing = JSON(self.myListings[indexPath.row])
-        cell.lblAddress.text  = showing["property"][0]["address"].stringValue
-        cell.lblPrice.text = Utility().formatCurrency(showing["property"][0]["price"].stringValue)
+        let address = showing["property"][0]["address"].stringValue
+        let price   = (showing["property"][0]["price"].stringValue.isEmpty) ? showing["property_price"].stringValue : showing["property"][0]["price"].stringValue
+        
+        cell.lblAddress.text  = address
+        cell.lblPrice.text = Utility().formatCurrency(price)
         cell.lblNiceDate.text = showing["nice_date"].stringValue
         
         cell.btnViewDetails.tag = indexPath.row
         cell.btnViewDetails.addTarget(self, action: "openViewDetails:", forControlEvents: .TouchUpInside)
-        let property = showing["property"][0]
-        if let _ = self.models[property["id"].stringValue] {
-            self.showCell(cell, property: property, indexPath: indexPath)
+        //let property = showing["property"][0]
+        if let _ = self.models[showing["property_id"].stringValue] {
+            self.showCell(cell, showing: showing, indexPath: indexPath)
         } else {
             cell.propertyImage.image = nil
-            self.models[property["id"].stringValue] = Model()
-            self.showCell(cell, property: property, indexPath: indexPath)
+            self.models[showing["property_id"].stringValue] = Model()
+            self.showCell(cell, showing: showing, indexPath: indexPath)
         }
         return cell
     }
     
-    func showCell(cell:SeeItLaterBuyerTableViewCell, property:JSON,indexPath: NSIndexPath){
+    func showCell(cell:SeeItLaterBuyerTableViewCell, showing:JSON,indexPath: NSIndexPath){
         // have we got a picture?
-        if let im = self.models[property["id"].stringValue]!.im {
+        if let im = self.models[showing["property_id"].stringValue]!.im {
             cell.propertyImage.image = im
         } else {
-            if self.models[property["id"].stringValue]!.task == nil &&  self.models[property["id"].stringValue]!.reloaded == false {
+            if self.models[showing["property_id"].stringValue]!.task == nil &&  self.models[showing["property_id"].stringValue]!.reloaded == false {
                 // no task? start one!
-                let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+property["id"].stringValue+"/1"
+                let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+showing["property_id"].stringValue+"/1"
                 Request().get(url, successHandler: {(response) in self.imageCell(indexPath, img:cell.propertyImage, response: response)})
             }
         }
@@ -108,21 +111,29 @@ class SeeItLaterBuyerViewController: UIViewController {
     
     func imageCell(indexPath: NSIndexPath, img:UIImageView,let response: NSData) {
         let showing = JSON(self.myListings[indexPath.row])
-        let property = showing["property"][0]
+        //let property = showing["property"][0]
         let result = JSON(data: response)
         let url = AppConfig.APP_URL+"/"+result[0]["url"].stringValue
-        self.models[property["id"].stringValue]!.task = self.downloader.download(url) {
+        self.models[showing["property_id"].stringValue]!.task = self.downloader.download(url) {
             [weak self] url in // *
-            if let _ = self?.models[property["id"].stringValue] {
-                self!.models[property["id"].stringValue]!.task = nil
+            if let _ = self?.models[showing["property_id"].stringValue] {
+                self!.models[showing["property_id"].stringValue]!.task = nil
                 if url == nil {
                     return
                 }
+                
+                
                 let data = NSData(contentsOfURL: url)!
-                let im = UIImage(data:data)
-                self!.models[property["id"].stringValue]!.im = im
+                //if photo is empty
+                if data.length <= 116 {
+                    let im = UIImage(named: "default_property_photo")
+                    self!.models[showing["property_id"].stringValue]!.im = im
+                }else {
+                    let im = UIImage(data:data)
+                    self!.models[showing["property_id"].stringValue]!.im = im
+                }
                 dispatch_async(dispatch_get_main_queue()) {
-                    self!.models[property["id"].stringValue]!.reloaded = true
+                    self!.models[showing["property_id"].stringValue]!.reloaded = true
                     self!.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                 }
             }
@@ -166,14 +177,28 @@ class SeeItLaterBuyerViewController: UIViewController {
             (date) -> Void in
             var dateTime = "\(date)"
             dateTime     = dateTime.stringByReplacingOccurrencesOfString(" +0000",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            let showing = JSON(self.myListings[indexPath.row])
-            let params = self.editRequestParams(showing, dateTime:dateTime)
+            let showing  = JSON(self.myListings[indexPath.row])
+            let params   = self.editRequestParams(showing, dateTime:dateTime)
             let url = AppConfig.APP_URL+"/showings/"+showing["id"].stringValue
-            Request().put(url,params: params, controller:self,successHandler: {(response) in })
-            let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! SeeItLaterBuyerTableViewCell
-            cell.lblNiceDate.text = Utility().millitaryToStandardTime(dateTime, format: "MMM dd, hh:mm a")
-            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            self.tableView.setEditing(false, animated: true)
+            Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterEditRequest(response, indexPath:indexPath)});
+        }
+    }
+    
+    func afterEditRequest(let response: NSData, indexPath: NSIndexPath) {
+        let result = JSON(data: response)
+        if(result["result"].bool == true) {
+            dispatch_async(dispatch_get_main_queue()) {
+                let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! SeeItLaterBuyerTableViewCell
+                cell.lblNiceDate.text = result["showing_date"].stringValue
+                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                self.tableView.setEditing(false, animated: true)
+            }
+        } else {
+            var msg = "Error saving, please try later"
+            if(result["msg"].stringValue != "") {
+                msg = result["msg"].stringValue
+            }
+            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
         }
     }
     
@@ -303,10 +328,8 @@ class SeeItLaterBuyerViewController: UIViewController {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
             for (_,subJson):(String, JSON) in result["data"] {
-                if(!subJson["property"][0]["id"].stringValue.isEmpty) {
-                    let jsonObject: AnyObject = subJson.object
-                    self.myListings.addObject(jsonObject)
-                }
+                let jsonObject: AnyObject = subJson.object
+                self.myListings.addObject(jsonObject)
             }
             if self.myListings.count > 0 {
                 self.tableView.reloadData()

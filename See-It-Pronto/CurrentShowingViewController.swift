@@ -191,8 +191,10 @@ class CurrentShowingViewController: UIViewController {
     
     func startShowing() {
         self.startEndButtonAction = "end"
-        self.btnStartEndShowing.setTitle("End showing", forState: .Normal)
-        self.btnStartEndShowing.backgroundColor = UIColor(rgba: "#45B5DC")
+        dispatch_async(dispatch_get_main_queue()) {
+            self.btnStartEndShowing.setTitle("End showing", forState: .Normal)
+            self.btnStartEndShowing.backgroundColor = UIColor(rgba: "#45B5DC")
+        }
     }
     
     func startShowingSendingMoney() {
@@ -218,17 +220,19 @@ class CurrentShowingViewController: UIViewController {
     }
     
     func endShowing() {
-        let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to end this showing?", preferredStyle: .Alert)
-        let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            self.sendEndShowingSaveRequest()
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to end this showing?", preferredStyle: .Alert)
+            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                self.sendEndShowingSaveRequest()
+            }
+            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+            }
+            alertController.addAction(yesAction)
+            alertController.addAction(noAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
-        let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-        }
-        alertController.addAction(yesAction)
-        alertController.addAction(noAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
 
     func sendEndShowingSaveRequest(){

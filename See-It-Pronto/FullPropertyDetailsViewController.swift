@@ -130,6 +130,11 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
                 self.sections.append(category.stringValue)
                 self.dataSection.addObject(result["extra_fields"][category.stringValue].object)
             }
+            if(result["have_beacon"].stringValue != "1"){
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.btnSeeItNow.backgroundColor = UIColor(rgba: "#DCDCDC")
+                }
+            }
             self.tableView.reloadData()
             Property().saveOne(result)
             self.showPropertydetails()
@@ -197,11 +202,6 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
             self.lbPets.text          = Property().getField("petsAllowed")
             self.lbPool.text          = Property().getField("pool")
             self.lbSpa.text           = Property().getField("spa")
-            //
-            dispatch_async(dispatch_get_main_queue()) {
-                self.btnSeeItNow.backgroundColor = UIColor(rgba: "#DCDCDC")
-            }
-            
         }
     }
     
