@@ -91,8 +91,9 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
     //display image after select
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         self.haveImage = true
-        
-        self.previewProfilePicture.image = image
+        var takedPhoto = image
+        takedPhoto = takedPhoto.correctlyOrientedImage()
+        self.previewProfilePicture.image = takedPhoto
         if(self.isTakenPhoto == true) {
             self.saveTakenPhoto()
         }

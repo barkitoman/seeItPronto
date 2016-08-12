@@ -18,6 +18,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     @IBOutlet weak var previewProfilePicture: UIImageView!
     @IBOutlet weak var zipCode1: UITextField!
     @IBOutlet weak var zipCode2: UITextField!
+    var isTakenPhoto:Bool = false
     //@IBOutlet weak var zipCode3: UITextField!
 
 
@@ -68,6 +69,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
 //    }
     
     @IBAction func btnchoosePicture(sender: AnyObject) {
+        self.isTakenPhoto = false
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
@@ -78,6 +80,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     }
     
     @IBAction func btnTakePhoto(sender: AnyObject) {
+        self.isTakenPhoto = true
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
             if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
                 let imagePicker = UIImagePickerController()
@@ -96,8 +99,12 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     //display image after select
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         self.haveImage = true
-        self.previewProfilePicture.image = image
-        self.saveTakenPhoto()
+        var takedPhoto = image
+        takedPhoto = takedPhoto.correctlyOrientedImage()
+        self.previewProfilePicture.image = takedPhoto
+        if(self.isTakenPhoto == true) {
+            self.saveTakenPhoto()
+        }
         self.dismissViewControllerAnimated(true, completion: nil);
     }
 

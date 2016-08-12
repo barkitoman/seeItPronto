@@ -16,7 +16,6 @@
 		103013171D26F67C00DF331B /* BugReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103013161D26F67C00DF331B /* BugReportViewController.swift */; };
 		1040F5441CAC47910011E497 /* PastListingsBuyerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1040F5431CAC47910011E497 /* PastListingsBuyerViewController.swift */; };
 		1040F5461CAC47CB0011E497 /* PastListingBuyerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1040F5451CAC47CB0011E497 /* PastListingBuyerTableViewCell.swift */; };
-		107746FA1D5CF61700AC07C4 /* NotificationCountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107746F91D5CF61700AC07C4 /* NotificationCountManager.swift */; };
 		107934BB1CD7AC6700F07A14 /* ImageLoadingWithCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107934BA1CD7AC6700F07A14 /* ImageLoadingWithCache.swift */; };
 		107934BD1CD7C7D500F07A14 /* MyDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107934BC1CD7C7D500F07A14 /* MyDownloader.swift */; };
 		107A40331C848C1A001C96A8 /* SeeitNowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107A40321C848C1A001C96A8 /* SeeitNowTableViewCell.swift */; };
@@ -147,7 +146,6 @@
 		103013161D26F67C00DF331B /* BugReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BugReportViewController.swift; sourceTree = "<group>"; };
 		1040F5431CAC47910011E497 /* PastListingsBuyerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastListingsBuyerViewController.swift; sourceTree = "<group>"; };
 		1040F5451CAC47CB0011E497 /* PastListingBuyerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastListingBuyerTableViewCell.swift; sourceTree = "<group>"; };
-		107746F91D5CF61700AC07C4 /* NotificationCountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCountManager.swift; sourceTree = "<group>"; };
 		107934BA1CD7AC6700F07A14 /* ImageLoadingWithCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoadingWithCache.swift; sourceTree = "<group>"; };
 		107934BC1CD7C7D500F07A14 /* MyDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDownloader.swift; sourceTree = "<group>"; };
 		107A40321C848C1A001C96A8 /* SeeitNowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeitNowTableViewCell.swift; sourceTree = "<group>"; };
@@ -286,7 +284,6 @@
 				107A40341C84C31A001C96A8 /* PropertyRealtorManager.swift */,
 				109FF8491C860A1000E20FC2 /* PropertyActionManager.swift */,
 				10C282F51D245DD100CF78D3 /* DeviceManager.swift */,
-				107746F91D5CF61700AC07C4 /* NotificationCountManager.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -644,7 +641,6 @@
 				68587EFA1C456F44002696C3 /* Notification.swift in Sources */,
 				10DA2E6F1CE4D56300EE8553 /* ConfigViewController.swift in Sources */,
 				107A40351C84C31A001C96A8 /* PropertyRealtorManager.swift in Sources */,
-				107746FA1D5CF61700AC07C4 /* NotificationCountManager.swift in Sources */,
 				10B360661CA9B45800B73D01 /* FeedBacksTableViewCell.swift in Sources */,
 				68D64C561C443DF5006CBE2F /* Utitity.swift in Sources */,
 				684D08471C6534B900BF086E /* ChildViewController.swift in Sources */,
