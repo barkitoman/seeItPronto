@@ -143,7 +143,6 @@ class ShowingRequestViewController: UIViewController {
     
     func loadShowingData(let response: NSData) {
         let result = JSON(data: response)
-        print(result)
         dispatch_async(dispatch_get_main_queue()) {
             self.viewData = result
             let name = result["buyer"]["first_name"].stringValue+" "+result["buyer"]["last_name"].stringValue
@@ -163,7 +162,6 @@ class ShowingRequestViewController: UIViewController {
     
     func statusMessage() {
         var message = ""
-        print(self.viewData)
         if(self.viewData == nil) {
             message = "Sorry, this showing request is not available at this time"
             
