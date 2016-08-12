@@ -68,32 +68,35 @@ class AppointmentsViewController: UIViewController {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! AppointmentsTableViewCell
-        let appoiment      = JSON(self.appoiments[indexPath.row])
-        cell.address.text  = appoiment["property"][0]["address"].stringValue
-        cell.lblPrice.text = Utility().formatCurrency(appoiment["property"][0]["price"].stringValue)
+        let appoiment = JSON(self.appoiments[indexPath.row])
+        
+        let address = appoiment["property"][0]["address"].stringValue
+        let price   = (appoiment["property"][0]["price"].stringValue.isEmpty) ? appoiment["property_price"].stringValue : appoiment["property"][0]["price"].stringValue
+        
+        cell.address.text  = address
+        cell.lblPrice.text = Utility().formatCurrency(price)
         let state = appoiment["showing_status"].stringValue
         cell.lblState.text = self.getState(state)
         cell.niceDate.text = appoiment["nice_date"].stringValue
-        let property = appoiment["property"][0]
         
-        if let _ = self.models[property["id"].stringValue] {
-            self.showCell(cell, property: property, indexPath: indexPath)
+        if let _ = self.models[appoiment["property_id"].stringValue] {
+            self.showCell(cell, appoiment: appoiment, indexPath: indexPath)
         } else {
             cell.propertyImage.image = nil
-            self.models[property["id"].stringValue] = Model()
-            self.showCell(cell, property: property, indexPath: indexPath)
+            self.models[appoiment["property_id"].stringValue] = Model()
+            self.showCell(cell, appoiment: appoiment, indexPath: indexPath)
         }
         return cell
     }
     
-    func showCell(cell:AppointmentsTableViewCell, property:JSON,indexPath: NSIndexPath){
+    func showCell(cell:AppointmentsTableViewCell, appoiment:JSON, indexPath: NSIndexPath){
         // have we got a picture?
-        if let im = self.models[property["id"].stringValue]!.im {
+        if let im = self.models[appoiment["property_id"].stringValue]!.im {
             cell.propertyImage.image = im
         } else {
-            if self.models[property["id"].stringValue]!.task == nil &&  self.models[property["id"].stringValue]!.reloaded == false {
+            if self.models[appoiment["property_id"].stringValue]!.task == nil &&  self.models[appoiment["property_id"].stringValue]!.reloaded == false {
                 // no task? start one!
-                let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+property["id"].stringValue+"/1"
+                let url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+appoiment["property_id"].stringValue+"/1"
                 Request().get(url, successHandler: {(response) in self.imageCell(indexPath, img:cell.propertyImage, response: response)})
             }
         }
@@ -101,21 +104,26 @@ class AppointmentsViewController: UIViewController {
     
     func imageCell(indexPath: NSIndexPath, img:UIImageView,let response: NSData) {
         let appoiment = JSON(self.appoiments[indexPath.row])
-        let property = appoiment["property"][0]
         let result = JSON(data: response)
         let url = AppConfig.APP_URL+"/"+result[0]["url"].stringValue
-        self.models[property["id"].stringValue]!.task = self.downloader.download(url) {
+        self.models[appoiment["property_id"].stringValue]!.task = self.downloader.download(url) {
             [weak self] url in // *
-            if let _ = self?.models[property["id"].stringValue] {
-                self!.models[property["id"].stringValue]!.task = nil
+            if let _ = self?.models[appoiment["property_id"].stringValue] {
+                self!.models[appoiment["property_id"].stringValue]!.task = nil
                 if url == nil {
                     return
                 }
                 let data = NSData(contentsOfURL: url)!
-                let im = UIImage(data:data)
-                self!.models[property["id"].stringValue]!.im = im
+                //if photo is empty
+                if data.length <= 116 {
+                    let im = UIImage(named: "default_property_photo")
+                    self!.models[appoiment["property_id"].stringValue]!.im = im
+                } else {
+                    let im = UIImage(data:data)
+                    self!.models[appoiment["property_id"].stringValue]!.im = im
+                }
                 dispatch_async(dispatch_get_main_queue()) {
-                    self!.models[property["id"].stringValue]!.reloaded = true
+                    self!.models[appoiment["property_id"].stringValue]!.reloaded = true
                     self!.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                 }
             }
@@ -172,16 +180,26 @@ class AppointmentsViewController: UIViewController {
             dateTime      = dateTime.stringByReplacingOccurrencesOfString(" +0000",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
             let appoiment = JSON(self.appoiments[indexPath.row])
             let params = self.editRequestParams(appoiment, dateTime:dateTime)
-            var url = AppConfig.APP_URL+"/showings/"+appoiment["id"].stringValue
-            Request().put(url,params: params,controller:self, successHandler: {(response) in })
-            let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! AppointmentsTableViewCell
-            url = AppConfig.APP_URL+"/real_state_property_basics/get_photos_property/"+appoiment["property"][0]["id"].stringValue+"/1"
-            if cell.propertyImage.image == nil {
-                Request().get(url, successHandler: {(response) in self.loadImage(cell.propertyImage, response: response)})
+            let url = AppConfig.APP_URL+"/showings/"+appoiment["id"].stringValue
+            Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterEditRequest(response, indexPath:indexPath, appoiment:appoiment)});
+        }
+    }
+    
+    func afterEditRequest(let response: NSData, indexPath: NSIndexPath,appoiment:JSON) {
+        let result = JSON(data: response)
+        if(result["result"].bool == true) {
+            dispatch_async(dispatch_get_main_queue()) {
+                let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! AppointmentsTableViewCell
+                cell.niceDate.text = result["showing_date"].stringValue
+                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                self.tableView.setEditing(false, animated: true)
             }
-            cell.niceDate.text = Utility().millitaryToStandardTime(dateTime, format: "MMM dd, hh:mm a")
-            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            self.tableView.setEditing(false, animated: true)
+        } else {
+            var msg = "Error saving, please try later"
+            if(result["msg"].stringValue != "") {
+                msg = result["msg"].stringValue
+            }
+            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
         }
     }
     
@@ -256,10 +274,8 @@ class AppointmentsViewController: UIViewController {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
             for (_,subJson):(String, JSON) in result["data"] {
-                if(!subJson["property"][0]["id"].stringValue.isEmpty) {
-                    let jsonObject: AnyObject = subJson.object
-                    self.appoiments.addObject(jsonObject)
-                }
+                let jsonObject: AnyObject = subJson.object
+                self.appoiments.addObject(jsonObject)
             }
             if(self.appoiments.count == 0 && self.countPage == 0) {
                 BProgressHUD.dismissHUD(0)
