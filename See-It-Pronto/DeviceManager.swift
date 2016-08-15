@@ -35,10 +35,12 @@ class DeviceManager {
     func getField(fieldName:String)->String{
         let deviceConfig = DeviceManager().find()
         var out:String   = ""
-        if(deviceConfig.count >= 1 && deviceConfig[0] != nil) {
-            let obj  = deviceConfig[0] as! NSManagedObject
-            if(obj.valueForKey(fieldName) != nil) {
-                out = obj.valueForKey(fieldName) as! String
+        if(deviceConfig.count >= 1) {
+            if let dataObj:AnyObject = deviceConfig.objectAtIndex(0)  {
+                let obj  = dataObj as! NSManagedObject
+                if(obj.valueForKey(fieldName) != nil) {
+                    out = obj.valueForKey(fieldName) as! String
+                }
             }
         }
         return out
@@ -54,6 +56,7 @@ class DeviceManager {
     }
     
     func save(deviceData:JSON) {
+        print(deviceData)
         let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let contxt: NSManagedObjectContext = appDel.managedObjectContext
         let en = NSEntityDescription.entityForName("DeviceManager", inManagedObjectContext: contxt)

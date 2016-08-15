@@ -68,10 +68,12 @@ class Property {
     func getField(fieldName:String)->String{
         let property   = Property().find()
         var out:String = ""
-        if(property.count >= 1 && property[0] != nil) {
-            let obj  = property[0] as! NSManagedObject
-            if(obj.valueForKey(fieldName) != nil) {
-                out = obj.valueForKey(fieldName) as! String
+        if(property.count >= 1) {
+            if let dataObj:AnyObject = property.objectAtIndex(0)  {
+                let obj  = dataObj as! NSManagedObject
+                if(obj.valueForKey(fieldName) != nil) {
+                    out = obj.valueForKey(fieldName) as! String
+                }
             }
         }
         return out

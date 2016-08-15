@@ -85,11 +85,6 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
         navigationController?.popViewControllerAnimated(true)
     }
     
-//    @IBAction func btnSearchAgain(sender: AnyObject) {
-//        Utility().goHome(self)
-//    }
-    
-    
     @IBAction func btnSeeitPronto(sender: AnyObject) {
         if(self.viewData["user"]["current_zip_code"].stringValue == self.viewData["zipcode"].stringValue) {
             if(self.viewData["have_beacon"].stringValue == "1") {
@@ -155,27 +150,26 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
         dispatch_async(dispatch_get_main_queue()) {
             let scrollViewWidth:CGFloat = self.scrollImages.frame.width
             let scrollViewHeight:CGFloat = self.scrollImages.frame.height
-            let images = self.viewData["images"].arrayObject
-            self.cont = (images?.count)!
-            
-                        var numberImage:CGFloat = 0
-            for img in images! {
-                let imgView = UIImageView(frame: CGRectMake(scrollViewWidth * numberImage, 0,scrollViewWidth, scrollViewHeight))
-                let property = JSON(img)
+    
+            if let images = self.viewData["images"].arrayObject {
+                self.cont = images.count
+                var numberImage:CGFloat = 0
+                for img in images {
+                    let imgView = UIImageView(frame: CGRectMake(scrollViewWidth * numberImage, 0,scrollViewWidth, scrollViewHeight))
+                    let property = JSON(img)
                 
-                Utility().showPhoto(imgView, imgPath: property.stringValue, defaultImg: "default_user_photo")
-                self.scrollImages.addSubview(imgView)
-                numberImage++
-                
+                    Utility().showPhoto(imgView, imgPath: property.stringValue, defaultImg: "default_user_photo")
+                    self.scrollImages.addSubview(imgView)
+                    numberImage++
+                }
             }
+            
             self.lbContImage.text = "1 of \(self.cont)"
             self.scrollImages.contentSize = CGSizeMake(self.scrollImages.frame.width * CGFloat(self.cont), self.scrollImages.frame.height)
             self.scrollImages.delegate = self
             self.pageControl.numberOfPages = self.cont
             self.pageControl.currentPage = 0
             
-            //self.lblEstPayment.text   = Property().getField("est_payments")
-            //self.lblYourCredits.text  = Property().getField("your_credits")
             self.lblBedrooms.text     = Property().getField("bedrooms")
             self.lblBathrooms.text    = Property().getField("bathrooms")
             self.lblType.text         = Property().getField("property_type")
@@ -193,7 +187,6 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
             } else {
                 self.lbTypeProperty.text  = "For Sale"
             }
-            //self.lbTypeProperty.text  = Property().getField("rs")
             
             self.lbPrice.text         = Utility().formatCurrency(Property().getField("price"))
             self.lbRemarks.text       = Property().getField("remarks")
@@ -228,10 +221,6 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
         
         cell.textLabel?.text = dat["label"].stringValue
         cell.detailTextLabel?.text = dat["value"].stringValue
-        //let tema  = self.sections[indexPath.row]
-        //cell.imgLogo.tag = indexPath.row
-        //cell.imgLogo.setImage(UIImage(named: tema.url_logo), forState: UIControlState.Normal)
-        
         return cell
     }
     
@@ -261,16 +250,12 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "showImages") {
-//            let view: MoreImageViewController = segue.destinationViewController as! MoreImageViewController
-//                view.viewData  = self.viewData
             let view = segue.destinationViewController as! MoreImageViewController
             let controller = view.popoverPresentationController
             view.viewData  = self.viewData
             if controller != nil {
                 controller?.delegate = self
             }
-
-            
         }
     }
     

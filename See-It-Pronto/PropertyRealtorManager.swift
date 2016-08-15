@@ -46,10 +46,12 @@ class PropertyRealtor {
     func getField(fieldName:String)->String{
         let propertyRealtor   = PropertyRealtor().find()
         var out:String = ""
-        if(propertyRealtor.count >= 1 && propertyRealtor[0] != nil) {
-            let obj  = propertyRealtor[0] as! NSManagedObject
-            if(obj.valueForKey(fieldName) != nil) {
-                out = obj.valueForKey(fieldName) as! String
+        if(propertyRealtor.count >= 1) {
+            if let dataObj:AnyObject = propertyRealtor.objectAtIndex(0)  {
+                let obj  = dataObj as! NSManagedObject
+                if(obj.valueForKey(fieldName) != nil) {
+                    out = obj.valueForKey(fieldName) as! String
+                }
             }
         }
         return out

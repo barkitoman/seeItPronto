@@ -151,8 +151,8 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
     func loadDataToEdit(let response: NSData) {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
-            self.txtFirstName.text = result["last_name"].stringValue
-            self.txtLastName.text = result["first_name"].stringValue
+            self.txtFirstName.text = result["first_name"].stringValue
+            self.txtLastName.text = result["last_name"].stringValue
             if(!result["url_image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.previewProfilePicture, imgPath: result["url_image"].stringValue)
             }

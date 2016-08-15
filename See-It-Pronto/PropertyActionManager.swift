@@ -35,10 +35,12 @@ class PropertyAction {
     func getField(fieldName:String)->String{
         let propertyAction = PropertyAction().find()
         var out:String = ""
-        if(propertyAction.count >= 1 && propertyAction[0] != nil) {
-            let obj  = propertyAction[0] as! NSManagedObject
-            if(obj.valueForKey(fieldName) != nil) {
-                out = obj.valueForKey(fieldName) as! String
+        if(propertyAction.count >= 1) {
+            if let dataObj:AnyObject = propertyAction.objectAtIndex(0)  {
+                let obj  = dataObj as! NSManagedObject
+                if(obj.valueForKey(fieldName) != nil) {
+                    out = obj.valueForKey(fieldName) as! String
+                }
             }
         }
         return out

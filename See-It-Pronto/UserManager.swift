@@ -52,10 +52,12 @@ class User {
     func getField(fieldName:String)->String{
         let user       = User().find()
         var out:String = ""
-        if(user.count >= 1 && user[0] != nil) {
-            let obj  = user[0] as! NSManagedObject
-            if(obj.valueForKey(fieldName) != nil) {
-                out = obj.valueForKey(fieldName) as! String
+        if(user.count >= 1) {
+            if let dataObj:AnyObject = user.objectAtIndex(0)  {
+                let obj  = dataObj as! NSManagedObject
+                if(obj.valueForKey(fieldName) != nil) {
+                    out = obj.valueForKey(fieldName) as! String
+                }
             }
         }
         return out
@@ -105,10 +107,12 @@ class User {
     }
     
     func updateField(field:String,value:String) {
-        let user       = User().find()
-        if(user.count >= 1 && user[0] != nil) {
-            let obj  = user[0] as! NSManagedObject
-            obj.setValue(value as String, forKey: field)
+        let user = User().find()
+        if(user.count >= 1) {
+            if let dataObj:AnyObject = user.objectAtIndex(0)  {
+                let obj  = dataObj as! NSManagedObject
+                obj.setValue(value as String, forKey: field)
+            }
         }
     }
     

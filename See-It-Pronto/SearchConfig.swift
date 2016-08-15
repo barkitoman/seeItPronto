@@ -45,10 +45,12 @@ class SearchConfig {
     func getField(fieldName:String)->String{
         let searchConfig = SearchConfig().find()
         var out:String   = ""
-        if(searchConfig.count >= 1 && searchConfig[0] != nil) {
-            let obj  = searchConfig[0] as! NSManagedObject
-            if(obj.valueForKey(fieldName) != nil) {
-                out = obj.valueForKey(fieldName) as! String
+        if(searchConfig.count >= 1) {
+            if let dataObj:AnyObject = searchConfig.objectAtIndex(0)  {
+                let obj  = dataObj as! NSManagedObject
+                if(obj.valueForKey(fieldName) != nil) {
+                    out = obj.valueForKey(fieldName) as! String
+                }
             }
         }
         return out

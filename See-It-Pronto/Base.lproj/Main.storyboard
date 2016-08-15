@@ -5446,11 +5446,12 @@ $480,000
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Once you select the &quot;Send Request&quot; Button below, a notification will be sent to the agent" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xi6-AT-zqf">
-                                        <rect key="frame" x="20" y="29" width="280" height="31"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xi6-AT-zqf">
+                                        <rect key="frame" x="20" y="21" width="280" height="45"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="31" id="RdQ-z4-MJS"/>
+                                            <constraint firstAttribute="height" constant="45" id="RdQ-z4-MJS"/>
                                         </constraints>
+                                        <string key="text">Once you select the "Send Request" Button below, a notification will be sent to the agent and your card will be charged with $10</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -5465,7 +5466,7 @@ $480,000
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please Confirm" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UC5-Iw-5Ri">
-                                        <rect key="frame" x="102" y="0.0" width="117" height="21"/>
+                                        <rect key="frame" x="102" y="-3" width="117" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -5473,7 +5474,7 @@ $480,000
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="YD3-L5-fFH" firstAttribute="top" secondItem="Xi6-AT-zqf" secondAttribute="bottom" constant="17" id="2nf-bd-Fgb"/>
+                                    <constraint firstItem="YD3-L5-fFH" firstAttribute="top" secondItem="Xi6-AT-zqf" secondAttribute="bottom" constant="11" id="2nf-bd-Fgb"/>
                                     <constraint firstItem="YD3-L5-fFH" firstAttribute="leading" secondItem="Pq8-gP-WJT" secondAttribute="leading" constant="8" id="69Q-h6-4cy"/>
                                     <constraint firstItem="Xi6-AT-zqf" firstAttribute="leading" secondItem="Pq8-gP-WJT" secondAttribute="leading" constant="20" symbolic="YES" id="6ZD-3r-g5O"/>
                                     <constraint firstAttribute="height" constant="110" id="C2O-tG-R8e"/>
@@ -5481,9 +5482,9 @@ $480,000
                                     <constraint firstAttribute="trailing" secondItem="gSa-JH-G6N" secondAttribute="trailing" constant="8" id="i32-34-t6S"/>
                                     <constraint firstAttribute="trailing" secondItem="Xi6-AT-zqf" secondAttribute="trailing" constant="20" symbolic="YES" id="jcv-dE-4bB"/>
                                     <constraint firstItem="gSa-JH-G6N" firstAttribute="centerY" secondItem="YD3-L5-fFH" secondAttribute="centerY" id="mNa-JS-mxs"/>
-                                    <constraint firstItem="UC5-Iw-5Ri" firstAttribute="top" secondItem="Pq8-gP-WJT" secondAttribute="top" id="nOc-L3-w8z"/>
+                                    <constraint firstItem="UC5-Iw-5Ri" firstAttribute="top" secondItem="Pq8-gP-WJT" secondAttribute="top" constant="-3" id="nOc-L3-w8z"/>
                                     <constraint firstItem="UC5-Iw-5Ri" firstAttribute="centerX" secondItem="Pq8-gP-WJT" secondAttribute="centerX" id="oFK-CR-Xzg"/>
-                                    <constraint firstItem="Xi6-AT-zqf" firstAttribute="top" secondItem="UC5-Iw-5Ri" secondAttribute="bottom" constant="8" symbolic="YES" id="tEi-1D-Yxl"/>
+                                    <constraint firstItem="Xi6-AT-zqf" firstAttribute="top" secondItem="UC5-Iw-5Ri" secondAttribute="bottom" constant="3" id="tEi-1D-Yxl"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NgQ-7t-bkv">
@@ -9720,7 +9721,7 @@ $480,000
                                         <color key="textColor" red="0.41568627450000001" green="0.41568627450000001" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This payment method will be used for your monthly subscription fee." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="100" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mgN-qz-oRw">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This payment method will be used for your monthly subscription of $10." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="100" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mgN-qz-oRw">
                                         <rect key="frame" x="8" y="37" width="264" height="29"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
