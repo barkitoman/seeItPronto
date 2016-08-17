@@ -17,7 +17,6 @@ class CurrentShowingViewController: UIViewController {
 
     @IBOutlet weak var btnCall: UIButton!
     @IBOutlet weak var btnStartEndShowing: UIButton!
-    
     @IBOutlet weak var btnInstructions: UIButton!
     
     var manager: OneShotLocationManager?

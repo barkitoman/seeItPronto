@@ -14,37 +14,23 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     
     @IBOutlet weak var lbContImage: UILabel!
     @IBOutlet weak var lbAddress: UILabel!
-    //@IBOutlet weak var lbCity: UILabel!
-    //@IBOutlet weak var lbZipCode: UILabel!
     @IBOutlet weak var lbTypeProperty: UILabel!
     @IBOutlet weak var lbPrice: UILabel!
     @IBOutlet weak var lbRemarks: UILabel!
-    @IBOutlet weak var lbGarage: UILabel!
-    @IBOutlet weak var lbInternet: UILabel!
-    @IBOutlet weak var lbPets: UILabel!
-    @IBOutlet weak var lbPool: UILabel!
-    @IBOutlet weak var lbSpa: UILabel!
     @IBOutlet weak var scrollImages: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
     
-    //@IBOutlet weak var lblEstPayment: UILabel!
-    //@IBOutlet weak var lblYourCredits: UILabel!
     @IBOutlet weak var lblBedrooms: UILabel!
     @IBOutlet weak var lblBathrooms: UILabel!
     @IBOutlet weak var lblType: UILabel!
     @IBOutlet weak var lblSize: UILabel!
     @IBOutlet weak var lblLot: UILabel!
     @IBOutlet weak var lblYearBuilt: UILabel!
-    @IBOutlet weak var lblLocation: UILabel!
-    @IBOutlet weak var lblNeighborhood: UILabel!
-    @IBOutlet weak var lblAddedOn: UILabel!
     
     @IBOutlet weak var btnSeeItNow: UIButton!
     @IBOutlet weak var btnSeeItLater: UIButton!
-    //@IBOutlet weak var btnSearchAgain: UIButton!
     
     var cont = 0
-    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -59,7 +45,6 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     func showHideButtons() {
         let role = User().getField("role")
         if(role == "realtor" || User().getField("id") == "") {
-            //btnSearchAgain.hidden = true
             btnSeeItLater.hidden  = true
             btnSeeItNow.hidden    = true
         }
@@ -173,28 +158,16 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
             self.lblBedrooms.text     = Property().getField("bedrooms")
             self.lblBathrooms.text    = Property().getField("bathrooms")
             self.lblType.text         = Property().getField("property_type")
-            self.lblSize.text         = Property().getField("size")
+            self.lblSize.text         = Property().getField("square_feed")
             self.lblLot.text          = Property().getField("lot")
-            self.lblYearBuilt.text    = Property().getField("year_built")
-            self.lblNeighborhood.text = Property().getField("neighborhood")
-            self.lblAddedOn.text      = Property().getField("added_on")
-            self.lblLocation.text     = Property().getField("location")
-            
             self.lbAddress.text       = Property().getField("address")
-
             if(Property().getField("property_class") == "6") {
-                self.lbTypeProperty.text  = "For Rental"
+                self.lbTypeProperty.text  = "For Rent"
             } else {
                 self.lbTypeProperty.text  = "For Sale"
             }
-            
             self.lbPrice.text         = Utility().formatCurrency(Property().getField("price"))
             self.lbRemarks.text       = Property().getField("remarks")
-            self.lbGarage.text        = Property().getField("garage")
-            self.lbInternet.text      = Property().getField("internet")
-            self.lbPets.text          = Property().getField("petsAllowed")
-            self.lbPool.text          = Property().getField("pool")
-            self.lbSpa.text           = Property().getField("spa")
         }
     }
     

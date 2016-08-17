@@ -112,6 +112,10 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
             Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
         }
     }
+    
+    @IBAction func btnTakePhoto(sender: AnyObject) {
+
+    }
 
     @IBAction func btnChoosePicture(sender: AnyObject) {
         let myPickerController = UIImagePickerController()
