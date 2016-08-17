@@ -207,19 +207,12 @@ class ShowingRequestViewController: UIViewController {
     }
     
     func chatAgent() {
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
-        vc.to = self.viewData["showing"]["buyer_id"].stringValue
-        vc.oponentImageName = self.viewData["buyer"]["url_image"].stringValue
-        self.navigationController?.showViewController(vc, sender: nil)
-    }
-    
-    private func callNumber(phoneNumber:String) {
-        if let phoneCallURL:NSURL = NSURL(string: "tel://\(phoneNumber)") {
-            let application:UIApplication = UIApplication.sharedApplication()
-            if (application.canOpenURL(phoneCallURL)) {
-                application.openURL(phoneCallURL);
-            }
+         dispatch_async(dispatch_get_main_queue()) {
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+            vc.to = self.viewData["showing"]["buyer_id"].stringValue
+            vc.oponentImageName = self.viewData["buyer"]["url_image"].stringValue
+            self.navigationController?.showViewController(vc, sender: nil)
         }
     }
     

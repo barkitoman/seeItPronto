@@ -164,20 +164,13 @@ class CurrentShowingViewController: UIViewController {
     }
     
     @IBAction func btnCallCustomer(sender: AnyObject) {
-        let phoneNumber = self.viewData["buyer"]["phone"].stringValue
-        if(phoneNumber.isEmpty) {
-            Utility().displayAlert(self,title: "Message", message:"The call can't be made at this time, because the customer hasn't confirmed his/her phone number.", performSegue:"")
-        } else {
-            callNumber(phoneNumber)
+        dispatch_async(dispatch_get_main_queue()) {
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+            vc.to = self.viewData["buyer"]["id"].stringValue
+            vc.oponentImageName = self.viewData["buyer"]["url_image"].stringValue
+            self.navigationController?.showViewController(vc, sender: nil)
         }
-    }
-    
-    private func callNumber(phoneNumber:String) {
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
-        vc.to = self.viewData["buyer"]["id"].stringValue
-        vc.oponentImageName = self.viewData["buyer"]["url_image"].stringValue
-        self.navigationController?.showViewController(vc, sender: nil)
     }
     
     @IBAction func btnStartEndShowing(sender: AnyObject) {
