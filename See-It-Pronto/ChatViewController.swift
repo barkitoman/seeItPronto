@@ -10,6 +10,9 @@ import UIKit
 
 class ChatViewController: UIViewController, LGChatControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
 
+    
+    @IBOutlet weak var chatContent: UIScrollView!
+    
     @IBOutlet weak var txtMessage: UITextField!
     @IBOutlet weak var btnSend: UIButton!
     var animateDistance: CGFloat!
@@ -86,11 +89,9 @@ class ChatViewController: UIViewController, LGChatControllerDelegate, UITextFiel
     
     // Animate message field to accomodate for keyboard
     func animateViewMoving( up: Bool, move: CGFloat ) {
-        UIView.beginAnimations( "animateView", context: nil )
-        UIView.setAnimationBeginsFromCurrentState( true )
-        UIView.setAnimationDuration( 0.3 )
-        self.view.frame = CGRectOffset( self.view.frame, 0, up ? ( 0 - move ) : move )
-        UIView.commitAnimations()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.chatContent.setContentOffset(CGPointMake(0,  up ? ( 0 - move ) : move ), animated: true)
+        }
     }
     
     // Handler for tap outside keyboard
@@ -100,18 +101,14 @@ class ChatViewController: UIViewController, LGChatControllerDelegate, UITextFiel
     
     // Handler to put field back when done editing
     func keyboardWillHide( notification: NSNotification ) {
-        var info = notification.userInfo!
-        let keyboard: CGRect = ( info[UIKeyboardFrameEndUserInfoKey] as! NSValue ).CGRectValue()
-        
-        animateViewMoving( false, move: keyboard.size.height )
+        dispatch_async(dispatch_get_main_queue()) {
+            self.chatContent.setContentOffset(CGPointMake(0, 0), animated: true)
+        }
     }
     
     // Handler to keep field visible when editing
     func keyboardWillShow( notification: NSNotification ) {
-        var info = notification.userInfo!
-        let keyboard: CGRect = ( info[UIKeyboardFrameEndUserInfoKey] as! NSValue ).CGRectValue()
-        
-        animateViewMoving( true, move: keyboard.size.height )
+        self.chatContent.setContentOffset(CGPointMake(0, 250), animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
