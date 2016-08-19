@@ -73,7 +73,7 @@ class ChatViewController: UIViewController, LGChatControllerDelegate, UITextFiel
         self.txtMessage.layer.borderWidth = 1.0
         self.txtMessage.delegate = self
         self.txtMessage.attributedPlaceholder = NSAttributedString(
-            string: "Enter message here.",
+            string: "  Enter message here.",
             attributes: [
                 NSForegroundColorAttributeName: UIColor( red: 0, green: 0, blue: 0, alpha: 0.40 )
             ]
@@ -108,7 +108,7 @@ class ChatViewController: UIViewController, LGChatControllerDelegate, UITextFiel
     
     // Handler to keep field visible when editing
     func keyboardWillShow( notification: NSNotification ) {
-        self.chatContent.setContentOffset(CGPointMake(0, 250), animated: true)
+        self.chatContent.setContentOffset(CGPointMake(0, 270), animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
