@@ -20,6 +20,7 @@ class ShowingRequestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        BProgressHUD.showLoadingViewWithMessage("Loading")
         self.findShowing()
     }
     
@@ -156,6 +157,7 @@ class ShowingRequestViewController: UIViewController {
             if(!result["property"]["image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.propertyPhoto, imgPath: result["property"]["image"].stringValue)
             }
+            BProgressHUD.dismissHUD(3)
             self.statusMessage()
         }
     }
@@ -182,13 +184,15 @@ class ShowingRequestViewController: UIViewController {
         }
         
         if(!message.isEmpty) {
-            let alertController = UIAlertController(title:"Message", message: message, preferredStyle: .Alert)
-            let homeAction = UIAlertAction(title: "Back", style: UIAlertActionStyle.Default) {
-                UIAlertAction in
-                self.navigationController?.popViewControllerAnimated(true)
+            dispatch_async(dispatch_get_main_queue()) {
+                let alertController = UIAlertController(title:"Message", message: message, preferredStyle: .Alert)
+                let homeAction = UIAlertAction(title: "Back", style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+                alertController.addAction(homeAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
             }
-            alertController.addAction(homeAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
     

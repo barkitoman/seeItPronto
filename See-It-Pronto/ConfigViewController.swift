@@ -42,40 +42,36 @@ class ConfigViewController: UIViewController {
     }
     
     @IBAction func gpsEnabled(sender: AnyObject) {
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController (title: "Title", message: "Go to Settings?", preferredStyle: .Alert)
         
-        let alertController = UIAlertController (title: "Title", message: "Go to Settings?", preferredStyle: .Alert)
-        
-        let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (_) -> Void in
-            //let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
-            
+            let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (_) -> Void in
+                //let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
                 UIApplication.sharedApplication().openURL(NSURL(string:"prefs:root=LOCATION_SERVICES")!)
                 //UIApplication.sharedApplication().openURL(url)
-            
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+            alertController.addAction(settingsAction)
+            alertController.addAction(cancelAction)
+            self.presentViewController(alertController, animated: true, completion: nil);
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
-        alertController.addAction(settingsAction)
-        alertController.addAction(cancelAction)
-        presentViewController(alertController, animated: true, completion: nil);
-        
-        
-        
     }
     
     @IBAction func pushEnabled(sender: AnyObject) {
-        let alertController = UIAlertController (title: "Title", message: "Go to Settings?", preferredStyle: .Alert)
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController (title: "Title", message: "Go to Settings?", preferredStyle: .Alert)
+            let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (_) -> Void in
+                //let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
+                UIApplication.sharedApplication().openURL(NSURL(string:"prefs:root=NOTIFICATIONS_ID")!)
+                //UIApplication.sharedApplication().openURL(url)
+            }
         
-        let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (_) -> Void in
-            //let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
-            UIApplication.sharedApplication().openURL(NSURL(string:"prefs:root=NOTIFICATIONS_ID")!)
-            //UIApplication.sharedApplication().openURL(url)
-            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+            alertController.addAction(settingsAction)
+            alertController.addAction(cancelAction)
+        
+            self.presentViewController(alertController, animated: true, completion: nil);
         }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
-        alertController.addAction(settingsAction)
-        alertController.addAction(cancelAction)
-        
-        presentViewController(alertController, animated: true, completion: nil);
     }
     
 }

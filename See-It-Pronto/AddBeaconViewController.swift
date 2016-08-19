@@ -18,6 +18,7 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     var propertyId:String = ""
     var beaconId = ""
     var animateDistance: CGFloat!
+    var isTakenPhoto:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,21 +115,51 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     }
     
     @IBAction func btnTakePhoto(sender: AnyObject) {
-
+        self.isTakenPhoto = true
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
+            if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
+                let imagePicker = UIImagePickerController()
+                imagePicker.delegate = self
+                imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
+                imagePicker.allowsEditing = false
+                self.presentViewController(imagePicker, animated: true, completion: nil)
+            } else {
+                Utility().displayAlert(self, title: "Rear camera doesn't exist", message:  "Application cannot access the camera.", performSegue: "")
+            }
+        } else {
+            Utility().displayAlert(self, title: "Camera inaccessable", message: "Application cannot access the camera.", performSegue: "")
+        }
     }
 
     @IBAction func btnChoosePicture(sender: AnyObject) {
-        let myPickerController = UIImagePickerController()
-        myPickerController.delegate = self;
-        myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        self.presentViewController(myPickerController, animated: true, completion: nil)
+        self.isTakenPhoto = false
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
+            imagePicker.allowsEditing = true
+            self.presentViewController(imagePicker, animated: true, completion: nil)
+        }
     }
     
     //display image after select
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        self.previewImage.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         self.haveImage = true
-        self.dismissViewControllerAnimated(true, completion: nil)
+        var takedPhoto = image
+        takedPhoto = takedPhoto.correctlyOrientedImage()
+        self.previewImage.image = takedPhoto
+        if(self.isTakenPhoto == true) {
+            self.saveTakenPhoto()
+        }
+        self.dismissViewControllerAnimated(true, completion: nil);
+    }
+    
+    func saveTakenPhoto() {
+        var takedPhoto = previewImage.image!
+        takedPhoto = takedPhoto.correctlyOrientedImage()
+        let imageData = UIImageJPEGRepresentation(takedPhoto, 0.6)
+        let compressedJPGImage = UIImage(data: imageData!)
+        UIImageWriteToSavedPhotosAlbum(compressedJPGImage!, nil, nil, nil)
     }
     
     //upload photo to server

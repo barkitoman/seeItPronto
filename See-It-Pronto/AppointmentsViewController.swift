@@ -214,28 +214,30 @@ class AppointmentsViewController: UIViewController {
     }
     
     func cancelShowingRequest(indexPath:NSIndexPath){
-        let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to cancel this showing request?", preferredStyle: .Alert)
-        let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to cancel this showing request?", preferredStyle: .Alert)
+            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
             
-            var appoiment = JSON(self.appoiments[indexPath.row])
-            let url = AppConfig.APP_URL+"/showings/"+appoiment["id"].stringValue
-            let params = self.cancelParams(appoiment)
-            Request().put(url,params: params,controller:self, successHandler: {(response) in })
+                var appoiment = JSON(self.appoiments[indexPath.row])
+                let url = AppConfig.APP_URL+"/showings/"+appoiment["id"].stringValue
+                let params = self.cancelParams(appoiment)
+                Request().put(url,params: params,controller:self, successHandler: {(response) in })
             
-            let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! AppointmentsTableViewCell
-            cell.lblState.text = "Cancelled"
-            appoiment["showing_status"].int = 4
-            self.appoiments[indexPath.row] = appoiment.object
-            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            self.tableView.setEditing(false, animated: true)
+                let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! AppointmentsTableViewCell
+                cell.lblState.text = "Cancelled"
+                appoiment["showing_status"].int = 4
+                self.appoiments[indexPath.row] = appoiment.object
+                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                self.tableView.setEditing(false, animated: true)
+            }
+            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+            }
+            alertController.addAction(yesAction)
+            alertController.addAction(noAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
-        let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-        }
-        alertController.addAction(yesAction)
-        alertController.addAction(noAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func cancelParams(appoiment:JSON)->String{

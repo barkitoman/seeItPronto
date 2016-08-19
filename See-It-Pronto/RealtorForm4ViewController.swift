@@ -145,31 +145,34 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     @IBAction func cancelSubscription(sender: AnyObject) {
         if(btnSuscriptionAction == "CANCEL") {
-            let cancelMsg = "If you cancel the subscription you will have limited access, and you will not be listed for customers to schedule appointments"
-            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to cancel your subscription?\n \(cancelMsg)", preferredStyle: .Alert)
-            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
-                UIAlertAction in
-                self.cancelSubscription()
+            dispatch_async(dispatch_get_main_queue()) {
+                let cancelMsg = "If you cancel the subscription you will have limited access, and you will not be listed for customers to schedule appointments"
+                let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to cancel your subscription?\n \(cancelMsg)", preferredStyle: .Alert)
+                let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                    self.cancelSubscription()
+                }
+                let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                }
+                alertController.addAction(yesAction)
+                alertController.addAction(noAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
             }
-            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
-                UIAlertAction in
-            }
-            alertController.addAction(yesAction)
-            alertController.addAction(noAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
-            
         } else if(btnSuscriptionAction == "ACTIVATE") {
-            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to activate your subscription", preferredStyle: .Alert)
-            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
-                UIAlertAction in
-                self.activateSubscription()
+            dispatch_async(dispatch_get_main_queue()) {
+                let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to activate your subscription", preferredStyle: .Alert)
+                let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                    self.activateSubscription()
+                }
+                let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                }
+                alertController.addAction(yesAction)
+                alertController.addAction(noAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
             }
-            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
-                UIAlertAction in
-            }
-            alertController.addAction(yesAction)
-            alertController.addAction(noAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
         } else {
             Utility().displayAlert(self, title: "Message", message: "This action is not available at this time", performSegue: "")
         }

@@ -112,23 +112,25 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
     }
     
     func cancelShowingRequest(indexPath:NSIndexPath){
-        let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to delete this property listing?", preferredStyle: .Alert)
-        let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to delete this property listing?", preferredStyle: .Alert)
+            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
             
-            var listing = JSON(self.myListings[indexPath.row])
-            self.myListings.removeObjectAtIndex(indexPath.row)
-            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-            let url = AppConfig.APP_URL+"/realtor_properties/"+listing["id"].stringValue
-            Request().delete(url,params:"", successHandler: {(response) in })
-        }
-        let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
+                var listing = JSON(self.myListings[indexPath.row])
+                self.myListings.removeObjectAtIndex(indexPath.row)
+                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                let url = AppConfig.APP_URL+"/realtor_properties/"+listing["id"].stringValue
+                Request().delete(url,params:"", successHandler: {(response) in })
+            }
+            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
             
+            }
+            alertController.addAction(yesAction)
+            alertController.addAction(noAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
-        alertController.addAction(yesAction)
-        alertController.addAction(noAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func showCell(cell:MyListingsRealtorTableViewCell, property:JSON,indexPath: NSIndexPath){

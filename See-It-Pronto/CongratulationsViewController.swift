@@ -187,42 +187,46 @@ class CongratulationsViewController: UIViewController {
     }
     
     func noResponse() {
-        let alertController = UIAlertController(title:"Message", message: "The agent has not responded to the request", preferredStyle: .Alert)
-        let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            Utility().goHome(self)
-        }
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title:"Message", message: "The agent has not responded to the request", preferredStyle: .Alert)
+            let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                Utility().goHome(self)
+            }
         
-        let cancelAction = UIAlertAction(title: "Cancel Request", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            self.cancelRequest()
-        }
+            let cancelAction = UIAlertAction(title: "Cancel Request", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                self.cancelRequest()
+            }
         
-        let waitAction = UIAlertAction(title: "Wait", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            self.congratutationSecondsCount = AppConfig.SHOWING_WAIT_SECONDS
-            self.startCongratulationTimer()
-        }
+            let waitAction = UIAlertAction(title: "Wait", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                self.congratutationSecondsCount = AppConfig.SHOWING_WAIT_SECONDS
+                self.startCongratulationTimer()
+            }
         
-        alertController.addAction(homeAction)
-        alertController.addAction(cancelAction)
-        alertController.addAction(waitAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
+            alertController.addAction(homeAction)
+            alertController.addAction(cancelAction)
+            alertController.addAction(waitAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
     func requestRejected() {
-        let alertController = UIAlertController(title:"Message", message: "The agent is not available at this time. Please choose another", preferredStyle: .Alert)
-        let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            Utility().goHome(self)
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title:"Message", message: "The agent is not available at this time. Please choose another", preferredStyle: .Alert)
+            let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                Utility().goHome(self)
+            }
+            let selectAgentAction = UIAlertAction(title: "Select another", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                self.gotoSelectAnotherAgent()
+            }
+            alertController.addAction(homeAction)
+            alertController.addAction(selectAgentAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
-        let selectAgentAction = UIAlertAction(title: "Select another", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            self.gotoSelectAnotherAgent()
-        }
-        alertController.addAction(homeAction)
-        alertController.addAction(selectAgentAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func gotoSelectAnotherAgent() {

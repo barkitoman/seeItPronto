@@ -101,33 +101,37 @@ class CurrentShowingViewController: UIViewController {
     func showingPendingMessage(showingId:String) {
         let role = User().getField("role")
         if(role == "realtor") {
-            let alertController = UIAlertController(title:"Message", message: "This showing request is pending to be approved", preferredStyle: .Alert)
-            let goAction = UIAlertAction(title: "View Request", style: UIAlertActionStyle.Default) {
-                UIAlertAction in
+            dispatch_async(dispatch_get_main_queue()) {
+                let alertController = UIAlertController(title:"Message", message: "This showing request is pending to be approved", preferredStyle: .Alert)
+                let goAction = UIAlertAction(title: "View Request", style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
                 
-                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                let vc : ShowingRequestViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ShowingRequestViewController") as! ShowingRequestViewController
-                vc.showingId = showingId
-                self.navigationController?.showViewController(vc, sender: nil)
+                    let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                    let vc : ShowingRequestViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ShowingRequestViewController") as! ShowingRequestViewController
+                    vc.showingId = showingId
+                    self.navigationController?.showViewController(vc, sender: nil)
+                }
+                let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                    Utility().goHome(self)
+                }
+                alertController.addAction(goAction)
+                alertController.addAction(homeAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
             }
-            let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
-                UIAlertAction in
-                Utility().goHome(self)
-            }
-            alertController.addAction(goAction)
-            alertController.addAction(homeAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
     
     func showingNotExistMessage() {
-        let alertController = UIAlertController(title:"Message", message: "You don't have a current showing", preferredStyle: .Alert)
-        let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            Utility().goHome(self)
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title:"Message", message: "You don't have a current showing", preferredStyle: .Alert)
+            let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                Utility().goHome(self)
+            }
+            alertController.addAction(homeAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
-        alertController.addAction(homeAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     @IBAction func btnGetDirections(sender: AnyObject) {

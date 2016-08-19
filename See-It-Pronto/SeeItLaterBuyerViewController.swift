@@ -213,25 +213,27 @@ class SeeItLaterBuyerViewController: UIViewController {
     }
     
     func cancelShowingRequest(indexPath:NSIndexPath){
-        let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to cancel this showing request?", preferredStyle: .Alert)
-        let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to cancel this showing request?", preferredStyle: .Alert)
+            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
             
-            let showing = JSON(self.myListings[indexPath.row])
-            self.myListings.removeObjectAtIndex(indexPath.row)
-            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-            let url = AppConfig.APP_URL+"/showings/"+showing["id"].stringValue
-            let params = self.cancelParams(showing)
-            Request().put(url,params: params, controller:self,successHandler: {(response) in })
-            self.removeAppleCalendarEvent(showing["buyer_calendar_id"].stringValue)
-        }
-        let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
+                let showing = JSON(self.myListings[indexPath.row])
+                self.myListings.removeObjectAtIndex(indexPath.row)
+                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                let url = AppConfig.APP_URL+"/showings/"+showing["id"].stringValue
+                let params = self.cancelParams(showing)
+                Request().put(url,params: params, controller:self,successHandler: {(response) in })
+                self.removeAppleCalendarEvent(showing["buyer_calendar_id"].stringValue)
+            }
+            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
             
+            }
+            alertController.addAction(yesAction)
+            alertController.addAction(noAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
-        alertController.addAction(yesAction)
-        alertController.addAction(noAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func cancelParams(showing:JSON)->String{

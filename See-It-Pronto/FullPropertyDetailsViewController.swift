@@ -122,13 +122,15 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     }
     
     func propertyNoExistMessage() {
-        let alertController = UIAlertController(title:"Message", message: "The property is not available at this time", preferredStyle: .Alert)
-        let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            Utility().goHome(self)
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title:"Message", message: "The property is not available at this time", preferredStyle: .Alert)
+            let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                Utility().goHome(self)
+            }
+            alertController.addAction(homeAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
-        alertController.addAction(homeAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func showPropertydetails() {
