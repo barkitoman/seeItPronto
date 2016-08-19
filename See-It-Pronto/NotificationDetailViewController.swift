@@ -53,6 +53,9 @@ class NotificationDetailViewController: UIViewController {
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
             self.viewData = result
+            if(result["property"]["id"].stringValue.isEmpty) {
+                self.propertyNoExistMessage()
+            }
             self.address.text  = result["property"]["address"].stringValue
             self.lblPrice.text = Utility().formatCurrency(result["property"]["price"].stringValue)
             var description = ""
@@ -69,6 +72,18 @@ class NotificationDetailViewController: UIViewController {
             if(!result["property"]["image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.propertyImage, imgPath: result["property"]["image"].stringValue)
             }
+        }
+    }
+    
+    func propertyNoExistMessage() {
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title:"Message", message: "The details of this property are not available at this time", preferredStyle: .Alert)
+            let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                Utility().goHome(self)
+            }
+            alertController.addAction(homeAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
 }

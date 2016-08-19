@@ -56,7 +56,7 @@ class FeedBack3ViewController: UIViewController {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             dispatch_async(dispatch_get_main_queue()) {
-                let alertController = UIAlertController(title:"Success", message: "The data have been saved correctly", preferredStyle: .Alert)
+                let alertController = UIAlertController(title:"Success", message: "The data has been saved successfully.", preferredStyle: .Alert)
                 let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
                     UIAlertAction in
                     Utility().goHome(self)

@@ -77,10 +77,10 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
                 PropertyAction().saveOne(propertyActionData)
                 self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
             } else {
-                Utility().displayAlert(self, title: "Message", message: " \"See it pronto\" is not available for this property.", performSegue: "")
+                Utility().displayAlert(self, title: "Message", message: " \"See It Pronto\" is not available for this property.", performSegue: "")
             }
         } else {
-            Utility().displayAlert(self, title: "Message", message: " \"See it pronto\" is only available for nearby properties.", performSegue: "")
+            Utility().displayAlert(self, title: "Message", message: " \"See It Pronto\" is only available for nearby properties.", performSegue: "")
         }
     }
     

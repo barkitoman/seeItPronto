@@ -202,7 +202,7 @@ class PropertyViewedViewController: UIViewController {
                 BProgressHUD.dismissHUD(4)
             }else {
                 BProgressHUD.dismissHUD(0)
-                let msg = "¡No properties found!"
+                let msg = "No properties found!"
                 Utility().displayAlert(self,title: "Notification", message:msg, performSegue:"")
             }
         }

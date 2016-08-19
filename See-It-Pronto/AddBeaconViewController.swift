@@ -104,7 +104,7 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
             dispatch_async(dispatch_get_main_queue()) {
                 self.uploadImage()
             }
-            Utility().displayAlert(self,title: "Success", message:"The data have been saved correctly", performSegue:"")
+            Utility().displayAlert(self,title: "Success", message:"The data has been saved successfully.", performSegue:"")
         } else {
             var msg = "Error saving, please try later"
             if(result["msg"].stringValue != "") {

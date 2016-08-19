@@ -145,7 +145,7 @@ class ListRealtorsViewController: UIViewController,UIWebViewDelegate {
                 BProgressHUD.dismissHUD(5)
             }else {
                 BProgressHUD.dismissHUD(0)
-                let msg = "¡Currently no available agents!"
+                let msg = "Currently no available agents!"
                 Utility().displayAlert(self,title: "Notification", message:msg, performSegue:"")
             }
             

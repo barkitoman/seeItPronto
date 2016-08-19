@@ -200,11 +200,11 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
         }
     }
     
-    var pickSeletion: String = "unfiltered"
+    var pickSeletion: String = "Unfiltered"
     
     @IBAction func filter(sender: AnyObject) {
         let pickerView = CustomPickerDialog.init()
-        var arrayDataSource:[String] = ["unfiltered","Higher Price", "Low price",  "Greater nº bedrooms" ," Smaller nº bedrooms","Greater nº bathrooms" ," Smaller nº bathrooms","More sq.ft." ,"less sq.ft."]
+        var arrayDataSource:[String] = ["Unfiltered","Higher Price", "Lower Price",  "Greater nº of Bedrooms" ,"Fewer nº of Bedrooms","Greater nº of Bathrooms" ,"Fewer nº of Bathrooms","More Sq.Ft." ,"Less Sq.Ft."]
         let array_name:[String] = ["-", "price","price", "bedrooms", "bedrooms", "bathrooms", "bathrooms", "square_feed", "square_feed"]
         let array_asc_desc:[String] = ["-","desc","asc","desc","asc","desc", "asc","desc","asc"]
         
@@ -218,7 +218,7 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
             }
             self.pickSeletion = result
             var url:String = ""
-            if result == "unfiltered"
+            if result == "Unfiltered"
             {
                 url = AppConfig.APP_URL+"/property_list/\(User().getField("id"))"
             }else

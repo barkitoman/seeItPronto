@@ -60,7 +60,7 @@ class CreateBeaconViewController: UIViewController,UITextFieldDelegate, UITextVi
     func afterPost(let response: NSData) {
         let result = JSON(data: response)
         if(result["result"].bool == true ) {
-            Utility().displayAlert(self,title: "Success", message:"The data have been saved correctly", performSegue:"")
+            Utility().displayAlert(self,title: "Success", message:"The data has been saved successfully.", performSegue:"")
         } else {
             var msg = "Error saving, please try later"
             if(result["msg"].stringValue != "") {

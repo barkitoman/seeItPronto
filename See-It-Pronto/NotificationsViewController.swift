@@ -140,7 +140,7 @@ class NotificationsViewController: UIViewController {
                 BProgressHUD.dismissHUD(0)
             }else{
                 BProgressHUD.dismissHUD(0)
-                let msg = "¡No notifications found!"
+                let msg = "No notifications found!"
                 Utility().displayAlert(self,title: "Notification", message:msg, performSegue:"")
             }
         }

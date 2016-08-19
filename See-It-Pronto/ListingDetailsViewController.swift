@@ -82,19 +82,17 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
     }
     
     @IBAction func btnSeletion(sender: AnyObject) {
-        
         let pickerView = CustomPickerDialog.init()
         let arrayDataSource:[String] = ["Supra","iBox","Combo","Other"]
         pickerView.setDataSource(arrayDataSource)
         pickerView.selectValue(self.lbSelection.text!)
         
-        pickerView.showDialog("Select", doneButtonTitle: "done", cancelButtonTitle: "cancel") { (result) -> Void in
+        pickerView.showDialog("Select", doneButtonTitle: "Done", cancelButtonTitle: "Cancel") { (result) -> Void in
             //self.lblResult.text = result
             self.lbSelection.text! = result
             
         }
     }
-    
     
     func updateData() {
         var propertyClass = self.viewData["property_class"].stringValue
@@ -125,7 +123,7 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
         let result = JSON(data: response)
         if(result["result"].bool == true ) {
             self.viewData = result
-            Utility().displayAlert(self,title: "Success", message:"The data have been saved correctly", performSegue:"")
+            Utility().displayAlert(self,title: "Success", message:"The data has been saved successfully.", performSegue:"")
         } else {
             var msg = "Error saving, please try later"
             if(result["msg"].stringValue != "") {
