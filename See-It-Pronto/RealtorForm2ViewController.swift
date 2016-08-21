@@ -143,7 +143,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
         params = params+"&broker_email=\(self.txtBrokerMail.text!)"
         //params = params+"&active_zip_code3=\(self.zipCode3.text!)"
         params = params+"&role=realtor&brokerage="+txtBrokerage.text!+"&first_name="+txtFirstName.text!
-        params = params+"&last_name="+txtLastName.text!+"&lisence="+txtLisence.text!+"&broker_name="+txtBankAcct.text!
+        params = params+"&last_name="+txtLastName.text!+"&lisence="+txtLisence.text!+"&broker_name="+txtBankAcct.text!+"&broker_email="+self.txtBrokerMail.text!
         if(!self.viewData["realtor_id"].stringValue.isEmpty){
             params = params+"&realtor_id="+self.viewData["realtor_id"].stringValue
         }

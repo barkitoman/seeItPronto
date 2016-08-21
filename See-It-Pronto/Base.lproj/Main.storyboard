@@ -6700,6 +6700,7 @@ $480,000
                     <connections>
                         <outlet property="previewProfilePicture" destination="iUA-2F-wqe" id="GZv-mp-Mky"/>
                         <outlet property="txtBankAcct" destination="fdp-ah-u4X" id="aS5-aG-b7r"/>
+                        <outlet property="txtBrokerMail" destination="7ZT-ce-vaS" id="Vs5-Fj-r9B"/>
                         <outlet property="txtBrokerage" destination="7As-gb-MwV" id="BO2-Z5-MtO"/>
                         <outlet property="txtFirstName" destination="po4-Hz-8Bc" id="VjF-li-1nY"/>
                         <outlet property="txtLastName" destination="Yup-Wt-j3A" id="Pjc-tC-78w"/>
