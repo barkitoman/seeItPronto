@@ -39,25 +39,6 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         super.didReceiveMemoryWarning()
     }
     
-//    @IBAction func editShowingRate(sender: AnyObject) {
-//        
-//        let pickerView = CustomPickerDialog.init()
-//        var arrayDataSource:[String] = []
-//        for i in 0...50 {
-//            arrayDataSource.append(String(i))
-//        }
-//        pickerView.setDataSource(arrayDataSource)
-//        pickerView.selectValue(self.numberShowingRate)
-//        
-//        pickerView.showDialog("Select Showing Rate", doneButtonTitle: "Done", cancelButtonTitle: "Cancel") { (result) -> Void in
-//            //self.lblResult.text = result
-//            let showingRate = result
-//            self.numberShowingRate = result
-//            self.showRates(String(showingRate), traveRange: "")
-//        }
-//        
-//    }
-    
     @IBAction func editTravelRate(sender: AnyObject) {
         
         let pickerView = CustomPickerDialog.init()
@@ -69,7 +50,6 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         pickerView.selectValue(self.numberTravelRange)
         
         pickerView.showDialog("Select Travel Range", doneButtonTitle: "Done", cancelButtonTitle: "Cancel") { (result) -> Void in
-            //self.lblResult.text = result
             let travelRange = result
             self.numberTravelRange = result
             self.showRates("", traveRange: String(travelRange))
@@ -87,7 +67,6 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     func save() {
         //create params
-        //let showingRate = self.numberShowingRate
         let travelRate  = self.numberTravelRange
         let params = "id="+self.viewData["id"].stringValue+"&realtor_id="+self.viewData["realtor_id"].stringValue+"&travel_range="+travelRate
         let url = AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue
@@ -108,16 +87,6 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         }
     }
     
-    /*@IBAction func editShowingRate(sender: AnyObject) {
-        let showingRate = Int(roundf(slShowingRate.value))
-        self.showRates(String(showingRate), traveRange: "")
-    }
-    
-    @IBAction func editTravelRate(sender: AnyObject) {
-        let travelRange = Int(roundf(slTravelRate.value))
-        self.showRates("", traveRange: String(travelRange))
-    }*/
-    
     func findUserInfo() {
         let userId = User().getField("id")
         if(!userId.isEmpty) {
@@ -133,21 +102,16 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
             self.viewData = result
             if(!result["showing_rate"].stringValue.isEmpty) {
                 self.numberShowingRate = result["showing_rate"].stringValue
-                //self.slShowingRate.value = Float(result["showing_rate"].stringValue)!
                 self.showRates(result["showing_rate"].stringValue, traveRange: "")
             }
             if(!result["travel_range"].stringValue.isEmpty) {
                 self.numberTravelRange = result["travel_range"].stringValue
-                //self.slTravelRate.value = Float(result["travel_range"].stringValue)!
                 self.showRates("", traveRange: result["travel_range"].stringValue)
             }
         }
     }
     
     func showRates(showingRate:String,traveRange:String) {
-//        if(!showingRate.isEmpty){
-//            self.lblShowingRate.text = "Your Rate: $\(showingRate) per showing"
-//        }
         if(!traveRange.isEmpty){
             self.lblTravelRate.text  = "You are willing to travel up to \(traveRange) miles to show a property"
         }

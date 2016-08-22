@@ -172,13 +172,17 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
     @IBAction func openBeaconView(sender:UIButton) {
         let listing = JSON(self.myListings[sender.tag])
         self.viewData = listing
-        self.performSegueWithIdentifier("MyListingToAddBeacon", sender: self)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.performSegueWithIdentifier("MyListingToAddBeacon", sender: self)
+        }
     }
     
     @IBAction func openEditView(sender:UIButton) {
         let listing = JSON(self.myListings[sender.tag])
         self.viewData = listing
-        self.performSegueWithIdentifier("MyListingToEditListng", sender: self)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.performSegueWithIdentifier("MyListingToEditListng", sender: self)
+        }
     }
     
     @IBAction func turnBeaconOnOff(sender:UISwitch) {

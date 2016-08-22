@@ -97,7 +97,9 @@ class NotificationsViewController: UIViewController {
                 Utility().displayAlert(self,title: title, message:notification["description"].stringValue, performSegue:"showFeedback1")
             } else {
                 if(notification["feedback"].stringValue == "1") {
-                    self.performSegueWithIdentifier("NotificationDetail", sender: self)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.performSegueWithIdentifier("NotificationDetail", sender: self)
+                    }
                 } else {
                     Utility().displayAlert(self,title: title, message:notification["description"].stringValue, performSegue:"NotificationDetail")
                 }

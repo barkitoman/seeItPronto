@@ -44,8 +44,9 @@ class ViewController: UIViewController {
         if self.timer != nil { self.stopInterval()}
         login = automaticLogin()
         if (login == false) {
-            self.performSegueWithIdentifier("showMap", sender: self)
-            //self.performSegueWithIdentifier("ShowLogin", sender: self)
+            dispatch_async(dispatch_get_main_queue()) {
+                self.performSegueWithIdentifier("showMap", sender: self)
+            }
         }
     }
     
@@ -56,14 +57,18 @@ class ViewController: UIViewController {
         var out = false
         if(!userId.isEmpty && !role.isEmpty && !accessToken.isEmpty) {
             if(role == "realtor") {
-                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                let viewController : ReadyToWorkViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ReadyToWorkViewController") as! ReadyToWorkViewController
-                self.navigationController?.showViewController(viewController, sender: nil)
+                dispatch_async(dispatch_get_main_queue()) {
+                    let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                    let viewController : ReadyToWorkViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ReadyToWorkViewController") as! ReadyToWorkViewController
+                    self.navigationController?.showViewController(viewController, sender: nil)
+                }
                 out = true
             } else if (role == "buyer") {
-                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                let viewController : BuyerHomeViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as! BuyerHomeViewController
-                self.navigationController?.showViewController(viewController, sender: nil)
+                dispatch_async(dispatch_get_main_queue()) {
+                    let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                    let viewController : BuyerHomeViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as! BuyerHomeViewController
+                    self.navigationController?.showViewController(viewController, sender: nil)
+                }
                 out = true
             }
         }

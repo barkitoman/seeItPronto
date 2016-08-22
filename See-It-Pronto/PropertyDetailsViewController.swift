@@ -66,7 +66,9 @@ class PropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
         if(self.viewData["user"]["current_zip_code"].stringValue == self.viewData["zipcode"].stringValue) {
             let propertyActionData: JSON =  ["type":"see_it_pronto"]
             PropertyAction().saveOne(propertyActionData)
-            self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+            dispatch_async(dispatch_get_main_queue()) {
+                self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+            }
         } else {
             Utility().displayAlert(self, title: "Message", message: " \"See it pronto” is only available for nearby properties.", performSegue: "")
         }
@@ -75,7 +77,9 @@ class PropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
     @IBAction func btnSeeItLater(sender: AnyObject) {
         let propertyActionData: JSON =  ["type":"see_it_later"]
         PropertyAction().saveOne(propertyActionData)
-        self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+        }
     }
     
     func findPropertyDetails(){

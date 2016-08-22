@@ -176,12 +176,14 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
         let realtor = JSON(self.realtors[sender.tag])
         PropertyRealtor().saveOne(realtor)
         let propertyTypeAction = PropertyAction().getField("type")
-        if(propertyTypeAction == "see_it_later") {
-            //open view for see it later process
-            self.performSegueWithIdentifier("seeItNowConfirmation", sender: self)
-        } else {
-            //open view for see it pronto process
-            self.performSegueWithIdentifier("SeeItNowAgentConfirmation", sender: self)
+        dispatch_async(dispatch_get_main_queue()) {
+            if(propertyTypeAction == "see_it_later") {
+                //open view for see it later process
+                self.performSegueWithIdentifier("seeItNowConfirmation", sender: self)
+            } else {
+                //open view for see it pronto process
+                self.performSegueWithIdentifier("SeeItNowAgentConfirmation", sender: self)
+            }
         }
     }
 

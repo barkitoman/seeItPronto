@@ -42,7 +42,9 @@ class RealtorDashboardViewController: UIViewController {
     }
     
     @IBAction func btnNext(sender: AnyObject) {
-        self.performSegueWithIdentifier("AgentDashBoardMyListings", sender: self)  
+        dispatch_async(dispatch_get_main_queue()) {
+            self.performSegueWithIdentifier("AgentDashBoardMyListings", sender: self)
+        }
     }
     
     @IBAction func btnBuyers(sender: AnyObject) {
@@ -58,7 +60,9 @@ class RealtorDashboardViewController: UIViewController {
     }
     
     @IBAction func btnListing(sender: AnyObject) {
-        self.performSegueWithIdentifier("AgentDashBoardMyListings", sender: self)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.performSegueWithIdentifier("AgentDashBoardMyListings", sender: self)
+        }
     }
     
     @IBAction func btnFeedBack(sender: AnyObject) {

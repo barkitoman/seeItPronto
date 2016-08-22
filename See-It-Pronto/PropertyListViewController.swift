@@ -21,10 +21,10 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
     var manager: OneShotLocationManager?
     var latitude   = "0"
     var longintude = "0"
-    var cache = ImageLoadingWithCache()
-    var model = [Model]()
-    var models = [String:Model]()
-    var count = 0
+    var cache      = ImageLoadingWithCache()
+    var model      = [Model]()
+    var models     = [String:Model]()
+    var count      = 0
     
     lazy var configuration : NSURLSessionConfiguration = {
         let config = NSURLSessionConfiguration.ephemeralSessionConfiguration()
@@ -218,21 +218,16 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
             }
             self.pickSeletion = result
             var url:String = ""
-            if result == "Unfiltered"
-            {
+            if result == "Unfiltered" {
                 url = AppConfig.APP_URL+"/property_list/\(User().getField("id"))"
-            }else
-            {
-                for var i=0; i < array_name.count; i++
-                {
-                    if arrayDataSource[i] == result
-                    {
+            }else {
+                for var i=0; i < array_name.count; i++ {
+                    if arrayDataSource[i] == result {
                       url = AppConfig.APP_URL+"/map_properties_list/\(User().getField("id"))?orderby=\(array_name[i])&order=\(array_asc_desc[i])"
                     }
                 }
             }
             Request().get(url, successHandler: {(response) in self.loadProperties(response)})
         }
-        
     }
 }

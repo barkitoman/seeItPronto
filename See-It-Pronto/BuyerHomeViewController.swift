@@ -144,7 +144,9 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
             if(url.containsString(AppConfig.APP_URL)) {
                 let saveData: JSON =  Utility().getIdFromUrl(url)
                 Property().saveOne(saveData)
-                self.performSegueWithIdentifier("ViewBuyerHouse", sender: self)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.performSegueWithIdentifier("ViewBuyerHouse", sender: self)
+                }
             }
             return false
         }
@@ -163,40 +165,46 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     }
     
     @IBAction func btnViewList(sender: AnyObject) {
-        let VC = storyboard?.instantiateViewControllerWithIdentifier("PropertyListViewController") as! PropertyListViewController
-        VC.preferredContentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.width)
-        let navController = UINavigationController(rootViewController: VC)
+        dispatch_async(dispatch_get_main_queue()) {
+            let VC = self.storyboard?.instantiateViewControllerWithIdentifier("PropertyListViewController") as! PropertyListViewController
+            VC.preferredContentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.width)
+            let navController = UINavigationController(rootViewController: VC)
         
-        let popOver = navController.popoverPresentationController
-        popOver?.delegate = self
-        popOver?.barButtonItem = sender as? UIBarButtonItem
+            let popOver = navController.popoverPresentationController
+            popOver?.delegate = self
+            popOver?.barButtonItem = sender as? UIBarButtonItem
         
-        self.presentViewController(navController, animated: true, completion: nil)
+            self.presentViewController(navController, animated: true, completion: nil)
+        }
     }
     
     @IBAction func btnSingUP(sender: AnyObject) {
-        let VC = storyboard?.instantiateViewControllerWithIdentifier("SelectRoleViewController") as! SelectRoleViewController
-        VC.preferredContentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.width)
-        let navController = UINavigationController(rootViewController: VC)
+        dispatch_async(dispatch_get_main_queue()) {
+            let VC = self.storyboard?.instantiateViewControllerWithIdentifier("SelectRoleViewController") as! SelectRoleViewController
+            VC.preferredContentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.width)
+            let navController = UINavigationController(rootViewController: VC)
         
-        let popOver = navController.popoverPresentationController
-        popOver?.delegate = self
-        popOver?.barButtonItem = sender as? UIBarButtonItem
+            let popOver = navController.popoverPresentationController
+            popOver?.delegate = self
+            popOver?.barButtonItem = sender as? UIBarButtonItem
         
-        self.presentViewController(navController, animated: true, completion: nil)
+            self.presentViewController(navController, animated: true, completion: nil)
+        }
         
     }
     
     @IBAction func btnLogin(sender: AnyObject) {
-        let VC = storyboard?.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
-        VC.preferredContentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.width)
-        let navController = UINavigationController(rootViewController: VC)
+        dispatch_async(dispatch_get_main_queue()) {
+            let VC = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+            VC.preferredContentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.width)
+            let navController = UINavigationController(rootViewController: VC)
         
-        let popOver = navController.popoverPresentationController
-        popOver?.delegate = self
-        popOver?.barButtonItem = sender as? UIBarButtonItem
+            let popOver = navController.popoverPresentationController
+            popOver?.delegate = self
+            popOver?.barButtonItem = sender as? UIBarButtonItem
         
-        self.presentViewController(navController, animated: true, completion: nil)
+            self.presentViewController(navController, animated: true, completion: nil)
+        }
     }
     
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {

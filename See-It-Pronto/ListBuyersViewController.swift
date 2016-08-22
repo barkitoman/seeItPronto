@@ -67,7 +67,9 @@ class ListBuyersViewController: UIViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.viewData = JSON(self.buyers[indexPath.row])
-        self.performSegueWithIdentifier("showBuyerProfile", sender: self)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.performSegueWithIdentifier("showBuyerProfile", sender: self)
+        }
     }
     
     //Pagination

@@ -38,12 +38,14 @@ class BuyerForm4ViewController: UIViewController {
     
     @IBAction func btnYes(sender: AnyObject) {
         User().updateField("is_login", value: "1")
-        self.performSegueWithIdentifier("FormBuyer4", sender: self)
+        Utility().performSegue(self, performSegue: "FormBuyer4")
     }
     
     @IBAction func btnSkip(sender: AnyObject) {
         User().updateField("is_login", value: "1")
-        self.performSegueWithIdentifier("FormBuyer4", sender: self)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.performSegueWithIdentifier("FormBuyer4", sender: self)
+        }
     }
 
 }

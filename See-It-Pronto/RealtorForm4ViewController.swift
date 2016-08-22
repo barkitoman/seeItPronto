@@ -106,6 +106,9 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result
+            if(result["stripe_subscription_active"].stringValue == "1") {
+                User().updateField("stripe_subscription_active", value: "1")
+            }
             Utility().performSegue(self, performSegue: "RealtorForm3")
         } else {
             var msg = "Error saving, please try later"

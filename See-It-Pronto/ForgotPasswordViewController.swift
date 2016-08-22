@@ -53,9 +53,10 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate, UIText
     }
     
     @IBAction func fnRecoverPass(sender: AnyObject) {
-        
         if txtEmail.text!.isEmpty {
-            BProgressHUD.dismissHUD(0)
+            dispatch_async(dispatch_get_main_queue()) {
+                BProgressHUD.dismissHUD(0)
+            }
             let msg = "Please enter your email"
             Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
         }else{

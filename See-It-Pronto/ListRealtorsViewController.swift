@@ -111,7 +111,9 @@ class ListRealtorsViewController: UIViewController,UIWebViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.viewData = JSON(self.realtors[indexPath.row])
-        self.performSegueWithIdentifier("showRealtorProfile", sender: self)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.performSegueWithIdentifier("showRealtorProfile", sender: self)
+        }
     }
     
     //Pagination

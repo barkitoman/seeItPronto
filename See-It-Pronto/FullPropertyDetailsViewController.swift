@@ -75,7 +75,9 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
             if(self.viewData["have_beacon"].stringValue == "1") {
                 let propertyActionData: JSON =  ["type":"see_it_pronto"]
                 PropertyAction().saveOne(propertyActionData)
-                self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+                }
             } else {
                 Utility().displayAlert(self, title: "Message", message: " \"See It Pronto\" is not available for this property.", performSegue: "")
             }
@@ -87,7 +89,9 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     @IBAction func btnSeeItLater(sender: AnyObject) {
         let propertyActionData: JSON =  ["type":"see_it_later"]
         PropertyAction().saveOne(propertyActionData)
-        self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+        }
     }
     
     func findPropertyDetails(){
@@ -205,8 +209,9 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     }
     
     @IBAction func btnMoreImage(sender: AnyObject) {
-        print(self.viewData)
-        self.performSegueWithIdentifier("showImages", sender: self)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.performSegueWithIdentifier("showImages", sender: self)
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

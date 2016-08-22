@@ -77,7 +77,9 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
             imagePicker.delegate = self
             imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
             imagePicker.allowsEditing = true
-            self.presentViewController(imagePicker, animated: true, completion: nil)
+            dispatch_async(dispatch_get_main_queue()) {
+                self.presentViewController(imagePicker, animated: true, completion: nil)
+            }
         }
     }
     
@@ -89,7 +91,9 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
                 imagePicker.delegate = self
                 imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
                 imagePicker.allowsEditing = false
-                self.presentViewController(imagePicker, animated: true, completion: nil)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.presentViewController(imagePicker, animated: true, completion: nil)
+                }
             } else {
                 Utility().displayAlert(self, title: "Rear camera doesn't exist", message:  "Application cannot access the camera.", performSegue: "")
             }
