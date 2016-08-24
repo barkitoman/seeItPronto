@@ -28,7 +28,9 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
-        BProgressHUD.showLoadingViewWithMessage("Loading")
+        dispatch_async(dispatch_get_main_queue()) {
+            BProgressHUD.showLoadingViewWithMessage("Loading")
+        }
         manager = OneShotLocationManager()
         manager!.fetchWithCompletion {location, error in
             // fetch location or an error

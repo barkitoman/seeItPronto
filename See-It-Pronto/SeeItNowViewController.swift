@@ -68,7 +68,9 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
     }
     
     func loadMap() {
-        BProgressHUD.showLoadingViewWithMessage("Loading")
+        dispatch_async(dispatch_get_main_queue()) {
+            BProgressHUD.showLoadingViewWithMessage("Loading")
+        }
         var url = AppConfig.APP_URL+"/calculate_distances/\(User().getField("id"))/\(String(self.stepPage))/"
         url     = url+"?page=\(String(self.countPage + 1))"
         url     = url+"&lat=\(self.latitude)&lon=\(self.longintude)"

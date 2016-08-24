@@ -25,6 +25,8 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
     var model      = [Model]()
     var models     = [String:Model]()
     var count      = 0
+    var propertyId:String    = ""
+    var propertyClass:String = ""
     
     lazy var configuration : NSURLSessionConfiguration = {
         let config = NSURLSessionConfiguration.ephemeralSessionConfiguration()
@@ -40,6 +42,7 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
+        
         self.webView.hidden = true
         manager = OneShotLocationManager()
         manager!.fetchWithCompletion {location, error in
@@ -173,8 +176,30 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
     }
     
     func findProperties() {
-        let url = AppConfig.APP_URL+"/property_list/\(User().getField("id"))"
+        var url = AppConfig.APP_URL+"/property_list/\(User().getField("id"))"
+        url = self.propertiesUrlParams(url);
         Request().get(url, successHandler: {(response) in self.loadProperties(response)})
+    }
+    
+    func propertiesUrlParams(var url:String)->String {
+        url =  url+"?role=\(User().getField("role"))"
+        url =  url+"&property=\(self.propertyId)"
+        url =  url+"&type_property=\(SearchConfig().getField("type_property"))"
+        url =  url+"&area=\(SearchConfig().getField("area"))"
+        url =  url+"&beds=\(SearchConfig().getField("beds"))"
+        url =  url+"&baths=\(SearchConfig().getField("baths"))"
+        url =  url+"&pool=\(SearchConfig().getField("pool"))"
+        url =  url+"&price_range_less=\(SearchConfig().getField("price_range_less"))"
+        url =  url+"&price_range_higher=\(SearchConfig().getField("price_range_higher"))"
+        url =  url+"&fast_search=1"
+        if(self.propertyClass != "") {
+            url =  url+"&property_class=\(self.propertyClass)"
+        } else {
+            url =  url+"&property_class=\(SearchConfig().getField("property_class"))"
+        }
+        self.propertyId = ""
+        self.propertyClass = ""
+        return url;
     }
     
     func loadProperties(let response: NSData){
@@ -185,12 +210,11 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
                 if(!subJson["id"].stringValue.isEmpty) {
                     let jsonObject: AnyObject = subJson.object
                     self.properties.addObject(jsonObject)
-                    
                 }
             }
             if self.properties.count > 0 {
                 self.tableView.reloadData()
-                BProgressHUD.dismissHUD(5)
+                BProgressHUD.dismissHUD(3)
             }else{
                 BProgressHUD.dismissHUD(0)
                 let msg = "No Properties Found"
@@ -219,11 +243,14 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
             self.pickSeletion = result
             var url:String = ""
             if result == "Unfiltered" {
-                url = AppConfig.APP_URL+"/property_list/\(User().getField("id"))"
+                var url = AppConfig.APP_URL+"/property_list/\(User().getField("id"))"
+                url     = self.propertiesUrlParams(url)
             }else {
                 for var i=0; i < array_name.count; i++ {
                     if arrayDataSource[i] == result {
-                      url = AppConfig.APP_URL+"/map_properties_list/\(User().getField("id"))?orderby=\(array_name[i])&order=\(array_asc_desc[i])"
+                      url = AppConfig.APP_URL+"/map_properties_list/\(User().getField("id"))"
+                      url = self.propertiesUrlParams(url)
+                      url = url+"&orderby=\(array_name[i])&order=\(array_asc_desc[i])"
                     }
                 }
             }

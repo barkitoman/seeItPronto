@@ -110,7 +110,9 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             let saveData: JSON =  ["id":""]
             User().saveOne(saveData)
             SearchConfig().saveOne(saveData)
-            self.navigationController?.pushViewController(vc, animated: true)
+            dispatch_async(dispatch_get_main_queue()) {
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
             
         } else if (viewIdentifier == "ListRealtorsViewController") {
             viewController = mainStoryboard.instantiateViewControllerWithIdentifier("ListRealtorsViewController") as! ListRealtorsViewController
@@ -173,12 +175,13 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             viewController = vc
         }
         
-        //
-        if(showView == true) {
-            if(viewIdentifier != nil && viewIdentifier!.isEmpty) {
-                self.navigationController?.pushViewController(viewController, animated: true)
-            } else {
-                self.navigationController?.showViewController(viewController, sender: nil)
+        dispatch_async(dispatch_get_main_queue()) {
+            if(showView == true) {
+                if(viewIdentifier != nil && viewIdentifier!.isEmpty) {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                } else {
+                    self.navigationController?.showViewController(viewController, sender: nil)
+                }
             }
         }
     }
@@ -245,9 +248,11 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     }
     
     func onSlideSearchButtonPressed(sender : UIButton){
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController: SearchViewController = storyboard.instantiateViewControllerWithIdentifier("SearchViewController") as! SearchViewController
-        self.navigationController?.showViewController(viewController, sender: nil)
+        dispatch_async(dispatch_get_main_queue()) {
+            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let viewController: SearchViewController = storyboard.instantiateViewControllerWithIdentifier("SearchViewController") as! SearchViewController
+            self.navigationController?.showViewController(viewController, sender: nil)
+        }
     }
     
     func createContainerView(){

@@ -37,7 +37,9 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
         super.viewDidLoad()
         self.scrollImages.frame = CGRectMake(0, 0, self.view.frame.width, self.scrollImages.frame.height)
         self.findPropertyDetails()
-        BProgressHUD.showLoadingViewWithMessage("Loading")
+        dispatch_async(dispatch_get_main_queue()) {
+            BProgressHUD.showLoadingViewWithMessage("Loading")
+        }
         self.showHideButtons()
         self.tableView.delegate = self
     }

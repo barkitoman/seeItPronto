@@ -23,9 +23,13 @@ class NotificationsViewController: UIViewController {
         super.viewDidLoad()
         if(self.showNewNotificationMsg == true) {
             Utility().displayAlert(self, title: "Message", message: "New notification received", performSegue: "")
-            BProgressHUD.showLoadingViewWithMessage("Loading")
+            dispatch_async(dispatch_get_main_queue()) {
+                BProgressHUD.showLoadingViewWithMessage("Loading")
+            }
         } else {
-            BProgressHUD.showLoadingViewWithMessage("Loading")
+            dispatch_async(dispatch_get_main_queue()) {
+                BProgressHUD.showLoadingViewWithMessage("Loading")
+            }
         }
         self.findNotifications()
     }

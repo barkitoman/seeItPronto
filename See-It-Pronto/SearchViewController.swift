@@ -205,8 +205,6 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         
     }
     
-
-    
     @IBAction func btnClass(sender: AnyObject) {
         picker.hidden ? openPicker() : closePicker()
     }

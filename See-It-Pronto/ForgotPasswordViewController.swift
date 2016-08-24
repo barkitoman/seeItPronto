@@ -73,7 +73,9 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate, UIText
     }
     
     func recoverpassword(email: String){
-            BProgressHUD.showLoadingViewWithMessage("Loading")
+            dispatch_async(dispatch_get_main_queue()) {
+                BProgressHUD.showLoadingViewWithMessage("Loading")
+            }
             let urlString = "\(AppConfig.APP_URL)/emailpasswordrecover/\(email)"
             let url = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
             Request().get(url!, successHandler: {(response) in self.response(response)})

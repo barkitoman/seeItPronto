@@ -11,12 +11,14 @@ import UIKit
 class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,UITextViewDelegate, UIPopoverPresentationControllerDelegate {
 
     var manager: OneShotLocationManager?
-    var latitude   = "0"
-    var longintude = "0"
+    var latitude     = "0"
+    var longintude   = "0"
     var session:Bool = true
-    var viewData:JSON     = []
-    var propertyId:String = ""
+    var viewData:JSON        = []
+    var propertyId:String    = ""
     var propertyClass:String = ""
+    var propertyIdTemporal:String    = ""
+    var propertyClassTemporal:String = ""
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var txtSearch: UITextField!
     @IBOutlet weak var btnLogin: UIButton!
@@ -167,6 +169,8 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     @IBAction func btnViewList(sender: AnyObject) {
         dispatch_async(dispatch_get_main_queue()) {
             let VC = self.storyboard?.instantiateViewControllerWithIdentifier("PropertyListViewController") as! PropertyListViewController
+            VC.propertyId = self.propertyIdTemporal
+            VC.propertyClass = self.propertyClassTemporal
             VC.preferredContentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.width)
             let navController = UINavigationController(rootViewController: VC)
         
@@ -284,6 +288,9 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
                 self.txtSearch.text = selectedCell.textLabel!.text
                 self.propertyId = item["id"].stringValue
                 self.propertyClass = item["class"].stringValue
+                
+                self.propertyIdTemporal = item["id"].stringValue
+                self.propertyClassTemporal = item["class"].stringValue
                 self.loadMap()
             }
         }
