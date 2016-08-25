@@ -63,6 +63,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             addChildView("RealtorForm1ViewController",      titleOfChildren: "My Profile",             iconName: "edit_profile")
              addChildView("LoginViewController",            titleOfChildren: "Log Out",                iconName: "logout")
         }
+        addChildView("AboutUsViewController",          titleOfChildren: "About", iconName: "about_us")
     }
     
     func menuBuyer(){
@@ -75,6 +76,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         addChildView("LoginViewController",            titleOfChildren: "Log Out",               iconName: "logout")
         addChildView("ConfigViewController",           titleOfChildren: "Settings",              iconName: "settings")
         addChildView("BugReportViewController",        titleOfChildren: "Send Us Your Feedback", iconName: "send_us_your_feedback")
+        addChildView("AboutUsViewController",          titleOfChildren: "About", iconName: "about_us")
     }
     
     //MARK: Functions for Container
@@ -172,6 +174,9 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             viewController = vc
         }else if (viewIdentifier == "ChatViewController") {
             let vc:ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+            viewController = vc
+        }else if (viewIdentifier == "AboutUsViewController") {
+            let vc:AboutUsViewController = mainStoryboard.instantiateViewControllerWithIdentifier("AboutUsViewController") as! AboutUsViewController
             viewController = vc
         }
         

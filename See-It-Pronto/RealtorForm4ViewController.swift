@@ -13,6 +13,8 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
     var animateDistance: CGFloat!
     var viewData:JSON = []
     
+    @IBOutlet weak var txtPromoCode: UITextField!
+    @IBOutlet weak var lblSubscriptionDescription: UILabel!
     @IBOutlet weak var txtCardNumber: UITextField!
     @IBOutlet weak var txtExpDate: UITextField!
     @IBOutlet weak var txtCvc: UITextField!
@@ -21,6 +23,7 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.lblSubscriptionDescription.text = "This payment method will be used for your monthly subscription fee of $\(AppConfig.SUBSCRIPTION_PRICE)."
         self.findUserInfo()
         self.selfDelegate()
         self.subscriptionButtonAction()

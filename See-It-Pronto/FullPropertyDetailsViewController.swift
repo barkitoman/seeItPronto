@@ -157,25 +157,26 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
                 }
             }
             
-            self.lbContImage.text = "1 of \(self.cont)"
-            self.scrollImages.contentSize = CGSizeMake(self.scrollImages.frame.width * CGFloat(self.cont), self.scrollImages.frame.height)
-            self.scrollImages.delegate = self
+            self.lbContImage.text          = "1 of \(self.cont)"
+            self.scrollImages.contentSize  = CGSizeMake(self.scrollImages.frame.width * CGFloat(self.cont), self.scrollImages.frame.height)
+            self.scrollImages.delegate     = self
             self.pageControl.numberOfPages = self.cont
-            self.pageControl.currentPage = 0
+            self.pageControl.currentPage   = 0
             
             self.lblBedrooms.text     = Property().getField("bedrooms")
             self.lblBathrooms.text    = Property().getField("bathrooms")
             self.lblType.text         = Property().getField("property_type")
             self.lblSize.text         = Property().getField("square_feed")
-            self.lblLot.text          = Property().getField("lot")
+            self.lblLot.text          = Property().getField("lot_size")
             self.lbAddress.text       = Property().getField("address")
+            self.lblYearBuilt.text    = Property().getField("year_built")
             if(Property().getField("property_class") == "6") {
                 self.lbTypeProperty.text  = "For Rent"
             } else {
                 self.lbTypeProperty.text  = "For Sale"
             }
-            self.lbPrice.text         = Utility().formatCurrency(Property().getField("price"))
-            self.lbRemarks.text       = Property().getField("remarks")
+            self.lbPrice.text    = Utility().formatCurrency(Property().getField("price"))
+            self.lbRemarks.text   = Property().getField("remarks")
         }
     }
     

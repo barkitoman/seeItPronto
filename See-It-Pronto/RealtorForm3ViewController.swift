@@ -12,8 +12,6 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
 
     
     @IBOutlet weak var lblTravelRate: UILabel!
-    
-    
     var viewData:JSON = []
     var numberShowingRate:String = "25"
     var numberTravelRange:String = "50"
@@ -43,7 +41,7 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         
         let pickerView = CustomPickerDialog.init()
         var arrayDataSource:[String] = []
-        for i in 10...99 {
+        for i in 5...25 {
             arrayDataSource.append(String(i))
         }
         pickerView.setDataSource(arrayDataSource)

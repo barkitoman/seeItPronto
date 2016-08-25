@@ -76,20 +76,26 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate, UIText
             dispatch_async(dispatch_get_main_queue()) {
                 BProgressHUD.showLoadingViewWithMessage("Loading")
             }
-            let urlString = "\(AppConfig.APP_URL)/emailpasswordrecover/\(email)"
-            let url = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-            Request().get(url!, successHandler: {(response) in self.response(response)})
-
+            let url = "\(AppConfig.APP_URL)/emailpasswordrecover"
+            let params = "email=\(email)"
+            Request().post(url, params: params, controller: self) { (response) -> Void in
+                self.afterRecoverRequest(response)
+            }
     }
     
-    func response(let response: NSData){
+    func afterRecoverRequest(let response: NSData){
         dispatch_async(dispatch_get_main_queue()) {
             BProgressHUD.dismissHUD(0)
             let result = JSON(data: response)
-            if result["success"].bool == true{
-                let msg = "Please review your inbox"
-                Utility().displayAlert(self,title: "Confirm", message:msg, performSegue:"")
-                self.navigationController?.popViewControllerAnimated(true)
+            if result["result"].bool == true {
+                let msg = "Please check your email to continue the process of recovering password."
+                Utility().displayAlertBack(self, title: "Success", message: msg)
+            } else {
+                var msg = "Error recovering password, please try later"
+                if(!result["msg"].stringValue.isEmpty) {
+                    msg = result["msg"].stringValue
+                }
+                Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
             }
         }
     }

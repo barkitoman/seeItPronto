@@ -28,6 +28,7 @@
 		108B96921D1DBCAE000CA586 /* KontaktSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 108B96901D1DBBC5000CA586 /* KontaktSDK.framework */; };
 		108B96931D1DBCAE000CA586 /* KontaktSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 108B96901D1DBBC5000CA586 /* KontaktSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1094FD2F1CF4E285009DCAF9 /* CreateBeaconViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1094FD2E1CF4E285009DCAF9 /* CreateBeaconViewController.swift */; };
+		1098C2331D6F63FD00E7D866 /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1098C2321D6F63FD00E7D866 /* AboutUsViewController.swift */; };
 		109E6A481C80A95A00AD46EE /* PropertyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109E6A471C80A95A00AD46EE /* PropertyManager.swift */; };
 		109FF84A1C860A1000E20FC2 /* PropertyActionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109FF8491C860A1000E20FC2 /* PropertyActionManager.swift */; };
 		109FF84C1C861B1A00E20FC2 /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109FF84B1C861B1A00E20FC2 /* DatePickerDialog.swift */; };
@@ -157,6 +158,7 @@
 		1087959A1C97367A00B3D6FA /* MyListingsRealtorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyListingsRealtorTableViewCell.swift; sourceTree = "<group>"; };
 		108B96901D1DBBC5000CA586 /* KontaktSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KontaktSDK.framework; sourceTree = "<group>"; };
 		1094FD2E1CF4E285009DCAF9 /* CreateBeaconViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateBeaconViewController.swift; sourceTree = "<group>"; };
+		1098C2321D6F63FD00E7D866 /* AboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
 		109E6A471C80A95A00AD46EE /* PropertyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyManager.swift; sourceTree = "<group>"; };
 		109FF8491C860A1000E20FC2 /* PropertyActionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyActionManager.swift; sourceTree = "<group>"; };
 		109FF84B1C861B1A00E20FC2 /* DatePickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerDialog.swift; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 				103013161D26F67C00DF331B /* BugReportViewController.swift */,
 				A40081921D53AE9700BBFF91 /* MoreImageViewController.swift */,
 				10A598CF1D58DD5600CE93E6 /* PropertyViewedViewController.swift */,
+				1098C2321D6F63FD00E7D866 /* AboutUsViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -629,6 +632,7 @@
 				109FF84C1C861B1A00E20FC2 /* DatePickerDialog.swift in Sources */,
 				681140991C3AC62F0068AE1C /* BuyerForm3ViewController.swift in Sources */,
 				684D08461C6534B900BF086E /* TableViewMenuController.swift in Sources */,
+				1098C2331D6F63FD00E7D866 /* AboutUsViewController.swift in Sources */,
 				681140891C3AC2360068AE1C /* ForgotPasswordViewController.swift in Sources */,
 				684D08451C6534B900BF086E /* BaseViewController.swift in Sources */,
 				681140AD1C3AC8010068AE1C /* AddBeaconViewController.swift in Sources */,

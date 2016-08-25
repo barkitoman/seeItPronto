@@ -12,20 +12,24 @@ import UIKit
 struct AppConfig {
     static var APP_URL                 = "http://oauthtest-nyxent.rhcloud.com"
     static var GRANT_TYPE              = "client_credentials"
-    //0 en espera, 1 aceptado, 2 rechazado, 3 completado, 4 cancelado
-    static var SHOWING_CANCELED_STATUS = "4"
+    
+    static var SHOWING_CANCELED_STATUS = "4"//0 en espera, 1 aceptado, 2 rechazado, 3 completado, 4 cancelado
     static var SHOWING_WAIT_SECONDS    = 60
     static var FIND_BEACONS_INTERVAL   = 10.0
     static var MODE                    = "DEVELOP" //PROD, DEVELOP
+    
+    //Valor de precios, estos valores se deben cambiar tambien en en backend app/Stripe.php
+    static var SHOWING_PRICE           = "10"
+    static var SUBSCRIPTION_PRICE      = "15"
 
 }
 
 //model configuration for avoid repeat images on table lists
 class Model {
     var property : JSON = []
-    var im : UIImage!
-    var picurl : String!
-    var task : NSURLSessionTask!
+    var im       : UIImage!
+    var picurl   : String!
+    var task     : NSURLSessionTask!
     var reloaded = false
 }
 
