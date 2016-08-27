@@ -56,7 +56,7 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
     func selfDelegate() {
         self.txtShowingInstructions.delegate = self
         self.txtEmail.delegate = self
-        self.txtPhone.delegate = self
+        //self.txtPhone.delegate = self
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -185,7 +185,7 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
             self.viewData = result
             self.txtShowingInstructions.text = result["showing_instruction"].stringValue
             self.txtEmail.text = result["owner_email"].stringValue
-            self.txtPhone.text = result["owner_phone"].stringValue
+            //self.txtPhone.text = result["owner_phone"].stringValue
             if(result["state_beacon"].int == 1) {
                 self.swBeacon.on = true
             }

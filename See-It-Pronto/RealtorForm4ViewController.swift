@@ -94,7 +94,7 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
     func save() {
         //create params
         var params = "id=\(self.viewData["id"].stringValue)&user_id=\(self.viewData["id"].stringValue)&number_card=\(txtCardNumber.text!)"
-        params = params+"&expiration_date=\(txtExpDate.text!)&csv=\(self.txtCvc.text!)"
+        params = params+"&expiration_date=\(txtExpDate.text!)&csv=\(self.txtCvc.text!)&promo_code=\(self.txtPromoCode.text!)"
         params = params+"&subscription=1&stripe_subscription_active=\(self.viewData["stripe_subscription_active"].stringValue)"
         params = params+"&email=\(self.viewData["email"].stringValue)&stripe_subscription_id=\(self.viewData["stripe_subscription_id"].stringValue)"
         params = params+"&first_name=\(self.viewData["first_name"].stringValue)&last_name=\(self.viewData["last_name"].stringValue)"
@@ -139,6 +139,7 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
             self.txtCardNumber.text = result["number_card"].stringValue
             self.txtExpDate.text    = result["expiration_date"].stringValue
             self.txtCvc.text        = result["csv"].stringValue
+            self.txtPromoCode.text  = result["promo_code"].stringValue
         }
     }
     
