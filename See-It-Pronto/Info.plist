@@ -44,7 +44,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>See It Pronto uses your device location to present you with custom results tailored to your needs. Please allow this app to access your device location</string>
+	<string>See It Pronto! uses your device location to present you with custom results tailored to your needs. Please allow this app to access your device location</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

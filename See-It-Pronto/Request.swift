@@ -28,11 +28,12 @@ class Request {
                     print("AN ERROR HAS OCURRED SENDING POST REQUEST!")
                     print(error); return
                 }
+                
                 successHandler(response: data!)
             }
             task.resume();
         } else {
-            Utility().displayAlert(controller, title: "Alert", message: "You are no longer connected to the internet. See It Pronto requires access to the internet to provide you with accurate information", performSegue: "")
+            Utility().displayAlert(controller, title: "Alert", message: "You are no longer connected to the internet. See It Pronto! requires access to the internet to provide you with accurate information", performSegue: "")
         }
     }
     
@@ -76,7 +77,7 @@ class Request {
             }
             task.resume();
         } else {
-            Utility().displayAlert(controller, title: "Alert", message: "You are no longer connected to the internet. See It Pronto requires access to the internet to provide you with accurate information", performSegue: "")
+            Utility().displayAlert(controller, title: "Alert", message: "You are no longer connected to the internet. See It Pronto! requires access to the internet to provide you with accurate information", performSegue: "")
         }
     }
     
@@ -140,7 +141,7 @@ class Request {
                 }
                 task.resume();
             } else {
-                Utility().displayAlert(controller, title: "Alert", message: "You are no longer connected to the internet. See It Pronto requires access to the internet to provide you with accurate information", performSegue: "")
+                Utility().displayAlert(controller, title: "Alert", message: "You are no longer connected to the internet. See It Pronto! requires access to the internet to provide you with accurate information", performSegue: "")
             }
         }
     }
