@@ -23,7 +23,7 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.lblSubscriptionDescription.text = "This payment method will be used for your monthly subscription fee of $\(AppConfig.SUBSCRIPTION_PRICE)."
+        self.lblSubscriptionDescription.text = "This payment method will be used for your monthly subscription fee of $\(AppConfig.SUBSCRIPTION_PRICE).     Monthly subscription fee grants you full access. You will be able to switch on your listings and make them See It Pronto! properties. You will also appear in list of available agents for all See It Pronto! request and all See It Later appointments"
         self.findUserInfo()
         self.selfDelegate()
         self.subscriptionButtonAction()
