@@ -89,16 +89,21 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     }
     
     @IBAction func setBedrooms(button:UIButton) {
-        self.bedRooms = (button.titleLabel?.text)! as String
+        var selectedBeds = (button.titleLabel?.text)! as String
+        selectedBeds     = selectedBeds.stringByReplacingOccurrencesOfString("+",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        self.bedRooms    = selectedBeds
         setBedsAndBaths("bedrooms", value: self.bedRooms)
     }
     
     @IBAction func setBathrooms(button:UIButton) {
-        self.bathRooms = (button.titleLabel?.text)! as String
+        var selectedBaths = (button.titleLabel?.text)! as String
+        selectedBaths     = selectedBaths.stringByReplacingOccurrencesOfString("+",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        self.bathRooms    = selectedBaths
         setBedsAndBaths("bathrooms", value: self.bathRooms)
     }
     
     func setBedsAndBaths(type:String, value:String) {
+        dispatch_async(dispatch_get_main_queue()) {
         if(type == "bedrooms") {
             self.beds1.backgroundColor = UIColor(rgba: "#45B5DC")
             self.beds2.backgroundColor = UIColor(rgba: "#45B5DC")
@@ -106,15 +111,15 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
             self.beds4.backgroundColor = UIColor(rgba: "#45B5DC")
             self.beds5.backgroundColor = UIColor(rgba: "#45B5DC")
             if(value == "1") {
-                beds1.backgroundColor = UIColor(rgba: "#5cb85c")
+                self.beds1.backgroundColor = UIColor(rgba: "#5cb85c")
             } else if(value == "2") {
-                beds2.backgroundColor = UIColor(rgba: "#5cb85c")
+                self.beds2.backgroundColor = UIColor(rgba: "#5cb85c")
             } else if(value == "3") {
-                beds3.backgroundColor = UIColor(rgba: "#5cb85c")
+                self.beds3.backgroundColor = UIColor(rgba: "#5cb85c")
             } else if(value == "4") {
-                beds4.backgroundColor = UIColor(rgba: "#5cb85c")
+                self.beds4.backgroundColor = UIColor(rgba: "#5cb85c")
             } else if(value == "5") {
-                beds5.backgroundColor = UIColor(rgba: "#5cb85c")
+                self.beds5.backgroundColor = UIColor(rgba: "#5cb85c")
             }
             
         } else if(type == "bathrooms") {
@@ -124,16 +129,17 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
             self.baths4.backgroundColor = UIColor(rgba: "#45B5DC")
             self.baths5.backgroundColor = UIColor(rgba: "#45B5DC")
             if(value == "1") {
-                baths1.backgroundColor = UIColor(rgba: "#5cb85c")
+                self.baths1.backgroundColor = UIColor(rgba: "#5cb85c")
             } else if(value == "2") {
-                baths2.backgroundColor = UIColor(rgba: "#5cb85c")
+                self.baths2.backgroundColor = UIColor(rgba: "#5cb85c")
             } else if(value == "3") {
-                baths3.backgroundColor = UIColor(rgba: "#5cb85c")
+                self.baths3.backgroundColor = UIColor(rgba: "#5cb85c")
             } else if(value == "4") {
-                baths4.backgroundColor = UIColor(rgba: "#5cb85c")
+                self.baths4.backgroundColor = UIColor(rgba: "#5cb85c")
             } else if(value == "5") {
-                baths5.backgroundColor = UIColor(rgba: "#5cb85c")
+                self.baths5.backgroundColor = UIColor(rgba: "#5cb85c")
             }
+        }
         }
     }
     

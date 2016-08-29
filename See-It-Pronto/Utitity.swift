@@ -45,28 +45,34 @@ class Utility {
     }
     
     func showPhoto(img:UIImageView, imgPath:String, defaultImg:String = ""){
-        var url = NSURL(string: AppConfig.APP_URL+"/"+imgPath)
-        if (imgPath.rangeOfString("http://") != nil || imgPath.rangeOfString("https://") != nil ){
-            url = NSURL(string: imgPath)
-        }
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) { (data, response, error) -> Void in
-            if error != nil {
-                print("ERROR SHOWING IMAGE "+imgPath)
-            } else {
-                if let httpResponse = response as? NSHTTPURLResponse {
-                    if(httpResponse.statusCode == 200) {
-                        dispatch_async(dispatch_get_main_queue()) {
-                            img.image = UIImage(data: data!)
+        if(imgPath.isEmpty && !defaultImg.isEmpty) {
+            dispatch_async(dispatch_get_main_queue()) {
+                img.image = UIImage(named: defaultImg)
+            }
+        } else {
+            var url = NSURL(string: AppConfig.APP_URL+"/"+imgPath)
+            if (imgPath.rangeOfString("http://") != nil || imgPath.rangeOfString("https://") != nil ){
+                url = NSURL(string: imgPath)
+            }
+            let task = NSURLSession.sharedSession().dataTaskWithURL(url!) { (data, response, error) -> Void in
+                if error != nil {
+                    print("ERROR SHOWING IMAGE "+imgPath)
+                } else {
+                    if let httpResponse = response as? NSHTTPURLResponse {
+                        if(httpResponse.statusCode == 200) {
+                            dispatch_async(dispatch_get_main_queue()) {
+                                img.image = UIImage(data: data!)
+                            }
+                        } else if(defaultImg != "") {
+                            dispatch_async(dispatch_get_main_queue()) {
+                                img.image = UIImage(named: defaultImg)
+                            }
                         }
-                    } else if(defaultImg != "") {
-                        dispatch_async(dispatch_get_main_queue()) {
-                            img.image = UIImage(named: defaultImg)
-                         }
                     }
                 }
             }
+            task.resume()
         }
-        task.resume()
     }
     
     func formatCurrency(var currentString : String)->String  {

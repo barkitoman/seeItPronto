@@ -18,6 +18,8 @@ class CongratulationsViewController: UIViewController {
     @IBOutlet weak var lblDescription: UILabel!
     private let congratutationSeconds:NSTimeInterval = 1
     private var congratutationSecondsCount:Int = 30
+    private var requestSeconds:Int = 0
+    
     private var congratulationTimer: NSTimer?
     @IBOutlet weak var waitingForAgentConfirmationLabel: UILabel!
     
@@ -49,7 +51,7 @@ class CongratulationsViewController: UIViewController {
     }
     
     func cancelRequest() {
-        if self.congratulationTimer != nil { self.stopCongratulationTimer()}
+        self.stopCongratulationTimer()
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         var params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status="+AppConfig.SHOWING_CANCELED_STATUS
         params     = self.canceledNotificationParams(params)
@@ -72,6 +74,7 @@ class CongratulationsViewController: UIViewController {
                 let alertController = UIAlertController(title:"Success", message: "The request has been canceled", preferredStyle: .Alert)
                 let homeAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default) {
                     UIAlertAction in
+                    self.stopCongratulationTimer()
                     self.gotoSelectAnotherAgent()
                 }
                 alertController.addAction(homeAction)
@@ -108,12 +111,12 @@ class CongratulationsViewController: UIViewController {
     }
 
     @IBAction func btnHome(sender: AnyObject) {
-        if self.congratulationTimer != nil { self.stopCongratulationTimer()}
+        self.stopCongratulationTimer()
         Utility().goHome(self)
     }
     
     @IBAction func btnSearchAgain(sender: AnyObject) {
-        if self.congratulationTimer != nil { self.stopCongratulationTimer()}
+        self.stopCongratulationTimer()
         Utility().goHome(self)
     }
     
@@ -142,51 +145,64 @@ class CongratulationsViewController: UIViewController {
     
     func startCongratulationTimer() {
         if(self.congratutationSecondsCount > 0) {
-            if self.congratulationTimer != nil { self.stopCongratulationTimer()}
+            self.stopCongratulationTimer()
             self.congratulationTimer = NSTimer.scheduledTimerWithTimeInterval(self.congratutationSeconds,
                 target:self,
                 selector:Selector("showWaitingForAgentConfirmation"),
                 userInfo:nil,
                 repeats:true)
         } else {
-            if self.congratulationTimer != nil { self.stopCongratulationTimer()}
+            self.stopCongratulationTimer()
         }
     }
     
     func stopCongratulationTimer() {
-        self.congratulationTimer!.invalidate()
+        if self.congratulationTimer != nil {
+            self.congratulationTimer!.invalidate()
+        }
     }
     
     func showWaitingForAgentConfirmation(){
+        self.requestSeconds+=1
         if(self.congratutationSecondsCount > 0) {
             self.congratutationSecondsCount-=1
-            self.waitingForAgentConfirmationLabel.text = "Waiting for agent confirmation... "+String(congratutationSecondsCount)
+            self.findShowingInfo()
+            dispatch_async(dispatch_get_main_queue()) {
+                self.waitingForAgentConfirmationLabel.text = "Waiting for agent confirmation... \(self.congratutationSecondsCount)"
+            }
         } else {
-            if self.congratulationTimer != nil { self.stopCongratulationTimer()}
+            self.stopCongratulationTimer()
             self.findShowingInfo()
         }
     }
     
     func findShowingInfo() {
-        let url = AppConfig.APP_URL+"/get_showing_info/"+self.viewData["showing"]["id"].stringValue
-        Request().get(url, successHandler: {(response) in self.loadShowingData(response)})
+        print("SECONDS \(self.requestSeconds)")
+        if(self.requestSeconds == 4 || self.congratutationSecondsCount <= 0) {
+            self.requestSeconds = 0;
+            let url = AppConfig.APP_URL+"/get_showing_info/"+self.viewData["showing"]["id"].stringValue
+            Request().get(url, successHandler: {(response) in self.loadShowingData(response)})
+        }
     }
     
     func loadShowingData(let response: NSData){
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
-            if(result["showing_status"].int == 0) {
-                self.noResponse()
-            } else if(result["showing_status"].int == 1) {
-                Utility().displayAlert(self,title: "Success", message:"The agent has accepted your request", performSegue:"showCurrentShowing")
-                
-            } else if(result["showing_status"].int == 2) {
-                self.requestRejected()
-            }
+        if(self.congratutationSecondsCount > 0 && result["showing_status"].int == 0) {
+        
+        }else if(result["showing_status"].int == 0) {
+            self.noResponse()
+            
+        } else if(result["showing_status"].int == 1) {
+            self.stopCongratulationTimer()
+            Utility().displayAlert(self,title: "Success", message:"The agent has accepted your request", performSegue:"showCurrentShowing")
+            
+        } else if(result["showing_status"].int == 2) {
+            self.requestRejected()
         }
     }
     
     func noResponse() {
+        self.stopCongratulationTimer()
         dispatch_async(dispatch_get_main_queue()) {
             let alertController = UIAlertController(title:"Message", message: "The agent has not responded to the request", preferredStyle: .Alert)
             let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
@@ -213,13 +229,14 @@ class CongratulationsViewController: UIViewController {
     }
     
     func requestRejected() {
+        self.stopCongratulationTimer()
         dispatch_async(dispatch_get_main_queue()) {
             let alertController = UIAlertController(title:"Message", message: "The agent is not available at this time. Please choose another", preferredStyle: .Alert)
             let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
                 UIAlertAction in
                 Utility().goHome(self)
             }
-            let selectAgentAction = UIAlertAction(title: "Select another", style: UIAlertActionStyle.Default) {
+            let selectAgentAction = UIAlertAction(title: "Select Another", style: UIAlertActionStyle.Default) {
                 UIAlertAction in
                 self.gotoSelectAnotherAgent()
             }
