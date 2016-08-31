@@ -68,7 +68,9 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         super.viewDidLoad()
         
         self.addButtonTarget()
-        self.btnClass.setTitle(self.propertySelectedClassName, forState: .Normal)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.btnClass.setTitle(self.propertySelectedClassName, forState: .Normal)
+        }
         self.selfDelegate()
         self.findSearcConfig()
         scrollView.contentSize.height = 1100
@@ -286,7 +288,9 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         self.propertySelectedClass = SearchConfig().getField("property_class")
         let className = SearchConfig().getField("property_class_name")
         if(!className.isEmpty) {
-            self.btnClass.setTitle(className, forState: .Normal)
+            dispatch_async(dispatch_get_main_queue()) {
+                self.btnClass.setTitle(className, forState: .Normal)
+            }
         }
         self.propertySelectedClassName = className
         let beds = SearchConfig().getField("beds")
@@ -333,8 +337,10 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
                 color = self.selectedColor
                 self.selectedIndex = index
             }
-            button.setTitleColor(UIColor(rgba: color), forState: .Normal)
-            button.setTitle(feeling["title"], forState: .Normal)
+            dispatch_async(dispatch_get_main_queue()) {
+                button.setTitleColor(UIColor(rgba: color), forState: .Normal)
+                button.setTitle(feeling["title"], forState: .Normal)
+            }
             button.addTarget(self, action: "clickPicker:", forControlEvents: .TouchUpInside)
             picker.addSubview(button)
             offset += 44
@@ -345,7 +351,9 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     @IBAction func clickPicker(sender:UIButton) {
         let index = sender.tag
         self.selectedIndex = index
-        self.btnClass.setTitle(properties.moods[index]["title"], forState: .Normal)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.btnClass.setTitle(properties.moods[index]["title"], forState: .Normal)
+        }
         self.propertySelectedClass = properties.moods[index]["class"]!
         self.propertySelectedClassName = properties.moods[index]["title"]!
         closePicker()
@@ -355,9 +363,11 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         for v in self.picker.subviews {
             if (v is UIButton) {
                 let button = v as! UIButton
-                button.setTitleColor(UIColor(rgba: self.defaultColor), forState: .Normal)
-                if(v.tag == self.selectedIndex) {
-                    button.setTitleColor(UIColor(rgba: "#5cb85c"), forState: .Normal)
+                dispatch_async(dispatch_get_main_queue()) {
+                    button.setTitleColor(UIColor(rgba: self.defaultColor), forState: .Normal)
+                    if(v.tag == self.selectedIndex) {
+                        button.setTitleColor(UIColor(rgba: "#5cb85c"), forState: .Normal)
+                    }
                 }
             }
         }
@@ -423,7 +433,9 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     func afterSend(let response: NSData) {
         SearchConfig().deleteAllData()
         self.txtArea.text = ""
-        self.btnClass.setTitle("-----------------------", forState: .Normal)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.btnClass.setTitle("-----------------------", forState: .Normal)
+        }
         setBedsAndBaths("bedrooms", value: "0")
         setBedsAndBaths("bathrooms", value: "0")
         self.txtPriceFrom.text = ""

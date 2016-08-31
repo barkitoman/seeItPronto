@@ -14,6 +14,7 @@ class CurrentShowingViewController: UIViewController {
     @IBOutlet weak var lblPrice: UILabel!
     @IBOutlet weak var address: UILabel!
     @IBOutlet weak var propertyDescription: UILabel!
+    @IBOutlet weak var btnShowingInstructionChat: UIButton!
 
     @IBOutlet weak var btnCall: UIButton!
     @IBOutlet weak var btnStartEndShowing: UIButton!
@@ -35,7 +36,9 @@ class CurrentShowingViewController: UIViewController {
         if(role == "buyer") {
             self.btnCall.hidden = true
             self.btnStartEndShowing.hidden = true
-            self.btnInstructions.hidden = true
+            dispatch_async(dispatch_get_main_queue()) {
+                self.btnShowingInstructionChat.setTitle("Chat With Agent", forState: .Normal)
+            }
         }
     }
 
@@ -158,12 +161,21 @@ class CurrentShowingViewController: UIViewController {
     }
     
     @IBAction func btnShowingInstrunctions(sender: AnyObject) {
-        if(!self.viewData["realtor_properties"]["showing_instruction"].stringValue.isEmpty) {
-            var instructions = self.viewData["realtor_properties"]["type"].stringValue+"\n"
-            instructions = instructions+self.viewData["realtor_properties"]["showing_instruction"].stringValue
-            Utility().displayAlert(self, title: "Showing instructions", message: instructions, performSegue: "")
+        if(User().getField("role") == "buyer") {
+            dispatch_async(dispatch_get_main_queue()) {
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+                vc.to = self.viewData["realtor"]["id"].stringValue
+                self.navigationController?.showViewController(vc, sender: nil)
+            }
         } else {
-            Utility().displayAlert(self, title: "Message", message: "You don't have showing instructions for this property", performSegue: "")
+            if(!self.viewData["realtor_properties"]["showing_instruction"].stringValue.isEmpty) {
+                var instructions = self.viewData["realtor_properties"]["type"].stringValue+"\n"
+                instructions = instructions+self.viewData["realtor_properties"]["showing_instruction"].stringValue
+                Utility().displayAlert(self, title: "Showing instructions", message: instructions, performSegue: "")
+            } else {
+                Utility().displayAlert(self, title: "Message", message: "You don't have showing instructions for this property", performSegue: "")
+            }
         }
     }
     
@@ -172,7 +184,6 @@ class CurrentShowingViewController: UIViewController {
             let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
             vc.to = self.viewData["buyer"]["id"].stringValue
-            vc.oponentImageName = self.viewData["buyer"]["url_image"].stringValue
             self.navigationController?.showViewController(vc, sender: nil)
         }
     }

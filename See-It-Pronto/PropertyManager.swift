@@ -45,6 +45,7 @@ class PropertyEntity: NSManagedObject {
     @NSManaged var remarks:String
     @NSManaged var spa:String
     @NSManaged var zipcode:String
+    @NSManaged var license:String
     
 
 }
@@ -130,6 +131,7 @@ class Property {
         newItem.remarks       = propertyData["remarks"].stringValue //description
         newItem.spa           = propertyData["spa"].stringValue //spa
         newItem.zipcode       = propertyData["zipcode"].stringValue
+        newItem.license       = propertyData["license"].stringValue
         newItem.property_class = propertyClass
         
         do {

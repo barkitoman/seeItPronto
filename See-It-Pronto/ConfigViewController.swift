@@ -43,7 +43,7 @@ class ConfigViewController: UIViewController {
     
     @IBAction func gpsEnabled(sender: AnyObject) {
         dispatch_async(dispatch_get_main_queue()) {
-            let alertController = UIAlertController (title: "Message", message: "See It Pronto requires certain functions enabled to work properly: GPS and Push Notifications. Click the Settings button to open it up so you can enable them.", preferredStyle: .Alert)
+            let alertController = UIAlertController (title: "Message", message: "See It Pronto! requires certain functions enabled to work properly: GPS and Push Notifications. Click the Settings button to open it up so you can enable them.", preferredStyle: .Alert)
         
             let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (_) -> Void in
                 //let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
@@ -59,7 +59,7 @@ class ConfigViewController: UIViewController {
     
     @IBAction func pushEnabled(sender: AnyObject) {
         dispatch_async(dispatch_get_main_queue()) {
-            let alertController = UIAlertController (title: "Message", message: "See It Pronto requires certain functions enabled to work properly: GPS and Push Notifications. Click the Settings button to open it up so you can enable them.", preferredStyle: .Alert)
+            let alertController = UIAlertController (title: "Message", message: "See It Pronto! requires certain functions enabled to work properly: GPS and Push Notifications. Click the Settings button to open it up so you can enable them.", preferredStyle: .Alert)
             let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (_) -> Void in
                 //let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
                 UIApplication.sharedApplication().openURL(NSURL(string:"prefs:root=NOTIFICATIONS_ID")!)

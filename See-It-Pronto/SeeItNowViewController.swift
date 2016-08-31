@@ -75,6 +75,7 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
         url     = url+"?page=\(String(self.countPage + 1))"
         url     = url+"&lat=\(self.latitude)&lon=\(self.longintude)"
         url     = url+"&property_zipcode=\(Property().getField("zipcode"))"
+        url     = url+"&license=\(Property().getField("license"))"
         url     = url+"&showing_type=\(PropertyAction().getField("type"))"
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)

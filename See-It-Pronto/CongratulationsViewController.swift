@@ -97,7 +97,6 @@ class CongratulationsViewController: UIViewController {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
         vc.to = self.viewData["realtor"]["id"].stringValue
-        vc.oponentImageName = self.viewData["realtor"]["url_image"].stringValue
         self.navigationController?.showViewController(vc, sender: nil)
     }
     
@@ -194,7 +193,7 @@ class CongratulationsViewController: UIViewController {
             
         } else if(result["showing_status"].int == 1) {
             self.stopCongratulationTimer()
-            Utility().displayAlert(self,title: "Success", message:"The agent has accepted your request", performSegue:"showCurrentShowing")
+            Utility().displayAlert(self,title: "Success", message:"An Agent is on their way to show you the above property PRONTO!", performSegue:"showCurrentShowing")
             
         } else if(result["showing_status"].int == 2) {
             self.requestRejected()

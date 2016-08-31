@@ -156,6 +156,14 @@ class SeeItLaterBuyerViewController: UIViewController {
                 self.addShowingCalendar(indexPath)
             }
         }
+        let chat = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Chat\nWith\nAgent"){(UITableViewRowAction,NSIndexPath) -> Void in
+            dispatch_async(dispatch_get_main_queue()) {
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+                vc.to = showing["realtor_id"].stringValue
+                self.navigationController?.showViewController(vc, sender: nil)
+            }
+        }
         if(!showing["buyer_calendar_id"].stringValue.isEmpty) {
             calendar = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "View\nEvent"){(UITableViewRowAction,NSIndexPath) -> Void in
                 let dateString = "\(showing["date"].stringValue) EST"
@@ -166,7 +174,7 @@ class SeeItLaterBuyerViewController: UIViewController {
                 self.gotoAppleCalendar(date!)
             }
         }
-        return [delete, edit, calendar]
+        return [delete, edit, calendar, chat]
     }
     
     @IBAction func openViewDetails(sender:UIButton) {
@@ -255,7 +263,7 @@ class SeeItLaterBuyerViewController: UIViewController {
         store.requestAccessToEntityType(.Event) {(granted, error) in
             if !granted { return }
             let event = EKEvent(eventStore: store)
-            event.title = "See it pronto, showing request.\n \(showing["property"][0]["address"].stringValue)"
+            event.title = "See It Pronto!, showing request.\n \(showing["property"][0]["address"].stringValue)"
             let dateString = "\(showing["date"].stringValue) EST"
             let dateFormatter = NSDateFormatter()
             dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")

@@ -164,6 +164,7 @@ class AppointmentsViewController: UIViewController {
     }
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let appoiment = JSON(self.appoiments[indexPath.row])
         let delete = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Cancel"){
             (UITableViewRowAction,NSIndexPath) -> Void in
             self.cancelShowingRequest(indexPath)
@@ -172,7 +173,15 @@ class AppointmentsViewController: UIViewController {
             (UITableViewRowAction,NSIndexPath) -> Void in
             self.showEditDatePicker(indexPath)
         }
-        return [delete, edit]
+        let chat = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Chat With\nCustomer"){(UITableViewRowAction,NSIndexPath) -> Void in
+            dispatch_async(dispatch_get_main_queue()) {
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+                vc.to = appoiment["buyer_id"].stringValue
+                self.navigationController?.showViewController(vc, sender: nil)
+            }
+        }
+        return [delete, edit, chat]
     }
     
     func showEditDatePicker(indexPath:NSIndexPath){

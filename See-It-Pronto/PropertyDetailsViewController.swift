@@ -72,7 +72,7 @@ class PropertyDetailsViewController: UIViewController, UIScrollViewDelegate {
                 self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
             }
         } else {
-            Utility().displayAlert(self, title: "Message", message: " \"See it pronto” is only available for nearby properties.", performSegue: "")
+            Utility().displayAlert(self, title: "Message", message: " \"See It Pronto!” is only available for nearby properties.", performSegue: "")
         }
     }
     
