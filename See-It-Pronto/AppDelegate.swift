@@ -132,7 +132,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
         
         let vc = storyboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
         vc.to = fromUserId
-        vc.oponentImageName = ""
         rootViewController.pushViewController(vc, animated: true)
     }
     

@@ -18,6 +18,7 @@
         <attribute name="image5" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image6" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="internet" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="license" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lot" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lot_size" optional="YES" attributeType="String" syncable="YES"/>
@@ -87,7 +88,7 @@
     </entity>
     <elements>
         <element name="DeviceManager" positionX="-54" positionY="135" width="128" height="60"/>
-        <element name="Property" positionX="-54" positionY="117" width="128" height="525"/>
+        <element name="Property" positionX="-54" positionY="117" width="128" height="540"/>
         <element name="PropertyAction" positionX="-54" positionY="135" width="128" height="60"/>
         <element name="PropertyRealtor" positionX="-54" positionY="108" width="128" height="210"/>
         <element name="SearchConfig" positionX="-63" positionY="54" width="128" height="210"/>

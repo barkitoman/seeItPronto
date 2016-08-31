@@ -121,7 +121,10 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
         let cell   = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PropertyListTableViewCell
         let property = JSON(self.properties[indexPath.row])
         var description = property["address"].stringValue+"\n"+Utility().formatCurrency(property["price"].stringValue)
-        description = description+" "+property["bedrooms"].stringValue+" Bd / "+property["bathrooms"].stringValue+" Ba"
+        description = description+" \n"+property["bedrooms"].stringValue+" Bd / "+property["bathrooms"].stringValue+" Ba"
+        if(!property["square_feed"].stringValue.isEmpty) {
+            description = description+" / \(property["square_feed"].stringValue) Sq Ft"
+        }
         cell.lblDescription.text = description
         cell.btnViewDetails.tag = indexPath.row
         cell.btnViewDetails.addTarget(self, action: "viewDetails:", forControlEvents: .TouchUpInside)

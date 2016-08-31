@@ -43,7 +43,6 @@ class ChatViewController: UIViewController, LGChatControllerDelegate, UITextFiel
         self.lastToMessageDate = "\(Utility().getCurrentDate()) \(Utility().getTime())"
         self.findConversation()
         self.internalNewMessages()
-        print(lastToMessageDate)
         self.txtMessage.delegate = self
         tableView.separatorStyle = UITableViewCellSeparatorStyle.None 
         // Keep message field visible

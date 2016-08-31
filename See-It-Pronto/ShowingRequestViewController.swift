@@ -217,7 +217,6 @@ class ShowingRequestViewController: UIViewController {
             let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
             vc.to = self.viewData["showing"]["buyer_id"].stringValue
-            vc.oponentImageName = self.viewData["buyer"]["url_image"].stringValue
             self.navigationController?.showViewController(vc, sender: nil)
         }
     }
