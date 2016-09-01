@@ -176,7 +176,6 @@ class CongratulationsViewController: UIViewController {
     }
     
     func findShowingInfo() {
-        print("SECONDS \(self.requestSeconds)")
         if(self.requestSeconds == 4 || self.congratutationSecondsCount <= 0) {
             self.requestSeconds = 0;
             let url = AppConfig.APP_URL+"/get_showing_info/"+self.viewData["showing"]["id"].stringValue

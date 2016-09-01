@@ -27,7 +27,7 @@ class AgentConfirmationViewController: UIViewController, UITextFieldDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.lblPaymentDescription.text = "Once you select the \"Send Request\" Button below, a notification will be sent to the agent and your card will be charged with $\(AppConfig.SHOWING_PRICE)"
+        self.lblPaymentDescription.text = "Once you select the \"Send Request\" button below, your request will be sent to the agent. Once they confirm, your card will be charged $\(AppConfig.SHOWING_PRICE)"
         self.txtCouponCode.delegate = self
         self.loadPropertyData()
         self.loadRealtorData()

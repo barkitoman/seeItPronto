@@ -5355,7 +5355,7 @@ $480,000
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="RdQ-z4-MJS"/>
                                         </constraints>
-                                        <string key="text">Once you select the "Send Request" Button below, a notification will be sent to the agent and your card will be charged with $10</string>
+                                        <string key="text">Once you select the "Send Request" button below, your request will be sent to the agent. Once they confirm, your card will be charged $5.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
