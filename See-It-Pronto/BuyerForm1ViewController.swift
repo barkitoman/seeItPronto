@@ -76,7 +76,8 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
             Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPost(response)});
         } else {
             //if user is registering
-            let params = "role=buyer&client_id="+txtEmail.text!+"&phone="+txtPhone.text!+"&client_secret="+txtPassword.text!+"&grant_type="+AppConfig.GRANT_TYPE
+            var params = "role=buyer&client_id=\(txtEmail.text!)&phone=\(self.txtPhone.text!)"
+            params = params+"&client_secret=\(txtPassword.text!)&grant_type=\(AppConfig.GRANT_TYPE)&device_token_id=\(Utility().deviceTokenId())"
             Request().post(url, params:params,controller: self,successHandler: {(response) in self.afterPost(response)});
         }
     }
