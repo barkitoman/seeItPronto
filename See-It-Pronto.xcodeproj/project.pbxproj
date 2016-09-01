@@ -28,6 +28,8 @@
 		108B96921D1DBCAE000CA586 /* KontaktSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 108B96901D1DBBC5000CA586 /* KontaktSDK.framework */; };
 		108B96931D1DBCAE000CA586 /* KontaktSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 108B96901D1DBBC5000CA586 /* KontaktSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1094FD2F1CF4E285009DCAF9 /* CreateBeaconViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1094FD2E1CF4E285009DCAF9 /* CreateBeaconViewController.swift */; };
+		1095DEC61D779BAB0091801B /* Notie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1095DEC41D779BAB0091801B /* Notie.swift */; };
+		1095DEC71D779BAB0091801B /* NotieStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1095DEC51D779BAB0091801B /* NotieStyle.swift */; };
 		1098C2331D6F63FD00E7D866 /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1098C2321D6F63FD00E7D866 /* AboutUsViewController.swift */; };
 		109E6A481C80A95A00AD46EE /* PropertyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109E6A471C80A95A00AD46EE /* PropertyManager.swift */; };
 		109FF84A1C860A1000E20FC2 /* PropertyActionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109FF8491C860A1000E20FC2 /* PropertyActionManager.swift */; };
@@ -158,6 +160,8 @@
 		1087959A1C97367A00B3D6FA /* MyListingsRealtorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyListingsRealtorTableViewCell.swift; sourceTree = "<group>"; };
 		108B96901D1DBBC5000CA586 /* KontaktSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KontaktSDK.framework; sourceTree = "<group>"; };
 		1094FD2E1CF4E285009DCAF9 /* CreateBeaconViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateBeaconViewController.swift; sourceTree = "<group>"; };
+		1095DEC41D779BAB0091801B /* Notie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notie.swift; sourceTree = "<group>"; };
+		1095DEC51D779BAB0091801B /* NotieStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotieStyle.swift; sourceTree = "<group>"; };
 		1098C2321D6F63FD00E7D866 /* AboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
 		109E6A471C80A95A00AD46EE /* PropertyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyManager.swift; sourceTree = "<group>"; };
 		109FF8491C860A1000E20FC2 /* PropertyActionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyActionManager.swift; sourceTree = "<group>"; };
@@ -372,6 +376,8 @@
 				6885E5F01C57021200CCCA19 /* SRWebClient.swift */,
 				107934BC1CD7C7D500F07A14 /* MyDownloader.swift */,
 				10E66C6E1D39831F00C22445 /* LGSimpleChat.swift */,
+				1095DEC41D779BAB0091801B /* Notie.swift */,
+				1095DEC51D779BAB0091801B /* NotieStyle.swift */,
 				A4FDCA651CE544F600D18B88 /* BProgressHUD.swift */,
 				10E46AE91CC1535300C5F8D5 /* UIColor.swift */,
 				A4048DD61CF7EFB10052EBB5 /* CustomPickerDialog.swift */,
@@ -625,6 +631,7 @@
 				109E6A481C80A95A00AD46EE /* PropertyManager.swift in Sources */,
 				682EF3571C528960007176BF /* RealtorForm1ViewController.swift in Sources */,
 				A40081931D53AE9700BBFF91 /* MoreImageViewController.swift in Sources */,
+				1095DEC71D779BAB0091801B /* NotieStyle.swift in Sources */,
 				681140B11C3AC8760068AE1C /* ListingDetailsViewController.swift in Sources */,
 				68598DF31C2AF44F00E104C9 /* LoginViewController.swift in Sources */,
 				A4FDCA661CE544F600D18B88 /* BProgressHUD.swift in Sources */,
@@ -677,6 +684,7 @@
 				686E8F411C3C2AF900F5FE01 /* RealtorHomeViewController.swift in Sources */,
 				680842E31C3EB0C700AF7F8E /* AppConfig.swift in Sources */,
 				68663D2D1C3C8CB600460D42 /* PropertyDetailsViewController.swift in Sources */,
+				1095DEC61D779BAB0091801B /* Notie.swift in Sources */,
 				681140971C3AC61F0068AE1C /* BuyerForm2ViewController.swift in Sources */,
 				680C41B01C6A6BF800194728 /* ListRealtorsViewController.swift in Sources */,
 				683F7F231C3D7CB500CA0A0C /* CongratulationsViewController.swift in Sources */,

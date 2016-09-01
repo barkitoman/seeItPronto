@@ -47,9 +47,10 @@ class ShowingRequestViewController: UIViewController {
     }
     
     @IBAction func btnYes(sender: AnyObject) {
-        let url          = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
+        let url          = AppConfig.APP_URL+"/showings/\(self.viewData["showing"]["id"].stringValue)"
         var params       = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=1&current_showing="+self.isCurrentShowing()
-        params           = params+"&user_id="+User().getField("id")
+        params           = params+"&user_id=\(User().getField("id"))&showing_type=\(self.viewData["showing"]["type"].stringValue)"
+        params           = params+"&execute_payment=1&coupon_code=\(self.viewData["showing"]["coupon_code"].stringValue)"
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         let type         = "showing_acepted"
         let title        = "Showing Request Accepted"
@@ -82,7 +83,11 @@ class ShowingRequestViewController: UIViewController {
             if(result["msg"].stringValue != "") {
                 msg = result["msg"].stringValue
             }
-            Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
+            if(result["execute_payment"].stringValue == "1") {
+                Utility().displayAlertBack(self, title: "Error", message: msg)
+            } else {
+                Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
+            }
         }
     }
     
@@ -153,9 +158,7 @@ class ShowingRequestViewController: UIViewController {
             var description = result["property"]["address"].stringValue+"\n \(Utility().formatCurrency(result["property"]["price"].stringValue))"
             description = description+"\n \(result["property"]["bedrooms"].stringValue) Bd / \(result["property"]["bathrooms"].stringValue) Ba / "
             self.lblPropertyDescription.text = description
-            
             Utility().showPhoto(self.buyerPhoto, imgPath: result["buyer"]["url_image"].stringValue, defaultImg: "default_user_photo")
-            
             if(!result["property"]["image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.propertyPhoto, imgPath: result["property"]["image"].stringValue)
             }

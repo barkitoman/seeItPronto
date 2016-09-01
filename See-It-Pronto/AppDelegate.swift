@@ -100,6 +100,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
         print("Error getting device token on emulator")
         print(error.localizedDescription)
     }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        let rootViewController = self.window?.rootViewController as! UINavigationController
+        var notie = Notie(view: rootViewController.view, message: "New notification received", style: .Confirm)
+        notie.leftButtonTitle  = "View"
+        notie.rightButtonTitle = "Close"
+        notie.leftButtonAction = {
+            notie.dismiss()
+        }
+        notie.rightButtonAction = {
+            notie.dismiss()
+        }
+        if let aps = userInfo["aps"] as? NSDictionary {
+            if let alertMsg = aps["alert"] as? NSDictionary {
+                if let message = alertMsg["body"] as? String {
+                    notie = Notie(view: rootViewController.view, message: message, style: .Confirm)
+                }
+            }
+            if let category = aps["category"] as? String {
+                if category == "NEW_MESSAGE" {
+                    if let alert = aps["alert"] as? NSDictionary {
+                        if let userIds = alert["loc-args"] as? NSArray {
+                            let fromUserId = userIds[0] as! String
+                            notie.leftButtonAction = {
+                                notie.dismiss()
+                                self.goToChat(fromUserId)
+                            }
+                        }
+                    }
+                }else {
+                    notie.leftButtonAction = {
+                        notie.dismiss()
+                        self.goToNotifications()
+                    }
+                }
+            } else if let _ = aps["alert"] as? NSString {
+                notie.leftButtonAction = {
+                    notie.dismiss()
+                    self.goToNotifications()
+                }
+            }
+        }
+        notie.show()
+    }
 
     
     // Called when a notification is received and the app is in the

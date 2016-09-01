@@ -19,7 +19,7 @@ struct AppConfig {
     static var MODE                    = "DEVELOP" //PROD, DEVELOP
     
     //Valor de precios, estos valores se deben cambiar tambien en en backend app/Stripe.php
-    static var SHOWING_PRICE           = "10"
+    static var SHOWING_PRICE           = "5"
     static var SUBSCRIPTION_PRICE      = "15"
 
 }
