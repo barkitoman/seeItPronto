@@ -159,7 +159,14 @@ class NotificationsViewController: UIViewController {
     func seenNotificationRequest(notificationId:String) {
         let url = AppConfig.APP_URL+"/seen_notification/\(notificationId)"
         Request().get(url) { (response) -> Void in
-        
+            let val = UIApplication.sharedApplication().applicationIconBadgeNumber.description
+            if let currentCount = Int(val) {
+                if(currentCount > 0) {
+                    UIApplication.sharedApplication().applicationIconBadgeNumber = currentCount - 1
+                } else {
+                    UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+                }
+            }
         }
     }
     

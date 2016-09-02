@@ -47,12 +47,39 @@ extension UIImage {
         if self.imageOrientation == UIImageOrientation.Up {
             return self
         }
-        
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
         self.drawInRect(CGRectMake(0, 0, self.size.width, self.size.height))
         let normalizedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        
         return normalizedImage;
     }
+}
+
+extension String {
+    
+    func toDateTime() -> NSDate {
+        //Create Date Formatter
+        let dateFormatter = NSDateFormatter()
+    
+        //Specify Format of String to Parse
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        //Parse into NSDate
+        if let dateFromString : NSDate = dateFormatter.dateFromString(self) {
+            return dateFromString
+        }
+        let currentDate = NSDate()
+        return currentDate
+    }
+}
+
+extension NSDate {
+    
+    func diffHours(date:NSDate) -> Int {
+        let dayHourMinuteSecond: NSCalendarUnit = [.Day, .Hour, .Minute, .Second]
+        let difference = NSCalendar.currentCalendar().components(dayHourMinuteSecond, fromDate: date, toDate: self, options: [])
+        let hours      = difference.hour
+        return hours
+    }
+    
 }

@@ -113,7 +113,9 @@ class ChatViewController: UIViewController, LGChatControllerDelegate, UITextFiel
     override func viewWillAppear(animated: Bool) {
         navigationController?.navigationBarHidden = true
         super.viewWillAppear(animated)
-        
+        if(User().getField("id") != "") {
+            User().updateField("current_chat", value: self.to)
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -121,6 +123,9 @@ class ChatViewController: UIViewController, LGChatControllerDelegate, UITextFiel
             navigationController?.navigationBarHidden = false
         }
         super.viewWillDisappear(animated)
+        if(User().getField("id") != "") {
+            User().updateField("current_chat", value: "")
+        }
     }
 
     override func didReceiveMemoryWarning() {

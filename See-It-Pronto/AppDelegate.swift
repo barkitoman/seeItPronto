@@ -101,7 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
         print(error.localizedDescription)
     }
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+    func showTopNotification(userInfo: [NSObject : AnyObject]) {
         let rootViewController = self.window?.rootViewController as! UINavigationController
         var notie = Notie(view: rootViewController.view, message: "New notification received", style: .Confirm)
         notie.leftButtonTitle  = "View"
@@ -145,47 +145,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
         notie.show()
     }
 
-    
     // Called when a notification is received and the app is in the
     // foreground (or if the app was in the background and the user clicks on the notification).
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
         // display the userInfo
-        if let aps = userInfo["aps"] as? NSDictionary {
-            if let category = aps["category"] as? String {
-                if category == "NEW_MESSAGE" {
-                    if let alert = aps["alert"] as? NSDictionary {
-                        if let userIds = alert["loc-args"] as? NSArray {
-                            let fromUserId = userIds[0] as! String
-                            self.goToChat(fromUserId)
+        if ( application.applicationState == UIApplicationState.Inactive || application.applicationState == UIApplicationState.Background ){
+            if let aps = userInfo["aps"] as? NSDictionary {
+                if let category = aps["category"] as? String {
+                    if category == "NEW_MESSAGE" {
+                        if let alert = aps["alert"] as? NSDictionary {
+                            if let userIds = alert["loc-args"] as? NSArray {
+                                let fromUserId = userIds[0] as! String
+                                self.goToChat(fromUserId)
+                            }
                         }
+                    }else {
+                        self.goToNotifications()
                     }
-                }else {
+                } else if let _ = aps["alert"] as? NSString {
                     self.goToNotifications()
                 }
-            } else if let _ = aps["alert"] as? NSString {
-                self.goToNotifications()
+                completionHandler(UIBackgroundFetchResult.NoData)
             }
-            completionHandler(UIBackgroundFetchResult.NoData)
+        }else{
+            self.showTopNotification(userInfo);
         }
-  
     }
     
     func goToChat(fromUserId:String = "") {
-        let rootViewController = self.window?.rootViewController as! UINavigationController
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if(User().getField("current_chat") != fromUserId) {
+            dispatch_async(dispatch_get_main_queue()) {
+                let rootViewController = self.window?.rootViewController as! UINavigationController
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let vc = storyboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
-        vc.to = fromUserId
-        rootViewController.pushViewController(vc, animated: true)
+                let vc = storyboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+                vc.to = fromUserId
+                rootViewController.pushViewController(vc, animated: true)
+            }
+        }
     }
     
     func goToNotifications() {
-        let rootViewController = self.window?.rootViewController as! UINavigationController
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        dispatch_async(dispatch_get_main_queue()) {
+            let rootViewController = self.window?.rootViewController as! UINavigationController
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let vc = storyboard.instantiateViewControllerWithIdentifier("NotificationsViewController") as! NotificationsViewController
-        vc.showNewNotificationMsg = true
-        rootViewController.pushViewController(vc, animated: true)
+            let vc = storyboard.instantiateViewControllerWithIdentifier("NotificationsViewController") as! NotificationsViewController
+            vc.showNewNotificationMsg = true
+            rootViewController.pushViewController(vc, animated: true)
+        }
     }
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
@@ -207,7 +215,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-        if (User().getField("id") != "" && User().getField("is_login") == "1" && User().getField("role") == "realtor") {
+        if(User().getField("id") != "" && User().getField("is_login") == "1" && User().getField("role") == "realtor") {
+            if(User().getField("foreground_date") != "") {
+                let lastDateStr     = User().getField("foreground_date")
+                let lastDate        = lastDateStr.toDateTime()
+                let currentDateStr  = "\(Utility().getCurrentDate()) \(Utility().getTime())"
+                let currentDate     = currentDateStr.toDateTime()
+                let diffHours       = currentDate.diffHours(lastDate)
+                if(diffHours >= 4) {
+                    self.gotoReadyToWork()
+                }
+            } else {
+                self.gotoReadyToWork()
+            }
+        }
+    }
+    
+    func gotoReadyToWork() {
+        let currentDateStr = "\(Utility().getCurrentDate()) \(Utility().getTime())"
+        User().updateField("foreground_date", value: currentDateStr)
+        dispatch_async(dispatch_get_main_queue()) {
             let rootViewController = self.window?.rootViewController as! UINavigationController
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let mvc = storyboard.instantiateViewControllerWithIdentifier("ReadyToWorkViewController") as! ReadyToWorkViewController

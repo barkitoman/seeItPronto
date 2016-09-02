@@ -235,4 +235,5 @@ class Utility {
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString(" ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         return deviceTokenStr
     }
+    
 }

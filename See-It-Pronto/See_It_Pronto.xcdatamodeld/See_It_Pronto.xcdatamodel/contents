@@ -71,10 +71,12 @@
         <attribute name="access_token" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="active_for_showing" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="broker_email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="current_chat" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="device_token_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="expires_in" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="first_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="foreground_date" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="is_login" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="last_name" optional="YES" attributeType="String" syncable="YES"/>
@@ -92,6 +94,6 @@
         <element name="PropertyAction" positionX="-54" positionY="135" width="128" height="60"/>
         <element name="PropertyRealtor" positionX="-54" positionY="108" width="128" height="210"/>
         <element name="SearchConfig" positionX="-63" positionY="54" width="128" height="210"/>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="300"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="330"/>
     </elements>
 </model>
