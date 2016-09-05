@@ -10,18 +10,12 @@ import UIKit
 
 class FeedBack1ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
-    var viewData:JSON = []
+    var viewData:JSON         = []
     var showStartMessage:Bool = false
     var showingRating:String  = ""
     var homeRating:String     = ""
     
-    @IBOutlet weak var showingComments: UITextView!
-    @IBOutlet weak var showingRate1: UIButton!
-    @IBOutlet weak var showingRate2: UIButton!
-    @IBOutlet weak var showingRate3: UIButton!
-    @IBOutlet weak var showingRate4: UIButton!
-    @IBOutlet weak var showingRate5: UIButton!
-    
+    @IBOutlet weak var propertyComments: UITextView!
     @IBOutlet weak var homeRate1: UIButton!
     @IBOutlet weak var homeRate2: UIButton!
     @IBOutlet weak var homeRate3: UIButton!
@@ -32,7 +26,7 @@ class FeedBack1ViewController: UIViewController, UITextFieldDelegate, UITextView
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.showingComments.delegate = self
+        self.propertyComments.delegate = self
         if(showStartMessage == true) {
          self.showIndications()
         }
@@ -88,7 +82,7 @@ class FeedBack1ViewController: UIViewController, UITextFieldDelegate, UITextView
     }
     
     @IBAction func btnNext(sender: AnyObject) {
-        var params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3&feedback_showing_comment="+self.showingComments.text!
+        var params = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=3&feedback_property_comment="+self.propertyComments.text!
         params     = params+"&showing_rating_value="+self.showingRating+"&home_rating_value="+self.homeRating
         params     = params+"&user_id="+User().getField("id")+"&realtor_id="+self.viewData["showing"]["realtor_id"].stringValue
         params     = params+"&notification_feedback=1&property_id=\(self.viewData["showing"]["property_id"].stringValue)"
@@ -119,12 +113,6 @@ class FeedBack1ViewController: UIViewController, UITextFieldDelegate, UITextView
     }
     
     func addRatingTarget() {
-        showingRate1.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
-        showingRate2.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
-        showingRate3.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
-        showingRate4.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
-        showingRate5.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
-        
         homeRate1.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
         homeRate2.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
         homeRate3.addTarget(self, action: "setRating:", forControlEvents: .TouchUpInside)
@@ -134,44 +122,12 @@ class FeedBack1ViewController: UIViewController, UITextFieldDelegate, UITextView
     
     @IBAction func setRating(button:UIButton) {
         let description = (button.titleLabel?.text)! as String
-        let typeRating = description.characters.split{$0 == "="}.map(String.init)
-        let type   = typeRating[0] as String
-        let rating = typeRating[1] as String
-        if(type == "showing") {
-            self.showingRating = rating
-            showingRatingButtons(rating)
-        }else if(type == "home") {
+        let typeRating  = description.characters.split{$0 == "="}.map(String.init)
+        let type        = typeRating[0] as String
+        let rating      = typeRating[1] as String
+        if(type == "home") {
             self.homeRating = rating
             homeRatingButtons(rating)
-        }
-    }
-    
-    func showingRatingButtons(rating:String) {
-        showingRate1.setImage(UIImage(named: "0stars_alone"), forState: UIControlState.Normal)
-        showingRate2.setImage(UIImage(named: "0stars_alone"), forState: UIControlState.Normal)
-        showingRate3.setImage(UIImage(named: "0stars_alone"), forState: UIControlState.Normal)
-        showingRate4.setImage(UIImage(named: "0stars_alone"), forState: UIControlState.Normal)
-        showingRate5.setImage(UIImage(named: "0stars_alone"), forState: UIControlState.Normal)
-        if(rating == "1"){
-            showingRate1.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-        }else if(rating == "2") {
-            showingRate1.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            showingRate2.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-        }else if(rating == "3") {
-            showingRate1.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            showingRate2.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            showingRate3.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-        } else if(rating == "4") {
-            showingRate1.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            showingRate2.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            showingRate3.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            showingRate4.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-        } else if(rating == "5") {
-            showingRate1.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            showingRate2.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            showingRate3.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            showingRate4.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
-            showingRate5.setImage(UIImage(named: "1stars_alone"), forState: UIControlState.Normal)
         }
     }
     
@@ -230,7 +186,6 @@ class FeedBack1ViewController: UIViewController, UITextFieldDelegate, UITextView
         self.view.frame = viewFrame
         UIView.commitAnimations()
     }
-    
     
     func textViewDidEndEditing(textView: UITextView) {
         var viewFrame : CGRect = self.view.frame

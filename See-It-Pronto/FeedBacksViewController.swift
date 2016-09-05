@@ -72,11 +72,14 @@ class FeedBacksViewController: UIViewController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! FeedBacksTableViewCell
         let feedback = JSON(self.feedbacks[indexPath.row])
-        cell.lblDescription.text = feedback["feedback_realtor_comment"].stringValue
-        cell.lblDate.text = feedback["date"].stringValue
-        if(!feedback["user_rating_value"].stringValue.isEmpty) {
-            cell.rating.image = UIImage(named: feedback["user_rating_value"].stringValue+"stars")
+        cell.lblAddress.text = feedback["property_address"].stringValue
+        cell.lblDescription.text = feedback["feedback_property_comment"].stringValue
+        cell.lblDate.text = feedback["nice_date"].stringValue
+        var homeRating = "0"
+        if(!feedback["home_rating_value"].stringValue.isEmpty) {
+            homeRating = feedback["home_rating_value"].stringValue
         }
+        cell.rating.image = UIImage(named: homeRating+"stars")
         if let _ = self.models[feedback["property_id"].stringValue] {
             self.showCell(cell, showing: feedback, indexPath: indexPath)
         } else {
@@ -130,7 +133,7 @@ class FeedBacksViewController: UIViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let feedback = JSON(self.feedbacks[indexPath.row])
-        Utility().displayAlert(self, title: "Feedback", message: feedback["feedback_realtor_comment"].stringValue, performSegue: "")
+        Utility().displayAlert(self, title: "Feedback", message: feedback["feedback_property_comment"].stringValue, performSegue: "")
     }
     
     //Pagination

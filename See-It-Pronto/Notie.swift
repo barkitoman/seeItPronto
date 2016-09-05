@@ -124,22 +124,24 @@ public class Notie : UIView {
 
     /// Shows the notification.
     public func show() {
-        self.view.addSubview(self)
-        self.backgroundColor = self.messageBackgroundColor
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.widthAnchor.constraintEqualToAnchor(self.view.widthAnchor).active = true
-        self.topConstraint = self.topAnchor.constraintEqualToAnchor(self.view.topAnchor)
-        self.bottomConstraint = self.bottomAnchor.constraintEqualToAnchor(self.view.topAnchor)
-        self.topConstraint?.active = false
-        self.bottomConstraint?.active = true
+        dispatch_async(dispatch_get_main_queue()) {
+            self.view.addSubview(self)
+            self.backgroundColor = self.messageBackgroundColor
+            self.translatesAutoresizingMaskIntoConstraints = false
+            self.widthAnchor.constraintEqualToAnchor(self.view.widthAnchor).active = true
+            self.topConstraint = self.topAnchor.constraintEqualToAnchor(self.view.topAnchor)
+            self.bottomConstraint = self.bottomAnchor.constraintEqualToAnchor(self.view.topAnchor)
+            self.topConstraint?.active = false
+            self.bottomConstraint?.active = true
 
-        self.configureBackgroundView()
-        self.forceUpdates()
-
-        UIView.animateWithDuration(self.animationDuration) { () -> Void in
-            self.bottomConstraint?.active = false
-            self.topConstraint?.active = true
+            self.configureBackgroundView()
             self.forceUpdates()
+
+            UIView.animateWithDuration(self.animationDuration) { () -> Void in
+                self.bottomConstraint?.active = false
+                self.topConstraint?.active = true
+                self.forceUpdates()
+            }
         }
     }
 

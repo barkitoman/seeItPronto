@@ -122,6 +122,7 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
         var params = "buyer_id="+User().getField("id")+"&realtor_id="+PropertyRealtor().getField("id")+"&property_id="+Property().getField("id")
         params     = params+"&type=see_it_later&date=\(self.seeItLaterDate)&property_class=\(Property().getField("property_class"))"
         params     = params+"&property_price=\(Property().getField("price"))&property_address=\(Property().getField("address"))&property_description=\(propertyDescription)"
+        params     = params+"&property_license=\(Property().getField("license"))"
         let url    = AppConfig.APP_URL+"/seeitpronto"
         Request().post(url, params:params,controller: self,successHandler: {(response) in self.afterPostRequest(response)});
     }

@@ -104,14 +104,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
     func showTopNotification(userInfo: [NSObject : AnyObject]) {
         let rootViewController = self.window?.rootViewController as! UINavigationController
         var notie = Notie(view: rootViewController.view, message: "New notification received", style: .Confirm)
-        notie.leftButtonTitle  = "View"
-        notie.rightButtonTitle = "Close"
         notie.leftButtonAction = {
             notie.dismiss()
         }
         notie.rightButtonAction = {
             notie.dismiss()
         }
+        var fromUserId = ""
         if let aps = userInfo["aps"] as? NSDictionary {
             if let alertMsg = aps["alert"] as? NSDictionary {
                 if let message = alertMsg["body"] as? String {
@@ -122,7 +121,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
                 if category == "NEW_MESSAGE" {
                     if let alert = aps["alert"] as? NSDictionary {
                         if let userIds = alert["loc-args"] as? NSArray {
-                            let fromUserId = userIds[0] as! String
+                            fromUserId = userIds[0] as! String
                             notie.leftButtonAction = {
                                 notie.dismiss()
                                 self.goToChat(fromUserId)
@@ -142,7 +141,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
                 }
             }
         }
-        notie.show()
+        notie.leftButtonTitle  = "View"
+        notie.rightButtonTitle = "Close"
+        if(fromUserId != "" && User().getField("current_chat") != fromUserId) {
+            notie.show()
+        }
     }
 
     // Called when a notification is received and the app is in the
@@ -169,6 +172,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
             }
         }else{
             self.showTopNotification(userInfo);
+            completionHandler(UIBackgroundFetchResult.NoData)
         }
     }
     

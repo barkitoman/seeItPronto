@@ -97,13 +97,6 @@ class FeedBack2ViewController: UIViewController,UITextFieldDelegate, UITextViewD
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func btnBuyWithThisAgent(sender: AnyObject) {
-        var params = "id=\(self.viewData["showing"]["id"].stringValue)&showing_status=3&realtor_id=\(self.viewData["showing"]["realtor_id"].stringValue)"
-        params     = params+"&feedback_realtor_comment=\(self.txtAgentComments.text!)&user_rating_value=\(self.userRating)&user_id\(User().getField("id"))"
-        let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
-        Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterBuyWithAgentButton(response)});
-    }
-    
     func afterBuyWithAgentButton(let response: NSData) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
@@ -125,9 +118,8 @@ class FeedBack2ViewController: UIViewController,UITextFieldDelegate, UITextViewD
 
     @IBAction func btnNext(sender: AnyObject) {
         var params = "id=\(self.viewData["showing"]["id"].stringValue)&showing_status=3&realtor_id=\(self.viewData["showing"]["realtor_id"].stringValue)"
-        params = params+"&feedback_realtor_comment=\(self.txtAgentComments.text!)&user_rating_value=\(self.userRating)&user_id\(User().getField("id"))"
-        params = params+"&send_broker_email=1"
-        //&send_broker_email=1&broker_email=\(User().getField("broker_email"))
+        params     = params+"&feedback_realtor_comment=\(self.txtAgentComments.text!)&user_rating_value=\(self.userRating)&user_id\(User().getField("id"))"
+        params     = params+"&send_broker_email=1&send_broker_email=1&broker_email=\(User().getField("broker_email"))"
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterNextRequest(response)});
     }
@@ -135,7 +127,9 @@ class FeedBack2ViewController: UIViewController,UITextFieldDelegate, UITextViewD
     func afterNextRequest(let response: NSData) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
-            Utility().goHome(self)
+            dispatch_async(dispatch_get_main_queue()) {
+                self.performSegueWithIdentifier("FeedBack2ViewController", sender: self)
+            }
         } else {
             var msg = "Error saving, please try later"
             if(result["msg"].stringValue != "") {
@@ -146,7 +140,9 @@ class FeedBack2ViewController: UIViewController,UITextFieldDelegate, UITextViewD
     }
     
     @IBAction func bntSkip(sender: AnyObject) {
-        Utility().goHome(self)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.performSegueWithIdentifier("FeedBack2ViewController", sender: self)
+        }
     }
     
     @IBAction func btnBack(sender: AnyObject) {

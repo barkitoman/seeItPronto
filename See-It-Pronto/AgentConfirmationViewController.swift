@@ -75,6 +75,7 @@ class AgentConfirmationViewController: UIViewController, UITextFieldDelegate, UI
         params     = params+"&type=\(PropertyAction().getField("type"))&coupon_code=\(self.txtCouponCode.text!)"
         params     = params+"&date=\(currentDate)&property_class=\(Property().getField("property_class"))"
         params     = params+"&property_price=\(Property().getField("price"))&property_address=\(Property().getField("address"))&property_description=\(propertyDescription)"
+        params     = params+"&property_license=\(Property().getField("license"))"
         let url    = AppConfig.APP_URL+"/seeitpronto"
         Request().post(url, params:params,controller: self,successHandler: {(response) in self.afterPostRequest(response)});
     }

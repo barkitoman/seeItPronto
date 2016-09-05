@@ -36,19 +36,23 @@ class FeedBack3ViewController: UIViewController {
         navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func btnBuyWithThisAgent(sender: AnyObject) {
+    @IBAction func btnPrev(sender: AnyObject) {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func btnShareMyInfo(sender: AnyObject) {
         var params = "id="+self.viewData["showing"]["id"].stringValue+"&buy_with_realtor=1"
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
-        params     = self.canceledNotificationParams(params)
+        params     = self.shareMyInfoNotificationParams(params)
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterBuyWithAgentRequest(response)});
     }
     
-    func canceledNotificationParams(var params:String)->String {
+    func shareMyInfoNotificationParams(var params:String)->String {
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+self.viewData["showing"]["realtor_id"].stringValue
-        params = params+"&title=A user wants to buy&property_id=\(self.viewData["showing"]["property_id"].stringValue)"
-        params = params+"&description=\(fullUsername) wants to buy a property with you"
-        params = params+"&parent_id="+self.viewData["showing"]["id"].stringValue+"&type=user_wants_buy&parent_type=showings"
+        params = params+"&title=User Wants To Share Info&property_id=\(self.viewData["showing"]["property_id"].stringValue)"
+        params = params+"&description=\(fullUsername) wants to share your info with you"
+        params = params+"&parent_id="+self.viewData["showing"]["id"].stringValue+"&notification_type=user_wants_share&parent_type=showings"
         return params
     }
     
@@ -73,7 +77,7 @@ class FeedBack3ViewController: UIViewController {
         }
     }
     
-    @IBAction func btnNoThanks(sender: AnyObject) {
+    @IBAction func btnFinish(sender: AnyObject) {
         Utility().goHome(self)
     }
     

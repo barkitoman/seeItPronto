@@ -10,6 +10,8 @@ import UIKit
 
 class FeedBacksTableViewCell: UITableViewCell {
 
+ 
+    @IBOutlet weak var lblAddress: UILabel!
     @IBOutlet weak var rating: UIImageView!
     @IBOutlet weak var lblDescription: UILabel!
     @IBOutlet weak var imageFeedback: UIImageView!

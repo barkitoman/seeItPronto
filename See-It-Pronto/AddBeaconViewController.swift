@@ -10,8 +10,11 @@ import UIKit
 
 class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate   {
 
+
+    @IBOutlet weak var btnRemoveBeacon: UIButton!
     @IBOutlet weak var btnSelectBeacon: UIButton!
-    var viewData:JSON = []
+    var viewData:JSON   = []
+    var beaconData:JSON = []
     @IBOutlet weak var txtLocation: UITextField!
     @IBOutlet weak var previewImage: UIImageView!
     var haveImage:Bool = false
@@ -22,6 +25,7 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.btnRemoveBeacon.hidden = true
         self.propertyId = self.viewData["property"]["id"].stringValue
         self.viewData["id"] = JSON("")
         self.selfDelegate()
@@ -188,6 +192,7 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
         let result = JSON(data: response)
         dispatch_async(dispatch_get_main_queue()) {
             if(!result["id"].stringValue.isEmpty) {
+                self.btnRemoveBeacon.hidden = false
                 self.viewData = result
                 self.beaconId = result["beacon_id"].stringValue
                 if(!result["beacon_id"].stringValue.isEmpty) {
@@ -208,6 +213,45 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
             vc.addBeaconVC = self
         }
     }
+    
+    @IBAction func actionRemoveBeacon(sender: UIButton) {
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to remove this beacon?", preferredStyle: .Alert)
+            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                dispatch_async(dispatch_get_main_queue()) {
+                    let url = AppConfig.APP_URL+"/remove_beacon_property/\(self.self.viewData["id"].stringValue)"
+                    print(url)
+                    Request().delete(url, params: "", successHandler: { (response) -> Void in
+                        self.afterDeleteBeacon(response)
+                    })
+                }
+            }
+            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+            }
+            alertController.addAction(yesAction)
+            alertController.addAction(noAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func afterDeleteBeacon(let response: NSData) {
+            let result = JSON(data: response)
+            if(result["result"].bool == true) {
+                dispatch_async(dispatch_get_main_queue()) {
+                    let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                    let viewController : MyListingsRealtorViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MyListingsRealtorViewController") as! MyListingsRealtorViewController
+                    self.navigationController?.showViewController(viewController, sender: nil)
+                }
+            } else {
+                var msg = "Error saving, please try later"
+                if(result["msg"].stringValue != "") {
+                    msg = result["msg"].stringValue
+                }
+                Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
+            }
+        }
     
     func textFieldDidBeginEditing(textField: UITextField) {
         let textFieldRect : CGRect = self.view.window!.convertRect(textField.bounds, fromView: textField)
