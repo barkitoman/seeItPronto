@@ -5001,23 +5001,17 @@ $480,000
                                 <rect key="frame" x="0.0" y="561" width="320" height="7"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
                             </webView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="141" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="r4M-da-I9z">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="131" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="r4M-da-I9z">
                                 <rect key="frame" x="0.0" y="179" width="320" height="381"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="141" id="Ws0-R1-PF8" customClass="SeeitNowTableViewCell" customModule="See_It_Pronto" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="320" height="141"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="131" id="Ws0-R1-PF8" customClass="SeeitNowTableViewCell" customModule="See_It_Pronto" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="131"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ws0-R1-PF8" id="vnX-kd-8ao">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ugG-E4-qlZ">
-                                                    <rect key="frame" x="8" y="20" width="100" height="100"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="ugG-E4-qlZ" secondAttribute="height" multiplier="1:1" id="GSt-wJ-wQj"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KOH-9Q-MME">
                                                     <rect key="frame" x="113" y="20" width="199" height="100"/>
                                                     <subviews>
@@ -5085,6 +5079,18 @@ $480,000
                                                         <constraint firstAttribute="bottom" secondItem="BH9-v2-2jz" secondAttribute="bottom" id="ZuC-hj-n2V"/>
                                                     </constraints>
                                                 </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Listing Agent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oXf-qy-KUJ">
+                                                    <rect key="frame" x="8" y="0.0" width="312" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" red="0.97254901959999995" green="0.078431372550000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ugG-E4-qlZ">
+                                                    <rect key="frame" x="8" y="20" width="100" height="100"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="ugG-E4-qlZ" secondAttribute="height" multiplier="1:1" id="GSt-wJ-wQj"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="ugG-E4-qlZ" firstAttribute="top" secondItem="vnX-kd-8ao" secondAttribute="top" constant="20" symbolic="YES" id="Gl4-zC-qlC"/>
@@ -5093,7 +5099,7 @@ $480,000
                                                 <constraint firstItem="KOH-9Q-MME" firstAttribute="bottom" secondItem="ugG-E4-qlZ" secondAttribute="bottom" id="ToI-vV-rc4"/>
                                                 <constraint firstAttribute="trailing" secondItem="KOH-9Q-MME" secondAttribute="trailing" constant="8" id="cS1-hY-9sE"/>
                                                 <constraint firstItem="KOH-9Q-MME" firstAttribute="trailing" secondItem="vnX-kd-8ao" secondAttribute="trailingMargin" id="hG9-e1-VVS"/>
-                                                <constraint firstAttribute="bottom" secondItem="ugG-E4-qlZ" secondAttribute="bottom" constant="20" symbolic="YES" id="oQx-zE-bRw"/>
+                                                <constraint firstAttribute="bottom" secondItem="ugG-E4-qlZ" secondAttribute="bottom" constant="10" id="oQx-zE-bRw"/>
                                                 <constraint firstItem="ugG-E4-qlZ" firstAttribute="leading" secondItem="vnX-kd-8ao" secondAttribute="leading" constant="8" id="qbD-aE-EUd"/>
                                                 <constraint firstItem="KOH-9Q-MME" firstAttribute="top" secondItem="ugG-E4-qlZ" secondAttribute="top" id="wf6-Sh-tPK"/>
                                             </constraints>
@@ -5102,6 +5108,7 @@ $480,000
                                             <outlet property="btnViewDetails" destination="UCr-K4-igp" id="cLP-uc-tW9"/>
                                             <outlet property="lblCompany" destination="Gmp-9D-wQf" id="LhO-Hi-slQ"/>
                                             <outlet property="lblDistance" destination="D4Q-ba-maM" id="7g4-NM-p7z"/>
+                                            <outlet property="lblListingAgent" destination="oXf-qy-KUJ" id="bLd-1p-qJO"/>
                                             <outlet property="lblName" destination="yWz-cJ-yPc" id="fGu-FJ-2Sq"/>
                                             <outlet property="lblRating" destination="BH9-v2-2jz" id="F4a-XF-o5p"/>
                                             <outlet property="photo" destination="ugG-E4-qlZ" id="Fz6-tV-Iqr"/>

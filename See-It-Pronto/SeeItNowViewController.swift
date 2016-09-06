@@ -77,7 +77,6 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
         url     = url+"&property_zipcode=\(Property().getField("zipcode"))"
         url     = url+"&license=\(Property().getField("license"))"
         url     = url+"&showing_type=\(PropertyAction().getField("type"))"
-        print(url)
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         self.webView.loadRequest(request)
@@ -137,7 +136,7 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
         let image = (!realtor["image"].stringValue.isEmpty) ? realtor["image"].stringValue : realtor["url_image"].stringValue
         
         cell.photo.image = nil
-        cell.photo.tag = indexPath.row
+        cell.photo.tag   = indexPath.row
         let tap = UITapGestureRecognizer(target: self, action: "imageClickOpenProfile:")
         cell.photo.addGestureRecognizer(tap)
         cell.photo.userInteractionEnabled = true
@@ -145,6 +144,10 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
         
         if(!realtor["rating"].stringValue.isEmpty) {
             cell.ratingImage.image = UIImage(named: realtor["rating"].stringValue+"stars")
+        }
+        cell.lblListingAgent.hidden = true
+        if(realtor["is_listing"].stringValue == "1") {
+            cell.lblListingAgent.hidden = false
         }
         
         return cell
@@ -200,6 +203,7 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
     
     func loadRealtors(let response: NSData){
         let result = JSON(data: response)
+        print(result)
         dispatch_async(dispatch_get_main_queue()) {
             for (_,subJson):(String, JSON) in result {
                 if(!subJson["id"].stringValue.isEmpty) {

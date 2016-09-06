@@ -11,6 +11,7 @@ import UIKit
 class SeeitNowTableViewCell: UITableViewCell {
 
     
+    @IBOutlet weak var lblListingAgent: UILabel!
     @IBOutlet weak var photo: UIImageView!
     @IBOutlet weak var lblDistance: UILabel!
     //@IBOutlet weak var lblShowingRate: UILabel!
