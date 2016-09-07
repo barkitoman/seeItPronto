@@ -44,13 +44,14 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.selfDelegate()
         self.webView.hidden = false
+        self.selfDelegate()
         self.loadPropertyData()
         manager = OneShotLocationManager()
         manager!.fetchWithCompletion {location, error in
             // fetch location or an error
             if let loc = location {
+                print("WAS HERE 1")
                 self.latitude   = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.latitude)" : "26.189244"
                 self.longintude = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.longitude)": "-80.1824587"
                 self.loadMap()
@@ -63,13 +64,19 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        navigationController?.navigationBarHidden = true
+        super.viewWillAppear(animated)
+
+    }
+    
     func selfDelegate() {
         self.webView.delegate = self;
     }
     
     func loadMap() {
         dispatch_async(dispatch_get_main_queue()) {
-            BProgressHUD.showLoadingViewWithMessage("Loading")
+            BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         var url = AppConfig.APP_URL+"/calculate_distances/\(User().getField("id"))/\(String(self.stepPage))/"
         url     = url+"?page=\(String(self.countPage + 1))"
@@ -77,18 +84,15 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
         url     = url+"&property_zipcode=\(Property().getField("zipcode"))"
         url     = url+"&license=\(Property().getField("license"))"
         url     = url+"&showing_type=\(PropertyAction().getField("type"))"
+        print(url)
         let requestURL = NSURL(string:url)
         let request = NSURLRequest(URL: requestURL!)
         self.webView.loadRequest(request)
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
+        print("WAS HERE 2")
         self.findPropertyRealtors()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
-        super.viewWillAppear(animated)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -149,8 +153,62 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
         if(realtor["is_listing"].stringValue == "1") {
             cell.lblListingAgent.hidden = false
         }
-        
+        cell.btnStopShareInfo.tag = indexPath.row
+        cell.btnStopShareInfo.hidden = true
+        if(realtor["share_info"].stringValue == "1") {
+            cell.btnStopShareInfo.hidden = false
+        }
+        cell.btnStopShareInfo.addTarget(self, action: "stopShareInfo:", forControlEvents: .TouchUpInside)
         return cell
+    }
+    
+    @IBAction func openPropertyAction(sender:UIButton) {
+        let realtor = JSON(self.realtors[sender.tag])
+        PropertyRealtor().saveOne(realtor)
+        let propertyTypeAction = PropertyAction().getField("type")
+        dispatch_async(dispatch_get_main_queue()) {
+            if(propertyTypeAction == "see_it_later") {
+                //open view for see it later process
+                self.performSegueWithIdentifier("seeItNowConfirmation", sender: self)
+            } else {
+                //open view for see it pronto process
+                self.performSegueWithIdentifier("SeeItNowAgentConfirmation", sender: self)
+            }
+        }
+    }
+    
+    @IBAction func stopShareInfo(sender:UIButton) {
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to stop share your info with this agent?", preferredStyle: .Alert)
+            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                let realtor = JSON(self.realtors[sender.tag])
+                dispatch_async(dispatch_get_main_queue()) {
+                    let url    = AppConfig.APP_URL+"/stop_share_info"
+                    let params = "buyer_id=\(User().getField("id"))&realtor_id=\(realtor["id"])"
+                    Request().post(url, params: params, controller: self, successHandler: { (response) -> Void in
+                        self.afterStopShareInfo(response)
+                    })
+                }
+            }
+            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+            }
+            alertController.addAction(yesAction)
+            alertController.addAction(noAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    private func afterStopShareInfo(let response: NSData) {
+        let result = JSON(data: response)
+        if(result["result"].bool == true) {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.navigationController?.popViewControllerAnimated(true)
+            }
+        } else {
+            Utility().displayAlert(self,title: "Error", message:"Error saving, please try later", performSegue:"")
+        }
     }
     
     func imageClickOpenProfile(gesture: UIGestureRecognizer) {
@@ -179,21 +237,6 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
             self.loadMap()
         }
     }
-    
-    @IBAction func openPropertyAction(sender:UIButton) {
-        let realtor = JSON(self.realtors[sender.tag])
-        PropertyRealtor().saveOne(realtor)
-        let propertyTypeAction = PropertyAction().getField("type")
-        dispatch_async(dispatch_get_main_queue()) {
-            if(propertyTypeAction == "see_it_later") {
-                //open view for see it later process
-                self.performSegueWithIdentifier("seeItNowConfirmation", sender: self)
-            } else {
-                //open view for see it pronto process
-                self.performSegueWithIdentifier("SeeItNowAgentConfirmation", sender: self)
-            }
-        }
-    }
 
     func findPropertyRealtors() {
         let propertyId = Property().getField("id")
@@ -203,7 +246,6 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
     
     func loadRealtors(let response: NSData){
         let result = JSON(data: response)
-        print(result)
         dispatch_async(dispatch_get_main_queue()) {
             for (_,subJson):(String, JSON) in result {
                 if(!subJson["id"].stringValue.isEmpty) {

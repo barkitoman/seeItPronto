@@ -12,9 +12,10 @@ class BuyerProfileViewController: UIViewController {
 
     var viewData:JSON = []
     @IBOutlet weak var photo: UIImageView!
-    @IBOutlet weak var lblPrequelified: UILabel!
     @IBOutlet weak var lblLastName: UILabel!
     @IBOutlet weak var lblFirstName: UILabel!
+    @IBOutlet weak var lblEmail: UILabel!
+    @IBOutlet weak var lblPhone: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,11 +55,8 @@ class BuyerProfileViewController: UIViewController {
             let result = JSON(data: response)
             self.lblFirstName.text = result["first_name"].stringValue
             self.lblLastName.text  = result["last_name"].stringValue
-            if(result["pre_qualified"].int == 1) {
-                self.lblPrequelified.text = "Yes"
-            } else {
-                self.lblPrequelified.text = "No"
-            }
+            self.lblEmail.text     = result["email"].stringValue
+            self.lblPhone.text     = result["phone"].stringValue
             Utility().showPhoto(self.photo, imgPath: result["url_image"].stringValue, defaultImg: "default_user_photo")
         }
     }

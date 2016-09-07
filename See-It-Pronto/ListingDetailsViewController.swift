@@ -29,7 +29,7 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
         self.propertyId = self.viewData["property"]["id"].stringValue
         self.viewData["id"] = JSON("")
         dispatch_async(dispatch_get_main_queue()) {
-            BProgressHUD.showLoadingViewWithMessage("Loading")
+            BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         self.findPropertyDetails()
         self.findPropertyListing()

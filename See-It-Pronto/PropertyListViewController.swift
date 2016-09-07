@@ -73,7 +73,7 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
     
     func webViewDidFinishLoad(webView: UIWebView) {
         dispatch_async(dispatch_get_main_queue()) {
-            BProgressHUD.showLoadingViewWithMessage("Loading")
+            BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         self.findProperties()
     }
@@ -241,7 +241,7 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
         pickerView.showDialog("Filter property", doneButtonTitle: "Done", cancelButtonTitle: "Cancel")
         { (result) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
-                BProgressHUD.showLoadingViewWithMessage("Loading")
+                BProgressHUD.showLoadingViewWithMessage("Loading...")
             }
             self.pickSeletion = result
             var url:String = ""

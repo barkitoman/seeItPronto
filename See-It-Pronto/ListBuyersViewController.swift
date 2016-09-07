@@ -22,7 +22,7 @@ class ListBuyersViewController: UIViewController {
         super.viewDidLoad()
         self.findBuyers()
         dispatch_async(dispatch_get_main_queue()) {
-            BProgressHUD.showLoadingViewWithMessage("Loading")
+            BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
     }
 

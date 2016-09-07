@@ -58,7 +58,7 @@ class ListRealtorsViewController: UIViewController,UIWebViewDelegate {
     
     func webViewDidFinishLoad(webView: UIWebView) {
         dispatch_async(dispatch_get_main_queue()) {
-            BProgressHUD.showLoadingViewWithMessage("Loading")
+            BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         self.findRealtors()
     }

@@ -53,7 +53,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
     
     @IBAction func btnLogin(sender: AnyObject) {
         dispatch_async(dispatch_get_main_queue()) {
-            BProgressHUD.showLoadingViewWithMessage("Loading")
+            BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         self.login()
     }

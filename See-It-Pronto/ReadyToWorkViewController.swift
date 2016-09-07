@@ -99,7 +99,7 @@ class ReadyToWorkViewController: UIViewController {
     func save(shoingStatus:String) {
         //create params
         dispatch_async(dispatch_get_main_queue()) {
-            BProgressHUD.showLoadingViewWithMessage("Loading")
+            BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         let travelRate  = self.numberTravelRange
         let params = "id="+self.viewData["id"].stringValue+"&realtor_id="+self.viewData["realtor_id"].stringValue+"&travel_range="+travelRate+"&active_for_showing="+shoingStatus

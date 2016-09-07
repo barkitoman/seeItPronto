@@ -25,7 +25,7 @@ class RealtorProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dispatch_async(dispatch_get_main_queue()) {
-            BProgressHUD.showLoadingViewWithMessage("Loading")
+            BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         self.findUserInfo()
         let role = User().getField("id")
