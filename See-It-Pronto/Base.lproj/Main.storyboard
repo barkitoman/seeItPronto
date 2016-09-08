@@ -162,7 +162,7 @@
                                 <rect key="frame" x="160" y="508" width="160" height="60"/>
                                 <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <state key="normal" title="I Am A Realtor">
+                                <state key="normal" title="I Am An Agent">
                                     <color key="titleColor" red="0.81176470590000005" green="0.88235294119999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -189,7 +189,7 @@
                                     <constraint firstAttribute="height" constant="60" id="kVU-cd-1UL"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title=" I Am A Buyer">
+                                <state key="normal" title=" I Am A Consumer">
                                     <color key="titleColor" red="0.0" green="0.45882352939999999" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -10092,13 +10092,13 @@ Monthly subscription fee grants you full access. You will be able to switch on y
         <image name="take_photo" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="vxA-X1-U6d"/>
         <segue reference="hcE-p4-akP"/>
         <segue reference="bS0-SP-Jq6"/>
         <segue reference="U05-Ui-KM7"/>
-        <segue reference="DJR-bZ-L3O"/>
-        <segue reference="vxA-X1-U6d"/>
+        <segue reference="voO-kP-iEV"/>
+        <segue reference="CcM-Cn-vPF"/>
         <segue reference="cEt-sO-PDF"/>
         <segue reference="emA-ye-QEi"/>
-        <segue reference="CcM-Cn-vPF"/>
     </inferredMetricsTieBreakers>
 </document>
