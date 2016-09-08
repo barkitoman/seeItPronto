@@ -60,7 +60,8 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
             var dateTime = "\(date)"
             dateTime = dateTime.stringByReplacingOccurrencesOfString(" +0000",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
             self.seeItLaterDate = dateTime
-            self.txtDate.text = Utility().millitaryToStandardTime(dateTime)
+            let timestamp = NSDateFormatter.localizedStringFromDate(dateTime.toDateTime(), dateStyle: .ShortStyle, timeStyle: .ShortStyle)
+            self.txtDate.text = timestamp
         }
     }
     

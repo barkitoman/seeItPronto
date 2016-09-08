@@ -8,10 +8,20 @@
 
 import UIKit
 
-class AboutUsViewController: UIViewController {
+class AboutUsViewController: UIViewController,UIWebViewDelegate {
 
+    @IBOutlet weak var webView: UIWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.loadAboutPage()
+    }
+    
+    func loadAboutPage() {
+        self.webView.delegate = self
+        let url = AppConfig.ABOUT_URL
+        let requestURL = NSURL(string:url)
+        let request = NSURLRequest(URL: requestURL!)
+        self.webView.loadRequest(request)
     }
 
     override func viewWillAppear(animated: Bool) {

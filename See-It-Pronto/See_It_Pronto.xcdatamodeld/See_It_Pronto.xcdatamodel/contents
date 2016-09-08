@@ -80,6 +80,7 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="is_login" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="last_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="license" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mls_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="realtor_id" optional="YES" attributeType="String" syncable="YES"/>
@@ -94,6 +95,6 @@
         <element name="PropertyAction" positionX="-54" positionY="135" width="128" height="60"/>
         <element name="PropertyRealtor" positionX="-54" positionY="108" width="128" height="210"/>
         <element name="SearchConfig" positionX="-63" positionY="54" width="128" height="210"/>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="330"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="345"/>
     </elements>
 </model>

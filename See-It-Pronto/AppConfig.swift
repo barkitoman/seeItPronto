@@ -11,6 +11,7 @@ import UIKit
 
 struct AppConfig {
     static var APP_URL                 = "http://oauthtest-nyxent.rhcloud.com"
+    static var ABOUT_URL               = "http://seeitpronto.com/about"
     static var GRANT_TYPE              = "client_credentials"
     
     static var SHOWING_CANCELED_STATUS = "4"//0 en espera, 1 aceptado, 2 rechazado, 3 completado, 4 cancelado
@@ -42,6 +43,7 @@ struct MoveKeyboard {
     static let LANDSCAPE_KEYBOARD_HEIGHT : CGFloat = 162;
 }
 
+//avoid image rotation, when use the camera
 extension UIImage {
     func correctlyOrientedImage() -> UIImage {
         if self.imageOrientation == UIImageOrientation.Up {
@@ -56,14 +58,11 @@ extension UIImage {
 }
 
 extension String {
-    
-    func toDateTime() -> NSDate {
+    func toDateTime(let format:String = "yyyy-MM-dd HH:mm:ss") -> NSDate {
         //Create Date Formatter
         let dateFormatter = NSDateFormatter()
-    
         //Specify Format of String to Parse
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
+        dateFormatter.dateFormat = format
         //Parse into NSDate
         if let dateFromString : NSDate = dateFormatter.dateFromString(self) {
             return dateFromString

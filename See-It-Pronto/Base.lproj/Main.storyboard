@@ -10033,12 +10033,6 @@ Monthly subscription fee grants you full access. You will be able to switch on y
                                     <constraint firstItem="iS1-nd-tNU" firstAttribute="centerX" secondItem="ie0-hl-JX0" secondAttribute="centerX" id="nvu-Xh-v5p"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="version 1.26.8.16" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="11" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6UR-nM-dI9">
-                                <rect key="frame" x="20" y="99" width="280" height="16"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ilw-Ji-fqF">
                                 <rect key="frame" x="0.0" y="28" width="90" height="44"/>
                                 <color key="backgroundColor" red="0.47450980390000003" green="0.77647058820000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -10052,23 +10046,30 @@ Monthly subscription fee grants you full access. You will be able to switch on y
                                     <action selector="btnBack:" destination="pfx-Vw-dC6" eventType="touchUpInside" id="O0Y-v5-F2A"/>
                                 </connections>
                             </button>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="omH-D8-ZAo">
+                                <rect key="frame" x="0.0" y="72" width="320" height="496"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                            </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="omH-D8-ZAo" firstAttribute="trailing" secondItem="ie0-hl-JX0" secondAttribute="trailing" id="1fk-Dc-yk9"/>
                             <constraint firstItem="ie0-hl-JX0" firstAttribute="leading" secondItem="ilw-Ji-fqF" secondAttribute="trailing" id="4sS-r2-SE1"/>
-                            <constraint firstItem="6UR-nM-dI9" firstAttribute="centerX" secondItem="ELb-QP-Hac" secondAttribute="centerX" id="8cV-5l-gyt"/>
                             <constraint firstItem="ilw-Ji-fqF" firstAttribute="top" secondItem="9D0-yX-axx" secondAttribute="bottom" constant="8" symbolic="YES" id="Fsr-4L-gW3"/>
+                            <constraint firstItem="omH-D8-ZAo" firstAttribute="leading" secondItem="ilw-Ji-fqF" secondAttribute="leading" id="Pcc-nJ-g1g"/>
                             <constraint firstAttribute="trailing" secondItem="ie0-hl-JX0" secondAttribute="trailing" id="QMZ-DI-9PH"/>
                             <constraint firstItem="ie0-hl-JX0" firstAttribute="centerY" secondItem="ilw-Ji-fqF" secondAttribute="centerY" id="XHU-z9-hr1"/>
-                            <constraint firstAttribute="trailing" secondItem="6UR-nM-dI9" secondAttribute="trailing" constant="20" id="YNu-ES-vfY"/>
-                            <constraint firstItem="6UR-nM-dI9" firstAttribute="leading" secondItem="ELb-QP-Hac" secondAttribute="leading" constant="20" id="eCd-zy-Y0M"/>
+                            <constraint firstItem="omH-D8-ZAo" firstAttribute="top" secondItem="ilw-Ji-fqF" secondAttribute="bottom" id="agz-Kc-vld"/>
                             <constraint firstItem="ie0-hl-JX0" firstAttribute="top" secondItem="9D0-yX-axx" secondAttribute="bottom" constant="8" symbolic="YES" id="qdC-4f-HSH"/>
-                            <constraint firstItem="6UR-nM-dI9" firstAttribute="top" secondItem="ie0-hl-JX0" secondAttribute="bottom" constant="27" id="sHJ-Dp-LmX"/>
+                            <constraint firstItem="omH-D8-ZAo" firstAttribute="bottom" secondItem="Bia-xV-ov9" secondAttribute="top" id="vTh-NH-zFd"/>
                             <constraint firstItem="ilw-Ji-fqF" firstAttribute="leading" secondItem="ELb-QP-Hac" secondAttribute="leading" id="yTX-En-Vui"/>
                             <constraint firstItem="ie0-hl-JX0" firstAttribute="leading" secondItem="ilw-Ji-fqF" secondAttribute="trailing" id="ylC-AT-Jyd"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="webView" destination="omH-D8-ZAo" id="VC9-LB-Rkd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kjq-ti-2hg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

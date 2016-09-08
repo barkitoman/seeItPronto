@@ -152,7 +152,8 @@ class FeedBacksViewController: UIViewController {
     }
     
     func findFeedBacks() {
-        let url = AppConfig.APP_URL+"/my_feedbacks/\(User().getField("id"))/\(self.stepPage)/?page="+String(self.countPage + 1)
+        var url = AppConfig.APP_URL+"/my_feedbacks/\(User().getField("id"))/\(self.stepPage)/?page="+String(self.countPage + 1)
+        url = url+"&license=\(User().getField("license"))"
         Request().get(url, successHandler: {(response) in self.loadFeedBacks(response)})
     }
     

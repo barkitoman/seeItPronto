@@ -208,8 +208,8 @@ class Utility {
         }
     }
     
-    func millitaryToStandardTime(militaryTime:String, format:String="MM/dd/yyyy HH:mm a")->String {
-        let dateString = "\(militaryTime) EST"
+    func millitaryToStandardTime(militaryTime:String, format:String="MM/dd/yyyy hh:mm a")->String {
+        let dateString = "\(militaryTime)"
         let dateFormatter = NSDateFormatter()
         
         dateFormatter.timeZone = NSTimeZone.localTimeZone()

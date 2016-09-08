@@ -61,7 +61,8 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             addChildView("BugReportViewController",         titleOfChildren: "Send Us Your Feedback",  iconName: "send_us_your_feedback")
         } else {
             addChildView("RealtorForm1ViewController",      titleOfChildren: "My Profile",             iconName: "edit_profile")
-             addChildView("LoginViewController",            titleOfChildren: "Log Out",                iconName: "logout")
+            addChildView("BugReportViewController",         titleOfChildren: "Send Us Your Feedback",  iconName: "send_us_your_feedback")
+            addChildView("LoginViewController",             titleOfChildren: "Log Out",                iconName: "logout")
         }
         addChildView("AboutUsViewController",          titleOfChildren: "About", iconName: "about_us")
     }

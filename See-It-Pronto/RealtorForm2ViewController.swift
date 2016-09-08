@@ -19,13 +19,12 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     @IBOutlet weak var zipCode1: UITextField!
     @IBOutlet weak var zipCode2: UITextField!
     var isTakenPhoto:Bool = false
-    //@IBOutlet weak var zipCode3: UITextField!
 
     @IBOutlet weak var txtBrokerMail: UITextField!
 
     let imagePicker: UIImagePickerController! = UIImagePickerController()
     var haveImage:Bool = false
-    var viewData:JSON = []
+    var viewData:JSON  = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,25 +49,17 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     }
     
     func selfDelegate() {
-        self.txtLisence.delegate = self
-        self.txtBankAcct.delegate = self
-        self.txtBrokerage.delegate = self
+        self.txtLisence.delegate    = self
+        self.txtBankAcct.delegate   = self
+        self.txtBrokerage.delegate  = self
         self.txtBrokerMail.delegate = self
-        self.txtFirstName.delegate = self
-        self.txtLastName.delegate = self
-        self.zipCode1.delegate = self
-        self.zipCode2.delegate = self
-        //self.zipCode3.delegate = self
-        self.zipCode1.tag = 1
-        self.zipCode2.tag = 1
-        //self.zipCode3.tag = 1
-
+        self.txtFirstName.delegate  = self
+        self.txtLastName.delegate   = self
+        self.zipCode1.delegate      = self
+        self.zipCode2.delegate      = self
+        self.zipCode1.tag           = 1
+        self.zipCode2.tag           = 1
     }
-    
-//    func textFieldShouldReturn(textField: UITextField) -> Bool {
-//        self.view.endEditing(true)
-//        return false
-//    }
     
     @IBAction func btnchoosePicture(sender: AnyObject) {
         self.isTakenPhoto = false
@@ -159,6 +150,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result
+            User().updateField("license", value: result["license"].stringValue)
             self.uploadImage()
             Utility().performSegue(self, performSegue: "RealtorForm2")
         } else {
@@ -191,8 +183,6 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
             self.txtLisence.text    = result["license"].stringValue
             self.zipCode1.text      = result["active_zip_code1"].stringValue
             self.zipCode2.text      = result["active_zip_code2"].stringValue
-            //self.zipCode3.text    = result["active_zip_code3"].stringValue
-            //self.txtmlsid.text    = result["mls_id"].stringValue
             if(!result["url_image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.previewProfilePicture, imgPath: result["url_image"].stringValue)
             }

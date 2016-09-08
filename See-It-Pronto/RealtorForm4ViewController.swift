@@ -219,7 +219,7 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
         let userId = User().getField("id")
         if(!userId.isEmpty) {
             self.viewData["id"] = JSON(userId)
-            let url = AppConfig.APP_URL+"/reactive_subscription/"+userId
+            let url = AppConfig.APP_URL+"/reactive_subscription/\(userId)?promo_code=\(self.viewData["promo_code"].stringValue)"
             Request().get(url, successHandler: {(response) in self.afterActivateSubscription(response)})
         } else {
             Utility().displayAlert(self, title: "Message", message: "Activate subscription is not available at this time", performSegue: "")
