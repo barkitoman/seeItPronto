@@ -158,12 +158,13 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
     @IBAction func btnMenu(sender: AnyObject) {
         self.textFieldShouldReturn(self.txtSearch)
         if(User().getField("id") != "") {
-            self.onSlideMenuButtonPressed(sender as! UIButton)
+            dispatch_async(dispatch_get_main_queue()) {
+                self.menuToReturn.removeAll()
+                self.createMenu()
+                self.createContainerView()
+                self.onSlideMenuButtonPressed(sender as! UIButton)
+            }
         }
-    }
-    
-    @IBAction func btnSearchMenu(sender: AnyObject) {
-        self.onSlideSearchButtonPressed(sender as! UIButton)
     }
     
     @IBAction func btnViewList(sender: AnyObject) {

@@ -24,7 +24,7 @@ class ChatViewController: UIViewController, LGChatControllerDelegate, UITextFiel
     var isTheFirstMessage = true
     var isFromPushNotification = false
     
-    private let kTimeoutInSeconds:NSTimeInterval = 8
+    private let kTimeoutInSeconds:NSTimeInterval = 5
     private var loadMessagesTimer: NSTimer?
     
     private let sizingCell = LGChatMessageCell()

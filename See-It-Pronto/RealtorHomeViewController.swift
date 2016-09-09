@@ -131,11 +131,14 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     
     @IBAction func btnMenu(sender: AnyObject) {
         self.textFieldShouldReturn(self.searchTextField)
-        self.onSlideMenuButtonPressed(sender as! UIButton)
-    }
-    
-    @IBAction func btnSearch(sender: AnyObject) {
-        self.onSlideSearchButtonPressed(sender as! UIButton)
+        if(User().getField("id") != "") {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.menuToReturn.removeAll()
+                self.createMenu()
+                self.createContainerView()
+                self.onSlideMenuButtonPressed(sender as! UIButton)
+            }
+        }
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {

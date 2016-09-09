@@ -2096,6 +2096,7 @@ Thank you for helping us improve.</string>
                         <outlet property="lblPrice" destination="Gqb-UA-eaq" id="q8V-05-xwE"/>
                         <outlet property="propertyDescription" destination="nwG-Uj-dSo" id="cWx-ry-i8C"/>
                         <outlet property="propertyImage" destination="MVk-KP-SKU" id="8kr-lX-Nqw"/>
+                        <segue destination="0Wd-D8-bDI" kind="show" identifier="feedBackFromCurrentShowing" id="vmm-ZO-80K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SLX-pL-kby" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -5117,7 +5118,7 @@ $480,000
                                                     <rect key="frame" x="8" y="126" width="100" height="18"/>
                                                     <color key="backgroundColor" red="0.97254901959999995" green="0.078431372550000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <state key="normal" title="Stop Share Info">
+                                                    <state key="normal" title="Stop sharing">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
@@ -10092,11 +10093,11 @@ Monthly subscription fee grants you full access. You will be able to switch on y
         <image name="take_photo" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="vxA-X1-U6d"/>
         <segue reference="hcE-p4-akP"/>
         <segue reference="bS0-SP-Jq6"/>
         <segue reference="U05-Ui-KM7"/>
-        <segue reference="voO-kP-iEV"/>
+        <segue reference="vmm-ZO-80K"/>
+        <segue reference="vxA-X1-U6d"/>
         <segue reference="uBa-RI-Zc4"/>
         <segue reference="ymI-Wx-eXA"/>
         <segue reference="emA-ye-QEi"/>

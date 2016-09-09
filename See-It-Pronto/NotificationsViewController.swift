@@ -153,7 +153,7 @@ class NotificationsViewController: UIViewController {
     }
     
     @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func seenNotificationRequest(notificationId:String) {

@@ -75,7 +75,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
         let notificationTypes : UIUserNotificationType = [.Alert, .Badge, .Sound]
         let notificationSettings : UIUserNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
         UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         //send location
         self.intervalLocation()
         
@@ -105,9 +104,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
         let rootViewController = self.window?.rootViewController as! UINavigationController
         var notie = Notie(view: rootViewController.view, message: "New notification received", style: .Confirm)
         notie.leftButtonAction = {
-            notie.dismiss()
-        }
-        notie.rightButtonAction = {
             notie.dismiss()
         }
         var fromUserId = ""
@@ -141,9 +137,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
                 }
             }
         }
+        notie.rightButtonAction = {
+            notie.dismiss()
+        }
         notie.leftButtonTitle  = "View"
         notie.rightButtonTitle = "Close"
-        if(fromUserId != "" && User().getField("current_chat") != fromUserId) {
+        if(User().getField("current_chat") != "") {
+            if(User().getField("current_chat") != fromUserId) {
+                notie.show()
+            }
+        } else {
             notie.show()
         }
     }

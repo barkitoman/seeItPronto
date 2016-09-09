@@ -22,9 +22,14 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.createMenu()
-        //Create containerView that contain child view
-        createContainerView()
+        //self.createMenu()
+        //createContainerView()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        navigationController?.navigationBarHidden = true
+        super.viewWillAppear(animated)
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -43,6 +48,20 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         }
     }
     
+    private func countNotifications()->String {
+        let val = UIApplication.sharedApplication().applicationIconBadgeNumber.description
+        print("THIS IS THE ICON VAL \(val)")
+        var out = ""
+        if(User().getField("id") != "") {
+            if let currentCount = Int(val) {
+                if(currentCount > 0) {
+                    out = " (\(currentCount))"
+                }
+            }
+        }
+        return out
+    }
+    
     func menuRealtor() {
         let subscriptionActive = User().getField("stripe_subscription_active")
         if(subscriptionActive == "1") {
@@ -53,7 +72,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             addChildView("MyListingsRealtorViewController", titleOfChildren: "My Listings",            iconName: "my_listings")
             addChildView("ListBuyersViewController",        titleOfChildren: "Consumers",              iconName: "buyer")
             addChildView("RealtorForm1ViewController",      titleOfChildren: "My Profile",             iconName: "edit_profile")
-            addChildView("NotificationsViewController",     titleOfChildren: "Notifications",          iconName: "notification")
+            addChildView("NotificationsViewController",     titleOfChildren: "Notifications \(self.countNotifications())",          iconName: "notification")
             addChildView("ReadyToWorkViewController",       titleOfChildren: "Make Myself Active",     iconName: "making_money")
             addChildView("ConfigViewController",            titleOfChildren: "Settings",               iconName: "settings")
             addChildView("CreateBeaconViewController",      titleOfChildren: "Add Beacon",             iconName: "add_beacon")
@@ -72,8 +91,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         addChildView("SeeItLaterBuyerViewController",  titleOfChildren: "See It Later",          iconName: "my_listings")
         addChildView("PropertyViewedViewController",   titleOfChildren: "Properties Viewed",     iconName: "properties_viewed")
         addChildView("BuyerForm1ViewController",       titleOfChildren: "My Profile",            iconName: "edit_profile")
-        addChildView("NotificationsViewController",    titleOfChildren: "Notifications",         iconName: "notification")
-        //addChildView("PastListingsBuyerViewController",titleOfChildren: "Past Listings",         iconName: "properties_viewed")
+        addChildView("NotificationsViewController",    titleOfChildren: "Notifications \(self.countNotifications())",         iconName: "notification")
         addChildView("LoginViewController",            titleOfChildren: "Log Out",               iconName: "logout")
         addChildView("ConfigViewController",           titleOfChildren: "Settings",              iconName: "settings")
         addChildView("BugReportViewController",        titleOfChildren: "Send Us Your Feedback", iconName: "send_us_your_feedback")
@@ -255,9 +273,9 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     
     func onSlideSearchButtonPressed(sender : UIButton){
         dispatch_async(dispatch_get_main_queue()) {
-            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let viewController: SearchViewController = storyboard.instantiateViewControllerWithIdentifier("SearchViewController") as! SearchViewController
-            self.navigationController?.showViewController(viewController, sender: nil)
+            //let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            //let viewController: SearchViewController = storyboard.instantiateViewControllerWithIdentifier("SearchViewController") as! SearchViewController
+            //self.navigationController?.showViewController(viewController, sender: nil)
         }
     }
     

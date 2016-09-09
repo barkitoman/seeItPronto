@@ -19,6 +19,7 @@ class CurrentShowingViewController: UIViewController {
     @IBOutlet weak var btnCall: UIButton!
     @IBOutlet weak var btnStartEndShowing: UIButton!
     @IBOutlet weak var btnInstructions: UIButton!
+    var LocationTimer: NSTimer?
     
     var manager: OneShotLocationManager?
     var showingId:String = ""
@@ -49,6 +50,7 @@ class CurrentShowingViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         navigationController?.navigationBarHidden = true
         super.viewWillAppear(animated)
+        self.stopShowingEnded();
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -97,6 +99,9 @@ class CurrentShowingViewController: UIViewController {
             self.propertyDescription.text = description
             if(!result["property"]["image"].stringValue.isEmpty) {
                 Utility().showPhoto(self.propertyImage, imgPath: result["property"]["image"].stringValue)
+            }
+            if(User().getField("role") == "buyer") {
+                self.intervalShowingEnded()
             }
         }
     }
@@ -272,12 +277,59 @@ class CurrentShowingViewController: UIViewController {
             Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
         }
     }
+    
     @IBAction func CallPanic(sender: AnyObject) {
         if let phoneCallURL:NSURL = NSURL(string: "tel://911") {
             let application:UIApplication = UIApplication.sharedApplication()
             if (application.canOpenURL(phoneCallURL)) {
                 application.openURL(phoneCallURL);
             }
+        }
+    }
+    
+    func findShowingEnded() {
+        self.stopShowingEnded()
+        let url = AppConfig.APP_URL+"/get_showing_details/\(self.viewData["showing"]["id"].stringValue)/"+User().getField("id")
+        print(url)
+        Request().get(url, successHandler: {(response) in self.loadShowingEndData(response)})
+    }
+    
+    func loadShowingEndData(let response: NSData) {
+        let result = JSON(data: response)
+        dispatch_async(dispatch_get_main_queue()) {
+            if(!result["showing"]["id"].stringValue.isEmpty) {
+                if(result["showing"]["showing_status"].stringValue == "3") {
+                     let title = "Showing Request Completed"
+                     let msg   = "You have completed this showing please give us your feedback"
+                     Utility().displayAlert(self,title: title, message:msg, performSegue:"feedBackFromCurrentShowing")
+                } else {
+                    self.intervalShowingEnded();
+                }
+            } else {
+                self.intervalShowingEnded();
+            }
+        }
+    }
+    
+    func intervalShowingEnded() {
+        self.LocationTimer = NSTimer.scheduledTimerWithTimeInterval(4,
+            target:self,
+            selector:Selector("findShowingEnded"),
+            userInfo:nil,
+            repeats:true
+        )
+    }
+    
+    func stopShowingEnded() {
+        if(self.LocationTimer != nil) {
+            self.LocationTimer!.invalidate()
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "feedBackFromCurrentShowing") {
+            let view: FeedBack1ViewController = segue.destinationViewController as! FeedBack1ViewController
+            view.viewData  = self.viewData
         }
     }
 }

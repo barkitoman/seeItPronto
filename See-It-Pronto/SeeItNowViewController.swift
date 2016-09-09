@@ -67,7 +67,6 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
     override func viewWillAppear(animated: Bool) {
         navigationController?.navigationBarHidden = true
         super.viewWillAppear(animated)
-
     }
     
     func selfDelegate() {
@@ -178,7 +177,7 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
     
     @IBAction func stopShareInfo(sender:UIButton) {
         dispatch_async(dispatch_get_main_queue()) {
-            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to stop share your info with this agent?", preferredStyle: .Alert)
+            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to stop sharing your info with this agent?", preferredStyle: .Alert)
             let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
                 UIAlertAction in
                 let realtor = JSON(self.realtors[sender.tag])
