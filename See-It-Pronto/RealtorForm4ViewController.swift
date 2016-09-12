@@ -92,17 +92,19 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
     }
     
     func save() {
-        //create params
-        var params = "id=\(self.viewData["id"].stringValue)&user_id=\(self.viewData["id"].stringValue)&number_card=\(txtCardNumber.text!)"
-        params = params+"&expiration_date=\(txtExpDate.text!)&csv=\(self.txtCvc.text!)&promo_code=\(self.txtPromoCode.text!)"
-        params = params+"&subscription=1&stripe_subscription_active=\(self.viewData["stripe_subscription_active"].stringValue)"
-        params = params+"&email=\(self.viewData["email"].stringValue)&stripe_subscription_id=\(self.viewData["stripe_subscription_id"].stringValue)"
-        params = params+"&first_name=\(self.viewData["first_name"].stringValue)&last_name=\(self.viewData["last_name"].stringValue)"
-        if(!self.viewData["card_id"].stringValue.isEmpty) {
-            params = params+"&card_id="+self.viewData["card_id"].stringValue
+        if(self.validateFields() == true) {
+            //create params
+            var params = "id=\(self.viewData["id"].stringValue)&user_id=\(self.viewData["id"].stringValue)&number_card=\(txtCardNumber.text!)"
+            params = params+"&expiration_date=\(txtExpDate.text!)&csv=\(self.txtCvc.text!)&promo_code=\(self.txtPromoCode.text!)"
+            params = params+"&subscription=1&stripe_subscription_active=\(self.viewData["stripe_subscription_active"].stringValue)"
+            params = params+"&email=\(self.viewData["email"].stringValue)&stripe_subscription_id=\(self.viewData["stripe_subscription_id"].stringValue)"
+            params = params+"&first_name=\(self.viewData["first_name"].stringValue)&last_name=\(self.viewData["last_name"].stringValue)"
+            if(!self.viewData["card_id"].stringValue.isEmpty) {
+                params = params+"&card_id="+self.viewData["card_id"].stringValue
+            }
+            let url = AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue
+            Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPut(response)});
         }
-        let url = AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue
-        Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPut(response)});
     }
     
     func afterPut(let response: NSData) {
@@ -120,6 +122,22 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
             }
             Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
         }
+    }
+    
+    func validateFields()->Bool {
+        if(self.txtCardNumber.text! == "" || self.txtExpDate.text! == "" || self.txtCvc.text! == "") {
+            Utility().displayAlert(self, title: "Error", message: "Card #, Exp Date and CVC fields are required", performSegue: "")
+            return false
+        }
+        if(self.txtExpDate.text! != "") {
+            let regex = "[0-9]{2}/[0-9]{2,4}"
+            let matches = self.txtExpDate.text!.rangeOfString(regex, options: .RegularExpressionSearch)
+            if let _ = matches {} else {
+                Utility().displayAlert(self, title: "Error", message: "Please enter a valid Exp. Date. \n Example: 05/2020", performSegue: "")
+                return false
+            }
+        }
+        return true
     }
     
     func findUserInfo() {

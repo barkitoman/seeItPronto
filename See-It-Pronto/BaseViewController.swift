@@ -50,7 +50,6 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     
     private func countNotifications()->String {
         let val = UIApplication.sharedApplication().applicationIconBadgeNumber.description
-        print("THIS IS THE ICON VAL \(val)")
         var out = ""
         if(User().getField("id") != "") {
             if let currentCount = Int(val) {

@@ -63,13 +63,15 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
     }
     
     func save() {
-        //create params
-        var params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["id"].stringValue+"&number_card="+txtCardNumber.text!+"&expiration_date="+txtExpDate.text!+"&csv="+txtCVC.text!+"&promo_code="+txtPromoCode.text!
-        if(!self.viewData["card_id"].stringValue.isEmpty) {
-            params = params+"&card_id="+self.viewData["card_id"].stringValue
+        if(self.validateFields() == true) {
+            //create params
+            var params = "id="+self.viewData["id"].stringValue+"&user_id="+self.viewData["id"].stringValue+"&number_card="+txtCardNumber.text!+"&expiration_date="+txtExpDate.text!+"&csv="+txtCVC.text!+"&promo_code="+txtPromoCode.text!
+            if(!self.viewData["card_id"].stringValue.isEmpty) {
+                params = params+"&card_id="+self.viewData["card_id"].stringValue
+            }
+            let url = AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue
+            Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPut(response)});
         }
-        let url = AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue
-        Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPut(response)});
     }
     
     func afterPut(let response: NSData) {
@@ -84,6 +86,18 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
             }
             Utility().displayAlert(self,title: "Error", message:msg, performSegue:"")
         }
+    }
+    
+    func validateFields()->Bool {
+        if(self.txtExpDate.text! != "") {
+            let regex = "[0-9]{2}/[0-9]{4}"
+            let matches = self.txtExpDate.text!.rangeOfString(regex, options: .RegularExpressionSearch)
+            if let _ = matches {} else {
+                Utility().displayAlert(self, title: "Error", message: "Please enter a valid Exp. Date. \n Example: 05/2020", performSegue: "")
+                return false
+            }
+        }
+        return true
     }
     
     func findUserInfo() {

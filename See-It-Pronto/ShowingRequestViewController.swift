@@ -54,7 +54,7 @@ class ShowingRequestViewController: UIViewController {
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         let type         = "showing_acepted"
         let title        = "Showing Request Accepted"
-        let description  = "Agent \(fullUsername) Accepted your showing request"
+        let description  = "Agent \(fullUsername) accepted your showing request"
         params           = self.notificationParams(params,type: type,title: title,descripcion: description)
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterYesRequest(response)});
     }
