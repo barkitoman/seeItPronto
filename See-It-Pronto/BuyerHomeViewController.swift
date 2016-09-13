@@ -167,6 +167,10 @@ class BuyerHomeViewController: BaseViewController, UIWebViewDelegate, UITableVie
         }
     }
     
+    @IBAction func btnSearchMenu(sender: AnyObject) {
+        self.onSlideSearchButtonPressed(sender as! UIButton)
+    }
+
     @IBAction func btnViewList(sender: AnyObject) {
         dispatch_async(dispatch_get_main_queue()) {
             let VC = self.storyboard?.instantiateViewControllerWithIdentifier("PropertyListViewController") as! PropertyListViewController

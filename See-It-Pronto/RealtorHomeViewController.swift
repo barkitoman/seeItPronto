@@ -141,6 +141,10 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         }
     }
     
+    @IBAction func btnSearch(sender: AnyObject) {
+        self.onSlideSearchButtonPressed(sender as! UIButton)
+    }
+    
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         typeTimer?.invalidate()
         typeTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: Selector("stopTypingSearch:"), userInfo: textField, repeats: false)

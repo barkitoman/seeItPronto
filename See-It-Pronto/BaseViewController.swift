@@ -272,9 +272,9 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     
     func onSlideSearchButtonPressed(sender : UIButton){
         dispatch_async(dispatch_get_main_queue()) {
-            //let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            //let viewController: SearchViewController = storyboard.instantiateViewControllerWithIdentifier("SearchViewController") as! SearchViewController
-            //self.navigationController?.showViewController(viewController, sender: nil)
+            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let viewController: SearchViewController = storyboard.instantiateViewControllerWithIdentifier("SearchViewController") as! SearchViewController
+            self.navigationController?.showViewController(viewController, sender: nil)
         }
     }
     
