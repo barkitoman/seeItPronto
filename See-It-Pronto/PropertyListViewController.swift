@@ -206,6 +206,7 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
     }
     
     func loadProperties(let response: NSData){
+        self.clearSearchTable()
         let result = JSON(data: response)
         self.properties.removeAllObjects()
         dispatch_async(dispatch_get_main_queue()) {
@@ -225,6 +226,11 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
             }
             
         }
+    }
+    
+    func clearSearchTable() {
+        self.properties.removeAllObjects()
+        self.tableView.reloadData()
     }
     
     var pickSeletion: String = "Unfiltered"
