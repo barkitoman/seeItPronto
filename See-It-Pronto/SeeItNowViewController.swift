@@ -52,8 +52,8 @@ class SeeItNowViewController: UIViewController,UIWebViewDelegate {
             // fetch location or an error
             if let loc = location {
                 print("WAS HERE 1")
-                self.latitude   = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.latitude)" : AppConfig.TEST_LAT
-                self.longintude = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.longitude)": AppConfig.TEST_LON
+                self.latitude   = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.latitude)" : AppConfig().develop_lat()
+                self.longintude = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.longitude)": AppConfig().develop_lon()
                 self.loadMap()
             } else if let _ = error {
                 print("ERROR GETTING LOCATION")

@@ -18,12 +18,33 @@ struct AppConfig {
     static var SHOWING_WAIT_SECONDS    = 60
     static var FIND_BEACONS_INTERVAL   = 10.0
     static var MODE                    = "DEVELOP" //PROD, DEVELOP
-    static var TEST_LAT                = "25.784339"
-    static var TEST_LON                = "-80.136345"
+    
+    
+    static var TEST_LAT_REALTOR        = "25.770646"
+    static var TEST_LON_REALTOR        = "-80.135926"
+    
+    static var TEST_LAT_BUYER          = "25.784339"
+    static var TEST_LON_BUYER          = "-80.136345"
     
     //Valor de precios, estos valores se deben cambiar tambien en en backend app/Stripe.php
     static var SHOWING_PRICE           = "5"
     static var SUBSCRIPTION_PRICE      = "15"
+    
+    func develop_lat()->String {
+        let role = User().getField("role");
+        if(role == "realtor") {
+            return AppConfig.TEST_LAT_REALTOR
+        }
+        return AppConfig.TEST_LAT_BUYER
+    }
+    
+    func develop_lon()->String {
+        let role = User().getField("role");
+        if(role == "realtor") {
+            return AppConfig.TEST_LON_REALTOR
+        }
+        return AppConfig.TEST_LON_BUYER
+    }
 
 }
 
