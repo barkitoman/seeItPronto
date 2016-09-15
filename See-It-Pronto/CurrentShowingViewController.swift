@@ -147,8 +147,8 @@ class CurrentShowingViewController: UIViewController {
         manager!.fetchWithCompletion {location, error in
             // fetch location or an error
             if let loc  = location {
-                let lat = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.latitude)" : "26.189244"
-                let lng = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.longitude)": "-80.1824587"
+                let lat = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.latitude)" : AppConfig.TEST_LAT
+                let lng = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.longitude)": AppConfig.TEST_LON
                 var address = self.viewData["property"]["address"].stringValue
                 address = address.stringByReplacingOccurrencesOfString(" ", withString: "+", options: NSStringCompareOptions.LiteralSearch, range: nil)
                 let fullAddress = "http://maps.apple.com/?saddr=\(lat),\(lng)&daddr=\(address)"

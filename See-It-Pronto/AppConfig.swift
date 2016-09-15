@@ -18,6 +18,8 @@ struct AppConfig {
     static var SHOWING_WAIT_SECONDS    = 60
     static var FIND_BEACONS_INTERVAL   = 10.0
     static var MODE                    = "DEVELOP" //PROD, DEVELOP
+    static var TEST_LAT                = "25.784339"
+    static var TEST_LON                = "-80.136345"
     
     //Valor de precios, estos valores se deben cambiar tambien en en backend app/Stripe.php
     static var SHOWING_PRICE           = "5"

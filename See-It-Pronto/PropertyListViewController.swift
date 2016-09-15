@@ -48,8 +48,8 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
         manager!.fetchWithCompletion {location, error in
             // fetch location or an error
             if let loc = location {
-                self.latitude   = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.latitude)" : "26.189244"
-                self.longintude = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.longitude)": "-80.1824587"
+                self.latitude   = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.latitude)" : AppConfig.TEST_LAT
+                self.longintude = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.longitude)": AppConfig.TEST_LON
                 self.loadMap()
             } else if let _ = error {
                 print("ERROR GETTING LOCATION")
