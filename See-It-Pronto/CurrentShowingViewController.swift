@@ -10,6 +10,7 @@ import UIKit
 
 class CurrentShowingViewController: UIViewController {
 
+    @IBOutlet weak var btnPanicButton: UIButton!
     @IBOutlet weak var propertyImage: UIImageView!
     @IBOutlet weak var lblPrice: UILabel!
     @IBOutlet weak var address: UILabel!
@@ -37,6 +38,7 @@ class CurrentShowingViewController: UIViewController {
         if(role == "buyer") {
             self.btnCall.hidden = true
             self.btnStartEndShowing.hidden = true
+            self.btnPanicButton.hidden = true
             dispatch_async(dispatch_get_main_queue()) {
                 self.btnShowingInstructionChat.setTitle("Chat With Agent", forState: .Normal)
             }
@@ -290,7 +292,6 @@ class CurrentShowingViewController: UIViewController {
     func findShowingEnded() {
         self.stopShowingEnded()
         let url = AppConfig.APP_URL+"/get_showing_details/\(self.viewData["showing"]["id"].stringValue)/"+User().getField("id")
-        print(url)
         Request().get(url, successHandler: {(response) in self.loadShowingEndData(response)})
     }
     
