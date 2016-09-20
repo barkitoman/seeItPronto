@@ -150,45 +150,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
             notie.show()
         }
     }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        self.openNotification(userInfo)
+    }
 
     // Called when a notification is received and the app is in the
     // foreground (or if the app was in the background and the user clicks on the notification).
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
         // display the userInfo
-        if ( application.applicationState == UIApplicationState.Inactive || application.applicationState == UIApplicationState.Background ){
-            if let aps = userInfo["aps"] as? NSDictionary {
-                if let category = aps["category"] as? String {
-                    if category == "NEW_MESSAGE" {
-                        if let alert = aps["alert"] as? NSDictionary {
-                            if let userIds = alert["loc-args"] as? NSArray {
-                                let fromUserId = userIds[0] as! String
-                                self.goToChat(fromUserId)
-                            }
-                        }
-                    }else {
-                        self.goToNotifications()
-                    }
-                } else if let _ = aps["alert"] as? NSString {
-                    self.goToNotifications()
-                }
-                completionHandler(UIBackgroundFetchResult.NoData)
-            }
+        if (application.applicationState == UIApplicationState.Inactive || application.applicationState == UIApplicationState.Background ){
+            self.openNotification(userInfo)
+            completionHandler(UIBackgroundFetchResult.NoData)
         }else{
             self.showTopNotification(userInfo);
             completionHandler(UIBackgroundFetchResult.NoData)
         }
     }
     
-    func goToChat(fromUserId:String = "") {
-        if(User().getField("current_chat") != fromUserId) {
-            dispatch_async(dispatch_get_main_queue()) {
-                let rootViewController = self.window?.rootViewController as! UINavigationController
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-                let vc = storyboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
-                vc.to = fromUserId
-                rootViewController.pushViewController(vc, animated: true)
+    func openNotification(userInfo: [NSObject : AnyObject]) {
+        if let aps = userInfo["aps"] as? NSDictionary {
+            if let category = aps["category"] as? String {
+                if category == "NEW_MESSAGE" {
+                    if let alert = aps["alert"] as? NSDictionary {
+                        if let userIds = alert["loc-args"] as? NSArray {
+                            let fromUserId = userIds[0] as! String
+                            self.goToChat(fromUserId)
+                        }
+                    }
+                }else {
+                    self.goToNotifications()
+                }
+            } else if let _ = aps["alert"] as? NSString {
+                self.goToNotifications()
             }
+        }
+    }
+    
+    func goToChat(fromUserId:String = "") {
+        dispatch_async(dispatch_get_main_queue()) {
+            let rootViewController = self.window?.rootViewController as! UINavigationController
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+            let vc = storyboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+            vc.to = fromUserId
+            rootViewController.pushViewController(vc, animated: true)
         }
     }
     
