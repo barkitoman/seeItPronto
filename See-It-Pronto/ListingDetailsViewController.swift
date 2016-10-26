@@ -107,7 +107,7 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
         }
         var url = AppConfig.APP_URL+"/realtor_properties"
         var params = "showing_instruction=\(self.txtShowingInstructions.text!)&owner_email=\(self.txtEmail.text!)"
-        params     = params+"&owner_phone=\(self.txtPhone.text!)&user_id=\(User().getField("id"))"
+        params     = params+"&owner_phone=&user_id=\(User().getField("id"))"
         params     = params+"&property_id=\(self.propertyId)&property_class=\(propertyClass)"
         params     = params+"&type=\(typeSelection)"
         if(!self.viewData["id"].stringValue.isEmpty) {
