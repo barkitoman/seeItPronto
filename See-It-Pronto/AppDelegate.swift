@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import KontaktSDK
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate {
@@ -71,6 +72,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, KTKDevicesManagerDelegate
     }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        FIRApp.configure()
+        
         // Override point for customization after application launch.
         let notificationTypes : UIUserNotificationType = [.Alert, .Badge, .Sound]
         let notificationSettings : UIUserNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
