@@ -9,15 +9,15 @@
 import UIKit
 
 enum ActionViewMode {
-    case Success
-    case Failed
-    case Loading
+    case success
+    case failed
+    case loading
 }
 
 class ActionView: UIView {
     
     var isSuccess: Bool = true
-    private var actionMode: ActionViewMode = .Loading
+    fileprivate var actionMode: ActionViewMode = .loading
     var activityIndicator = UIActivityIndicatorView()
     
     // 30 X 30
@@ -30,7 +30,7 @@ class ActionView: UIView {
         
         activityIndicator.frame = self.bounds
         activityIndicator.startAnimating()
-        activityIndicator.hidden = true
+        activityIndicator.isHidden = true
         addSubview(activityIndicator)
     }
 
@@ -38,24 +38,24 @@ class ActionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setActionViewMode(mode: ActionViewMode) {
-        activityIndicator.hidden = true
+    func setActionViewMode(_ mode: ActionViewMode) {
+        activityIndicator.isHidden = true
         activityIndicator.removeFromSuperview()
         
         actionMode = mode
         
         switch mode {
-        case .Loading:
-            self.backgroundColor = UIColor.clearColor()
-            activityIndicator.hidden = false
+        case .loading:
+            self.backgroundColor = UIColor.clear
+            activityIndicator.isHidden = false
             addSubview(activityIndicator)
             break
             
-        case .Success:
+        case .success:
             self.backgroundColor = UIColor(red: 39/255.0, green: 183/255.0, blue: 42/255.0, alpha: 1)
             break
             
-        case .Failed:
+        case .failed:
             
             self.backgroundColor = UIColor(red: 236/255.0, green: 96/255.0, blue: 98/255.0, alpha: 1)
             break
@@ -65,7 +65,7 @@ class ActionView: UIView {
     }
 
     
-    func setSuccess(suc: Bool) {
+    func setSuccess(_ suc: Bool) {
         self.isSuccess = suc
         if suc {
             self.backgroundColor = UIColor(red: 39/255.0, green: 183/255.0, blue: 42/255.0, alpha: 1)
@@ -74,34 +74,34 @@ class ActionView: UIView {
         }
     }
     
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
         
         // set paint color
-        UIColor.whiteColor().set()
+        UIColor.white.set()
         // get the context
         let currentContext = UIGraphicsGetCurrentContext()
         // set line width
-        CGContextSetLineWidth(currentContext,5.0)
+        currentContext?.setLineWidth(5.0)
         
         switch actionMode {
-        case .Loading:
+        case .loading:
             
             break
-        case .Failed:
-            CGContextMoveToPoint(currentContext, 8, 8)
-            CGContextAddLineToPoint(currentContext, 22, 22)
-            CGContextAddLineToPoint(currentContext, 15, 15)
-            CGContextAddLineToPoint(currentContext, 22, 8)
-            CGContextAddLineToPoint(currentContext, 8, 22)
-            CGContextStrokePath(currentContext)
+        case .failed:
+            currentContext?.move(to: CGPoint(x: 8, y: 8))
+            currentContext?.addLine(to: CGPoint(x: 22, y: 22))
+            currentContext?.addLine(to: CGPoint(x: 15, y: 15))
+            currentContext?.addLine(to: CGPoint(x: 22, y: 8))
+            currentContext?.addLine(to: CGPoint(x: 8, y: 22))
+            currentContext?.strokePath()
             break
-        case .Success:
-            CGContextSetLineJoin(currentContext, CGLineJoin.Round)
-            CGContextMoveToPoint(currentContext, 7, 15)
-            CGContextAddLineToPoint(currentContext, 14, 20)
-            CGContextAddLineToPoint(currentContext, 24, 7)
-            CGContextStrokePath(currentContext)
+        case .success:
+            currentContext?.setLineJoin(CGLineJoin.round)
+            currentContext?.move(to: CGPoint(x: 7, y: 15))
+            currentContext?.addLine(to: CGPoint(x: 14, y: 20))
+            currentContext?.addLine(to: CGPoint(x: 24, y: 7))
+            currentContext?.strokePath()
             break
         }
         
@@ -109,14 +109,14 @@ class ActionView: UIView {
 }
 
 enum BProgressHUDMode {
-    case Loading            // only loading
-    case LoadingWithMessage // loading and message
-    case SuccessMessage     //
-    case FailedMessage
-    case OnlyMessage
+    case loading            // only loading
+    case loadingWithMessage // loading and message
+    case successMessage     //
+    case failedMessage
+    case onlyMessage
 }
 
-public class BProgressHUD: NSObject {
+open class BProgressHUD: NSObject {
     var backView: UIView!  // the fullscreen back
     var backColor: UIColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0) // the fullscreen back color
     var messageBackView: UIView! // the hud back
@@ -128,38 +128,38 @@ public class BProgressHUD: NSObject {
     var messageLabel: UILabel?
     var message: String?
     var messageLabelFont: CGFloat = 15
-    var messageLabelColor = UIColor.whiteColor()
+    var messageLabelColor = UIColor.white
     let MIN_WIDTH: CGFloat = 80 // the message back view min width
     
-    var progressMode: BProgressHUDMode = .Loading
+    var progressMode: BProgressHUDMode = .loading
     
     override init() {
         super.init()
-        backView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height))
+        backView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         backView.backgroundColor = backColor
 //        backView.userInteractionEnabled = false
         
-        messageBackView = UIView(frame: CGRectMake(0, 0, MIN_WIDTH, 80))
+        messageBackView = UIView(frame: CGRect(x: 0, y: 0, width: MIN_WIDTH, height: 80))
         messageBackView.layer.cornerRadius = 8
         messageBackView.layer.masksToBounds = true
         messageBackView.backgroundColor = messageBackColor
-        messageBackView.center = CGPointMake(UIScreen.mainScreen().bounds.width / 2, UIScreen.mainScreen().bounds.height / 2 - 40)
+        messageBackView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 - 40)
         backView.addSubview(messageBackView)
         
-        actionView = ActionView(frame: CGRectMake(0, 0, 30, 30))
-        actionView!.center = CGPointMake(messageBackView.frame.size.width / 2, 28)
+        actionView = ActionView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        actionView!.center = CGPoint(x: messageBackView.frame.size.width / 2, y: 28)
         messageBackView.addSubview(actionView!)
         
-        messageLabel = UILabel(frame: CGRectMake(0, 0, messageBackView.frame.size.width, 20))
-        messageLabel?.font = UIFont.systemFontOfSize(messageLabelFont)
+        messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: messageBackView.frame.size.width, height: 20))
+        messageLabel?.font = UIFont.systemFont(ofSize: messageLabelFont)
         messageLabel?.textColor = messageLabelColor
-        messageLabel?.textAlignment = NSTextAlignment.Center
+        messageLabel?.textAlignment = NSTextAlignment.center
         messageBackView.addSubview(messageLabel!)
     }
     
     // text width
-    class func getTextWidth(text: NSString, font: UIFont) -> CGFloat {
-        let textSize: CGSize = text.boundingRectWithSize(CGSizeMake(CGFloat.max, 20), options: NSStringDrawingOptions.UsesFontLeading, attributes: [NSFontAttributeName: font], context: nil).size
+    class func getTextWidth(_ text: NSString, font: UIFont) -> CGFloat {
+        let textSize: CGSize = text.boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 20), options: NSStringDrawingOptions.usesFontLeading, attributes: [NSFontAttributeName: font], context: nil).size
         
         return textSize.width
     }
@@ -175,22 +175,22 @@ public class BProgressHUD: NSObject {
     }
     
     func layoutSubviews() {
-        actionView?.hidden = false
+        actionView?.isHidden = false
         
         switch progressMode {
-        case .Loading:
+        case .loading:
             messageLabel?.text = ""
-            actionView?.hidden = false
+            actionView?.isHidden = false
             
             messageBackView.frame.size.height = 80
             messageBackView.frame.size.width = MIN_WIDTH
-            actionView?.center = CGPointMake(self.messageBackView.frame.size.width / 2, self.messageBackView.frame.size.height / 2)
-            messageBackView.center = CGPointMake(UIScreen.mainScreen().bounds.width / 2, UIScreen.mainScreen().bounds.height / 2 - 40)
+            actionView?.center = CGPoint(x: self.messageBackView.frame.size.width / 2, y: self.messageBackView.frame.size.height / 2)
+            messageBackView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 - 40)
             break
-        case .LoadingWithMessage:
+        case .loadingWithMessage:
             var messageWidth: CGFloat = 0
             if message != nil {
-                messageWidth = BProgressHUD.getTextWidth(message!, font: UIFont.systemFontOfSize(messageLabelFont))
+                messageWidth = BProgressHUD.getTextWidth(message! as NSString, font: UIFont.systemFont(ofSize: messageLabelFont))
             }
             
             if messageWidth > MIN_WIDTH {
@@ -200,17 +200,17 @@ public class BProgressHUD: NSObject {
             }
             
             messageBackView.frame.size.height = 80
-            messageLabel?.frame = CGRectMake(0, messageBackView.frame.size.height - 30, messageBackView.frame.size.width, 20)
+            messageLabel?.frame = CGRect(x: 0, y: messageBackView.frame.size.height - 30, width: messageBackView.frame.size.width, height: 20)
             
-            actionView?.center = CGPointMake(self.messageBackView.frame.size.width / 2, 28)
-            messageBackView.center = CGPointMake(UIScreen.mainScreen().bounds.width / 2, UIScreen.mainScreen().bounds.height / 2 - 40)
+            actionView?.center = CGPoint(x: self.messageBackView.frame.size.width / 2, y: 28)
+            messageBackView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 - 40)
             
             break
-        case .SuccessMessage:
+        case .successMessage:
             
             var messageWidth: CGFloat = 0
             if message != nil {
-                messageWidth = BProgressHUD.getTextWidth(message!, font: UIFont.systemFontOfSize(messageLabelFont))
+                messageWidth = BProgressHUD.getTextWidth(message! as NSString, font: UIFont.systemFont(ofSize: messageLabelFont))
             }
             
             if messageWidth > MIN_WIDTH {
@@ -220,15 +220,15 @@ public class BProgressHUD: NSObject {
             }
             
             messageBackView.frame.size.height = 80
-            messageLabel?.frame = CGRectMake(0, messageBackView.frame.size.height - 30, messageBackView.frame.size.width, 20)
+            messageLabel?.frame = CGRect(x: 0, y: messageBackView.frame.size.height - 30, width: messageBackView.frame.size.width, height: 20)
             
-            actionView?.center = CGPointMake(self.messageBackView.frame.size.width / 2, 28)
-            messageBackView.center = CGPointMake(UIScreen.mainScreen().bounds.width / 2, UIScreen.mainScreen().bounds.height / 2 - 40)
+            actionView?.center = CGPoint(x: self.messageBackView.frame.size.width / 2, y: 28)
+            messageBackView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 - 40)
             break
-        case .FailedMessage:
+        case .failedMessage:
             var messageWidth: CGFloat = 0
             if message != nil {
-                messageWidth = BProgressHUD.getTextWidth(message!, font: UIFont.systemFontOfSize(messageLabelFont))
+                messageWidth = BProgressHUD.getTextWidth(message! as NSString, font: UIFont.systemFont(ofSize: messageLabelFont))
             }
             
             if messageWidth > MIN_WIDTH {
@@ -238,16 +238,16 @@ public class BProgressHUD: NSObject {
             }
             
             messageBackView.frame.size.height = 80
-            messageLabel?.frame = CGRectMake(0, messageBackView.frame.size.height - 30, messageBackView.frame.size.width, 20)
-            actionView?.center = CGPointMake(self.messageBackView.frame.size.width / 2, 28)
-            messageBackView.center = CGPointMake(UIScreen.mainScreen().bounds.width / 2, UIScreen.mainScreen().bounds.height / 2 - 40)
+            messageLabel?.frame = CGRect(x: 0, y: messageBackView.frame.size.height - 30, width: messageBackView.frame.size.width, height: 20)
+            actionView?.center = CGPoint(x: self.messageBackView.frame.size.width / 2, y: 28)
+            messageBackView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 - 40)
             break
         
-        case .OnlyMessage:
-            actionView?.hidden = true
+        case .onlyMessage:
+            actionView?.isHidden = true
             var messageWidth: CGFloat = 0
             if message != nil {
-                messageWidth = BProgressHUD.getTextWidth(message!, font: UIFont.systemFontOfSize(messageLabelFont))
+                messageWidth = BProgressHUD.getTextWidth(message! as NSString, font: UIFont.systemFont(ofSize: messageLabelFont))
             }
             
             messageBackView.frame.size.height = 60
@@ -257,8 +257,8 @@ public class BProgressHUD: NSObject {
                 messageBackView.frame.size.width = MIN_WIDTH
             }
             
-            messageLabel?.frame = CGRectMake(0, 0, messageBackView.frame.size.width, messageBackView.frame.size.height)
-            messageBackView.center = CGPointMake(UIScreen.mainScreen().bounds.width / 2, UIScreen.mainScreen().bounds.height / 2 - 40)
+            messageLabel?.frame = CGRect(x: 0, y: 0, width: messageBackView.frame.size.width, height: messageBackView.frame.size.height)
+            messageBackView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 - 40)
             break
         }
     }
@@ -267,27 +267,27 @@ public class BProgressHUD: NSObject {
         showLoadingViewWithMessage(nil)
     }
     
-    class func showLoadingViewWithMessage(msg: String?) {
+    class func showLoadingViewWithMessage(_ msg: String?) {
         let hud = BProgressHUD.sharedInstance
         hud.message = msg
         hud.messageLabel?.text = msg
-        hud.actionView?.setActionViewMode(.Loading)
-        hud.progressMode = .LoadingWithMessage
+        hud.actionView?.setActionViewMode(.loading)
+        hud.progressMode = .loadingWithMessage
         if msg == nil {
-            hud.progressMode = .Loading
+            hud.progressMode = .loading
         }
         
         hud.layoutSubviews()
         hud.show()
     }
     
-    class func showOnlyMessageAutoHide(delay: NSTimeInterval, msg: String, dismissBlock: (() -> Void)?) {
+    class func showOnlyMessageAutoHide(_ delay: TimeInterval, msg: String, dismissBlock: (() -> Void)?) {
         let hud = BProgressHUD.sharedInstance
         hud.dismissBlock = dismissBlock
         hud.message = msg
         
-        hud.actionView?.setActionViewMode(.Success)
-        hud.progressMode = .OnlyMessage
+        hud.actionView?.setActionViewMode(.success)
+        hud.progressMode = .onlyMessage
         hud.messageLabel?.text = msg
         hud.layoutSubviews()
         
@@ -295,17 +295,17 @@ public class BProgressHUD: NSObject {
         hud.dismiss(delay)
     }
     
-    class func showSuccessMessageAutoHide(delay: NSTimeInterval, msg: String) {
+    class func showSuccessMessageAutoHide(_ delay: TimeInterval, msg: String) {
         BProgressHUD.showSuccessMessageAutoHide(delay, msg: msg, dismissBlock: nil)
     }
     
-    class func showSuccessMessageAutoHide(delay: NSTimeInterval, msg: String, dismissBlock: (() -> Void)?) {
+    class func showSuccessMessageAutoHide(_ delay: TimeInterval, msg: String, dismissBlock: (() -> Void)?) {
         let hud = BProgressHUD.sharedInstance
         hud.dismissBlock = dismissBlock
         hud.message = msg
         
-        hud.actionView?.setActionViewMode(.Success)
-        hud.progressMode = .SuccessMessage
+        hud.actionView?.setActionViewMode(.success)
+        hud.progressMode = .successMessage
         hud.messageLabel?.text = msg
         hud.layoutSubviews()
         
@@ -313,13 +313,13 @@ public class BProgressHUD: NSObject {
         hud.dismiss(delay)
     }
     
-    class func showErrorMessageAutoHide(delay: NSTimeInterval, msg: String, dismissBlock: (() -> Void)?) {
+    class func showErrorMessageAutoHide(_ delay: TimeInterval, msg: String, dismissBlock: (() -> Void)?) {
         let hud = BProgressHUD.sharedInstance
         hud.dismissBlock = dismissBlock
         hud.message = msg
         
-        hud.actionView?.setActionViewMode(.Failed)
-        hud.progressMode = .FailedMessage
+        hud.actionView?.setActionViewMode(.failed)
+        hud.progressMode = .failedMessage
         hud.messageLabel?.text = msg
         hud.layoutSubviews()
         
@@ -328,19 +328,19 @@ public class BProgressHUD: NSObject {
     }
     
     func show() {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            let pv: UIView = (UIApplication.sharedApplication().keyWindow?.subviews.first)!  as UIView
+        DispatchQueue.main.async(execute: { () -> Void in
+            let pv: UIView = (UIApplication.shared.keyWindow?.subviews.first)!  as UIView
             pv.addSubview(self.backView)
         })
     }
     
-    class func dismissHUD(delay: NSTimeInterval) {
+    class func dismissHUD(_ delay: TimeInterval) {
         let hud = BProgressHUD.sharedInstance
         hud.dismiss(delay)
     }
     
-    func dismiss(delay: NSTimeInterval) {
-        NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "dismiss", userInfo: nil, repeats: false)
+    func dismiss(_ delay: TimeInterval) {
+        Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(BProgressHUD.dismiss as (BProgressHUD) -> () -> ()), userInfo: nil, repeats: false)
     }
     
 //    func dismiss(delay: NSTimeInterval, animated: Bool) {
@@ -352,7 +352,7 @@ public class BProgressHUD: NSObject {
 //    }
     
     func dismiss() {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        DispatchQueue.main.async(execute: { () -> Void in
             
 //            println("dismiss alert view")
             if self.backView.superview != nil {

@@ -30,33 +30,33 @@ class SearchConfig {
     var existingItem : NSManagedObject!
     
     func find()->AnyObject{
-        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDel: AppDelegate = UIApplication.shared.delegate as! AppDelegate
         let contxt: NSManagedObjectContext = appDel.managedObjectContext
-        let freq = NSFetchRequest(entityName:"SearchConfig")
+        let freq = NSFetchRequest<NSFetchRequestResult>(entityName:"SearchConfig")
         var out:Array<AnyObject> = []
         do {
-            try out = contxt.executeFetchRequest(freq)
+            try out = contxt.fetch(freq)
         } catch {
             print("An error has ocurred")
         }
-        return out
+        return out as AnyObject
     }
     
-    func getField(fieldName:String)->String{
+    func getField(_ fieldName:String)->String{
         let searchConfig = SearchConfig().find()
         var out:String   = ""
         if(searchConfig.count >= 1) {
             if let dataObj:AnyObject = searchConfig.objectAtIndex(0)  {
                 let obj  = dataObj as! NSManagedObject
-                if(obj.valueForKey(fieldName) != nil) {
-                    out = obj.valueForKey(fieldName) as! String
+                if(obj.value(forKey: fieldName) != nil) {
+                    out = obj.value(forKey: fieldName) as! String
                 }
             }
         }
         return out
     }
     
-    func saveOne(configData:JSON) {
+    func saveOne(_ configData:JSON) {
         //check if item exists
         if (SearchConfig().find().count >= 1) {
             //Remove if exists
@@ -66,12 +66,12 @@ class SearchConfig {
         
     }
     
-    func save(searchConfigData:JSON) {
-        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    func save(_ searchConfigData:JSON) {
+        let appDel: AppDelegate = UIApplication.shared.delegate as! AppDelegate
         let contxt: NSManagedObjectContext = appDel.managedObjectContext
-        let en = NSEntityDescription.entityForName("SearchConfig", inManagedObjectContext: contxt)
+        let en = NSEntityDescription.entity(forEntityName: "SearchConfig", in: contxt)
         //create instance of pur data model and inicilize
-        let newItem = SearchConfigEntity(entity:en!, insertIntoManagedObjectContext:contxt)
+        let newItem = SearchConfigEntity(entity:en!, insertInto:contxt)
         //map our properties
         newItem.type_property       = searchConfigData["type_property"].stringValue
         newItem.price_range_higher  = searchConfigData["price_range_higher"].stringValue
@@ -92,14 +92,14 @@ class SearchConfig {
     }
     
     func deleteAllData() {
-        let appDel        = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDel        = UIApplication.shared.delegate as! AppDelegate
         let context       = appDel.managedObjectContext
         let coord         = appDel.persistentStoreCoordinator
-        let fetchRequest  = NSFetchRequest(entityName: "SearchConfig")
+        let fetchRequest  = NSFetchRequest<NSFetchRequestResult>(entityName: "SearchConfig")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         
         do {
-            try coord.executeRequest(deleteRequest, withContext: context)
+            try coord.execute(deleteRequest, with: context)
         } catch let error as NSError {
             debugPrint(error)
         }

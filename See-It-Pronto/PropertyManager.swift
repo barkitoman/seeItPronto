@@ -54,33 +54,33 @@ class Property {
     var existingItem : NSManagedObject!
     
     func find()->AnyObject{
-        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDel: AppDelegate = UIApplication.shared.delegate as! AppDelegate
         let contxt: NSManagedObjectContext = appDel.managedObjectContext
-        let freq = NSFetchRequest(entityName:"Property")
+        let freq = NSFetchRequest<NSFetchRequestResult>(entityName:"Property")
         var out:Array<AnyObject> = []
         do {
-            try out = contxt.executeFetchRequest(freq)
+            try out = contxt.fetch(freq)
         } catch {
             print("An error has ocurred")
         }
-        return out
+        return out as AnyObject
     }
     
-    func getField(fieldName:String)->String{
+    func getField(_ fieldName:String)->String{
         let property   = Property().find()
         var out:String = ""
         if(property.count >= 1) {
             if let dataObj:AnyObject = property.objectAtIndex(0)  {
                 let obj  = dataObj as! NSManagedObject
-                if(obj.valueForKey(fieldName) != nil) {
-                    out = obj.valueForKey(fieldName) as! String
+                if(obj.value(forKey: fieldName) != nil) {
+                    out = obj.value(forKey: fieldName) as! String
                 }
             }
         }
         return out
     }
     
-    func saveOne(propertyData:JSON) {
+    func saveOne(_ propertyData:JSON) {
         //check if item exists
         if (Property().find().count >= 1) {
             //Remove if exists
@@ -89,12 +89,12 @@ class Property {
         self.save(propertyData)
     }
     
-    func save(propertyData:JSON) {
-        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    func save(_ propertyData:JSON) {
+        let appDel: AppDelegate = UIApplication.shared.delegate as! AppDelegate
         let contxt: NSManagedObjectContext = appDel.managedObjectContext
-        let en = NSEntityDescription.entityForName("Property", inManagedObjectContext: contxt)
+        let en = NSEntityDescription.entity(forEntityName: "Property", in: contxt)
         //create instance of pur data model and inicilize
-        let newItem = PropertyEntity(entity:en!, insertIntoManagedObjectContext:contxt)
+        let newItem = PropertyEntity(entity:en!, insertInto:contxt)
         var propertyClass = propertyData["property_class"].stringValue
         if(propertyData["property_class"].stringValue.isEmpty && !propertyData["class"].stringValue.isEmpty) {
             propertyClass = propertyData["class"].stringValue
@@ -142,14 +142,14 @@ class Property {
     }
     
     func deleteAllData() {
-        let appDel        = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDel        = UIApplication.shared.delegate as! AppDelegate
         let context       = appDel.managedObjectContext
         let coord         = appDel.persistentStoreCoordinator
-        let fetchRequest  = NSFetchRequest(entityName: "Property")
+        let fetchRequest  = NSFetchRequest<NSFetchRequestResult>(entityName: "Property")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         
         do {
-            try coord.executeRequest(deleteRequest, withContext: context)
+            try coord.execute(deleteRequest, with: context)
         } catch let error as NSError {
             debugPrint(error)
         }

@@ -13,19 +13,19 @@ class ImageLoadingWithCache {
     
     var imageCache = [String:UIImage]()
     
-    func getImage(imgPath: String, imageView: UIImageView) {
+    func getImage(_ imgPath: String, imageView: UIImageView) {
         if let img = imageCache[imgPath] {
             self.setImage(imageView,img: img)
         } else {
-            var url = NSURL(string: AppConfig.APP_URL+"/"+imgPath)
-            if (imgPath.rangeOfString("http://") != nil || imgPath.rangeOfString("https://") != nil ){
-                url = NSURL(string: imgPath)
+            var url = URL(string: AppConfig.APP_URL+"/"+imgPath)
+            if (imgPath.range(of: "http://") != nil || imgPath.range(of: "https://") != nil ){
+                url = URL(string: imgPath)
             }
-            let task = NSURLSession.sharedSession().dataTaskWithURL(url!) { (data, response, error) -> Void in
+            let task = URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) -> Void in
                 if error != nil {
                     print("ERROR SHOWING IMAGE "+imgPath)
                 } else {
-                    if let httpResponse = response as? NSHTTPURLResponse {
+                    if let httpResponse = response as? HTTPURLResponse {
                         if(httpResponse.statusCode == 200) {
                             let img = UIImage(data: data!)
                             self.imageCache[imgPath] = img
@@ -35,13 +35,13 @@ class ImageLoadingWithCache {
                         }
                     }
                 }
-            }
+            }) 
             task.resume()
         }
     }
     
-    func setImage(imageView: UIImageView, img:UIImage){
-        dispatch_async(dispatch_get_main_queue()) {
+    func setImage(_ imageView: UIImageView, img:UIImage){
+        DispatchQueue.main.async {
             imageView.image = img
         }
     }

@@ -31,33 +31,33 @@ class PropertyRealtor {
     var existingItem : NSManagedObject!
     
     func find()->AnyObject{
-        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDel: AppDelegate = UIApplication.shared.delegate as! AppDelegate
         let contxt: NSManagedObjectContext = appDel.managedObjectContext
-        let freq = NSFetchRequest(entityName:"PropertyRealtor")
+        let freq = NSFetchRequest<NSFetchRequestResult>(entityName:"PropertyRealtor")
         var out:Array<AnyObject> = []
         do {
-            try out = contxt.executeFetchRequest(freq)
+            try out = contxt.fetch(freq)
         } catch {
             print("An error has ocurred")
         }
-        return out
+        return out as AnyObject
     }
     
-    func getField(fieldName:String)->String{
+    func getField(_ fieldName:String)->String{
         let propertyRealtor   = PropertyRealtor().find()
         var out:String = ""
         if(propertyRealtor.count >= 1) {
             if let dataObj:AnyObject = propertyRealtor.objectAtIndex(0)  {
                 let obj  = dataObj as! NSManagedObject
-                if(obj.valueForKey(fieldName) != nil) {
-                    out = obj.valueForKey(fieldName) as! String
+                if(obj.value(forKey: fieldName) != nil) {
+                    out = obj.value(forKey: fieldName) as! String
                 }
             }
         }
         return out
     }
     
-    func saveOne(propertyRealtorData:JSON) {
+    func saveOne(_ propertyRealtorData:JSON) {
         //check if item exists
         if (Property().find().count >= 1) {
             //Remove if exists
@@ -66,12 +66,12 @@ class PropertyRealtor {
         self.save(propertyRealtorData)
     }
     
-    func save(propertyData:JSON) {
-        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    func save(_ propertyData:JSON) {
+        let appDel: AppDelegate = UIApplication.shared.delegate as! AppDelegate
         let contxt: NSManagedObjectContext = appDel.managedObjectContext
-        let en = NSEntityDescription.entityForName("PropertyRealtor", inManagedObjectContext: contxt)
+        let en = NSEntityDescription.entity(forEntityName: "PropertyRealtor", in: contxt)
         //create instance of pur data model and inicilize
-        let newItem = PropertyRealtorEntity(entity:en!, insertIntoManagedObjectContext:contxt)
+        let newItem = PropertyRealtorEntity(entity:en!, insertInto:contxt)
         //map our properties realtor
         let image = (!propertyData["image"].stringValue.isEmpty) ? propertyData["image"].stringValue : propertyData["url_image"].stringValue
         newItem.distance     = propertyData["distance"].stringValue
@@ -93,14 +93,14 @@ class PropertyRealtor {
     }
     
     func deleteAllData() {
-        let appDel        = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDel        = UIApplication.shared.delegate as! AppDelegate
         let context       = appDel.managedObjectContext
         let coord         = appDel.persistentStoreCoordinator
-        let fetchRequest  = NSFetchRequest(entityName: "PropertyRealtor")
+        let fetchRequest  = NSFetchRequest<NSFetchRequestResult>(entityName: "PropertyRealtor")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         
         do {
-            try coord.executeRequest(deleteRequest, withContext: context)
+            try coord.execute(deleteRequest, with: context)
         } catch let error as NSError {
             debugPrint(error)
         }

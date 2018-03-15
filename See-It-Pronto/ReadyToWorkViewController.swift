@@ -30,23 +30,23 @@ class ReadyToWorkViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
     
-    @IBAction func btnActive(sender: AnyObject) {
+    @IBAction func btnActive(_ sender: AnyObject) {
         self.save("1")
     }
     
-    @IBAction func btnInactive(sender: AnyObject) {
+    @IBAction func btnInactive(_ sender: AnyObject) {
         self.save("0")
     }
     
@@ -69,7 +69,7 @@ class ReadyToWorkViewController: UIViewController {
 //
 //    }
     
-    @IBAction func editTravelRate(sender: AnyObject) {
+    @IBAction func editTravelRate(_ sender: AnyObject) {
         
         let pickerView = CustomPickerDialog.init()
         var arrayDataSource:[String] = []
@@ -87,7 +87,7 @@ class ReadyToWorkViewController: UIViewController {
         }
     }
     
-    func showRates(showingRate:String,traveRange:String) {
+    func showRates(_ showingRate:String,traveRange:String) {
 //        if(!showingRate.isEmpty){
 //            self.lblShowingRate.text = "Your Rate: $\(showingRate) per showing"
 //        }
@@ -96,9 +96,9 @@ class ReadyToWorkViewController: UIViewController {
         }
     }
 
-    func save(shoingStatus:String) {
+    func save(_ shoingStatus:String) {
         //create params
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         let travelRate  = self.numberTravelRange
@@ -107,15 +107,15 @@ class ReadyToWorkViewController: UIViewController {
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPost(response)});
     }
     
-    func afterPost(let response: NSData) {
+    func afterPost(_ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             BProgressHUD.dismissHUD(0)
         }
         if(result["result"].bool == true) {
             self.viewData = result
-            dispatch_async(dispatch_get_main_queue()) {
-                self.performSegueWithIdentifier("showRealtorHome", sender: self)
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "showRealtorHome", sender: self)
             }
         } else {
             var msg = "Error saving, please try later"
@@ -135,8 +135,8 @@ class ReadyToWorkViewController: UIViewController {
         }
     }
     
-    func loadDataToEdit(let response: NSData) {
-        dispatch_async(dispatch_get_main_queue()) {
+    func loadDataToEdit(_ response: Data) {
+        DispatchQueue.main.async {
             let result = JSON(data: response)
             self.viewData = result
 //            if(!result["showing_rate"].stringValue.isEmpty) {

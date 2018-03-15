@@ -20,20 +20,20 @@ class ShowingRequestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         self.findShowing()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -42,11 +42,11 @@ class ShowingRequestViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnYes(sender: AnyObject) {
+    @IBAction func btnYes(_ sender: AnyObject) {
         let url          = AppConfig.APP_URL+"/showings/\(self.viewData["showing"]["id"].stringValue)"
         var params       = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=1&current_showing="+self.isCurrentShowing()
         params           = params+"&user_id=\(User().getField("id"))&showing_type=\(self.viewData["showing"]["type"].stringValue)"
@@ -59,24 +59,24 @@ class ShowingRequestViewController: UIViewController {
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterYesRequest(response)});
     }
     
-    func afterYesRequest(let response: NSData) {
+    func afterYesRequest(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true ) {
-            dispatch_async(dispatch_get_main_queue()) {
-                let alertController = UIAlertController(title:"Success", message: "The request has been accepted, Please proceed to the property", preferredStyle: .Alert)
-                let currentShowingAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default) {
+            DispatchQueue.main.async {
+                let alertController = UIAlertController(title:"Success", message: "The request has been accepted, Please proceed to the property", preferredStyle: .alert)
+                let currentShowingAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) {
                     UIAlertAction in
                     if(self.viewData["showing"]["type"].stringValue == "see_it_pronto") {
-                        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                        let vc : CurrentShowingViewController = mainStoryboard.instantiateViewControllerWithIdentifier("CurrentShowingViewController") as! CurrentShowingViewController
+                        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                        let vc : CurrentShowingViewController = mainStoryboard.instantiateViewController(withIdentifier: "CurrentShowingViewController") as! CurrentShowingViewController
                         vc.showingId = self.showingId
-                        self.navigationController?.showViewController(vc, sender: nil)
+                        self.navigationController?.show(vc, sender: nil)
                     } else {
                         Utility().goHome(self)
                     }
                 }
                 alertController.addAction(currentShowingAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                self.present(alertController, animated: true, completion: nil)
             }
         } else {
             var msg = "Error saving, please try later"
@@ -99,7 +99,8 @@ class ShowingRequestViewController: UIViewController {
         return out
     }
     
-    func notificationParams(var params:String, type:String, title:String, descripcion:String)->String {
+    func notificationParams(_ params:String, type:String, title:String, descripcion:String)->String {
+        var params = params
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+self.viewData["showing"]["buyer_id"].stringValue
         params = params+"&title=\(title)&property_id="+self.viewData["showing"]["property_id"].stringValue
         params = params+"&description="+descripcion
@@ -107,7 +108,7 @@ class ShowingRequestViewController: UIViewController {
         return params
     }
     
-    @IBAction func btnNo(sender: AnyObject) {
+    @IBAction func btnNo(_ sender: AnyObject) {
         let url          = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         var params       = "id="+self.viewData["showing"]["id"].stringValue+"&showing_status=2&refund=1"
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
@@ -118,22 +119,22 @@ class ShowingRequestViewController: UIViewController {
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterNoRequest(response)});
     }
     
-    func afterNoRequest(let response: NSData) {
+    func afterNoRequest(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true ) {
-            dispatch_async(dispatch_get_main_queue()) {
-                let alertController = UIAlertController(title:"Success", message: "The request has been rejected", preferredStyle: .Alert)
-                let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+            DispatchQueue.main.async {
+                let alertController = UIAlertController(title:"Success", message: "The request has been rejected", preferredStyle: .alert)
+                let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.default) {
                     UIAlertAction in
                     Utility().goHome(self)
                 }
-                let backAction = UIAlertAction(title: "Back", style: UIAlertActionStyle.Default) {
+                let backAction = UIAlertAction(title: "Back", style: UIAlertActionStyle.default) {
                     UIAlertAction in
-                    self.navigationController?.popViewControllerAnimated(true)
+                    self.navigationController?.popViewController(animated: true)
                 }
                 alertController.addAction(homeAction)
                 alertController.addAction(backAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                self.present(alertController, animated: true, completion: nil)
             }
         } else {
             var msg = "Error saving, please try later"
@@ -149,9 +150,9 @@ class ShowingRequestViewController: UIViewController {
         Request().get(url, successHandler: {(response) in self.loadShowingData(response)})
     }
     
-    func loadShowingData(let response: NSData) {
+    func loadShowingData(_ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.viewData = result
             let name = result["buyer"]["first_name"].stringValue+" "+result["buyer"]["last_name"].stringValue
             self.lblBuyerName.text = "\(name) wants to see it on \(result["showing"]["showing_date"].stringValue)"
@@ -192,19 +193,19 @@ class ShowingRequestViewController: UIViewController {
         }
         
         if(!message.isEmpty) {
-            dispatch_async(dispatch_get_main_queue()) {
-                let alertController = UIAlertController(title:"Message", message: message, preferredStyle: .Alert)
-                let homeAction = UIAlertAction(title: "Back", style: UIAlertActionStyle.Default) {
+            DispatchQueue.main.async {
+                let alertController = UIAlertController(title:"Message", message: message, preferredStyle: .alert)
+                let homeAction = UIAlertAction(title: "Back", style: UIAlertActionStyle.default) {
                     UIAlertAction in
-                    self.navigationController?.popViewControllerAnimated(true)
+                    self.navigationController?.popViewController(animated: true)
                 }
                 alertController.addAction(homeAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                self.present(alertController, animated: true, completion: nil)
             }
         }
     }
     
-    @IBAction func btnViewShowingInstructions(sender: AnyObject) {
+    @IBAction func btnViewShowingInstructions(_ sender: AnyObject) {
         if(!self.viewData["realtor_properties"]["showing_instruction"].stringValue.isEmpty) {
             var instructions = self.viewData["realtor_properties"]["type"].stringValue+"\n"
             instructions = instructions+self.viewData["realtor_properties"]["showing_instruction"].stringValue
@@ -214,16 +215,16 @@ class ShowingRequestViewController: UIViewController {
         }
     }
     
-    @IBAction func btnCallCustomer(sender: AnyObject) {
+    @IBAction func btnCallCustomer(_ sender: AnyObject) {
         self.chatAgent()
     }
     
     func chatAgent() {
-         dispatch_async(dispatch_get_main_queue()) {
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+         DispatchQueue.main.async {
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            let vc : ChatViewController = mainStoryboard.instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
             vc.to = self.viewData["showing"]["buyer_id"].stringValue
-            self.navigationController?.showViewController(vc, sender: nil)
+            self.navigationController?.show(vc, sender: nil)
         }
     }
     

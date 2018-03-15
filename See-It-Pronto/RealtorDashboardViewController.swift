@@ -17,14 +17,14 @@ class RealtorDashboardViewController: UIViewController {
 
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -33,42 +33,42 @@ class RealtorDashboardViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
 
-    @IBAction func btnPrevious(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnPrevious(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnNext(sender: AnyObject) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("AgentDashBoardMyListings", sender: self)
+    @IBAction func btnNext(_ sender: AnyObject) {
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "AgentDashBoardMyListings", sender: self)
         }
     }
     
-    @IBAction func btnBuyers(sender: AnyObject) {
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let viewController = mainStoryboard.instantiateViewControllerWithIdentifier("ListBuyersViewController") as! ListBuyersViewController
-        self.navigationController?.showViewController(viewController, sender: nil)
+    @IBAction func btnBuyers(_ sender: AnyObject) {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "ListBuyersViewController") as! ListBuyersViewController
+        self.navigationController?.show(viewController, sender: nil)
     }
     
-    @IBAction func btnLog(sender: AnyObject) {
+    @IBAction func btnLog(_ sender: AnyObject) {
     }
     
-    @IBAction func btnForms(sender: AnyObject) {
+    @IBAction func btnForms(_ sender: AnyObject) {
     }
     
-    @IBAction func btnListing(sender: AnyObject) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("AgentDashBoardMyListings", sender: self)
+    @IBAction func btnListing(_ sender: AnyObject) {
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "AgentDashBoardMyListings", sender: self)
         }
     }
     
-    @IBAction func btnFeedBack(sender: AnyObject) {
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let viewController = mainStoryboard.instantiateViewControllerWithIdentifier("FeedBacksViewController") as! FeedBacksViewController
-        self.navigationController?.showViewController(viewController, sender: nil)
+    @IBAction func btnFeedBack(_ sender: AnyObject) {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "FeedBacksViewController") as! FeedBacksViewController
+        self.navigationController?.show(viewController, sender: nil)
     }
     
     

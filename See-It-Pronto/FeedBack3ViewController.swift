@@ -16,14 +16,14 @@ class FeedBack3ViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-        navigationController?.navigationBarHidden = false
+        navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -32,22 +32,23 @@ class FeedBack3ViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
 
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnPrev(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnPrev(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnShareMyInfo(sender: AnyObject) {
+    @IBAction func btnShareMyInfo(_ sender: AnyObject) {
         var params = "id="+self.viewData["showing"]["id"].stringValue+"&buy_with_realtor=1"
         let url    = AppConfig.APP_URL+"/showings/"+self.viewData["showing"]["id"].stringValue
         params     = self.shareMyInfoNotificationParams(params)
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterBuyWithAgentRequest(response)});
     }
     
-    func shareMyInfoNotificationParams(var params:String)->String {
+    func shareMyInfoNotificationParams(_ params:String)->String {
+        var params = params
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+self.viewData["showing"]["realtor_id"].stringValue
         params = params+"&title=User Wants To Share Info&property_id=\(self.viewData["showing"]["property_id"].stringValue)"
@@ -56,17 +57,17 @@ class FeedBack3ViewController: UIViewController {
         return params
     }
     
-    func afterBuyWithAgentRequest(let response: NSData) {
+    func afterBuyWithAgentRequest(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
-            dispatch_async(dispatch_get_main_queue()) {
-                let alertController = UIAlertController(title:"Success", message: "The data has been saved successfully.", preferredStyle: .Alert)
-                let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+            DispatchQueue.main.async {
+                let alertController = UIAlertController(title:"Success", message: "The data has been saved successfully.", preferredStyle: .alert)
+                let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.default) {
                     UIAlertAction in
                     Utility().goHome(self)
                 }
                 alertController.addAction(homeAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                self.present(alertController, animated: true, completion: nil)
             }
         } else {
             var msg = "Error saving, please try later"
@@ -77,7 +78,7 @@ class FeedBack3ViewController: UIViewController {
         }
     }
     
-    @IBAction func btnFinish(sender: AnyObject) {
+    @IBAction func btnFinish(_ sender: AnyObject) {
         Utility().goHome(self)
     }
     

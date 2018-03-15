@@ -28,20 +28,20 @@ class NotificationDetailViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
 
     func findShowing() {
@@ -49,9 +49,9 @@ class NotificationDetailViewController: UIViewController {
         Request().get(url, successHandler: {(response) in self.loadShowingData(response)})
     }
     
-    func loadShowingData(let response: NSData) {
+    func loadShowingData(_ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.viewData = result
             if(result["property"]["id"].stringValue.isEmpty) {
                 self.propertyNoExistMessage()
@@ -76,14 +76,14 @@ class NotificationDetailViewController: UIViewController {
     }
     
     func propertyNoExistMessage() {
-        dispatch_async(dispatch_get_main_queue()) {
-            let alertController = UIAlertController(title:"Message", message: "The details of this property are not available at this time", preferredStyle: .Alert)
-            let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title:"Message", message: "The details of this property are not available at this time", preferredStyle: .alert)
+            let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.default) {
                 UIAlertAction in
                 Utility().goHome(self)
             }
             alertController.addAction(homeAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
 }

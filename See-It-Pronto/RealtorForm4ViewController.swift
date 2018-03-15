@@ -31,35 +31,35 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     func subscriptionButtonAction() {
         if(User().getField("id") == "") {
-            self.btnCancelSubscription.hidden = true;
+            self.btnCancelSubscription.isHidden = true;
         } else if(self.viewData["stripe_subscription_id"].stringValue == "0"
             && self.viewData["stripe_subscription_active"].stringValue == "0") {
-            self.btnCancelSubscription.hidden = true;
+            self.btnCancelSubscription.isHidden = true;
                 
         } else if(self.viewData["stripe_subscription_id"].stringValue != "0"
             && self.viewData["stripe_subscription_active"].stringValue == "1") {
                 //cancel suscription
-                self.btnCancelSubscription.hidden = false;
+                self.btnCancelSubscription.isHidden = false;
                 btnSuscriptionAction = "CANCEL"
-                self.btnCancelSubscription.setTitle("Cancel Subscription", forState: .Normal)
+                self.btnCancelSubscription.setTitle("Cancel Subscription", for: UIControlState())
                 
         } else if(self.viewData["stripe_subscription_id"].stringValue != "0"
             && self.viewData["stripe_subscription_active"].stringValue == "0") {
                 //activate suscription
-                self.btnCancelSubscription.hidden = false;
+                self.btnCancelSubscription.isHidden = false;
                 btnSuscriptionAction = "ACTIVATE"
-                self.btnCancelSubscription.setTitle("Activate Subscription", forState: .Normal)
+                self.btnCancelSubscription.setTitle("Activate Subscription", for: UIControlState())
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -74,20 +74,20 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
         self.txtCvc.delegate = self
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnPrevious(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnPrevious(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnNext(sender: AnyObject) {
+    @IBAction func btnNext(_ sender: AnyObject) {
         self.save()
     }
     
@@ -107,7 +107,7 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
         }
     }
     
-    func afterPut(let response: NSData) {
+    func afterPut( _ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result
@@ -131,7 +131,7 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
         }
         if(self.txtExpDate.text! != "") {
             let regex = "[0-9]{2}/[0-9]{2,4}"
-            let matches = self.txtExpDate.text!.rangeOfString(regex, options: .RegularExpressionSearch)
+            let matches = self.txtExpDate.text!.range(of: regex, options: .regularExpression)
             if let _ = matches {} else {
                 Utility().displayAlert(self, title: "Error", message: "Please enter a valid Exp. Date. \n Example: 05/2020", performSegue: "")
                 return false
@@ -149,9 +149,9 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
         }
     }
     
-    func loadDataToEdit(let response: NSData) {
+    func loadDataToEdit( _ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.viewData = result
             self.subscriptionButtonAction()
             self.txtCardNumber.text = result["number_card"].stringValue
@@ -161,42 +161,42 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "RealtorForm3") {
-            let view: RealtorForm3ViewController = segue.destinationViewController as! RealtorForm3ViewController
+            let view: RealtorForm3ViewController = segue.destination as! RealtorForm3ViewController
             view.viewData  = self.viewData
         }
     }
     
-    @IBAction func cancelSubscription(sender: AnyObject) {
+    @IBAction func cancelSubscription(_ sender: AnyObject) {
         if(btnSuscriptionAction == "CANCEL") {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 let cancelMsg = "If you cancel the subscription you will have limited access, and you will not be listed for customers to schedule appointments"
-                let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to cancel your subscription?\n \(cancelMsg)", preferredStyle: .Alert)
-                let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+                let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to cancel your subscription?\n \(cancelMsg)", preferredStyle: .alert)
+                let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.default) {
                     UIAlertAction in
                     self.cancelSubscription()
                 }
-                let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+                let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.default) {
                     UIAlertAction in
                 }
                 alertController.addAction(yesAction)
                 alertController.addAction(noAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                self.present(alertController, animated: true, completion: nil)
             }
         } else if(btnSuscriptionAction == "ACTIVATE") {
-            dispatch_async(dispatch_get_main_queue()) {
-                let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to activate your subscription", preferredStyle: .Alert)
-                let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+            DispatchQueue.main.async {
+                let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to activate your subscription", preferredStyle: .alert)
+                let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.default) {
                     UIAlertAction in
                     self.activateSubscription()
                 }
-                let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+                let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.default) {
                     UIAlertAction in
                 }
                 alertController.addAction(yesAction)
                 alertController.addAction(noAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                self.present(alertController, animated: true, completion: nil)
             }
         } else {
             Utility().displayAlert(self, title: "Message", message: "This action is not available at this time", performSegue: "")
@@ -214,11 +214,11 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
         }
     }
     
-    func afterCancelSubscription(let response: NSData) {
+    func afterCancelSubscription( _ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.btnCancelSubscription.hidden = true
+            DispatchQueue.main.async {
+                self.btnCancelSubscription.isHidden = true
             }
             btnSuscriptionAction = "ACTIVATE"
             self.viewData["stripe_subscription_active"].string = "0"
@@ -244,11 +244,11 @@ class RealtorForm4ViewController: UIViewController,UITextFieldDelegate, UITextVi
         }
     }
     
-    func afterActivateSubscription(let response: NSData) {
+    func afterActivateSubscription( _ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.btnCancelSubscription.hidden = true
+            DispatchQueue.main.async {
+                self.btnCancelSubscription.isHidden = true
             }
             btnSuscriptionAction = "CANCEL"
             self.viewData["stripe_subscription_id"].string = result["subscription_id"].stringValue;

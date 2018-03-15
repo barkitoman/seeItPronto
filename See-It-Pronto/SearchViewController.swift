@@ -68,8 +68,8 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         super.viewDidLoad()
         
         self.addButtonTarget()
-        dispatch_async(dispatch_get_main_queue()) {
-            self.btnClass.setTitle(self.propertySelectedClassName, forState: .Normal)
+        DispatchQueue.main.async {
+            self.btnClass.setTitle(self.propertySelectedClassName, for: UIControlState())
         }
         self.selfDelegate()
         self.findSearcConfig()
@@ -77,35 +77,35 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     }
     
     func addButtonTarget() {
-        self.beds1.addTarget(self, action: "setBedrooms:", forControlEvents: .TouchUpInside)
-        self.beds2.addTarget(self, action: "setBedrooms:", forControlEvents: .TouchUpInside)
-        self.beds3.addTarget(self, action: "setBedrooms:", forControlEvents: .TouchUpInside)
-        self.beds4.addTarget(self, action: "setBedrooms:", forControlEvents: .TouchUpInside)
-        self.beds5.addTarget(self, action: "setBedrooms:", forControlEvents: .TouchUpInside)
+        self.beds1.addTarget(self, action: #selector(SearchViewController.setBedrooms(_:)), for: .touchUpInside)
+        self.beds2.addTarget(self, action: #selector(SearchViewController.setBedrooms(_:)), for: .touchUpInside)
+        self.beds3.addTarget(self, action: #selector(SearchViewController.setBedrooms(_:)), for: .touchUpInside)
+        self.beds4.addTarget(self, action: #selector(SearchViewController.setBedrooms(_:)), for: .touchUpInside)
+        self.beds5.addTarget(self, action: #selector(SearchViewController.setBedrooms(_:)), for: .touchUpInside)
         
-        self.baths1.addTarget(self, action: "setBathrooms:", forControlEvents: .TouchUpInside)
-        self.baths2.addTarget(self, action: "setBathrooms:", forControlEvents: .TouchUpInside)
-        self.baths3.addTarget(self, action: "setBathrooms:", forControlEvents: .TouchUpInside)
-        self.baths4.addTarget(self, action: "setBathrooms:", forControlEvents: .TouchUpInside)
-        self.baths5.addTarget(self, action: "setBathrooms:", forControlEvents: .TouchUpInside)
+        self.baths1.addTarget(self, action: #selector(SearchViewController.setBathrooms(_:)), for: .touchUpInside)
+        self.baths2.addTarget(self, action: #selector(SearchViewController.setBathrooms(_:)), for: .touchUpInside)
+        self.baths3.addTarget(self, action: #selector(SearchViewController.setBathrooms(_:)), for: .touchUpInside)
+        self.baths4.addTarget(self, action: #selector(SearchViewController.setBathrooms(_:)), for: .touchUpInside)
+        self.baths5.addTarget(self, action: #selector(SearchViewController.setBathrooms(_:)), for: .touchUpInside)
     }
     
-    @IBAction func setBedrooms(button:UIButton) {
+    @IBAction func setBedrooms(_ button:UIButton) {
         var selectedBeds = (button.titleLabel?.text)! as String
-        selectedBeds     = selectedBeds.stringByReplacingOccurrencesOfString("+",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        selectedBeds     = selectedBeds.replacingOccurrences(of: "+",  with: "", options: NSString.CompareOptions.literal, range: nil)
         self.bedRooms    = selectedBeds
         setBedsAndBaths("bedrooms", value: self.bedRooms)
     }
     
-    @IBAction func setBathrooms(button:UIButton) {
+    @IBAction func setBathrooms(_ button:UIButton) {
         var selectedBaths = (button.titleLabel?.text)! as String
-        selectedBaths     = selectedBaths.stringByReplacingOccurrencesOfString("+",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        selectedBaths     = selectedBaths.replacingOccurrences(of: "+",  with: "", options: NSString.CompareOptions.literal, range: nil)
         self.bathRooms    = selectedBaths
         setBedsAndBaths("bathrooms", value: self.bathRooms)
     }
     
-    func setBedsAndBaths(type:String, value:String) {
-        dispatch_async(dispatch_get_main_queue()) {
+    func setBedsAndBaths(_ type:String, value:String) {
+        DispatchQueue.main.async {
         if(type == "bedrooms") {
             self.beds1.backgroundColor = UIColor(rgba: "#45B5DC")
             self.beds2.backgroundColor = UIColor(rgba: "#45B5DC")
@@ -145,14 +145,14 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -186,7 +186,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     //MARK: - Delegate Methods
     
     // When clicking on the field, use this method.
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         
         
         // Create a button bar for the number pad
@@ -194,7 +194,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         keyboardDoneButtonView.sizeToFit()
         
         // Setup the buttons to be put in the system.
-        let item = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("endEditingNow") )
+        let item = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(SearchViewController.endEditingNow) )
         let toolbarButtons = [item]
         
         //Put the buttons into the ToolBar and display the tool bar
@@ -206,26 +206,26 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     
     // called when 'return' key pressed. return NO to ignore.
     // Requires having the text fields using the view controller as the delegate.
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Sends the keyboard away when pressing the "done" button
         resign()
         return true
         
     }
     
-    @IBAction func btnClass(sender: AnyObject) {
-        picker.hidden ? openPicker() : closePicker()
+    @IBAction func btnClass(_ sender: AnyObject) {
+        picker.isHidden ? openPicker() : closePicker()
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
+    @IBAction func btnBack(_ sender: AnyObject) {
         self.goBack()
     }
     
     func goBack() {
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnSearch(sender: AnyObject) {
+    @IBAction func btnSearch(_ sender: AnyObject) {
         let userId = User().getField("id")
         if(userId.isEmpty) {
             self.saveLocalSearchConfiguration()
@@ -253,10 +253,10 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         return out
     }
     
-    func afterPost(let response: NSData) {
+    func afterPost(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true ) {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 SearchConfig().saveOne(result)
                 Utility().goHome(self)
             }
@@ -281,15 +281,15 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     
     func loadSearchConfig() {
         let type = SearchConfig().getField("type_property")
-        if(type == "rental"){self.swType.on = true}else{self.swType.on = false}
+        if(type == "rental"){self.swType.isOn = true}else{self.swType.isOn = false}
         let area = SearchConfig().getField("area")
         self.txtArea.text = area
         
         self.propertySelectedClass = SearchConfig().getField("property_class")
         let className = SearchConfig().getField("property_class_name")
         if(!className.isEmpty) {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.btnClass.setTitle(className, forState: .Normal)
+            DispatchQueue.main.async {
+                self.btnClass.setTitle(className, for: UIControlState())
             }
         }
         self.propertySelectedClassName = className
@@ -305,7 +305,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
             setBedsAndBaths("bathrooms", value: baths)
         }
         let pool = SearchConfig().getField("pool")
-        if(pool == "1"){self.swPool.on = true}else{self.swPool.on = false}
+        if(pool == "1"){self.swPool.isOn = true}else{self.swPool.isOn = false}
         
         let priceFrom = SearchConfig().getField("price_range_less")
         self.txtPriceFrom.text = priceFrom
@@ -314,9 +314,9 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         self.createPicker()
     }
     
-    func afterGet(let response: NSData) {
+    func afterGet(_ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             SearchConfig().saveOne(result)
             self.loadSearchConfig()
         }
@@ -325,10 +325,10 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     func createPicker(){
         picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 100, width: 286, height: 208)
         picker.alpha = 0
-        picker.hidden = true
-        picker.userInteractionEnabled = true
+        picker.isHidden = true
+        picker.isUserInteractionEnabled = true
         var offset = 21
-        for (index, feeling) in properties.moods.enumerate() {
+        for (index, feeling) in properties.moods.enumerated() {
             let button = UIButton()
             button.tag = index
             button.frame = CGRect(x: 13, y: offset, width: 260, height: 43)
@@ -337,22 +337,22 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
                 color = self.selectedColor
                 self.selectedIndex = index
             }
-            dispatch_async(dispatch_get_main_queue()) {
-                button.setTitleColor(UIColor(rgba: color), forState: .Normal)
-                button.setTitle(feeling["title"], forState: .Normal)
+            DispatchQueue.main.async {
+                button.setTitleColor(UIColor(rgba: color), for: UIControlState())
+                button.setTitle(feeling["title"], for: UIControlState())
             }
-            button.addTarget(self, action: "clickPicker:", forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(SearchViewController.clickPicker(_:)), for: .touchUpInside)
             picker.addSubview(button)
             offset += 44
         }
         view.addSubview(picker)
     }
     
-    @IBAction func clickPicker(sender:UIButton) {
+    @IBAction func clickPicker(_ sender:UIButton) {
         let index = sender.tag
         self.selectedIndex = index
-        dispatch_async(dispatch_get_main_queue()) {
-            self.btnClass.setTitle(properties.moods[index]["title"], forState: .Normal)
+        DispatchQueue.main.async {
+            self.btnClass.setTitle(properties.moods[index]["title"], for: UIControlState())
         }
         self.propertySelectedClass = properties.moods[index]["class"]!
         self.propertySelectedClassName = properties.moods[index]["title"]!
@@ -363,16 +363,16 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         for v in self.picker.subviews {
             if (v is UIButton) {
                 let button = v as! UIButton
-                dispatch_async(dispatch_get_main_queue()) {
-                    button.setTitleColor(UIColor(rgba: self.defaultColor), forState: .Normal)
+                DispatchQueue.main.async {
+                    button.setTitleColor(UIColor(rgba: self.defaultColor), for: UIControlState())
                     if(v.tag == self.selectedIndex) {
-                        button.setTitleColor(UIColor(rgba: "#5cb85c"), forState: .Normal)
+                        button.setTitleColor(UIColor(rgba: "#5cb85c"), for: UIControlState())
                     }
                 }
             }
         }
-        self.picker.hidden = false
-        UIView.animateWithDuration(0.3,
+        self.picker.isHidden = false
+        UIView.animate(withDuration: 0.3,
             animations: {
                 self.picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 120, width: 286, height: 120)
                 self.picker.alpha = 1
@@ -380,31 +380,31 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
     }
     
     func closePicker(){
-        UIView.animateWithDuration(0.3,
+        UIView.animate(withDuration: 0.3,
             animations: {
                 self.picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 200, width: 286, height: 120)
                 self.picker.alpha = 0
             },
             completion: { finished in
-                self.picker.hidden = true
+                self.picker.isHidden = true
             }
         )
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let popupView = segue.destinationViewController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let popupView = segue.destination
         if let popup = popupView.popoverPresentationController {
             popup.delegate = self
         }
     }
     
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        return UIModalPresentationStyle.None
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
     }
     
     func saveLocalSearchConfiguration(){
         let saveData:JSON = [
-            "id":"99999999",
+            "id":"99999999" as AnyObject,
             "type_property":Utility().switchValue(self.swType, onValue: "rental", offValue: "sale"),
             "area":self.txtArea.text!,
             "beds":self.bedRooms,
@@ -420,7 +420,7 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         Utility().goHome(self)
     }
     
-    @IBAction func clearDataFilter(sender: AnyObject) {
+    @IBAction func clearDataFilter(_ sender: AnyObject) {
         self.clearFields()
         var userId = User().getField("id")
         if(userId.isEmpty) {
@@ -430,11 +430,11 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         Request().get(url, successHandler: {(response) in self.afterSend(response)})
     }
     
-    func afterSend(let response: NSData) {
+    func afterSend(_ response: Data) {
         SearchConfig().deleteAllData()
         self.txtArea.text = ""
-        dispatch_async(dispatch_get_main_queue()) {
-            self.btnClass.setTitle("-----------------------", forState: .Normal)
+        DispatchQueue.main.async {
+            self.btnClass.setTitle("-----------------------", for: UIControlState())
         }
         setBedsAndBaths("bedrooms", value: "0")
         setBedsAndBaths("bathrooms", value: "0")
@@ -462,14 +462,14 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         self.bedRooms  = ""
         self.bathRooms = ""
         
-        self.swPool.on = false
-        self.swType.on = false
+        self.swPool.isOn = false
+        self.swType.isOn = false
         self.propertySelectedClass = "1"
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        let textFieldRect : CGRect = self.view.window!.convertRect(textField.bounds, fromView: textField)
-        let viewRect : CGRect = self.view.window!.convertRect(self.view.bounds, fromView: self.view)
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let textFieldRect : CGRect = self.view.window!.convert(textField.bounds, from: textField)
+        let viewRect : CGRect = self.view.window!.convert(self.view.bounds, from: self.view)
         let midline : CGFloat = textFieldRect.origin.y + 0.5 * textFieldRect.size.height
         let numerator : CGFloat = midline - viewRect.origin.y - MoveKeyboard.MINIMUM_SCROLL_FRACTION * viewRect.size.height
         let denominator : CGFloat = (MoveKeyboard.MAXIMUM_SCROLL_FRACTION - MoveKeyboard.MINIMUM_SCROLL_FRACTION) * viewRect.size.height
@@ -479,8 +479,8 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         } else if heightFraction > 1.0 {
             heightFraction = 1.0
         }
-        let orientation : UIInterfaceOrientation = UIApplication.sharedApplication().statusBarOrientation
-        if (orientation == UIInterfaceOrientation.Portrait || orientation == UIInterfaceOrientation.PortraitUpsideDown) {
+        let orientation : UIInterfaceOrientation = UIApplication.shared.statusBarOrientation
+        if (orientation == UIInterfaceOrientation.portrait || orientation == UIInterfaceOrientation.portraitUpsideDown) {
             animateDistance = floor(MoveKeyboard.PORTRAIT_KEYBOARD_HEIGHT * heightFraction)
         } else {
             animateDistance = floor(MoveKeyboard.LANDSCAPE_KEYBOARD_HEIGHT * heightFraction)
@@ -489,17 +489,17 @@ class SearchViewController: UIViewController,UITextFieldDelegate, UITextViewDele
         viewFrame.origin.y -= animateDistance
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(NSTimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
+        UIView.setAnimationDuration(TimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
         self.view.frame = viewFrame
         UIView.commitAnimations()
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         var viewFrame : CGRect = self.view.frame
         viewFrame.origin.y += animateDistance
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(NSTimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
+        UIView.setAnimationDuration(TimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
         self.view.frame = viewFrame
         UIView.commitAnimations()
     }

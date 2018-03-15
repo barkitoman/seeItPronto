@@ -53,7 +53,7 @@ class Model {
     var property : JSON = []
     var im       : UIImage!
     var picurl   : String!
-    var task     : NSURLSessionTask!
+    var task     : URLSessionTask!
     var reloaded = false
 }
 
@@ -69,39 +69,39 @@ struct MoveKeyboard {
 //avoid image rotation, when use the camera
 extension UIImage {
     func correctlyOrientedImage() -> UIImage {
-        if self.imageOrientation == UIImageOrientation.Up {
+        if self.imageOrientation == UIImageOrientation.up {
             return self
         }
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
-        self.drawInRect(CGRectMake(0, 0, self.size.width, self.size.height))
-        let normalizedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext();
+        self.draw(in: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
+        let normalizedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!;
         UIGraphicsEndImageContext();
         return normalizedImage;
     }
 }
 
 extension String {
-    func toDateTime(let format:String = "yyyy-MM-dd HH:mm:ss") -> NSDate {
+    func toDateTime(_ format:String = "yyyy-MM-dd HH:mm:ss") -> Date {
         //Create Date Formatter
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         //Specify Format of String to Parse
         dateFormatter.dateFormat = format
         //Parse into NSDate
-        if let dateFromString : NSDate = dateFormatter.dateFromString(self) {
+        if let dateFromString : Date = dateFormatter.date(from: self) {
             return dateFromString
         }
-        let currentDate = NSDate()
+        let currentDate = Date()
         return currentDate
     }
 }
 
-extension NSDate {
+extension Date {
     
-    func diffHours(date:NSDate) -> Int {
-        let dayHourMinuteSecond: NSCalendarUnit = [.Day, .Hour, .Minute, .Second]
-        let difference = NSCalendar.currentCalendar().components(dayHourMinuteSecond, fromDate: date, toDate: self, options: [])
+    func diffHours(_ date:Date) -> Int {
+        let dayHourMinuteSecond: NSCalendar.Unit = [.day, .hour, .minute, .second]
+        let difference = (Calendar.current as NSCalendar).components(dayHourMinuteSecond, from: date, to: self, options: [])
         let hours      = difference.hour
-        return hours
+        return hours!
     }
     
 }

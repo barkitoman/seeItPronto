@@ -18,14 +18,14 @@ class CreateBeaconViewController: UIViewController,UITextFieldDelegate, UITextVi
         self.txtBeaconId.delegate = self
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -34,16 +34,16 @@ class CreateBeaconViewController: UIViewController,UITextFieldDelegate, UITextVi
         super.didReceiveMemoryWarning()
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnSave(sender: AnyObject) {
+    @IBAction func btnSave(_ sender: AnyObject) {
         if(!self.txtBeaconId.text!.isEmpty) {
             self.save()
         } else {
@@ -57,10 +57,10 @@ class CreateBeaconViewController: UIViewController,UITextFieldDelegate, UITextVi
         Request().post(url, params:params,controller:self,successHandler: {(response) in self.afterPost(response)});
     }
     
-    func afterPost(let response: NSData) {
+    func afterPost(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true ) {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.txtBeaconId.text = "";
             }
             Utility().displayAlert(self,title: "Success", message:"The data has been saved successfully.", performSegue:"")
@@ -73,7 +73,7 @@ class CreateBeaconViewController: UIViewController,UITextFieldDelegate, UITextVi
         }
     }
     
-    @IBAction func btnMyBeacons(sender: AnyObject) {
+    @IBAction func btnMyBeacons(_ sender: AnyObject) {
     }
     
 

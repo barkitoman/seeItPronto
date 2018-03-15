@@ -8,38 +8,38 @@ import UIKit
 
 class CustomPickerDialog: UIView {
 
-    typealias CustomPickerCallback = (result: String) -> Void
+    typealias CustomPickerCallback = (_ result: String) -> Void
     
     // constants
-    private let componentNum: Int = 1
+    fileprivate let componentNum: Int = 1
     
-    private let titleHeight: CGFloat = 30
-    private let buttonHeight: CGFloat = 50
-    private let doneButtonTag: Int = 1
+    fileprivate let titleHeight: CGFloat = 30
+    fileprivate let buttonHeight: CGFloat = 50
+    fileprivate let doneButtonTag: Int = 1
     
     // view
-    private var dialogView:   UIView!
-    private var titleLabel:   UILabel!
-    private var pickerView: UIPickerView!
+    fileprivate var dialogView:   UIView!
+    fileprivate var titleLabel:   UILabel!
+    fileprivate var pickerView: UIPickerView!
     
-    private var cancelButton: UIButton!
-    private var doneButton:   UIButton!
+    fileprivate var cancelButton: UIButton!
+    fileprivate var doneButton:   UIButton!
     
     // callback
-    private var callback: CustomPickerCallback?
+    fileprivate var callback: CustomPickerCallback?
     
     // data
-    private var dataSelcted: String?
-    private var dataSource = [String]()
+    fileprivate var dataSelcted: String?
+    fileprivate var dataSource = [String]()
     
     init() {
-        super.init(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
+        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
         
         initView()
     }
     
     init(dataSource: [String]) {
-        super.init(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
+        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
         
         initView()
         setDataSource(dataSource)
@@ -49,97 +49,97 @@ class CustomPickerDialog: UIView {
         super.init(coder: aDecoder)!
     }
     
-    private func initView() {
+    fileprivate func initView() {
         
-        self.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
+        self.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
         self.layer.shouldRasterize = true
-        self.layer.rasterizationScale = UIScreen.mainScreen().scale
+        self.layer.rasterizationScale = UIScreen.main.scale
         
         self.dialogView = createDialogView()
         
         self.addSubview(self.dialogView!)
     }
     
-    private func createDialogView() -> UIView {
+    fileprivate func createDialogView() -> UIView {
         
-        let dialogSize = CGSizeMake(300, 250 + buttonHeight)
+        let dialogSize = CGSize(width: 300, height: 250 + buttonHeight)
         
-        let dialogContainer = UIView(frame: CGRectMake((self.frame.size.width - dialogSize.width) / 2, (self.frame.size.height - dialogSize.height) / 2, dialogSize.width, dialogSize.height))
+        let dialogContainer = UIView(frame: CGRect(x: (self.frame.size.width - dialogSize.width) / 2, y: (self.frame.size.height - dialogSize.height) / 2, width: dialogSize.width, height: dialogSize.height))
         
-        dialogContainer.backgroundColor = UIColor.whiteColor()
+        dialogContainer.backgroundColor = UIColor.white
         dialogContainer.layer.shouldRasterize = true
-        dialogContainer.layer.rasterizationScale = UIScreen.mainScreen().scale
+        dialogContainer.layer.rasterizationScale = UIScreen.main.scale
         dialogContainer.layer.cornerRadius = 7
-        dialogContainer.layer.borderColor = UIColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1).CGColor
+        dialogContainer.layer.borderColor = UIColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1).cgColor
         dialogContainer.layer.borderWidth = 1
         dialogContainer.layer.shadowRadius = 12
         dialogContainer.layer.shadowOpacity = 0.1
-        dialogContainer.layer.shadowOffset = CGSizeMake(-6, -6)
-        dialogContainer.layer.shadowColor = UIColor.blackColor().CGColor
-        dialogContainer.layer.shadowPath = UIBezierPath(roundedRect: dialogContainer.bounds, cornerRadius: dialogContainer.layer.cornerRadius).CGPath
+        dialogContainer.layer.shadowOffset = CGSize(width: -6, height: -6)
+        dialogContainer.layer.shadowColor = UIColor.black.cgColor
+        dialogContainer.layer.shadowPath = UIBezierPath(roundedRect: dialogContainer.bounds, cornerRadius: dialogContainer.layer.cornerRadius).cgPath
         
         //Title
-        self.titleLabel = UILabel(frame: CGRectMake(10, 10, 280, titleHeight))
-        self.titleLabel.textAlignment = NSTextAlignment.Center
-        self.titleLabel.font = UIFont.boldSystemFontOfSize(17)
+        self.titleLabel = UILabel(frame: CGRect(x: 10, y: 10, width: 280, height: titleHeight))
+        self.titleLabel.textAlignment = NSTextAlignment.center
+        self.titleLabel.font = UIFont.boldSystemFont(ofSize: 17)
         dialogContainer.addSubview(self.titleLabel)
         
         // PickerView
-        pickerView = UIPickerView.init(frame: CGRectMake(0, titleHeight, dialogSize.width, dialogSize.height - buttonHeight - 10))
+        pickerView = UIPickerView.init(frame: CGRect(x: 0, y: titleHeight, width: dialogSize.width, height: dialogSize.height - buttonHeight - 10))
         pickerView.delegate = self
         
         dialogContainer.addSubview(pickerView)
         
         // Line
-        let lineView = UIView(frame: CGRectMake(0, dialogContainer.bounds.size.height - buttonHeight, dialogContainer.bounds.size.width, 1))
+        let lineView = UIView(frame: CGRect(x: 0, y: dialogContainer.bounds.size.height - buttonHeight, width: dialogContainer.bounds.size.width, height: 1))
         lineView.backgroundColor = UIColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1)
         dialogContainer.addSubview(lineView)
         
         // Button
         let buttonWidth = dialogContainer.bounds.size.width / 2
         
-        self.cancelButton = UIButton(type: UIButtonType.Custom) as UIButton
-        self.cancelButton.frame = CGRectMake(0, dialogContainer.bounds.size.height - buttonHeight, buttonWidth, buttonHeight)
-        self.cancelButton.setTitleColor(UIColor(red: 0, green: 0.5, blue: 1, alpha: 1), forState: UIControlState.Normal)
-        self.cancelButton.setTitleColor(UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5), forState: UIControlState.Highlighted)
-        self.cancelButton.titleLabel!.font = UIFont.boldSystemFontOfSize(14)
+        self.cancelButton = UIButton(type: UIButtonType.custom) as UIButton
+        self.cancelButton.frame = CGRect(x: 0, y: dialogContainer.bounds.size.height - buttonHeight, width: buttonWidth, height: buttonHeight)
+        self.cancelButton.setTitleColor(UIColor(red: 0, green: 0.5, blue: 1, alpha: 1), for: UIControlState())
+        self.cancelButton.setTitleColor(UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5), for: UIControlState.highlighted)
+        self.cancelButton.titleLabel!.font = UIFont.boldSystemFont(ofSize: 14)
         self.cancelButton.layer.cornerRadius = 7
-        self.cancelButton.addTarget(self, action: "clickButton:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.cancelButton.addTarget(self, action: #selector(CustomPickerDialog.clickButton(_:)), for: UIControlEvents.touchUpInside)
 
         dialogContainer.addSubview(self.cancelButton)
         
-        self.doneButton = UIButton(type: UIButtonType.Custom) as UIButton
+        self.doneButton = UIButton(type: UIButtonType.custom) as UIButton
         self.doneButton.tag = doneButtonTag
-        self.doneButton.frame = CGRectMake(buttonWidth, dialogContainer.bounds.size.height - buttonHeight, buttonWidth, buttonHeight)
-        self.doneButton.setTitleColor(UIColor(red: 0, green: 0.5, blue: 1, alpha: 1), forState: UIControlState.Normal)
-        self.doneButton.setTitleColor(UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5), forState: UIControlState.Highlighted)
-        self.doneButton.titleLabel!.font = UIFont.boldSystemFontOfSize(14)
+        self.doneButton.frame = CGRect(x: buttonWidth, y: dialogContainer.bounds.size.height - buttonHeight, width: buttonWidth, height: buttonHeight)
+        self.doneButton.setTitleColor(UIColor(red: 0, green: 0.5, blue: 1, alpha: 1), for: UIControlState())
+        self.doneButton.setTitleColor(UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5), for: UIControlState.highlighted)
+        self.doneButton.titleLabel!.font = UIFont.boldSystemFont(ofSize: 14)
         self.doneButton.layer.cornerRadius = 7
-        self.doneButton.addTarget(self, action: "clickButton:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.doneButton.addTarget(self, action: #selector(CustomPickerDialog.clickButton(_:)), for: UIControlEvents.touchUpInside)
         dialogContainer.addSubview(self.doneButton)
         
-        self.doneButton.setTitle("OK", forState: .Normal)
-        self.cancelButton.setTitle("Cancel", forState: .Normal)
+        self.doneButton.setTitle("OK", for: UIControlState())
+        self.cancelButton.setTitle("Cancel", for: UIControlState())
 
         return dialogContainer
     }
     
     // MARK: public func
-    func setDataSource(source: [String]) {
+    func setDataSource(_ source: [String]) {
         
         self.dataSource = source
         
         dataSelcted = self.dataSource[0]
     }
     
-    func selectRow(row: Int) {
+    func selectRow(_ row: Int) {
 
         self.dataSelcted = self.dataSource[row]
         
         self.pickerView.selectRow(row, inComponent: 0, animated: true)
     }
     
-    func selectValue(value: String) {
+    func selectValue(_ value: String) {
         
         var index: Int = 0
         
@@ -156,25 +156,25 @@ class CustomPickerDialog: UIView {
         self.pickerView.selectRow(index, inComponent: 0, animated: true)
     }
     
-    func showDialog(title: String, doneButtonTitle: String = "OK", cancelButtonTitle: String = "Cancel", callback: CustomPickerCallback) {
+    func showDialog(_ title: String, doneButtonTitle: String = "OK", cancelButtonTitle: String = "Cancel", callback: @escaping CustomPickerCallback) {
         
         self.titleLabel.text = title
-        self.doneButton.setTitle(doneButtonTitle, forState: .Normal)
-        self.cancelButton.setTitle(cancelButtonTitle, forState: .Normal)
+        self.doneButton.setTitle(doneButtonTitle, for: UIControlState())
+        self.cancelButton.setTitle(cancelButtonTitle, for: UIControlState())
         self.callback = callback
         
-        UIApplication.sharedApplication().windows.first!.addSubview(self)
-        UIApplication.sharedApplication().windows.first!.endEditing(true)
+        UIApplication.shared.windows.first!.addSubview(self)
+        UIApplication.shared.windows.first!.endEditing(true)
         
         // Animation
         self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.0)
         self.dialogView!.layer.opacity = 0.5
         self.dialogView!.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1)
         
-        UIView.animateWithDuration(
-            0.2,
+        UIView.animate(
+            withDuration: 0.2,
             delay: 0,
-            options: UIViewAnimationOptions.CurveEaseInOut,
+            options: UIViewAnimationOptions(),
             animations: { () -> Void in
                 self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
                 self.dialogView!.layer.opacity = 1
@@ -187,10 +187,10 @@ class CustomPickerDialog: UIView {
     func close() {
         
         // Animation
-        UIView.animateWithDuration(
-            0.2,
+        UIView.animate(
+            withDuration: 0.2,
             delay: 0,
-            options: UIViewAnimationOptions.TransitionNone,
+            options: UIViewAnimationOptions(),
             animations: { () -> Void in
                 self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.0)
                 self.dialogView!.layer.opacity = 0.1
@@ -202,10 +202,10 @@ class CustomPickerDialog: UIView {
     }
     
     // MARK: Button Event
-    func clickButton(sender: UIButton!) {
+    func clickButton(_ sender: UIButton!) {
         if sender.tag == doneButtonTag {
             
-            self.callback?(result: dataSelcted!)
+            self.callback?(dataSelcted!)
         }
         
         close()
@@ -214,21 +214,21 @@ class CustomPickerDialog: UIView {
 
 extension CustomPickerDialog: UIPickerViewDataSource, UIPickerViewDelegate {
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         
         return componentNum
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return self.dataSource.count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
         return self.dataSource[row]
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         dataSelcted = self.dataSource[row]
     }

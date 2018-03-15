@@ -38,33 +38,33 @@ class User {
     var existingItem : NSManagedObject!
     
     func find()->AnyObject{
-        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDel: AppDelegate = UIApplication.shared.delegate as! AppDelegate
         let contxt: NSManagedObjectContext = appDel.managedObjectContext
-        let freq = NSFetchRequest(entityName:"User")
+        let freq = NSFetchRequest<NSFetchRequestResult>(entityName:"User")
         var out:Array<AnyObject> = []
         do {
-            try out = contxt.executeFetchRequest(freq)
+            try out = contxt.fetch(freq)
         } catch {
             print("An error has ocurred")
         }
-        return out
+        return out as AnyObject
     }
     
-    func getField(fieldName:String)->String{
+    func getField(_ fieldName:String)->String{
         let user       = User().find()
         var out:String = ""
         if(user.count >= 1) {
             if let dataObj:AnyObject = user.objectAtIndex(0)  {
                 let obj  = dataObj as! NSManagedObject
-                if(obj.valueForKey(fieldName) != nil) {
-                    out = obj.valueForKey(fieldName) as! String
+                if(obj.value(forKey: fieldName) != nil) {
+                    out = obj.value(forKey: fieldName) as! String
                 }
             }
         }
         return out
     }
     
-    func saveOne(userData:JSON) {
+    func saveOne(_ userData:JSON) {
         //check if item exists
         if (self.find().count >= 1) {
             //Remove if exists
@@ -74,13 +74,13 @@ class User {
 
     }
     
-    func save(userData:JSON) {
-        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    func save(_ userData:JSON) {
+        let appDel: AppDelegate = UIApplication.shared.delegate as! AppDelegate
         let contxt: NSManagedObjectContext = appDel.managedObjectContext
         contxt.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        let en = NSEntityDescription.entityForName("User", inManagedObjectContext: contxt)
+        let en = NSEntityDescription.entity(forEntityName: "User", in: contxt)
         //create instance of pur data model and inicilize
-        let newItem = UserEntity(entity:en!, insertIntoManagedObjectContext:contxt)
+        let newItem = UserEntity(entity:en!, insertInto:contxt)
         //map our properties
         newItem.id              = userData["user"]["id"].stringValue
         newItem.role            = userData["user"]["role"].stringValue
@@ -108,7 +108,7 @@ class User {
         }
     }
     
-    func updateField(field:String,value:String) {
+    func updateField(_ field:String,value:String) {
         let user = User().find()
         if(user.count >= 1) {
             if let dataObj:AnyObject = user.objectAtIndex(0)  {
@@ -119,15 +119,15 @@ class User {
     }
     
     func deleteAllData() {
-        let appDel        = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDel        = UIApplication.shared.delegate as! AppDelegate
         let context       = appDel.managedObjectContext
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         let coord         = appDel.persistentStoreCoordinator
-        let fetchRequest  = NSFetchRequest(entityName: "User")
+        let fetchRequest  = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         
         do {
-            try coord.executeRequest(deleteRequest, withContext: context)
+            try coord.execute(deleteRequest, with: context)
         } catch let error as NSError {
             print("Error deleting user. error : \(error.userInfo)")
         }

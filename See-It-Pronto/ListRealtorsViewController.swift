@@ -25,7 +25,7 @@ class ListRealtorsViewController: UIViewController,UIWebViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.webView.hidden = true
+        self.webView.isHidden = true
         self.selfDelegate()
         manager = OneShotLocationManager()
         manager!.fetchWithCompletion {location, error in
@@ -51,26 +51,26 @@ class ListRealtorsViewController: UIViewController,UIWebViewDelegate {
         var url = AppConfig.APP_URL+"/calculate_distances/\(User().getField("id"))/\(String(self.stepPage))"
         url     = url+"/?page=\(String(self.countPage + 1))"
         url     = url+"&lat=\(self.latitude)&lon=\(self.longintude)"
-        let requestURL = NSURL(string:url)
-        let request = NSURLRequest(URL: requestURL!)
+        let requestURL = URL(string:url)
+        let request = URLRequest(url: requestURL!)
         self.webView.loadRequest(request)
     }
     
-    func webViewDidFinishLoad(webView: UIWebView) {
-        dispatch_async(dispatch_get_main_queue()) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        DispatchQueue.main.async {
             BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         self.findRealtors()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -80,20 +80,20 @@ class ListRealtorsViewController: UIViewController,UIWebViewDelegate {
 
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return realtors.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell    = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! ListRealtorsTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+        let cell    = self.tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ListRealtorsTableViewCell
         let realtor = JSON(self.realtors[indexPath.row])
         let name    = realtor["first_name"].stringValue+" "+realtor["last_name"].stringValue
         cell.lblName.text = name
@@ -111,15 +111,15 @@ class ListRealtorsViewController: UIViewController,UIWebViewDelegate {
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         self.viewData = JSON(self.realtors[indexPath.row])
-        dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("showRealtorProfile", sender: self)
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "showRealtorProfile", sender: self)
         }
     }
     
     //Pagination
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath){
+    func tableView(_ tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath){
         let row = indexPath.row
         let lastRow = self.realtors.count - 1
         let pageLimit = (((self.countPage+1) * (self.stepPage)) - 1)  //prevision of the page limit based on step and countPage
@@ -127,7 +127,7 @@ class ListRealtorsViewController: UIViewController,UIWebViewDelegate {
         // 1) The last rown and is the last
         // 2) To avoid two calls in a short space from time, while the data is downloading
         if (row == lastRow) && (row == pageLimit)  {
-            self.countPage++
+            self.countPage += 1
             self.findRealtors()
         }
     }
@@ -137,12 +137,12 @@ class ListRealtorsViewController: UIViewController,UIWebViewDelegate {
         Request().get(url, successHandler: {(response) in self.loadRealtors(response)})
     }
     
-    func loadRealtors(let response: NSData){
+    func loadRealtors(_ response: Data){
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             for (_,subJson):(String, JSON) in result {
                 let jsonObject: AnyObject = subJson.object
-                self.realtors.addObject(jsonObject)
+                self.realtors.add(jsonObject)
             }
             if self.realtors.count > 0 {
                 self.tableView.reloadData()
@@ -156,9 +156,9 @@ class ListRealtorsViewController: UIViewController,UIWebViewDelegate {
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showRealtorProfile") {
-            let view: RealtorProfileViewController = segue.destinationViewController as! RealtorProfileViewController
+            let view: RealtorProfileViewController = segue.destination as! RealtorProfileViewController
             view.viewData  = self.viewData
         }
     }

@@ -13,15 +13,15 @@ import SystemConfiguration
 class Request {
     var debug:Bool = false
 
-    func post(url : String, params : String,controller:UIViewController, successHandler: (response: NSData) -> Void) {
+    func post(_ url : String, params : String,controller:UIViewController, successHandler: @escaping (_ response: Data) -> Void) {
         if(self.internet()){
-            let url = NSURL(string: url)
+            let url = URL(string: url)
             let params = String(params);
-            let request = NSMutableURLRequest(URL: url!);
-            request.HTTPMethod = "POST"
-            request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+            let request = NSMutableURLRequest(url: url!);
+            request.httpMethod = "POST"
+            request.httpBody = params?.data(using: String.Encoding.utf8)
             
-            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+            let task = URLSession.shared.dataTask(with: request, completionHandler: {
                 data, response, error in
                 //in case of error
                 if error != nil {
@@ -30,7 +30,7 @@ class Request {
                 }
                 
                 successHandler(response: data!)
-            }
+            }) 
             task.resume();
         } else {
             Utility().displayAlert(controller, title: "Alert", message: "You are no longer connected to the internet. See It Pronto! requires access to the internet to provide you with accurate information", performSegue: "")
@@ -39,9 +39,9 @@ class Request {
     
     func internet()->Bool {
         var zeroAddress = sockaddr_in()
-        zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
         zeroAddress.sin_family = sa_family_t(AF_INET)
-        guard let defaultRouteReachability = withUnsafePointer(&zeroAddress, {
+        guard let defaultRouteReachability = withUnsafePointer(to: &zeroAddress, {
             SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
         }) else {
             return false
@@ -52,21 +52,22 @@ class Request {
             return false
         }
         
-        let isReachable = flags.contains(.Reachable)
-        let needsConnection = flags.contains(.ConnectionRequired)
+        let isReachable = flags.contains(.reachable)
+        let needsConnection = flags.contains(.connectionRequired)
         return (isReachable && !needsConnection)
     }
  
-    func put(url : String, var params : String,controller:UIViewController, successHandler: (response: NSData) -> Void) {
+    func put(_ url : String, params : String,controller:UIViewController, successHandler: @escaping (_ response: Data) -> Void) {
+        var params = params
         if(self.internet()){
-            let url = NSURL(string: url)
+            let url = URL(string: url)
             params+="&_method=PUT"
             let params = String(params);
-            let request = NSMutableURLRequest(URL: url!);
-            request.HTTPMethod = "POST"
-            request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+            let request = NSMutableURLRequest(url: url!);
+            request.httpMethod = "POST"
+            request.httpBody = params?.data(using: String.Encoding.utf8)
         
-            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+            let task = URLSession.shared.dataTask(with: request, completionHandler: {
                 data, response, error in
                 //in case of error
                 if error != nil {
@@ -74,19 +75,19 @@ class Request {
                     print(error); return
                 }
                 successHandler(response: data!)
-            }
+            }) 
             task.resume();
         } else {
             Utility().displayAlert(controller, title: "Alert", message: "You are no longer connected to the internet. See It Pronto! requires access to the internet to provide you with accurate information", performSegue: "")
         }
     }
     
-    func get(url : String, successHandler: (response: NSData) -> Void) {
-        let url = NSURL(string: url)
-        let request = NSMutableURLRequest(URL: url!);
-        request.HTTPMethod = "GET"
+    func get(_ url : String, successHandler: @escaping (_ response: Data) -> Void) {
+        let url = URL(string: url)
+        let request = NSMutableURLRequest(url: url!);
+        request.httpMethod = "GET"
         
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+        let task = URLSession.shared.dataTask(with: request, completionHandler: {
             data, response, error in
             //in case of error
             if error != nil {
@@ -94,19 +95,20 @@ class Request {
                 print(error); return
             }
             successHandler(response: data!)
-        }
+        }) 
         task.resume();
     }
     
-    func delete(url : String, var params : String, successHandler: (response: NSData) -> Void) {
-        let url = NSURL(string: url)
+    func delete(_ url : String, params : String, successHandler: @escaping (_ response: Data) -> Void) {
+        var params = params
+        let url = URL(string: url)
         params+="&_method=DELETE"
         let params = String(params);
-        let request = NSMutableURLRequest(URL: url!);
-        request.HTTPMethod = "POST"
-        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+        let request = NSMutableURLRequest(url: url!);
+        request.httpMethod = "POST"
+        request.httpBody = params.data(using: String.Encoding.utf8)
         
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+        let task = URLSession.shared.dataTask(with: request, completionHandler: {
             data, response, error in
             //in case of error
             if error != nil {
@@ -114,20 +116,20 @@ class Request {
                 print(error); return
             }
             successHandler(response: data!)
-        }
+        }) 
         task.resume();
     }
     
-    func homePost(url : String, params : String,controller:UIViewController, successHandler: (response: NSData) -> Void) {
+    func homePost(_ url : String, params : String,controller:UIViewController, successHandler: @escaping (_ response: Data) -> Void) {
         if(self.internet()){
-            let url = NSURL(string: url)
+            let url = URL(string: url)
             if(url != nil) {
                 let params = String(params);
-                let request = NSMutableURLRequest(URL: url!);
-                request.HTTPMethod = "POST"
-                request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding)
+                let request = NSMutableURLRequest(url: url!);
+                request.httpMethod = "POST"
+                request.httpBody = params?.data(using: String.Encoding.utf8)
             
-                let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+                let task = URLSession.shared.dataTask(with: request, completionHandler: {
                     data, response, error in
                     //in case of error
                     if error != nil {
@@ -138,7 +140,7 @@ class Request {
                     if let _ = data {
                         successHandler(response: data!)
                     }
-                }
+                }) 
                 task.resume();
             } else {
                 Utility().displayAlert(controller, title: "Alert", message: "You are no longer connected to the internet. See It Pronto! requires access to the internet to provide you with accurate information", performSegue: "")

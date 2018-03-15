@@ -28,10 +28,10 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
     var propertyId:String    = ""
     var propertyClass:String = ""
     
-    lazy var configuration : NSURLSessionConfiguration = {
-        let config = NSURLSessionConfiguration.ephemeralSessionConfiguration()
+    lazy var configuration : URLSessionConfiguration = {
+        let config = URLSessionConfiguration.ephemeral
         config.allowsCellularAccess = false
-        config.URLCache = nil
+        config.urlCache = nil
         return config
     }()
     
@@ -43,7 +43,7 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
         super.viewDidLoad()
         self.selfDelegate()
         
-        self.webView.hidden = true
+        self.webView.isHidden = true
         manager = OneShotLocationManager()
         manager!.fetchWithCompletion {location, error in
             // fetch location or an error
@@ -66,13 +66,13 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
     
     func loadMap() {
         let url = AppConfig.APP_URL+"/get_current_location/\(User().getField("id"))?lat=\(self.latitude)&lon=\(self.longintude)"
-        let requestURL = NSURL(string:url)
-        let request = NSURLRequest(URL: requestURL!)
+        let requestURL = URL(string:url)
+        let request = URLRequest(url: requestURL!)
         self.webView.loadRequest(request)
     }
     
-    func webViewDidFinishLoad(webView: UIWebView) {
-        dispatch_async(dispatch_get_main_queue()) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        DispatchQueue.main.async {
             BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         self.findProperties()
@@ -82,43 +82,43 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
+    @IBAction func btnBack(_ sender: AnyObject) {
         //navigationController?.popViewControllerAnimated(true)
-         self.dismissViewControllerAnimated(true, completion: nil)
+         self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func btnMenu(sender: AnyObject) {
+    @IBAction func btnMenu(_ sender: AnyObject) {
         //self.textFieldShouldReturn(self.txtSearch)
         self.onSlideMenuButtonPressed(sender as! UIButton)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return properties.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell   = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PropertyListTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell   = self.tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PropertyListTableViewCell
         let property = JSON(self.properties[indexPath.row])
         var description = property["address"].stringValue+"\n"+Utility().formatCurrency(property["price"].stringValue)
         description = description+" \n"+property["bedrooms"].stringValue+" Bd / "+property["bathrooms"].stringValue+" Ba"
@@ -127,7 +127,7 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
         }
         cell.lblDescription.text = description
         cell.btnViewDetails.tag = indexPath.row
-        cell.btnViewDetails.addTarget(self, action: "viewDetails:", forControlEvents: .TouchUpInside)
+        cell.btnViewDetails.addTarget(self, action: #selector(PropertyListViewController.viewDetails(_:)), for: .touchUpInside)
         if let _ = self.models[property["id"].stringValue] {
             self.showCell(cell, property: property, indexPath: indexPath)
         } else {
@@ -138,7 +138,7 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
         return cell
     }
     
-    func showCell(cell:PropertyListTableViewCell, property:JSON,indexPath: NSIndexPath){
+    func showCell(_ cell:PropertyListTableViewCell, property:JSON,indexPath: IndexPath){
         // have we got a picture?
         if let im = self.models[property["id"].stringValue]!.im {
             cell.propertyImage.image = im
@@ -151,7 +151,7 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
         }
     }
     
-    func imageCell(indexPath: NSIndexPath, img:UIImageView,let response: NSData) {
+    func imageCell(_ indexPath: IndexPath, img:UIImageView,response: Data) {
         let property = JSON(self.properties[indexPath.row])
         let result = JSON(data: response)
         let url = AppConfig.APP_URL+"/"+result[0]["url"].stringValue
@@ -162,18 +162,18 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
                 if url == nil {
                     return
                 }
-                let data = NSData(contentsOfURL: url)!
+                let data = try! Data(contentsOf: url)
                 let im = UIImage(data:data)
                 self!.models[property["id"].stringValue]!.im = im
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self!.models[property["id"].stringValue]!.reloaded = true
-                    self!.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                    self!.tableView.reloadRows(at: [indexPath], with: .none)
                 }
             }
         }
     }
     
-    @IBAction func viewDetails(sender:UIButton) {
+    @IBAction func viewDetails(_ sender:UIButton) {
         let property = JSON(self.properties[sender.tag])
         Utility().goPropertyDetails(self,propertyId: property["id"].stringValue, PropertyClass:property["class"].stringValue)
     }
@@ -184,7 +184,8 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
         Request().get(url, successHandler: {(response) in self.loadProperties(response)})
     }
     
-    func propertiesUrlParams(var url:String)->String {
+    func propertiesUrlParams(_ url:String)->String {
+        var url = url
         url =  url+"?role=\(User().getField("role"))"
         url =  url+"&property=\(self.propertyId)"
         url =  url+"&type_property=\(SearchConfig().getField("type_property"))"
@@ -205,15 +206,15 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
         return url;
     }
     
-    func loadProperties(let response: NSData){
+    func loadProperties(_ response: Data){
         self.clearSearchTable()
         let result = JSON(data: response)
         self.properties.removeAllObjects()
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             for (_,subJson):(String, JSON) in result {
                 if(!subJson["id"].stringValue.isEmpty) {
                     let jsonObject: AnyObject = subJson.object
-                    self.properties.addObject(jsonObject)
+                    self.properties.add(jsonObject)
                 }
             }
             if self.properties.count > 0 {
@@ -235,7 +236,7 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
     
     var pickSeletion: String = "Unfiltered"
     
-    @IBAction func filter(sender: AnyObject) {
+    @IBAction func filter(_ sender: AnyObject) {
         let pickerView = CustomPickerDialog.init()
         var arrayDataSource:[String] = ["Unfiltered","Higher Price", "Lower Price",  "Greater nº of Bedrooms" ,"Fewer nº of Bedrooms","Greater nº of Bathrooms" ,"Fewer nº of Bathrooms","More Sq.Ft." ,"Less Sq.Ft."]
         let array_name:[String] = ["-", "price","price", "bedrooms", "bedrooms", "bathrooms", "bathrooms", "square_feed", "square_feed"]
@@ -246,7 +247,7 @@ class PropertyListViewController: BaseViewController, UIWebViewDelegate, UITable
        
         pickerView.showDialog("Filter property", doneButtonTitle: "Done", cancelButtonTitle: "Cancel")
         { (result) -> Void in
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 BProgressHUD.showLoadingViewWithMessage("Loading...")
             }
             self.pickSeletion = result

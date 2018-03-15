@@ -22,10 +22,10 @@ class FeedBacksViewController: UIViewController {
     var models = [String:Model]()
     var count = 0
 
-    lazy var configuration : NSURLSessionConfiguration = {
-        let config = NSURLSessionConfiguration.ephemeralSessionConfiguration()
+    lazy var configuration : URLSessionConfiguration = {
+        let config = URLSessionConfiguration.ephemeral
         config.allowsCellularAccess = false
-        config.URLCache = nil
+        config.urlCache = nil
         return config
     }()
     
@@ -35,7 +35,7 @@ class FeedBacksViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         self.findFeedBacks()
@@ -45,32 +45,32 @@ class FeedBacksViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return feedbacks.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! FeedBacksTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FeedBacksTableViewCell
         let feedback = JSON(self.feedbacks[indexPath.row])
         cell.lblAddress.text = feedback["property_address"].stringValue
         cell.lblDescription.text = feedback["feedback_property_comment"].stringValue
@@ -90,7 +90,7 @@ class FeedBacksViewController: UIViewController {
         return cell
     }
     
-    func showCell(cell:FeedBacksTableViewCell, showing:JSON, indexPath: NSIndexPath){
+    func showCell(_ cell:FeedBacksTableViewCell, showing:JSON, indexPath: IndexPath){
         // have we got a picture?
         if let im = self.models[showing["property_id"].stringValue]!.im {
             cell.imageFeedback.image = im
@@ -103,7 +103,7 @@ class FeedBacksViewController: UIViewController {
         }
     }
     
-    func imageCell(indexPath: NSIndexPath, img:UIImageView,let response: NSData) {
+    func imageCell(_ indexPath: IndexPath, img:UIImageView,response: Data) {
         let showing = JSON(self.feedbacks[indexPath.row])
         let result = JSON(data: response)
         let url = AppConfig.APP_URL+"/"+result[0]["url"].stringValue
@@ -114,30 +114,30 @@ class FeedBacksViewController: UIViewController {
                 if url == nil {
                     return
                 }
-                let data = NSData(contentsOfURL: url)!
+                let data = try! Data(contentsOf: url)
                 //if photo is empty
-                if data.length <= 116 {
+                if data.count <= 116 {
                     let im = UIImage(named: "default_property_photo")
                     self!.models[showing["property_id"].stringValue]!.im = im
                 }else {
                     let im = UIImage(data:data)
                     self!.models[showing["property_id"].stringValue]!.im = im
                 }
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self!.models[showing["property_id"].stringValue]!.reloaded = true
-                    self!.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                    self!.tableView.reloadRows(at: [indexPath], with: .none)
                 }
             }
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         let feedback = JSON(self.feedbacks[indexPath.row])
         Utility().displayAlert(self, title: "Feedback", message: feedback["feedback_property_comment"].stringValue, performSegue: "")
     }
     
     //Pagination
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath){
+    func tableView(_ tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath){
         let row = indexPath.row
         let lastRow = self.feedbacks.count - 1
         let pageLimit = (((self.countPage+1) * (self.stepPage)) - 1)  //prevision of the page limit based on step and countPage
@@ -145,7 +145,7 @@ class FeedBacksViewController: UIViewController {
         // 1) The last rown and is the last
         // 2) To avoid two calls in a short space from time, while the data is downloading
         if (row == lastRow) && (row == pageLimit)  {
-            self.countPage++
+            self.countPage += 1
             print("Loading Page \(self.countPage) from \(self.maxPage)")
             self.findFeedBacks()
         }
@@ -157,13 +157,13 @@ class FeedBacksViewController: UIViewController {
         Request().get(url, successHandler: {(response) in self.loadFeedBacks(response)})
     }
     
-    func loadFeedBacks(let response: NSData){
+    func loadFeedBacks(_ response: Data){
         let result = JSON(data: response)
         print(result)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             for (_,subJson):(String, JSON) in result["data"] {
                 let jsonObject: AnyObject = subJson.object
-                self.feedbacks.addObject(jsonObject)
+                self.feedbacks.add(jsonObject)
             }
             self.tableView.reloadData()
             BProgressHUD.dismissHUD(0)

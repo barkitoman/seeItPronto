@@ -41,8 +41,8 @@ class AddRealtorPropertyViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.lblPropertyId.hidden = true;
-        self.txtPropertyId.hidden = true;
+        self.lblPropertyId.isHidden = true;
+        self.txtPropertyId.isHidden = true;
         self.createPicker()
     }
 
@@ -50,23 +50,23 @@ class AddRealtorPropertyViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnSubmit(sender: AnyObject) {
+    @IBAction func btnSubmit(_ sender: AnyObject) {
             self.save()
     }
     
@@ -84,7 +84,7 @@ class AddRealtorPropertyViewController: UIViewController {
         }
     }
     
-    func afterPost(let response: NSData) {
+    func afterPost(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true ) {
             Utility().displayAlert(self,title: "Success", message:"The data has been saved successfully.", performSegue:"")
@@ -97,17 +97,17 @@ class AddRealtorPropertyViewController: UIViewController {
         }
     }
     
-    @IBAction func btnSelectClass(sender: AnyObject) {
-        picker.hidden ? openPicker() : closePicker()
+    @IBAction func btnSelectClass(_ sender: AnyObject) {
+        picker.isHidden ? openPicker() : closePicker()
     }
     
     func createPicker(){
         picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 100, width: 286, height: 208)
         picker.alpha = 0
-        picker.hidden = true
-        picker.userInteractionEnabled = true
+        picker.isHidden = true
+        picker.isUserInteractionEnabled = true
         var offset = 21
-        for (index, feeling) in properties.moods.enumerate() {
+        for (index, feeling) in properties.moods.enumerated() {
             let button = UIButton()
             button.tag = index
             button.frame = CGRect(x: 13, y: offset, width: 260, height: 43)
@@ -116,29 +116,29 @@ class AddRealtorPropertyViewController: UIViewController {
                 color = self.selectedColor
                 self.selectedIndex = index
             }
-            button.setTitleColor(UIColor(rgba: color), forState: .Normal)
-            button.setTitle(feeling["title"], forState: .Normal)
-            button.addTarget(self, action: "clickPicker:", forControlEvents: .TouchUpInside)
+            button.setTitleColor(UIColor(rgba: color), for: UIControlState())
+            button.setTitle(feeling["title"], for: UIControlState())
+            button.addTarget(self, action: #selector(AddRealtorPropertyViewController.clickPicker(_:)), for: .touchUpInside)
             picker.addSubview(button)
             offset += 44
         }
         view.addSubview(picker)
     }
     
-    @IBAction func clickPicker(sender:UIButton) {
+    @IBAction func clickPicker(_ sender:UIButton) {
         let index = sender.tag
         self.selectedIndex = index
-        self.btnClass.setTitle(properties.moods[index]["title"], forState: .Normal)
+        self.btnClass.setTitle(properties.moods[index]["title"], for: UIControlState())
         self.propertySelectedClass = properties.moods[index]["class"]!
         self.propertySelectedClassName = properties.moods[index]["title"]!
         closePicker()
         self.txtPropertyId.text = ""
         if(index == 0) {
-            self.lblPropertyId.hidden = true;
-            self.txtPropertyId.hidden = true;
+            self.lblPropertyId.isHidden = true;
+            self.txtPropertyId.isHidden = true;
         }else {
-            self.lblPropertyId.hidden = false;
-            self.txtPropertyId.hidden = false;
+            self.lblPropertyId.isHidden = false;
+            self.txtPropertyId.isHidden = false;
         }
     }
     
@@ -146,14 +146,14 @@ class AddRealtorPropertyViewController: UIViewController {
         for v in self.picker.subviews {
             if (v is UIButton) {
                 let button = v as! UIButton
-                button.setTitleColor(UIColor(rgba: self.defaultColor), forState: .Normal)
+                button.setTitleColor(UIColor(rgba: self.defaultColor), for: UIControlState())
                 if(v.tag == self.selectedIndex) {
-                    button.setTitleColor(UIColor(rgba: "#5cb85c"), forState: .Normal)
+                    button.setTitleColor(UIColor(rgba: "#5cb85c"), for: UIControlState())
                 }
             }
         }
-        self.picker.hidden = false
-        UIView.animateWithDuration(0.3,
+        self.picker.isHidden = false
+        UIView.animate(withDuration: 0.3,
             animations: {
                 self.picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 160, width: 286, height: 291)
                 self.picker.alpha = 1
@@ -161,13 +161,13 @@ class AddRealtorPropertyViewController: UIViewController {
     }
     
     func closePicker(){
-        UIView.animateWithDuration(0.3,
+        UIView.animate(withDuration: 0.3,
             animations: {
                 self.picker.frame = CGRect(x: ((self.view.frame.width / 2) - 143), y: 200, width: 286, height: 291)
                 self.picker.alpha = 0
             },
             completion: { finished in
-                self.picker.hidden = true
+                self.picker.isHidden = true
             }
         )
     }

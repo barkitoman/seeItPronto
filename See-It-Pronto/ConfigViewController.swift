@@ -20,14 +20,14 @@ class ConfigViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -37,40 +37,40 @@ class ConfigViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func fnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func fnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func gpsEnabled(sender: AnyObject) {
-        dispatch_async(dispatch_get_main_queue()) {
-            let alertController = UIAlertController (title: "Message", message: "See It Pronto! requires certain functions enabled to work properly: GPS and Push Notifications. Click the Settings button to open it up so you can enable them.", preferredStyle: .Alert)
+    @IBAction func gpsEnabled(_ sender: AnyObject) {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController (title: "Message", message: "See It Pronto! requires certain functions enabled to work properly: GPS and Push Notifications. Click the Settings button to open it up so you can enable them.", preferredStyle: .alert)
         
-            let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (_) -> Void in
+            let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
                 //let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
-                UIApplication.sharedApplication().openURL(NSURL(string:"prefs:root=LOCATION_SERVICES")!)
+                UIApplication.shared.openURL(URL(string:"prefs:root=LOCATION_SERVICES")!)
                 //UIApplication.sharedApplication().openURL(url)
             }
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
             alertController.addAction(settingsAction)
             alertController.addAction(cancelAction)
-            self.presentViewController(alertController, animated: true, completion: nil);
+            self.present(alertController, animated: true, completion: nil);
         }
     }
     
-    @IBAction func pushEnabled(sender: AnyObject) {
-        dispatch_async(dispatch_get_main_queue()) {
-            let alertController = UIAlertController (title: "Message", message: "See It Pronto! requires certain functions enabled to work properly: GPS and Push Notifications. Click the Settings button to open it up so you can enable them.", preferredStyle: .Alert)
-            let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (_) -> Void in
+    @IBAction func pushEnabled(_ sender: AnyObject) {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController (title: "Message", message: "See It Pronto! requires certain functions enabled to work properly: GPS and Push Notifications. Click the Settings button to open it up so you can enable them.", preferredStyle: .alert)
+            let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
                 //let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
-                UIApplication.sharedApplication().openURL(NSURL(string:"prefs:root=NOTIFICATIONS_ID")!)
+                UIApplication.shared.openURL(URL(string:"prefs:root=NOTIFICATIONS_ID")!)
                 //UIApplication.sharedApplication().openURL(url)
             }
         
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
             alertController.addAction(settingsAction)
             alertController.addAction(cancelAction)
         
-            self.presentViewController(alertController, animated: true, completion: nil);
+            self.present(alertController, animated: true, completion: nil);
         }
     }
     

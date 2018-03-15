@@ -21,7 +21,7 @@ class ListBuyersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.findBuyers()
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
     }
@@ -31,32 +31,32 @@ class ListBuyersViewController: UIViewController {
  
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return buyers.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell   = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! ListBuyersTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+        let cell   = self.tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ListBuyersTableViewCell
         let buyer  = JSON(self.buyers[indexPath.row])
         let name   = buyer["first_name"].stringValue+" "+buyer["last_name"].stringValue
         cell.lblName.text = name
@@ -67,15 +67,15 @@ class ListBuyersViewController: UIViewController {
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         self.viewData = JSON(self.buyers[indexPath.row])
-        dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("showBuyerProfile", sender: self)
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "showBuyerProfile", sender: self)
         }
     }
     
     //Pagination
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath){
+    func tableView(_ tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath){
         let row = indexPath.row
         let lastRow = self.buyers.count - 1
         let pageLimit = (((self.countPage+1) * (self.stepPage)) - 1)  //prevision of the page limit based on step and countPage
@@ -83,7 +83,7 @@ class ListBuyersViewController: UIViewController {
         // 1) The last rown and is the last
         // 2) To avoid two calls in a short space from time, while the data is downloading
         if (row == lastRow) && (row == pageLimit)  {
-            self.countPage++
+            self.countPage += 1
             print("Loading Page \(self.countPage) from \(self.maxPage)")
             self.findBuyers()
         }
@@ -94,12 +94,12 @@ class ListBuyersViewController: UIViewController {
         Request().get(url, successHandler: {(response) in self.loadBuyers(response)})
     }
     
-    func loadBuyers(let response: NSData){
+    func loadBuyers(_ response: Data){
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             for (_,subJson):(String, JSON) in result["data"] {
                 let jsonObject: AnyObject = subJson.object
-                self.buyers.addObject(jsonObject)
+                self.buyers.add(jsonObject)
             }
             if(self.buyers.count == 0 && self.countPage == 0) {
                 BProgressHUD.dismissHUD(0)
@@ -111,9 +111,9 @@ class ListBuyersViewController: UIViewController {
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showBuyerProfile") {
-            let view: BuyerProfileViewController = segue.destinationViewController as! BuyerProfileViewController
+            let view: BuyerProfileViewController = segue.destination as! BuyerProfileViewController
             view.viewData  = self.viewData
         }
     }

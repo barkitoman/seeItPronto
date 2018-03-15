@@ -25,14 +25,14 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
         self.findUserInfo()
     }
 
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -41,12 +41,12 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnPrevious(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)  
+    @IBAction func btnPrevious(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)  
     }
     
     //selfDelegate, textFieldShouldReturn are functions for hide keyboard when press 'return' key
@@ -56,12 +56,12 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
         self.txtPassword.delegate = self
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
-    @IBAction func btnSave(sender: AnyObject) {
+    @IBAction func btnSave(_ sender: AnyObject) {
         save()
     }
     
@@ -82,7 +82,7 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
         }
     }
     
-    func afterPost(let response: NSData) {
+    func afterPost(_ response: Data) {
         let result = JSON(data: response)
         if(result["user"]["result"].bool == true || result["result"].bool == true ) {
             let userId = User().getField("id")
@@ -113,17 +113,17 @@ class BuyerForm1ViewController: UIViewController,UITextFieldDelegate, UITextView
         }
     }
     
-    func loadDataToEdit(let response: NSData) {
+    func loadDataToEdit(_ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.txtEmail.text = result["email"].stringValue
             self.txtPhone.text = result["phone"].stringValue
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "FromBuyerForm1") {
-            let view: BuyerForm2ViewController = segue.destinationViewController as! BuyerForm2ViewController
+            let view: BuyerForm2ViewController = segue.destination as! BuyerForm2ViewController
             view.viewData  = self.viewData
         }
     }

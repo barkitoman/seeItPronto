@@ -18,19 +18,19 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate, UIText
         self.txtEmail.delegate = self
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
@@ -40,21 +40,21 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate, UIText
 
     }
     
-    @IBAction func fnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func fnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    func isValidEmail(str: String) -> Bool {
+    func isValidEmail(_ str: String) -> Bool {
         print("validate emilId: \(str)")
         let emailRegEx = "^(?:(?:(?:(?: )*(?:(?:(?:\\t| )*\\r\\n)?(?:\\t| )+))+(?: )*)|(?: )+)?(?:(?:(?:[-A-Za-z0-9!#$%&’*+/=?^_'{|}~]+(?:\\.[-A-Za-z0-9!#$%&’*+/=?^_'{|}~]+)*)|(?:\"(?:(?:(?:(?: )*(?:(?:[!#-Z^-~]|\\[|\\])|(?:\\\\(?:\\t|[ -~]))))+(?: )*)|(?: )+)\"))(?:@)(?:(?:(?:[A-Za-z0-9](?:[-A-Za-z0-9]{0,61}[A-Za-z0-9])?)(?:\\.[A-Za-z0-9](?:[-A-Za-z0-9]{0,61}[A-Za-z0-9])?)*)|(?:\\[(?:(?:(?:(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))\\.){3}(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))))|(?:(?:(?: )*[!-Z^-~])*(?: )*)|(?:[Vv][0-9A-Fa-f]+\\.[-A-Za-z0-9._~!$&'()*+,;=:]+))\\])))(?:(?:(?:(?: )*(?:(?:(?:\\t| )*\\r\\n)?(?:\\t| )+))+(?: )*)|(?: )+)?$"
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        let result = emailTest.evaluateWithObject(str)
+        let result = emailTest.evaluate(with: str)
         return result
     }
     
-    @IBAction func fnRecoverPass(sender: AnyObject) {
+    @IBAction func fnRecoverPass(_ sender: AnyObject) {
         if txtEmail.text!.isEmpty {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 BProgressHUD.dismissHUD(0)
             }
             let msg = "Please enter your email"
@@ -72,8 +72,8 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate, UIText
         }
     }
     
-    func recoverpassword(email: String){
-            dispatch_async(dispatch_get_main_queue()) {
+    func recoverpassword(_ email: String){
+            DispatchQueue.main.async {
                 BProgressHUD.showLoadingViewWithMessage("Loading...")
             }
             let url = "\(AppConfig.APP_URL)/emailpasswordrecover"
@@ -83,8 +83,8 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate, UIText
             }
     }
     
-    func afterRecoverRequest(let response: NSData){
-        dispatch_async(dispatch_get_main_queue()) {
+    func afterRecoverRequest(_ response: Data){
+        DispatchQueue.main.async {
             BProgressHUD.dismissHUD(0)
             let result = JSON(data: response)
             if result["result"].bool == true {

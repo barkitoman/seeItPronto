@@ -29,53 +29,53 @@ class SelectBeaconViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: {});
+    @IBAction func btnBack(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: {});
     }
 
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return beacons.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell   = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+        let cell   = self.tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as UITableViewCell
         let beacon = JSON(self.beacons[indexPath.row])
         cell.textLabel?.text = beacon["beacon_id"].stringValue
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         if(canSelectBeacon == true) {
             let beacon = JSON(self.beacons[indexPath.row])
                 addBeaconVC!.beaconId = beacon["beacon_id"].stringValue
             addBeaconVC!.reloadButtonTitle()
-            self.dismissViewControllerAnimated(true, completion: {});
+            self.dismiss(animated: true, completion: {});
         }
     }
     
-    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-        let delete = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete"){
+    func tableView(_ tableView: UITableView, editActionsForRowAtIndexPath indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete"){
             (UITableViewRowAction,NSIndexPath) -> Void in
             self.deleteBeacon(indexPath)
         }
         return [delete]
     }
     
-    func deleteBeacon(indexPath: NSIndexPath) {
+    func deleteBeacon(_ indexPath: IndexPath) {
         let beacon = JSON(self.beacons[indexPath.row])
-        self.beacons.removeObjectAtIndex(indexPath.row)
-        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+        self.beacons.removeObject(at: indexPath.row)
+        self.tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
         let url = AppConfig.APP_URL+"/destroy_beacon/\(beacon["id"].stringValue)/\(User().getField("id"))"
         Request().delete(url, params: "", successHandler: {(response) in })
     }
     
     //Pagination
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath){
+    func tableView(_ tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath){
         let row = indexPath.row
         let lastRow = self.beacons.count - 1
         let pageLimit = (((self.countPage+1) * (self.stepPage)) - 1)  //prevision of the page limit based on step and countPage
@@ -83,7 +83,7 @@ class SelectBeaconViewController: UIViewController {
         // 1) The last rown and is the last
         // 2) To avoid two calls in a short space from time, while the data is downloading
         if (row == lastRow) && (row == pageLimit)  {
-            self.countPage++
+            self.countPage += 1
             print("Loading Page \(self.countPage) from \(self.maxPage)")
             self.findBeacons()
         }
@@ -94,12 +94,12 @@ class SelectBeaconViewController: UIViewController {
         Request().get(url, successHandler: {(response) in self.loadBeacons(response)})
     }
     
-    func loadBeacons(let response: NSData) {
+    func loadBeacons(_ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
         for (_,subJson):(String, JSON) in result["data"] {
                 let jsonObject: AnyObject = subJson.object
-                self.beacons.addObject(jsonObject)
+                self.beacons.add(jsonObject)
             }
             if self.beacons.count > 0 {
                 self.tableView.reloadData()

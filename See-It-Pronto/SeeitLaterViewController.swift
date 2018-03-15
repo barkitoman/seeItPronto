@@ -28,19 +28,19 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
         self.showRealtorData()
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -50,29 +50,29 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
 
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnShowDatePicker(sender: AnyObject) {
-        DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .DateAndTime) {
+    @IBAction func btnShowDatePicker(_ sender: AnyObject) {
+        DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .dateAndTime) {
             (date) -> Void in
             var dateTime = "\(date)"
-            dateTime = dateTime.stringByReplacingOccurrencesOfString(" +0000",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            dateTime = dateTime.replacingOccurrences(of: " +0000",  with: "", options: NSString.CompareOptions.literal, range: nil)
             self.seeItLaterDate = dateTime
-            let timestamp = NSDateFormatter.localizedStringFromDate(dateTime.toDateTime(), dateStyle: .ShortStyle, timeStyle: .ShortStyle)
+            let timestamp = DateFormatter.localizedString(from: dateTime.toDateTime(), dateStyle: .short, timeStyle: .short)
             self.txtDate.text = timestamp
         }
     }
     
-    @IBAction func btnMyListing(sender: AnyObject) {
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let viewController = mainStoryboard.instantiateViewControllerWithIdentifier("SeeItLaterBuyerViewController") as! SeeItLaterBuyerViewController
-        self.navigationController?.showViewController(viewController, sender: nil)
+    @IBAction func btnMyListing(_ sender: AnyObject) {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "SeeItLaterBuyerViewController") as! SeeItLaterBuyerViewController
+        self.navigationController?.show(viewController, sender: nil)
     }
     
     func showPropertydetails() {
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             let image = Property().getField("image")
             if(!image.isEmpty) {
                 Utility().showPhoto(self.photo, imgPath: image)
@@ -97,7 +97,7 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
     }
     
     func showRealtorData() {
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             let name            = PropertyRealtor().getField("first_name")+" "+PropertyRealtor().getField("last_name")
             self.agentName.text = name
             let image           = PropertyRealtor().getField("url_image")
@@ -105,11 +105,11 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
         }
     }
     
-    @IBAction func btnSearchAgain(sender: AnyObject) {
+    @IBAction func btnSearchAgain(_ sender: AnyObject) {
         Utility().goHome(self)
     }
     
-    @IBAction func btnSubmit(sender: AnyObject) {
+    @IBAction func btnSubmit(_ sender: AnyObject) {
         if(!self.seeItLaterDate.isEmpty) {
             self.sendRequest()
         } else  {
@@ -128,18 +128,18 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
         Request().post(url, params:params,controller: self,successHandler: {(response) in self.afterPostRequest(response)});
     }
         
-    func afterPostRequest(let response: NSData) {
+    func afterPostRequest(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result
-            dispatch_async(dispatch_get_main_queue()) {
-                let alertController = UIAlertController(title:"Success", message: "The request has been sent, Please wait for the agent confirmation", preferredStyle: .Alert)
-                let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default) {
+            DispatchQueue.main.async {
+                let alertController = UIAlertController(title:"Success", message: "The request has been sent, Please wait for the agent confirmation", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) {
                     UIAlertAction in
                     Utility().goHome(self)
                 }
                 alertController.addAction(okAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                self.present(alertController, animated: true, completion: nil)
             }
         } else {
             var msg = "Error sending your request, please try later"
@@ -150,9 +150,9 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
         }
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        let textFieldRect : CGRect = self.view.window!.convertRect(textField.bounds, fromView: textField)
-        let viewRect : CGRect = self.view.window!.convertRect(self.view.bounds, fromView: self.view)
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let textFieldRect : CGRect = self.view.window!.convert(textField.bounds, from: textField)
+        let viewRect : CGRect = self.view.window!.convert(self.view.bounds, from: self.view)
         let midline : CGFloat = textFieldRect.origin.y + 0.5 * textFieldRect.size.height
         let numerator : CGFloat = midline - viewRect.origin.y - MoveKeyboard.MINIMUM_SCROLL_FRACTION * viewRect.size.height
         let denominator : CGFloat = (MoveKeyboard.MAXIMUM_SCROLL_FRACTION - MoveKeyboard.MINIMUM_SCROLL_FRACTION) * viewRect.size.height
@@ -162,8 +162,8 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
         } else if heightFraction > 1.0 {
             heightFraction = 1.0
         }
-        let orientation : UIInterfaceOrientation = UIApplication.sharedApplication().statusBarOrientation
-        if (orientation == UIInterfaceOrientation.Portrait || orientation == UIInterfaceOrientation.PortraitUpsideDown) {
+        let orientation : UIInterfaceOrientation = UIApplication.shared.statusBarOrientation
+        if (orientation == UIInterfaceOrientation.portrait || orientation == UIInterfaceOrientation.portraitUpsideDown) {
             animateDistance = floor(MoveKeyboard.PORTRAIT_KEYBOARD_HEIGHT * heightFraction)
         } else {
             animateDistance = floor(MoveKeyboard.LANDSCAPE_KEYBOARD_HEIGHT * heightFraction)
@@ -172,18 +172,18 @@ class SeeitLaterViewController: UIViewController, UITextFieldDelegate, UITextVie
         viewFrame.origin.y -= animateDistance
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(NSTimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
+        UIView.setAnimationDuration(TimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
         self.view.frame = viewFrame
         UIView.commitAnimations()
     }
     
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         var viewFrame : CGRect = self.view.frame
         viewFrame.origin.y += animateDistance
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(NSTimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
+        UIView.setAnimationDuration(TimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
         self.view.frame = viewFrame
         UIView.commitAnimations()
     }

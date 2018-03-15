@@ -20,15 +20,15 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
     var propertyClass:String = ""
     var executeFind = true
     @IBOutlet weak var webView: UIWebView!
-    var typeTimer: NSTimer? = nil
+    var typeTimer: Timer? = nil
     
-    var autocompleteTableView = UITableView(frame: CGRectMake(0,75,320,210), style: UITableViewStyle.Plain)
+    var autocompleteTableView = UITableView(frame: CGRect(x: 0,y: 75,width: 320,height: 210), style: UITableViewStyle.plain)
     var autocompleteUrls:NSMutableArray! = NSMutableArray()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selfDelegate()
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         manager = OneShotLocationManager()
@@ -46,36 +46,36 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
             self.manager = nil
         }
     }
-    @IBAction func btnViewLIst(sender: AnyObject) {
-        dispatch_async(dispatch_get_main_queue()) {
-            let VC = self.storyboard?.instantiateViewControllerWithIdentifier("PropertyListViewController") as! PropertyListViewController
-            VC.preferredContentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.width)
+    @IBAction func btnViewLIst(_ sender: AnyObject) {
+        DispatchQueue.main.async {
+            let VC = self.storyboard?.instantiateViewController(withIdentifier: "PropertyListViewController") as! PropertyListViewController
+            VC.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
             let navController = UINavigationController(rootViewController: VC)
         
             let popOver = navController.popoverPresentationController
             popOver?.delegate = self
             popOver?.barButtonItem = sender as? UIBarButtonItem
         
-            self.presentViewController(navController, animated: true, completion: nil)
+            self.present(navController, animated: true, completion: nil)
         }
     }
     
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .None
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -86,15 +86,15 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         self.searchTextField.delegate = self
         
         //autocomple tableViewAutoSugges
-        self.autocompleteTableView = UITableView(frame: CGRectMake(0,75,self.view.frame.size.width, 210), style: UITableViewStyle.Plain)
+        self.autocompleteTableView = UITableView(frame: CGRect(x: 0,y: 75,width: self.view.frame.size.width, height: 210), style: UITableViewStyle.plain)
         autocompleteTableView.delegate = self
         autocompleteTableView.dataSource = self
-        autocompleteTableView.scrollEnabled = true
-        autocompleteTableView.hidden = true
+        autocompleteTableView.isScrollEnabled = true
+        autocompleteTableView.isHidden = true
         self.view.addSubview(autocompleteTableView)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
@@ -103,36 +103,36 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         let url = AppConfig.APP_URL+"/map/\(User().getField("id"))?lat=\(self.latitude)&lon=\(self.longintude)&role=\(User().getField("role"))&property=\(self.propertyId)&property_class=\(self.propertyClass)"
         self.propertyId = ""
         self.propertyClass = ""
-        let requestURL = NSURL(string:url)
-        let request = NSURLRequest(URL: requestURL!)
+        let requestURL = URL(string:url)
+        let request = URLRequest(url: requestURL!)
         self.webView.loadRequest(request)
     }
     
-    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        if navigationType == UIWebViewNavigationType.LinkClicked {
-            let url:String = request.URL!.absoluteString
-            if(url.containsString(AppConfig.APP_URL)) {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if navigationType == UIWebViewNavigationType.linkClicked {
+            let url:String = request.url!.absoluteString
+            if(url.contains(AppConfig.APP_URL)) {
                 let saveData: JSON =  Utility().getIdFromUrl(url)
                 Property().saveOne(saveData)
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.performSegueWithIdentifier("RealtorHomePropertyDetails", sender: self)
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "RealtorHomePropertyDetails", sender: self)
                 }
             }
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 BProgressHUD.dismissHUD(2)
             }
             return false
         }
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             BProgressHUD.dismissHUD(2)
         }
         return true
     }
     
-    @IBAction func btnMenu(sender: AnyObject) {
+    @IBAction func btnMenu(_ sender: AnyObject) {
         self.textFieldShouldReturn(self.searchTextField)
         if(User().getField("id") != "") {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.menuToReturn.removeAll()
                 self.createMenu()
                 self.createContainerView()
@@ -141,31 +141,31 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         }
     }
     
-    @IBAction func btnSearch(sender: AnyObject) {
+    @IBAction func btnSearch(_ sender: AnyObject) {
         self.onSlideSearchButtonPressed(sender as! UIButton)
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         typeTimer?.invalidate()
-        typeTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: Selector("stopTypingSearch:"), userInfo: textField, repeats: false)
+        typeTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(RealtorHomeViewController.stopTypingSearch(_:)), userInfo: textField, repeats: false)
         return true
     }
     
-    func stopTypingSearch(timer: NSTimer) {
+    func stopTypingSearch(_ timer: Timer) {
         self.clearSearchTable()
         let substring = searchTextField.text
         if(substring!.isEmpty) {
-            autocompleteTableView.hidden = true
+            autocompleteTableView.isHidden = true
             self.loadMap()
         }else {
-            autocompleteTableView.hidden = false
+            autocompleteTableView.isHidden = false
             self.findproperties(substring!)
         }
     }
     
-    func findproperties(substring:String) {
+    func findproperties(_ substring:String) {
         self.clearSearchTable()
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             let params = "q=\(substring)"
             let url = AppConfig.APP_URL+"/real_state_property_basics/find_by_address/\(User().getField("id"))"
             Request().homePost(url, params: params, controller: self, successHandler: { (response) -> Void in
@@ -174,34 +174,34 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         }
     }
     
-    func loadProperties(let response: NSData) {
+    func loadProperties(_ response: Data) {
         self.clearSearchTable()
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             let properties = JSON(data: response)
             if(properties["result"].stringValue.isEmpty) {
                 for (_,subJson):(String, JSON) in properties {
                     let jsonObject: AnyObject = subJson.object
-                    self.autocompleteUrls.addObject(jsonObject)
+                    self.autocompleteUrls.add(jsonObject)
                 }
             } else {
-                let objet:JSON = ["id":"","class":"", "description":"No Results Found!"]
+                let objet:JSON = ["id":"" as AnyObject,"class":"" as AnyObject, "description":"No Results Found!" as AnyObject]
                 let obj: AnyObject = objet.object
-                self.autocompleteUrls.addObject(obj)
+                self.autocompleteUrls.add(obj)
             }
             self.autocompleteTableView.reloadData()
         }
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return autocompleteUrls.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: UITableViewCellStyle.Default , reuseIdentifier: "Cell")
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: UITableViewCellStyle.default , reuseIdentifier: "Cell")
         if let _:AnyObject = self.autocompleteUrls[indexPath.row] {
             let item = JSON(self.autocompleteUrls[indexPath.row])
             cell.textLabel!.text = item["description"].stringValue
@@ -209,11 +209,11 @@ class RealtorHomeViewController: BaseViewController,UIWebViewDelegate, UITableVi
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let _ = tableView.cellForRowAtIndexPath(indexPath) {
-            let selectedCell : UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let _ = tableView.cellForRow(at: indexPath) {
+            let selectedCell : UITableViewCell = tableView.cellForRow(at: indexPath)!
             let item = JSON(self.autocompleteUrls[indexPath.row])
-            self.autocompleteTableView.hidden = true
+            self.autocompleteTableView.isHidden = true
             if(!item["id"].stringValue.isEmpty) {
                 self.searchTextField.text = selectedCell.textLabel!.text
                 self.propertyId = item["id"].stringValue

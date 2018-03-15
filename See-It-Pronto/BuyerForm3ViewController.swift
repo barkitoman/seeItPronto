@@ -22,14 +22,14 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
         findUserInfo()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -38,12 +38,12 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnPrevious(sender: AnyObject) {
-         navigationController?.popViewControllerAnimated(true)     
+    @IBAction func btnPrevious(_ sender: AnyObject) {
+         navigationController?.popViewController(animated: true)     
     }
     
     func selfDelegate() {
@@ -53,12 +53,12 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
         self.txtPromoCode.delegate = self
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
-    @IBAction func btnSave(sender: AnyObject) {
+    @IBAction func btnSave(_ sender: AnyObject) {
         save()
     }
     
@@ -74,7 +74,7 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
         }
     }
     
-    func afterPut(let response: NSData) {
+    func afterPut(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result
@@ -91,7 +91,7 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
     func validateFields()->Bool {
         if(self.txtExpDate.text! != "") {
             let regex = "[0-9]{2}/[0-9]{4}"
-            let matches = self.txtExpDate.text!.rangeOfString(regex, options: .RegularExpressionSearch)
+            let matches = self.txtExpDate.text!.range(of: regex, options: .regularExpression)
             if let _ = matches {} else {
                 Utility().displayAlert(self, title: "Error", message: "Please enter a valid Exp. Date. \n Example: 05/2020", performSegue: "")
                 return false
@@ -109,9 +109,9 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
         }
     }
     
-    func loadDataToEdit(let response: NSData) {
+    func loadDataToEdit(_ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.txtCardNumber.text = result["number_card"].stringValue
             self.txtExpDate.text    = result["expiration_date"].stringValue
             self.txtCVC.text        = result["csv"].stringValue
@@ -119,10 +119,10 @@ class BuyerForm3ViewController: UIViewController,UITextFieldDelegate, UITextView
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "FromBuyerForm3") {
             User().updateField("is_login", value: "1")
-            let view: BuyerHomeViewController = segue.destinationViewController as! BuyerHomeViewController
+            let view: BuyerHomeViewController = segue.destination as! BuyerHomeViewController
             view.viewData  = self.viewData
         }
     }

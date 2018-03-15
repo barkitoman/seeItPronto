@@ -19,26 +19,26 @@ class BugReportViewController: UIViewController,UITextFieldDelegate, UITextViewD
         self.txtComments.delegate = self
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             textView.resignFirstResponder()
         }
         return true
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -47,11 +47,11 @@ class BugReportViewController: UIViewController,UITextFieldDelegate, UITextViewD
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnSubmit(sender: AnyObject) {
+    @IBAction func btnSubmit(_ sender: AnyObject) {
         save()
     }
     
@@ -65,10 +65,10 @@ class BugReportViewController: UIViewController,UITextFieldDelegate, UITextViewD
         }
     }
     
-    func afterPost(let response: NSData) {
+    func afterPost(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true ) {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.txtComments.text = ""
             }
             Utility().displayAlert(self,title: "Success", message:"Your feedback has been sent, thanks for your help", performSegue:"")
@@ -81,13 +81,13 @@ class BugReportViewController: UIViewController,UITextFieldDelegate, UITextViewD
         }
     }
     
-    @IBAction func btnCancel(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnCancel(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    func textViewDidBeginEditing(textView: UITextView) {
-        let textFieldRect : CGRect = self.view.window!.convertRect(textView.bounds, fromView: textView)
-        let viewRect : CGRect = self.view.window!.convertRect(self.view.bounds, fromView: self.view)
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        let textFieldRect : CGRect = self.view.window!.convert(textView.bounds, from: textView)
+        let viewRect : CGRect = self.view.window!.convert(self.view.bounds, from: self.view)
         let midline : CGFloat = textFieldRect.origin.y + 0.5 * textFieldRect.size.height
         let numerator : CGFloat = midline - viewRect.origin.y - MoveKeyboard.MINIMUM_SCROLL_FRACTION * viewRect.size.height
         let denominator : CGFloat = (MoveKeyboard.MAXIMUM_SCROLL_FRACTION - MoveKeyboard.MINIMUM_SCROLL_FRACTION) * viewRect.size.height
@@ -97,8 +97,8 @@ class BugReportViewController: UIViewController,UITextFieldDelegate, UITextViewD
         } else if heightFraction > 1.0 {
             heightFraction = 1.0
         }
-        let orientation : UIInterfaceOrientation = UIApplication.sharedApplication().statusBarOrientation
-        if (orientation == UIInterfaceOrientation.Portrait || orientation == UIInterfaceOrientation.PortraitUpsideDown) {
+        let orientation : UIInterfaceOrientation = UIApplication.shared.statusBarOrientation
+        if (orientation == UIInterfaceOrientation.portrait || orientation == UIInterfaceOrientation.portraitUpsideDown) {
             animateDistance = floor(MoveKeyboard.PORTRAIT_KEYBOARD_HEIGHT * heightFraction)
         } else {
             animateDistance = floor(MoveKeyboard.LANDSCAPE_KEYBOARD_HEIGHT * heightFraction)
@@ -107,18 +107,18 @@ class BugReportViewController: UIViewController,UITextFieldDelegate, UITextViewD
         viewFrame.origin.y -= animateDistance
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(NSTimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
+        UIView.setAnimationDuration(TimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
         self.view.frame = viewFrame
         UIView.commitAnimations()
     }
     
     
-    func textViewDidEndEditing(textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView) {
         var viewFrame : CGRect = self.view.frame
         viewFrame.origin.y += animateDistance
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(NSTimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
+        UIView.setAnimationDuration(TimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
         self.view.frame = viewFrame
         UIView.commitAnimations()
     }

@@ -17,14 +17,14 @@ class SelectRoleViewController: UIViewController {
 
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -34,9 +34,9 @@ class SelectRoleViewController: UIViewController {
 
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
+    @IBAction func btnBack(_ sender: AnyObject) {
         //navigationController?.popViewControllerAnimated(true)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 
 }

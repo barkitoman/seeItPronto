@@ -23,10 +23,10 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
     var models = [String:Model]()
     var count = 0
     
-    lazy var configuration : NSURLSessionConfiguration = {
-        let config = NSURLSessionConfiguration.ephemeralSessionConfiguration()
+    lazy var configuration : URLSessionConfiguration = {
+        let config = URLSessionConfiguration.ephemeral
         config.allowsCellularAccess = false
-        config.URLCache = nil
+        config.urlCache = nil
         return config
     }()
     
@@ -36,21 +36,21 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         self.tableView.delegate = self
         self.findListings()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -59,23 +59,23 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return myListings.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MyListingsRealtorTableViewCell
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MyListingsRealtorTableViewCell
         
-        cell.selectedBackgroundView!.layer.borderColor = UIColor.yellowColor().CGColor
+        cell.selectedBackgroundView!.layer.borderColor = UIColor.yellow.cgColor
         cell.selectedBackgroundView!.layer.borderWidth = 3
         cell.selectedBackgroundView!.backgroundColor = UIColor(white: 0.8, alpha: 0.9)
         
@@ -84,16 +84,16 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
         description = description+" "+listing["property"]["bedrooms"].stringValue+" Bd / "+listing["property"]["bathrooms"].stringValue+" Ba "
         cell.lblInformation.text = description
         cell.btnBeacon.tag = indexPath.row
-        cell.btnBeacon.addTarget(self, action: "openBeaconView:", forControlEvents: .TouchUpInside)
+        cell.btnBeacon.addTarget(self, action: #selector(MyListingsRealtorViewController.openBeaconView(_:)), for: .touchUpInside)
         
         cell.btnEdit.tag = indexPath.row
-        cell.btnEdit.addTarget(self, action: "openEditView:", forControlEvents: .TouchUpInside)
-        cell.swBeacon.on = false
+        cell.btnEdit.addTarget(self, action: #selector(MyListingsRealtorViewController.openEditView(_:)), for: .touchUpInside)
+        cell.swBeacon.isOn = false
         if(listing["state_beacon"].int == 1) {
-            cell.swBeacon.on = true
+            cell.swBeacon.isOn = true
         }
         cell.swBeacon.tag = Int(listing["property"]["id"].stringValue)!
-        cell.swBeacon.addTarget(self, action: "turnBeaconOnOff:", forControlEvents: .TouchUpInside)
+        cell.swBeacon.addTarget(self, action: #selector(MyListingsRealtorViewController.turnBeaconOnOff(_:)), for: .touchUpInside)
         let property = listing["property"]
         
         if let _ = self.models[property["id"].stringValue] {
@@ -106,36 +106,36 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
         return cell
     }
     
-    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-        let delete = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Cancel"){(UITableViewRowAction,NSIndexPath) -> Void in
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Cancel"){(UITableViewRowAction,NSIndexPath) -> Void in
             self.cancelShowingRequest(indexPath)
         }
         return [delete]
     }
     
-    func cancelShowingRequest(indexPath:NSIndexPath){
-        dispatch_async(dispatch_get_main_queue()) {
-            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to delete this property listing?", preferredStyle: .Alert)
-            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+    func cancelShowingRequest(_ indexPath:IndexPath){
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to delete this property listing?", preferredStyle: .alert)
+            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.default) {
                 UIAlertAction in
             
                 var listing = JSON(self.myListings[indexPath.row])
-                self.myListings.removeObjectAtIndex(indexPath.row)
-                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                self.myListings.removeObject(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
                 let url = AppConfig.APP_URL+"/realtor_properties/"+listing["id"].stringValue
                 Request().delete(url,params:"", successHandler: {(response) in })
             }
-            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.default) {
                 UIAlertAction in
             
             }
             alertController.addAction(yesAction)
             alertController.addAction(noAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     
-    func showCell(cell:MyListingsRealtorTableViewCell, property:JSON,indexPath: NSIndexPath){
+    func showCell(_ cell:MyListingsRealtorTableViewCell, property:JSON,indexPath: IndexPath){
         // have we got a picture?
         if let im = self.models[property["id"].stringValue]!.im {
             cell.PropertyImage.image = im
@@ -148,7 +148,7 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
         }
     }
     
-    func imageCell(indexPath: NSIndexPath, img:UIImageView,let response: NSData) {
+    func imageCell(_ indexPath: IndexPath, img:UIImageView,response: Data) {
         var listing = JSON(self.myListings[indexPath.row])
         let property = listing["property"]
         let result = JSON(data: response)
@@ -160,46 +160,46 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
                 if url == nil {
                     return
                 }
-                let data = NSData(contentsOfURL: url)!
+                let data = try! Data(contentsOf: url)
                 let im = UIImage(data:data)
                 self!.models[property["id"].stringValue]!.im = im
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self!.models[property["id"].stringValue]!.reloaded = true
-                    self!.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                    self!.tableView.reloadRows(at: [indexPath], with: .none)
                 }
             }
         }
     }
     
-    @IBAction func openBeaconView(sender:UIButton) {
+    @IBAction func openBeaconView(_ sender:UIButton) {
         let listing = JSON(self.myListings[sender.tag])
         self.viewData = listing
-        dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("MyListingToAddBeacon", sender: self)
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "MyListingToAddBeacon", sender: self)
         }
     }
     
-    @IBAction func openEditView(sender:UIButton) {
+    @IBAction func openEditView(_ sender:UIButton) {
         let listing = JSON(self.myListings[sender.tag])
         self.viewData = listing
-        dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("MyListingToEditListng", sender: self)
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "MyListingToEditListng", sender: self)
         }
     }
     
-    @IBAction func turnBeaconOnOff(sender:UISwitch) {
+    @IBAction func turnBeaconOnOff(_ sender:UISwitch) {
         self.propertyId = String(sender.tag)
         let url = AppConfig.APP_URL+"/turn_beacon_on_off/"+User().getField("id")+"/"+self.propertyId+"/"+Utility().switchValue(sender, onValue: "1", offValue: "0")
         Request().get(url, successHandler: {(response) in self.afterTurnOnOffBeacon(response, sw: sender)})
     }
     
-    func afterTurnOnOffBeacon(let response: NSData, sw:UISwitch) {
+    func afterTurnOnOffBeacon(_ response: Data, sw:UISwitch) {
         let result = JSON(data: response)
         if(result["result"].bool == false ) {
             var msg = "Error saving, please try later"
             if(result["msg"].stringValue != "") {
-                dispatch_async(dispatch_get_main_queue()) {
-                    sw.on = false
+                DispatchQueue.main.async {
+                    sw.isOn = false
                 }
                 msg = result["msg"].stringValue
             }
@@ -208,7 +208,7 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
     }
     
     //Pagination
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath){
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){
         let row = indexPath.row
         let lastRow = self.myListings.count - 1
         let pageLimit = (((self.countPage+1) * (self.stepPage)) - 1)  //prevision of the page limit based on step and countPage
@@ -216,7 +216,7 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
         // 1) The last rown and is the last
         // 2) To avoid two calls in a short space from time, while the data is downloading
         if (row == lastRow) && (row == pageLimit)  {
-            self.countPage++
+            self.countPage += 1
             print("Loading Page \(self.countPage) from \(self.maxPage)")
             self.findListings()
         }
@@ -227,13 +227,13 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
         Request().get(url, successHandler: {(response) in self.loadListings(response)})
     }
     
-    func loadListings(let response: NSData){
+    func loadListings(_ response: Data){
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             for (_,subJson):(String, JSON) in result{
                 if(!subJson["property"]["id"].stringValue.isEmpty) {
                     let jsonObject: AnyObject = subJson.object
-                    self.myListings.addObject(jsonObject)
+                    self.myListings.add(jsonObject)
                 }
             }
             if self.myListings.count > 0 {
@@ -248,18 +248,18 @@ class MyListingsRealtorViewController: UIViewController, UIPopoverPresentationCo
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "MyListingToAddBeacon") {
-            let view: AddBeaconViewController = segue.destinationViewController as! AddBeaconViewController
+            let view: AddBeaconViewController = segue.destination as! AddBeaconViewController
             view.viewData = self.viewData
             
         }else if (segue.identifier == "MyListingToEditListng") {
-            let view: ListingDetailsViewController = segue.destinationViewController as! ListingDetailsViewController
+            let view: ListingDetailsViewController = segue.destination as! ListingDetailsViewController
             view.viewData = self.viewData
         }
     }
     
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        return UIModalPresentationStyle.None
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
     }
 }

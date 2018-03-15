@@ -22,10 +22,10 @@ class PastListingsBuyerViewController: UIViewController {
     var models = [String:Model]()
     var count = 0
     
-    lazy var configuration : NSURLSessionConfiguration = {
-        let config = NSURLSessionConfiguration.ephemeralSessionConfiguration()
+    lazy var configuration : URLSessionConfiguration = {
+        let config = URLSessionConfiguration.ephemeral
         config.allowsCellularAccess = false
-        config.URLCache = nil
+        config.urlCache = nil
         return config
     }()
     
@@ -35,7 +35,7 @@ class PastListingsBuyerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         self.findListings()
@@ -45,38 +45,38 @@ class PastListingsBuyerViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return myListings.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PastListingBuyerTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PastListingBuyerTableViewCell
         let showing = JSON(self.myListings[indexPath.row])
         let address = showing["property"][0]["address"].stringValue
  
         cell.lblAddress.text  = (address.isEmpty) ? showing["property_address"].stringValue  : address
         cell.btnRefund.tag    = indexPath.row
-        cell.btnRefund.addTarget(self, action: "refundShowingRequest:", forControlEvents: .TouchUpInside)
+        cell.btnRefund.addTarget(self, action: #selector(PastListingsBuyerViewController.refundShowingRequest(_:)), for: .touchUpInside)
         
         if let _ = self.models[showing["property_id"].stringValue] {
             self.showCell(cell, showing: showing, indexPath: indexPath)
@@ -88,19 +88,19 @@ class PastListingsBuyerViewController: UIViewController {
         return cell
     }
     
-    @IBAction func refundShowingRequest(sender:UIButton) {
+    @IBAction func refundShowingRequest(_ sender:UIButton) {
        let showing = JSON(self.myListings[sender.tag])
-        let indexPath = NSIndexPath(forRow: sender.tag, inSection: 0)
+        let indexPath = IndexPath(row: sender.tag, section: 0)
         let url = AppConfig.APP_URL+"/refund_showing/\(showing["id"].stringValue)"
         Request().get(url, successHandler: {(response) in self.afterRefundRequest(response, indexPath: indexPath)})
     }
     
-    func afterRefundRequest(let response: NSData, indexPath:NSIndexPath) {
+    func afterRefundRequest(_ response: Data, indexPath:IndexPath) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.myListings.removeObjectAtIndex(indexPath.row)
-                self.tableView.deleteRowsAtIndexPaths([indexPath],  withRowAnimation: UITableViewRowAnimation.Automatic)
+            DispatchQueue.main.async {
+                self.myListings.removeObject(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath],  with: UITableViewRowAnimation.automatic)
                 Utility().displayAlert(self, title: "Success!", message: "The showing request has been refunded", performSegue: "")
             }
         } else {
@@ -112,7 +112,7 @@ class PastListingsBuyerViewController: UIViewController {
         }
     }
     
-    func showCell(cell:PastListingBuyerTableViewCell, showing:JSON, indexPath: NSIndexPath){
+    func showCell(_ cell:PastListingBuyerTableViewCell, showing:JSON, indexPath: IndexPath){
         // have we got a picture?
         if let im = self.models[showing["property_id"].stringValue]!.im {
             cell.propertyImage.image = im
@@ -125,7 +125,7 @@ class PastListingsBuyerViewController: UIViewController {
         }
     }
     
-    func imageCell(indexPath: NSIndexPath, img:UIImageView,let response: NSData) {
+    func imageCell(_ indexPath: IndexPath, img:UIImageView,response: Data) {
         let showing = JSON(self.myListings[indexPath.row])
         let result = JSON(data: response)
         let url = AppConfig.APP_URL+"/"+result[0]["url"].stringValue
@@ -136,52 +136,52 @@ class PastListingsBuyerViewController: UIViewController {
                 if url == nil {
                     return
                 }
-                let data = NSData(contentsOfURL: url)!
+                let data = try! Data(contentsOf: url)
                 //if photo is empty
-                if data.length <= 116 {
+                if data.count <= 116 {
                     let im = UIImage(named: "default_property_photo")
                     self!.models[showing["property_id"].stringValue]!.im = im
                 }else {
                     let im = UIImage(data:data)
                     self!.models[showing["property_id"].stringValue]!.im = im
                 }
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self!.models[showing["property_id"].stringValue]!.reloaded = true
-                    self!.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                    self!.tableView.reloadRows(at: [indexPath], with: .none)
                 }
             }
         }
     }
     
-    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-        let viewDetails = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "View\nDetails"){(UITableViewRowAction,NSIndexPath) -> Void in
+    func tableView(_ tableView: UITableView, editActionsForRowAtIndexPath indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let viewDetails = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "View\nDetails"){(UITableViewRowAction,NSIndexPath) -> Void in
             let showing = JSON(self.myListings[indexPath.row])
             Utility().goPropertyDetails(self,propertyId: showing["property_id"].stringValue, PropertyClass: showing["property_class"].stringValue)
         }
         return [viewDetails]
     }
     
-    func openPropertyDetailView(indexPath: NSIndexPath) {
+    func openPropertyDetailView(_ indexPath: IndexPath) {
         let showing = JSON(self.myListings[indexPath.row])
         Utility().goPropertyDetails(self,propertyId: showing["property_id"].stringValue, PropertyClass: showing["property_class"].stringValue)
     }
     
-    func viewShowingComments(indexPath: NSIndexPath) {
+    func viewShowingComments(_ indexPath: IndexPath) {
         let showing  = JSON(self.myListings[indexPath.row])
         var comments = "Showing Comments:\n"+showing["feedback_showing_comment"].stringValue+"\n\n"
         comments     = comments+" Reviews for the agent:\n"+showing["feedback_realtor_comment"].stringValue
         Utility().displayAlert(self, title: "My comments", message: comments, performSegue: "")
     }
     
-    func loadImage(img:UIImageView,let response: NSData) {
+    func loadImage(_ img:UIImageView,response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             Utility().showPhoto(img, imgPath: result[0]["url"].stringValue)
         }
     }
     
     //Pagination
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath){
+    func tableView(_ tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath){
         let row = indexPath.row
         let lastRow = self.myListings.count - 1
         let pageLimit = (((self.countPage+1) * (self.stepPage)) - 1)  //prevision of the page limit based on step and countPage
@@ -189,7 +189,7 @@ class PastListingsBuyerViewController: UIViewController {
         // 1) The last rown and is the last
         // 2) To avoid two calls in a short space from time, while the data is downloading
         if (row == lastRow) && (row == pageLimit)  {
-            self.countPage++
+            self.countPage += 1
             print("Loading Page \(self.countPage) from \(self.maxPage)")
             self.findListings()
         }
@@ -200,12 +200,12 @@ class PastListingsBuyerViewController: UIViewController {
         Request().get(url, successHandler: {(response) in self.loadListings(response)})
     }
     
-    func loadListings(let response: NSData){
+    func loadListings(_ response: Data){
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             for (_,subJson):(String, JSON) in result["data"] {
                 let jsonObject: AnyObject = subJson.object
-                self.myListings.addObject(jsonObject)
+                self.myListings.add(jsonObject)
             }
             if self.myListings.count > 0 {
                 self.tableView.reloadData()

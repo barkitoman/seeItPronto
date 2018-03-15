@@ -24,25 +24,25 @@ class RealtorProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         self.findUserInfo()
         let role = User().getField("id")
         if(role != "realtor") {
-            self.btnPrevious.hidden = true
-            self.btnNext.hidden = true
+            self.btnPrevious.isHidden = true
+            self.btnNext.isHidden = true
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -51,12 +51,12 @@ class RealtorProfileViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnPrevious(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnPrevious(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
     func findUserInfo() {
@@ -69,8 +69,8 @@ class RealtorProfileViewController: UIViewController {
         Request().get(url, successHandler: {(response) in self.loadDataToEdit(response)})
     }
     
-    func loadDataToEdit(let response: NSData) {
-        dispatch_async(dispatch_get_main_queue()) {
+    func loadDataToEdit(_ response: Data) {
+        DispatchQueue.main.async {
             BProgressHUD.dismissHUD(0)
             let result = JSON(data: response)
             self.lblFirstName.text = result["first_name"].stringValue

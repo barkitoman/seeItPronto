@@ -33,36 +33,36 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnPrevious(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnPrevious(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnTakePicture(sender: AnyObject) {
+    @IBAction func btnTakePicture(_ sender: AnyObject) {
         self.isTakenPhoto = true
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
-            if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            if UIImagePickerController.availableCaptureModes(for: .rear) != nil {
                 let imagePicker = UIImagePickerController()
                 imagePicker.delegate = self
-                imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
+                imagePicker.sourceType = UIImagePickerControllerSourceType.camera;
                 imagePicker.allowsEditing = false
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.presentViewController(imagePicker, animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    self.present(imagePicker, animated: true, completion: nil)
                 }
             } else {
                 Utility().displayAlert(self, title: "Rear camera doesn't exist", message:  "Application cannot access the camera.", performSegue: "")
@@ -72,28 +72,28 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
         }
     }
     
-    @IBAction func btnChoosePicture(sender: AnyObject) {
+    @IBAction func btnChoosePicture(_ sender: AnyObject) {
         self.isTakenPhoto = false
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
-            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
+            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary;
             imagePicker.allowsEditing = true
-            dispatch_async(dispatch_get_main_queue()) {
-                self.presentViewController(imagePicker, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self.present(imagePicker, animated: true, completion: nil)
             }
         }
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [AnyHashable: Any]!) {
         self.currentImage.image = image
         if(self.isTakenPhoto == true) {
             self.saveTakenPhoto()
         }
-        self.dismissViewControllerAnimated(true, completion: nil);
+        self.dismiss(animated: true, completion: nil);
     }
     
-    @IBAction func btnNext(sender: AnyObject) {
+    @IBAction func btnNext(_ sender: AnyObject) {
         var params = "id="+User().getField("id")
         params     = params+"&pre_qualified="+Utility().switchValue(self.swPreQualified, onValue: "1", offValue: "0")
         params     = params+"&like_pre_qualification="+Utility().switchValue(self.swLikeToBe, onValue: "1", offValue: "0")
@@ -103,9 +103,9 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
     
     //upload photo to server
     func uploadImage() {
-        dispatch_async(dispatch_get_main_queue()) {
-         if (self.currentImage.image != nil && self.haveImage == true && !self.swPreQualified.on) {
-            let imageData:NSData = UIImageJPEGRepresentation(self.currentImage.image!, 1)!
+        DispatchQueue.main.async {
+         if (self.currentImage.image != nil && self.haveImage == true && !self.swPreQualified.isOn) {
+            let imageData:Data = UIImageJPEGRepresentation(self.currentImage.image!, 1)!
             SRWebClient.POST(AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue)
                 .data(imageData, fieldName:"pre_qualification_letter_image", data:["id":self.viewData["id"].stringValue,"_method":"PUT"])
                 .send({(response:AnyObject!, status:Int) -> Void in
@@ -116,7 +116,7 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
         }
     }
     
-    func afterPut(let response: NSData) {
+    func afterPut(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result
@@ -131,9 +131,9 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
         }
     }
     
-    @IBAction func swPrequalification(sender: AnyObject) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.preQualificationFields(!self.swPreQualified.on)
+    @IBAction func swPrequalification(_ sender: AnyObject) {
+        DispatchQueue.main.async {
+            self.preQualificationFields(!self.swPreQualified.isOn)
         }
     }
     
@@ -146,41 +146,41 @@ class BuyerForm5ViewController: UIViewController, UIImagePickerControllerDelegat
         }
     }
     
-    func loadDataToEdit(let response: NSData) {
+    func loadDataToEdit(_ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             let preQualified = result["pre_qualified"].stringValue
             if(preQualified == "1") {
-                self.swPreQualified.on = true
+                self.swPreQualified.isOn = true
                 self.preQualificationFields(false)
             }else{
-                self.swPreQualified.on = false
+                self.swPreQualified.isOn = false
                 self.preQualificationFields(true)
             }
             let likeToBe = result["like_pre_qualification"].stringValue
-            if(likeToBe == "1"){self.swLikeToBe.on = true}else{self.swLikeToBe.on = false}
+            if(likeToBe == "1"){self.swLikeToBe.isOn = true}else{self.swLikeToBe.isOn = false}
         }
     }
     
-    func preQualificationFields(preQuealificationIsEnabled:Bool){
+    func preQualificationFields(_ preQuealificationIsEnabled:Bool){
         if(preQuealificationIsEnabled == false) {
-            self.choosePicture.hidden  = false
-            self.btnScan.hidden        = false
-            self.currentImage.hidden   = false
-            self.lblLikeTobe.hidden    = true
-            self.lblYesLikeTobe.hidden = true
-            self.lblNoLikeTobe.hidden  = true
-            self.swLikeToBe.hidden     = true
-            self.lblIfYesText.hidden   = false
+            self.choosePicture.isHidden  = false
+            self.btnScan.isHidden        = false
+            self.currentImage.isHidden   = false
+            self.lblLikeTobe.isHidden    = true
+            self.lblYesLikeTobe.isHidden = true
+            self.lblNoLikeTobe.isHidden  = true
+            self.swLikeToBe.isHidden     = true
+            self.lblIfYesText.isHidden   = false
         } else {
-            self.choosePicture.hidden  = true
-            self.btnScan.hidden        = true
-            self.currentImage.hidden   = true
-            self.lblLikeTobe.hidden    = false
-            self.lblYesLikeTobe.hidden = false
-            self.lblNoLikeTobe.hidden  = false
-            self.swLikeToBe.hidden     = false
-            self.lblIfYesText.hidden   = true
+            self.choosePicture.isHidden  = true
+            self.btnScan.isHidden        = true
+            self.currentImage.isHidden   = true
+            self.lblLikeTobe.isHidden    = false
+            self.lblYesLikeTobe.isHidden = false
+            self.lblNoLikeTobe.isHidden  = false
+            self.swLikeToBe.isHidden     = false
+            self.lblIfYesText.isHidden   = true
         }
     }
     

@@ -11,8 +11,8 @@ import CoreData
 
 class ViewController: UIViewController {
 
-    private let internvalSeconds:NSTimeInterval = 3
-    private var timer: NSTimer?
+    fileprivate let internvalSeconds:TimeInterval = 3
+    fileprivate var timer: Timer?
     var login = false
     
     override func viewDidLoad() {
@@ -20,20 +20,20 @@ class ViewController: UIViewController {
         startSetInterval()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
     
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,8 +44,8 @@ class ViewController: UIViewController {
         if self.timer != nil { self.stopInterval()}
         login = automaticLogin()
         if (login == false) {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.performSegueWithIdentifier("showMap", sender: self)
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "showMap", sender: self)
             }
         }
     }
@@ -57,17 +57,17 @@ class ViewController: UIViewController {
         var out = false
         if(!userId.isEmpty && !role.isEmpty && !accessToken.isEmpty) {
             if(role == "realtor") {
-                dispatch_async(dispatch_get_main_queue()) {
-                    let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                    let viewController : ReadyToWorkViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ReadyToWorkViewController") as! ReadyToWorkViewController
-                    self.navigationController?.showViewController(viewController, sender: nil)
+                DispatchQueue.main.async {
+                    let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                    let viewController : ReadyToWorkViewController = mainStoryboard.instantiateViewController(withIdentifier: "ReadyToWorkViewController") as! ReadyToWorkViewController
+                    self.navigationController?.show(viewController, sender: nil)
                 }
                 out = true
             } else if (role == "buyer") {
-                dispatch_async(dispatch_get_main_queue()) {
-                    let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                    let viewController : BuyerHomeViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BuyerHomeViewController") as! BuyerHomeViewController
-                    self.navigationController?.showViewController(viewController, sender: nil)
+                DispatchQueue.main.async {
+                    let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                    let viewController : BuyerHomeViewController = mainStoryboard.instantiateViewController(withIdentifier: "BuyerHomeViewController") as! BuyerHomeViewController
+                    self.navigationController?.show(viewController, sender: nil)
                 }
                 out = true
             }
@@ -80,9 +80,9 @@ class ViewController: UIViewController {
     
     func startSetInterval() {
         if self.timer != nil { self.stopInterval()}
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(self.internvalSeconds,
+        self.timer = Timer.scheduledTimer(timeInterval: self.internvalSeconds,
             target:self,
-            selector:Selector("goToLogin"),
+            selector:#selector(ViewController.goToLogin),
             userInfo:nil,
             repeats:true)
     }
@@ -91,9 +91,9 @@ class ViewController: UIViewController {
         self.timer!.invalidate()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showMap") {
-            let view: BuyerHomeViewController = segue.destinationViewController as! BuyerHomeViewController
+            let view: BuyerHomeViewController = segue.destination as! BuyerHomeViewController
             view.session  = login
         }
     }

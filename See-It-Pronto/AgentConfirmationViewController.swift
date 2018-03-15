@@ -33,19 +33,19 @@ class AgentConfirmationViewController: UIViewController, UITextFieldDelegate, UI
         self.loadRealtorData()
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -55,15 +55,15 @@ class AgentConfirmationViewController: UIViewController, UITextFieldDelegate, UI
 
     }
 
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnSearchAgain(sender: AnyObject) {
+    @IBAction func btnSearchAgain(_ sender: AnyObject) {
         Utility().goHome(self)
     }
     
-    @IBAction func btnSendRequest(sender: AnyObject) {
+    @IBAction func btnSendRequest(_ sender: AnyObject) {
         self.sendRequest()
     }
     
@@ -81,12 +81,12 @@ class AgentConfirmationViewController: UIViewController, UITextFieldDelegate, UI
         Request().post(url, params:params,controller: self,successHandler: {(response) in self.afterPostRequest(response)});
     }
     
-    func afterPostRequest(let response: NSData) {
+    func afterPostRequest(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result
-            dispatch_async(dispatch_get_main_queue()) {
-                self.performSegueWithIdentifier("showCongratulationView", sender: self)
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "showCongratulationView", sender: self)
             }
         } else {
             var msg = "Error sending your request, please try later"
@@ -113,7 +113,7 @@ class AgentConfirmationViewController: UIViewController, UITextFieldDelegate, UI
         let image         = PropertyRealtor().getField("url_image")
         var distance      = PropertyRealtor().getField("travel_range")
         if(!distance.isEmpty) {
-            distance = distance.stringByReplacingOccurrencesOfString("mi",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            distance = distance.replacingOccurrences(of: "mi",  with: "", options: NSString.CompareOptions.literal, range: nil)
         }
         
         self.lblBrokerAgent.text = PropertyRealtor().getField("brokeragent")
@@ -127,16 +127,16 @@ class AgentConfirmationViewController: UIViewController, UITextFieldDelegate, UI
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showCongratulationView") {
-            let view: CongratulationsViewController = segue.destinationViewController as! CongratulationsViewController
+            let view: CongratulationsViewController = segue.destination as! CongratulationsViewController
             view.viewData  = self.viewData
         }
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        let textFieldRect : CGRect = self.view.window!.convertRect(textField.bounds, fromView: textField)
-        let viewRect : CGRect = self.view.window!.convertRect(self.view.bounds, fromView: self.view)
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let textFieldRect : CGRect = self.view.window!.convert(textField.bounds, from: textField)
+        let viewRect : CGRect = self.view.window!.convert(self.view.bounds, from: self.view)
         let midline : CGFloat = textFieldRect.origin.y + 0.5 * textFieldRect.size.height
         let numerator : CGFloat = midline - viewRect.origin.y - MoveKeyboard.MINIMUM_SCROLL_FRACTION * viewRect.size.height
         let denominator : CGFloat = (MoveKeyboard.MAXIMUM_SCROLL_FRACTION - MoveKeyboard.MINIMUM_SCROLL_FRACTION) * viewRect.size.height
@@ -146,8 +146,8 @@ class AgentConfirmationViewController: UIViewController, UITextFieldDelegate, UI
         } else if heightFraction > 1.0 {
             heightFraction = 1.0
         }
-        let orientation : UIInterfaceOrientation = UIApplication.sharedApplication().statusBarOrientation
-        if (orientation == UIInterfaceOrientation.Portrait || orientation == UIInterfaceOrientation.PortraitUpsideDown) {
+        let orientation : UIInterfaceOrientation = UIApplication.shared.statusBarOrientation
+        if (orientation == UIInterfaceOrientation.portrait || orientation == UIInterfaceOrientation.portraitUpsideDown) {
             animateDistance = floor(MoveKeyboard.PORTRAIT_KEYBOARD_HEIGHT * heightFraction)
         } else {
             animateDistance = floor(MoveKeyboard.LANDSCAPE_KEYBOARD_HEIGHT * heightFraction)
@@ -156,18 +156,18 @@ class AgentConfirmationViewController: UIViewController, UITextFieldDelegate, UI
         viewFrame.origin.y -= animateDistance
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(NSTimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
+        UIView.setAnimationDuration(TimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
         self.view.frame = viewFrame
         UIView.commitAnimations()
     }
     
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         var viewFrame : CGRect = self.view.frame
         viewFrame.origin.y += animateDistance
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(NSTimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
+        UIView.setAnimationDuration(TimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
         self.view.frame = viewFrame
         UIView.commitAnimations()
     }

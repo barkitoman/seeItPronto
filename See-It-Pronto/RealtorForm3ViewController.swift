@@ -21,14 +21,14 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         self.findUserInfo()
     }
 
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -37,7 +37,7 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func editTravelRate(sender: AnyObject) {
+    @IBAction func editTravelRate(_ sender: AnyObject) {
         
         let pickerView = CustomPickerDialog.init()
         var arrayDataSource:[String] = []
@@ -54,11 +54,11 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         }
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnMakeSomeMoney(sender: AnyObject) {
+    @IBAction func btnMakeSomeMoney(_ sender: AnyObject) {
         User().updateField("is_login", value: "1")
         self.save()
     }
@@ -71,7 +71,7 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPost(response)});
     }
     
-    func afterPost(let response: NSData) {
+    func afterPost(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result
@@ -94,9 +94,9 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         }
     }
     
-    func loadDataToEdit(let response: NSData) {
+    func loadDataToEdit(_ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.viewData = result
             if(!result["showing_rate"].stringValue.isEmpty) {
                 self.numberShowingRate = result["showing_rate"].stringValue
@@ -109,15 +109,15 @@ class RealtorForm3ViewController: UIViewController,UITextFieldDelegate, UITextVi
         }
     }
     
-    func showRates(showingRate:String,traveRange:String) {
+    func showRates(_ showingRate:String,traveRange:String) {
         if(!traveRange.isEmpty){
             self.lblTravelRate.text  = "You are willing to travel up to \(traveRange) miles to show a property"
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "RealtorForm1") {
-            let view: RealtorForm2ViewController = segue.destinationViewController as! RealtorForm2ViewController
+            let view: RealtorForm2ViewController = segue.destination as! RealtorForm2ViewController
             view.viewData  = self.viewData
         }
     }

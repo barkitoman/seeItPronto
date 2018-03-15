@@ -32,14 +32,14 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
         self.findUserInfo()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -61,29 +61,29 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
         self.zipCode2.tag           = 1
     }
     
-    @IBAction func btnchoosePicture(sender: AnyObject) {
+    @IBAction func btnchoosePicture(_ sender: AnyObject) {
         self.isTakenPhoto = false
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
-            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
+            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary;
             imagePicker.allowsEditing = true
-            dispatch_async(dispatch_get_main_queue()) {
-                self.presentViewController(imagePicker, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self.present(imagePicker, animated: true, completion: nil)
             }
         }
     }
     
-    @IBAction func btnTakePhoto(sender: AnyObject) {
+    @IBAction func btnTakePhoto(_ sender: AnyObject) {
         self.isTakenPhoto = true
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
-            if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            if UIImagePickerController.availableCaptureModes(for: .rear) != nil {
                 let imagePicker = UIImagePickerController()
                 imagePicker.delegate = self
-                imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
+                imagePicker.sourceType = UIImagePickerControllerSourceType.camera;
                 imagePicker.allowsEditing = false
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.presentViewController(imagePicker, animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    self.present(imagePicker, animated: true, completion: nil)
                 }
             } else {
                 Utility().displayAlert(self, title: "Rear camera doesn't exist", message:  "Application cannot access the camera.", performSegue: "")
@@ -94,21 +94,21 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     }
     
     //display image after select
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [AnyHashable: Any]!) {
         self.haveImage = true
         var takedPhoto = image
-        takedPhoto = takedPhoto.correctlyOrientedImage()
+        takedPhoto = takedPhoto?.correctlyOrientedImage()
         self.previewProfilePicture.image = takedPhoto
         if(self.isTakenPhoto == true) {
             self.saveTakenPhoto()
         }
-        self.dismissViewControllerAnimated(true, completion: nil);
+        self.dismiss(animated: true, completion: nil);
     }
 
     //upload photo to server
     func uploadImage() {
         if (self.previewProfilePicture.image != nil && self.haveImage == true) {
-            let imageData:NSData = UIImageJPEGRepresentation(self.previewProfilePicture.image!, 1)!
+            let imageData:Data = UIImageJPEGRepresentation(self.previewProfilePicture.image!, 1)!
             SRWebClient.POST(AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue)
                 .data(imageData, fieldName:"image", data:["id":self.viewData["id"].stringValue,"_method":"PUT"])
                 .send({(response:AnyObject!, status:Int) -> Void in
@@ -118,15 +118,15 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
         }
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-       navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+       navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnPrevious(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnPrevious(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnSave(sender: AnyObject) {
+    @IBAction func btnSave(_ sender: AnyObject) {
         self.save()
     }
     
@@ -146,7 +146,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPut(response)});
     }
     
-    func afterPut(let response: NSData) {
+    func afterPut( _ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result
@@ -171,9 +171,9 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
         }
     }
     
-    func loadDataToEdit(let response: NSData) {
+    func loadDataToEdit( _ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.viewData = result
             self.txtFirstName.text  = result["first_name"].stringValue
             self.txtLastName.text   = result["last_name"].stringValue
@@ -197,9 +197,9 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
         UIImageWriteToSavedPhotosAlbum(compressedJPGImage!, nil, nil, nil)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "RealtorForm2") {
-            let view: RealtorForm4ViewController = segue.destinationViewController as! RealtorForm4ViewController
+            let view: RealtorForm4ViewController = segue.destination as! RealtorForm4ViewController
             view.viewData  = self.viewData
         }
     }
@@ -222,14 +222,14 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     //MARK: - Delegate Methods
     
     // When clicking on the field, use this method.
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         
         // Create a button bar for the number pad
         let keyboardDoneButtonView = UIToolbar()
         keyboardDoneButtonView.sizeToFit()
         
         // Setup the buttons to be put in the system.
-        let item = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("endEditingNow") )
+        let item = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(RealtorForm2ViewController.endEditingNow) )
         let toolbarButtons = [item]
         
         //Put the buttons into the ToolBar and display the tool bar
@@ -244,7 +244,7 @@ class RealtorForm2ViewController: UIViewController,UITextFieldDelegate, UITextVi
     
     // called when 'return' key pressed. return NO to ignore.
     // Requires having the text fields using the view controller as the delegate.
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Sends the keyboard away when pressing the "done" button
         if textField.tag != 1 {
             self.view.endEditing(true)

@@ -28,21 +28,21 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
         self.selfDelegate()
         self.propertyId = self.viewData["property"]["id"].stringValue
         self.viewData["id"] = JSON("")
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         self.findPropertyDetails()
         self.findPropertyListing()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -59,31 +59,31 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
         //self.txtPhone.delegate = self
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             textView.resignFirstResponder()
         }
         return true
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnCancel(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnCancel(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnUpdate(sender: AnyObject) {
+    @IBAction func btnUpdate(_ sender: AnyObject) {
         self.updateData()
     }
     
-    @IBAction func btnSeletion(sender: AnyObject) {
+    @IBAction func btnSeletion(_ sender: AnyObject) {
         let pickerView = CustomPickerDialog.init()
         let arrayDataSource:[String] = ["Supra","iBox","Combo","Other"]
         pickerView.setDataSource(arrayDataSource)
@@ -121,7 +121,7 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
         }
     }
     
-    func afterUpdateRequest(let response: NSData) {
+    func afterUpdateRequest(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true ) {
             self.viewData = result
@@ -142,8 +142,8 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
         Request().get(url, successHandler: {(response) in self.loadPropertyDetails(response)})
     }
     
-    func loadPropertyDetails(let response: NSData) {
-        dispatch_async(dispatch_get_main_queue()) {
+    func loadPropertyDetails(_ response: Data) {
+        DispatchQueue.main.async {
             let result = JSON(data: response)
             var description = result["address"].stringValue+Utility().formatCurrency(result["price"].stringValue)
             description     = description+" \n"+result["bedrooms"].stringValue+" Bd / "
@@ -155,18 +155,18 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
             BProgressHUD.dismissHUD(0)
         }
     }
-    @IBAction func swBeaconState(sender: AnyObject) {
+    @IBAction func swBeaconState(_ sender: AnyObject) {
         let url = AppConfig.APP_URL+"/turn_beacon_on_off/"+User().getField("id")+"/"+self.propertyId+"/"+Utility().switchValue(self.swBeacon, onValue: "1", offValue: "0")
         Request().get(url, successHandler: {(response) in self.afterTurnOnOffBeacon(response)})
     }
     
-    func afterTurnOnOffBeacon(let response: NSData) {
+    func afterTurnOnOffBeacon(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == false ) {
             var msg = "Error saving, please try later"
             if(result["msg"].stringValue != "") {
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.swBeacon.on = false
+                DispatchQueue.main.async {
+                    self.swBeacon.isOn = false
                 }
                 msg = result["msg"].stringValue
             }
@@ -179,22 +179,22 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
         Request().get(url, successHandler: {(response) in self.loadPropertyListing(response)})
     }
     
-    func loadPropertyListing(let response: NSData) {
+    func loadPropertyListing(_ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.viewData = result
             self.txtShowingInstructions.text = result["showing_instruction"].stringValue
             self.txtEmail.text = result["owner_email"].stringValue
             //self.txtPhone.text = result["owner_phone"].stringValue
             if(result["state_beacon"].int == 1) {
-                self.swBeacon.on = true
+                self.swBeacon.isOn = true
             }
         }
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        let textFieldRect : CGRect = self.view.window!.convertRect(textField.bounds, fromView: textField)
-        let viewRect : CGRect = self.view.window!.convertRect(self.view.bounds, fromView: self.view)
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let textFieldRect : CGRect = self.view.window!.convert(textField.bounds, from: textField)
+        let viewRect : CGRect = self.view.window!.convert(self.view.bounds, from: self.view)
         let midline : CGFloat = textFieldRect.origin.y + 0.5 * textFieldRect.size.height
         let numerator : CGFloat = midline - viewRect.origin.y - MoveKeyboard.MINIMUM_SCROLL_FRACTION * viewRect.size.height
         let denominator : CGFloat = (MoveKeyboard.MAXIMUM_SCROLL_FRACTION - MoveKeyboard.MINIMUM_SCROLL_FRACTION) * viewRect.size.height
@@ -204,8 +204,8 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
         } else if heightFraction > 1.0 {
             heightFraction = 1.0
         }
-        let orientation : UIInterfaceOrientation = UIApplication.sharedApplication().statusBarOrientation
-        if (orientation == UIInterfaceOrientation.Portrait || orientation == UIInterfaceOrientation.PortraitUpsideDown) {
+        let orientation : UIInterfaceOrientation = UIApplication.shared.statusBarOrientation
+        if (orientation == UIInterfaceOrientation.portrait || orientation == UIInterfaceOrientation.portraitUpsideDown) {
             animateDistance = floor(MoveKeyboard.PORTRAIT_KEYBOARD_HEIGHT * heightFraction)
         } else {
             animateDistance = floor(MoveKeyboard.LANDSCAPE_KEYBOARD_HEIGHT * heightFraction)
@@ -214,18 +214,18 @@ class ListingDetailsViewController: UIViewController,UITextFieldDelegate, UIText
         viewFrame.origin.y -= animateDistance
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(NSTimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
+        UIView.setAnimationDuration(TimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
         self.view.frame = viewFrame
         UIView.commitAnimations()
     }
     
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         var viewFrame : CGRect = self.view.frame
         viewFrame.origin.y += animateDistance
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(NSTimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
+        UIView.setAnimationDuration(TimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
         self.view.frame = viewFrame
         UIView.commitAnimations()
     }

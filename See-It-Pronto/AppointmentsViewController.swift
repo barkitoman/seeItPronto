@@ -21,10 +21,10 @@ class AppointmentsViewController: UIViewController {
     var models = [String:Model]()
     var count = 0
     
-    lazy var configuration : NSURLSessionConfiguration = {
-        let config = NSURLSessionConfiguration.ephemeralSessionConfiguration()
+    lazy var configuration : URLSessionConfiguration = {
+        let config = URLSessionConfiguration.ephemeral
         config.allowsCellularAccess = false
-        config.URLCache = nil
+        config.urlCache = nil
         return config
     }()
     
@@ -34,7 +34,7 @@ class AppointmentsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         self.findAppoiments()
@@ -44,32 +44,32 @@ class AppointmentsViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
 
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return appoiments.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! AppointmentsTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! AppointmentsTableViewCell
         let appoiment = JSON(self.appoiments[indexPath.row])
         
         let address = appoiment["property"][0]["address"].stringValue
@@ -91,7 +91,7 @@ class AppointmentsViewController: UIViewController {
         return cell
     }
     
-    func showCell(cell:AppointmentsTableViewCell, appoiment:JSON, indexPath: NSIndexPath){
+    func showCell(_ cell:AppointmentsTableViewCell, appoiment:JSON, indexPath: IndexPath){
         // have we got a picture?
         if let im = self.models[appoiment["property_id"].stringValue]!.im {
             cell.propertyImage.image = im
@@ -104,7 +104,7 @@ class AppointmentsViewController: UIViewController {
         }
     }
     
-    func imageCell(indexPath: NSIndexPath, img:UIImageView,let response: NSData) {
+    func imageCell(_ indexPath: IndexPath, img:UIImageView,response: Data) {
         let appoiment = JSON(self.appoiments[indexPath.row])
         let result = JSON(data: response)
         let url = AppConfig.APP_URL+"/"+result[0]["url"].stringValue
@@ -115,31 +115,31 @@ class AppointmentsViewController: UIViewController {
                 if url == nil {
                     return
                 }
-                let data = NSData(contentsOfURL: url)!
+                let data = try! Data(contentsOf: url)
                 //if photo is empty
-                if data.length <= 116 {
+                if data.count <= 116 {
                     let im = UIImage(named: "default_property_photo")
                     self!.models[appoiment["property_id"].stringValue]!.im = im
                 } else {
                     let im = UIImage(data:data)
                     self!.models[appoiment["property_id"].stringValue]!.im = im
                 }
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self!.models[appoiment["property_id"].stringValue]!.reloaded = true
-                    self!.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                    self!.tableView.reloadRows(at: [indexPath], with: .none)
                 }
             }
         }
     }
     
-    func loadImage(img:UIImageView,let response: NSData) {
+    func loadImage(_ img:UIImageView,response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
            Utility().showPhoto(img, imgPath: result[0]["url"].stringValue)
         }
     }
     
-    func getState(state:String)->String {
+    func getState(_ state:String)->String {
         var out = ""
         if(state == "0") {
             out = "Pending"
@@ -155,7 +155,7 @@ class AppointmentsViewController: UIViewController {
         return out
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAtIndexPath indexPath: IndexPath) -> Bool {
         let appoiment = JSON(self.appoiments[indexPath.row])
         if(appoiment["showing_status"].stringValue == "1" || appoiment["showing_status"].stringValue == "0" ) {
             return true
@@ -163,32 +163,32 @@ class AppointmentsViewController: UIViewController {
         return false
     }
     
-    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAtIndexPath indexPath: IndexPath) -> [UITableViewRowAction]? {
         let appoiment = JSON(self.appoiments[indexPath.row])
-        let delete = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Cancel"){
+        let delete = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Cancel"){
             (UITableViewRowAction,NSIndexPath) -> Void in
             self.cancelShowingRequest(indexPath)
         }
-        let edit = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Reschedule"){
+        let edit = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "Reschedule"){
             (UITableViewRowAction,NSIndexPath) -> Void in
             self.showEditDatePicker(indexPath)
         }
-        let chat = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Chat With\nCustomer"){(UITableViewRowAction,NSIndexPath) -> Void in
-            dispatch_async(dispatch_get_main_queue()) {
-                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+        let chat = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "Chat With\nCustomer"){(UITableViewRowAction,NSIndexPath) -> Void in
+            DispatchQueue.main.async {
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                let vc : ChatViewController = mainStoryboard.instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
                 vc.to = appoiment["buyer_id"].stringValue
-                self.navigationController?.showViewController(vc, sender: nil)
+                self.navigationController?.show(vc, sender: nil)
             }
         }
         return [delete, edit, chat]
     }
     
-    func showEditDatePicker(indexPath:NSIndexPath){
-        DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .DateAndTime) {
+    func showEditDatePicker(_ indexPath:IndexPath){
+        DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .dateAndTime) {
             (date) -> Void in
             var dateTime  = "\(date)"
-            dateTime      = dateTime.stringByReplacingOccurrencesOfString(" +0000",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            dateTime      = dateTime.replacingOccurrences(of: " +0000",  with: "", options: NSString.CompareOptions.literal, range: nil)
             let appoiment = JSON(self.appoiments[indexPath.row])
             let params = self.editRequestParams(appoiment, dateTime:dateTime)
             let url = AppConfig.APP_URL+"/showings/"+appoiment["id"].stringValue
@@ -196,13 +196,13 @@ class AppointmentsViewController: UIViewController {
         }
     }
     
-    func afterEditRequest(let response: NSData, indexPath: NSIndexPath,appoiment:JSON) {
+    func afterEditRequest(_ response: Data, indexPath: IndexPath,appoiment:JSON) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
-            dispatch_async(dispatch_get_main_queue()) {
-                let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! AppointmentsTableViewCell
+            DispatchQueue.main.async {
+                let cell = self.tableView.cellForRow(at: indexPath) as! AppointmentsTableViewCell
                 cell.niceDate.text = result["showing_date"].stringValue
-                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                self.tableView.deselectRow(at: indexPath, animated: true)
                 self.tableView.setEditing(false, animated: true)
             }
         } else {
@@ -214,7 +214,7 @@ class AppointmentsViewController: UIViewController {
         }
     }
     
-    func editRequestParams(appoiment:JSON,dateTime:String)->String{
+    func editRequestParams(_ appoiment:JSON,dateTime:String)->String{
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         var params = "id=\(appoiment["id"].stringValue)&date="+dateTime
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+appoiment["buyer_id"].stringValue
@@ -224,10 +224,10 @@ class AppointmentsViewController: UIViewController {
         return params
     }
     
-    func cancelShowingRequest(indexPath:NSIndexPath){
-        dispatch_async(dispatch_get_main_queue()) {
-            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to cancel this showing request?", preferredStyle: .Alert)
-            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+    func cancelShowingRequest(_ indexPath:IndexPath){
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to cancel this showing request?", preferredStyle: .alert)
+            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.default) {
                 UIAlertAction in
             
                 var appoiment = JSON(self.appoiments[indexPath.row])
@@ -235,23 +235,23 @@ class AppointmentsViewController: UIViewController {
                 let params = self.cancelParams(appoiment)
                 Request().put(url,params: params,controller:self, successHandler: {(response) in })
             
-                let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! AppointmentsTableViewCell
+                let cell = self.tableView.cellForRow(at: indexPath) as! AppointmentsTableViewCell
                 cell.lblState.text = "Cancelled"
                 appoiment["showing_status"].int = 4
                 self.appoiments[indexPath.row] = appoiment.object
-                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                self.tableView.deselectRow(at: indexPath, animated: true)
                 self.tableView.setEditing(false, animated: true)
             }
-            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.default) {
                 UIAlertAction in
             }
             alertController.addAction(yesAction)
             alertController.addAction(noAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     
-    func cancelParams(appoiment:JSON)->String{
+    func cancelParams(_ appoiment:JSON)->String{
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         var params = "id=\(appoiment["id"].stringValue)&showing_status="+AppConfig.SHOWING_CANCELED_STATUS
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+appoiment["buyer_id"].stringValue
@@ -262,7 +262,7 @@ class AppointmentsViewController: UIViewController {
     }
     
     //Pagination
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath){
+    func tableView(_ tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath){
         let row = indexPath.row
         let lastRow = self.appoiments.count - 1
         let pageLimit = (((self.countPage+1) * (self.stepPage)) - 1)  //prevision of the page limit based on step and countPage
@@ -270,7 +270,7 @@ class AppointmentsViewController: UIViewController {
         // 1) The last rown and is the last
         // 2) To avoid two calls in a short space from time, while the data is downloading
         if (row == lastRow) && (row == pageLimit)  {
-            self.countPage++
+            self.countPage += 1
             print("Loading Page \(self.countPage) from \(self.maxPage)")
             self.findAppoiments()
         }
@@ -283,12 +283,12 @@ class AppointmentsViewController: UIViewController {
         Request().get(url, successHandler: {(response) in self.loadAppoiments(response)})
     }
     
-    func loadAppoiments(let response: NSData){
+    func loadAppoiments(_ response: Data){
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             for (_,subJson):(String, JSON) in result["data"] {
                 let jsonObject: AnyObject = subJson.object
-                self.appoiments.addObject(jsonObject)
+                self.appoiments.add(jsonObject)
             }
             if(self.appoiments.count == 0 && self.countPage == 0) {
                 BProgressHUD.dismissHUD(0)

@@ -26,14 +26,14 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
         self.findUserInfo()
     }
 
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -42,12 +42,12 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnPrevious(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)   
+    @IBAction func btnPrevious(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)   
     }
     
     func selfDelegate() {
@@ -55,34 +55,34 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
         self.txtLastName.delegate = self
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
-    @IBAction func btnChoosePicture(sender: AnyObject) {
+    @IBAction func btnChoosePicture(_ sender: AnyObject) {
         self.isTakenPhoto = false
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
-            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
+            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary;
             imagePicker.allowsEditing = true
-            dispatch_async(dispatch_get_main_queue()) {
-                self.presentViewController(imagePicker, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self.present(imagePicker, animated: true, completion: nil)
             }
         }
     }
     
-    @IBAction func btnTakePicture(sender: AnyObject) {
+    @IBAction func btnTakePicture(_ sender: AnyObject) {
         self.isTakenPhoto = true
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
-            if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            if UIImagePickerController.availableCaptureModes(for: .rear) != nil {
                 let imagePicker = UIImagePickerController()
                 imagePicker.delegate = self
-                imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
+                imagePicker.sourceType = UIImagePickerControllerSourceType.camera;
                 imagePicker.allowsEditing = false
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.presentViewController(imagePicker, animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    self.present(imagePicker, animated: true, completion: nil)
                 }
             } else {
                 Utility().displayAlert(self, title: "Rear camera doesn't exist", message:  "Application cannot access the camera.", performSegue: "")
@@ -93,21 +93,21 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
     }
     
     //display image after select
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [AnyHashable: Any]!) {
         self.haveImage = true
         var takedPhoto = image
-        takedPhoto = takedPhoto.correctlyOrientedImage()
+        takedPhoto = takedPhoto?.correctlyOrientedImage()
         self.previewProfilePicture.image = takedPhoto
         if(self.isTakenPhoto == true) {
             self.saveTakenPhoto()
         }
-        self.dismissViewControllerAnimated(true, completion: nil);
+        self.dismiss(animated: true, completion: nil);
     }
     
     //upload photo to server
     func uploadImage() {
         if (self.previewProfilePicture.image != nil && self.haveImage == true) {
-            let imageData:NSData = UIImageJPEGRepresentation(self.previewProfilePicture.image!, 1)!
+            let imageData:Data = UIImageJPEGRepresentation(self.previewProfilePicture.image!, 1)!
             SRWebClient.POST(AppConfig.APP_URL+"/users/"+self.viewData["id"].stringValue)
                 .data(imageData, fieldName:"image", data:["id":self.viewData["id"].stringValue,"_method":"PUT"])
                 .send({(response:AnyObject!, status:Int) -> Void in
@@ -117,7 +117,7 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
         }
     }
     
-    @IBAction func btnSave(sender: AnyObject) {
+    @IBAction func btnSave(_ sender: AnyObject) {
         self.save()
     }
     
@@ -128,7 +128,7 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterPut(response)});
     }
 
-    func afterPut(let response: NSData) {
+    func afterPut(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
             self.viewData = result
@@ -152,9 +152,9 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
         }
     }
     
-    func loadDataToEdit(let response: NSData) {
+    func loadDataToEdit(_ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.txtFirstName.text = result["first_name"].stringValue
             self.txtLastName.text = result["last_name"].stringValue
             if(!result["url_image"].stringValue.isEmpty) {
@@ -171,9 +171,9 @@ class BuyerForm2ViewController: UIViewController,UITextFieldDelegate, UITextView
         UIImageWriteToSavedPhotosAlbum(compressedJPGImage!, nil, nil, nil)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "FromBuyerForm2") {
-            let view: BuyerForm3ViewController = segue.destinationViewController as! BuyerForm3ViewController
+            let view: BuyerForm3ViewController = segue.destination as! BuyerForm3ViewController
             view.viewData  = self.viewData
         }
     }

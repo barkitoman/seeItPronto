@@ -14,26 +14,26 @@ struct Notification {
         let textAction = UIMutableUserNotificationAction()
         textAction.identifier = "TEXT_ACTION"
         textAction.title = "Reply"
-        textAction.activationMode = .Background
-        textAction.authenticationRequired = false
-        textAction.destructive = false
-        textAction.behavior = .TextInput
+        textAction.activationMode = .background
+        textAction.isAuthenticationRequired = false
+        textAction.isDestructive = false
+        textAction.behavior = .textInput
 
         let category = UIMutableUserNotificationCategory()
         category.identifier = "CATEGORY_ID"
-        category.setActions([textAction], forContext: .Default)
-        category.setActions([textAction], forContext: .Minimal)
+        category.setActions([textAction], for: .default)
+        category.setActions([textAction], for: .minimal)
 
         let categories = NSSet(object: category) as! Set<UIUserNotificationCategory>
-        let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: categories)
-        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: categories)
+        UIApplication.shared.registerUserNotificationSettings(settings)
     }
 
-    static func scheduleNotification(alertBodyText:String) {
-        let now: NSDateComponents = NSCalendar.currentCalendar().components([.Hour, .Minute], fromDate: NSDate())
+    static func scheduleNotification(_ alertBodyText:String) {
+        let now: DateComponents = (Calendar.current as NSCalendar).components([.hour, .minute], from: Date())
 
-        let cal  = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        let date = cal.dateBySettingHour(now.hour, minute: now.minute + 1, second: 0, ofDate: NSDate(), options: NSCalendarOptions())
+        let cal  = Calendar(identifier: Calendar.Identifier.gregorian)
+        let date = (cal as NSCalendar).date(bySettingHour: now.hour!, minute: now.minute! + 1, second: 0, of: Date(), options: NSCalendar.Options())
         let reminder = UILocalNotification()
         reminder.fireDate  = date
         reminder.alertBody = alertBodyText
@@ -41,6 +41,6 @@ struct Notification {
         reminder.soundName = "sound.aif"
         reminder.category  = "CATEGORY_ID"
 
-        UIApplication.sharedApplication().scheduleLocalNotification(reminder)
+        UIApplication.shared.scheduleLocalNotification(reminder)
     }
 }

@@ -26,10 +26,10 @@ class SeeItLaterBuyerViewController: UIViewController {
     var count = 0
     var isAddingTocalendar = false;
     
-    lazy var configuration : NSURLSessionConfiguration = {
-        let config = NSURLSessionConfiguration.ephemeralSessionConfiguration()
+    lazy var configuration : URLSessionConfiguration = {
+        let config = URLSessionConfiguration.ephemeral
         config.allowsCellularAccess = false
-        config.URLCache = nil
+        config.urlCache = nil
         return config
     }()
     
@@ -39,7 +39,7 @@ class SeeItLaterBuyerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         self.findListings()
@@ -50,33 +50,33 @@ class SeeItLaterBuyerViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
 
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return myListings.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell    = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! SeeItLaterBuyerTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+        let cell    = self.tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SeeItLaterBuyerTableViewCell
         let showing = JSON(self.myListings[indexPath.row])
         let address = showing["property"][0]["address"].stringValue
         let price   = (showing["property"][0]["price"].stringValue.isEmpty) ? showing["property_price"].stringValue : showing["property"][0]["price"].stringValue
@@ -86,7 +86,7 @@ class SeeItLaterBuyerViewController: UIViewController {
         cell.lblNiceDate.text = showing["nice_date"].stringValue
         
         cell.btnViewDetails.tag = indexPath.row
-        cell.btnViewDetails.addTarget(self, action: "openViewDetails:", forControlEvents: .TouchUpInside)
+        cell.btnViewDetails.addTarget(self, action: #selector(SeeItLaterBuyerViewController.openViewDetails(_:)), for: .touchUpInside)
         //let property = showing["property"][0]
         if let _ = self.models[showing["property_id"].stringValue] {
             self.showCell(cell, showing: showing, indexPath: indexPath)
@@ -98,7 +98,7 @@ class SeeItLaterBuyerViewController: UIViewController {
         return cell
     }
     
-    func showCell(cell:SeeItLaterBuyerTableViewCell, showing:JSON,indexPath: NSIndexPath){
+    func showCell(_ cell:SeeItLaterBuyerTableViewCell, showing:JSON,indexPath: IndexPath){
         // have we got a picture?
         if let im = self.models[showing["property_id"].stringValue]!.im {
             cell.propertyImage.image = im
@@ -111,7 +111,7 @@ class SeeItLaterBuyerViewController: UIViewController {
         }
     }
     
-    func imageCell(indexPath: NSIndexPath, img:UIImageView,let response: NSData) {
+    func imageCell(_ indexPath: IndexPath, img:UIImageView,response: Data) {
         let showing = JSON(self.myListings[indexPath.row])
         //let property = showing["property"][0]
         let result = JSON(data: response)
@@ -125,68 +125,68 @@ class SeeItLaterBuyerViewController: UIViewController {
                 }
                 
                 
-                let data = NSData(contentsOfURL: url)!
+                let data = try! Data(contentsOf: url)
                 //if photo is empty
-                if data.length <= 116 {
+                if data.count <= 116 {
                     let im = UIImage(named: "default_property_photo")
                     self!.models[showing["property_id"].stringValue]!.im = im
                 }else {
                     let im = UIImage(data:data)
                     self!.models[showing["property_id"].stringValue]!.im = im
                 }
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self!.models[showing["property_id"].stringValue]!.reloaded = true
-                    self!.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                    self!.tableView.reloadRows(at: [indexPath], with: .none)
                 }
             }
         }
     }
     
-    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAtIndexPath indexPath: IndexPath) -> [UITableViewRowAction]? {
         let showing = JSON(self.myListings[indexPath.row])
-        let delete = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Cancel"){(UITableViewRowAction,NSIndexPath) -> Void in
+        let delete = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Cancel"){(UITableViewRowAction,NSIndexPath) -> Void in
             self.cancelShowingRequest(indexPath)
         }
-        let edit = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Reschedule"){(UITableViewRowAction,NSIndexPath) -> Void in
+        let edit = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "Reschedule"){(UITableViewRowAction,NSIndexPath) -> Void in
             self.showEditDatePicker(indexPath)
         }
-        var calendar = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Add\nEvent"){(UITableViewRowAction,NSIndexPath) -> Void in
+        var calendar = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "Add\nEvent"){(UITableViewRowAction,NSIndexPath) -> Void in
             if(self.isAddingTocalendar == false) {
                 self.isAddingTocalendar = true
                 self.addShowingCalendar(indexPath)
             }
         }
-        let chat = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Chat\nWith\nAgent"){(UITableViewRowAction,NSIndexPath) -> Void in
-            dispatch_async(dispatch_get_main_queue()) {
-                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+        let chat = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "Chat\nWith\nAgent"){(UITableViewRowAction,NSIndexPath) -> Void in
+            DispatchQueue.main.async {
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                let vc : ChatViewController = mainStoryboard.instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
                 vc.to = showing["realtor_id"].stringValue
-                self.navigationController?.showViewController(vc, sender: nil)
+                self.navigationController?.show(vc, sender: nil)
             }
         }
         if(!showing["buyer_calendar_id"].stringValue.isEmpty) {
-            calendar = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "View\nEvent"){(UITableViewRowAction,NSIndexPath) -> Void in
+            calendar = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "View\nEvent"){(UITableViewRowAction,NSIndexPath) -> Void in
                 let dateString = "\(showing["date"].stringValue) EST"
-                let dateFormatter = NSDateFormatter()
-                dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
-                let date: NSDate? = dateFormatter.dateFromString(dateString)
+                let date: Date? = dateFormatter.date(from: dateString)
                 self.gotoAppleCalendar(date!)
             }
         }
         return [delete, edit, calendar, chat]
     }
     
-    @IBAction func openViewDetails(sender:UIButton) {
+    @IBAction func openViewDetails(_ sender:UIButton) {
         let showing = JSON(self.myListings[sender.tag])
         Utility().goPropertyDetails(self,propertyId: showing["property"][0]["id"].stringValue, PropertyClass: showing["property_class"].stringValue)
     }
     
-    func showEditDatePicker(indexPath:NSIndexPath){
-        DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .DateAndTime) {
+    func showEditDatePicker(_ indexPath:IndexPath){
+        DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .dateAndTime) {
             (date) -> Void in
             var dateTime = "\(date)"
-            dateTime     = dateTime.stringByReplacingOccurrencesOfString(" +0000",  withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            dateTime     = dateTime.replacingOccurrences(of: " +0000",  with: "", options: NSString.CompareOptions.literal, range: nil)
             let showing  = JSON(self.myListings[indexPath.row])
             let params   = self.editRequestParams(showing, dateTime:dateTime)
             let url = AppConfig.APP_URL+"/showings/"+showing["id"].stringValue
@@ -194,13 +194,13 @@ class SeeItLaterBuyerViewController: UIViewController {
         }
     }
     
-    func afterEditRequest(let response: NSData, indexPath: NSIndexPath) {
+    func afterEditRequest(_ response: Data, indexPath: IndexPath) {
         let result = JSON(data: response)
         if(result["result"].bool == true) {
-            dispatch_async(dispatch_get_main_queue()) {
-                let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! SeeItLaterBuyerTableViewCell
+            DispatchQueue.main.async {
+                let cell = self.tableView.cellForRow(at: indexPath) as! SeeItLaterBuyerTableViewCell
                 cell.lblNiceDate.text = result["showing_date"].stringValue
-                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                self.tableView.deselectRow(at: indexPath, animated: true)
                 self.tableView.setEditing(false, animated: true)
             }
         } else {
@@ -212,7 +212,7 @@ class SeeItLaterBuyerViewController: UIViewController {
         }
     }
     
-    func editRequestParams(showing:JSON,dateTime:String)->String{
+    func editRequestParams(_ showing:JSON,dateTime:String)->String{
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         var params = "id=\(showing["id"].stringValue)&date="+dateTime
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+showing["realtor_id"].stringValue
@@ -222,31 +222,31 @@ class SeeItLaterBuyerViewController: UIViewController {
         return params
     }
     
-    func cancelShowingRequest(indexPath:NSIndexPath){
-        dispatch_async(dispatch_get_main_queue()) {
-            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to cancel this showing request?", preferredStyle: .Alert)
-            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+    func cancelShowingRequest(_ indexPath:IndexPath){
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to cancel this showing request?", preferredStyle: .alert)
+            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.default) {
                 UIAlertAction in
             
                 let showing = JSON(self.myListings[indexPath.row])
-                self.myListings.removeObjectAtIndex(indexPath.row)
-                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                self.myListings.removeObject(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
                 let url = AppConfig.APP_URL+"/showings/"+showing["id"].stringValue
                 let params = self.cancelParams(showing)
                 Request().put(url,params: params, controller:self,successHandler: {(response) in })
                 self.removeAppleCalendarEvent(showing["buyer_calendar_id"].stringValue)
             }
-            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.default) {
                 UIAlertAction in
             
             }
             alertController.addAction(yesAction)
             alertController.addAction(noAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     
-    func cancelParams(showing:JSON)->String{
+    func cancelParams(_ showing:JSON)->String{
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         var params = "id=\(showing["id"].stringValue)&showing_status="+AppConfig.SHOWING_CANCELED_STATUS
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+showing["realtor_id"].stringValue
@@ -256,30 +256,30 @@ class SeeItLaterBuyerViewController: UIViewController {
         return params
     }
     
-    func addShowingCalendar(indexPath:NSIndexPath) {
+    func addShowingCalendar(_ indexPath:IndexPath) {
         let store = EKEventStore()
         var showing = JSON(self.myListings[indexPath.row])
         //add showing to calendar
-        store.requestAccessToEntityType(.Event) {(granted, error) in
+        store.requestAccess(to: .event) {(granted, error) in
             if !granted { return }
             let event = EKEvent(eventStore: store)
             event.title = "See It Pronto!, showing request.\n \(showing["property"][0]["address"].stringValue)"
             let dateString = "\(showing["date"].stringValue) EST"
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
-            let date: NSDate? = dateFormatter.dateFromString(dateString)
+            let date: Date? = dateFormatter.date(from: dateString)
             event.startDate = date!
-            event.endDate = event.startDate.dateByAddingTimeInterval(60*60) //30 min long meeting
+            event.endDate = event.startDate.addingTimeInterval(60*60) //30 min long meeting
             event.calendar = store.defaultCalendarForNewEvents
             do {
-                try store.saveEvent(event, span: .ThisEvent, commit: true)
+                try store.save(event, span: .thisEvent, commit: true)
                 self.savedEventId = event.eventIdentifier
                 showing["buyer_calendar_id"].stringValue = self.savedEventId
                 self.myListings[indexPath.row] = showing.object
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self.saveCalendarId(showing)
-                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                    self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
                     self.tableView.setEditing(false, animated: true)
                     self.isAddingTocalendar = false
                     self.gotoAppleCalendar(event.startDate)
@@ -292,15 +292,15 @@ class SeeItLaterBuyerViewController: UIViewController {
         }
     }
     
-    func removeAppleCalendarEvent(eventId:String) {
+    func removeAppleCalendarEvent(_ eventId:String) {
         if(!eventId.isEmpty){
             let store = EKEventStore()
-                store.requestAccessToEntityType(EKEntityType.Event) {(granted, error) in
+                store.requestAccess(to: EKEntityType.event) {(granted, error) in
                 if !granted { return }
-                let eventToRemove = store.eventWithIdentifier(eventId)
+                let eventToRemove = store.event(withIdentifier: eventId)
                 if eventToRemove != nil {
                     do {
-                    try store.removeEvent(eventToRemove!, span: .ThisEvent, commit: true)
+                    try store.remove(eventToRemove!, span: .thisEvent, commit: true)
                     } catch {
                     // Display error to user
                     }
@@ -309,15 +309,15 @@ class SeeItLaterBuyerViewController: UIViewController {
         }
     }
     
-    func loadImage(img:UIImageView,let response: NSData) {
+    func loadImage(_ img:UIImageView,response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             Utility().showPhoto(img, imgPath: result[0]["url"].stringValue)
         }
     }
     
     //Pagination
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath){
+    func tableView(_ tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath){
         let row = indexPath.row
         let lastRow = self.myListings.count - 1
         let pageLimit = (((self.countPage+1) * (self.stepPage)) - 1)  //prevision of the page limit based on step and countPage
@@ -325,7 +325,7 @@ class SeeItLaterBuyerViewController: UIViewController {
         // 1) The last rown and is the last
         // 2) To avoid two calls in a short space from time, while the data is downloading
         if (row == lastRow) && (row == pageLimit)  {
-            self.countPage++
+            self.countPage += 1
             print("Loading Page \(self.countPage) from \(self.maxPage)")
             self.findListings()
         }
@@ -336,12 +336,12 @@ class SeeItLaterBuyerViewController: UIViewController {
         Request().get(url, successHandler: {(response) in self.loadListings(response)})
     }
     
-    func loadListings(let response: NSData){
+    func loadListings(_ response: Data){
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             for (_,subJson):(String, JSON) in result["data"] {
                 let jsonObject: AnyObject = subJson.object
-                self.myListings.addObject(jsonObject)
+                self.myListings.add(jsonObject)
             }
             if self.myListings.count > 0 {
                 self.tableView.reloadData()
@@ -356,16 +356,16 @@ class SeeItLaterBuyerViewController: UIViewController {
         }
     }
     
-    func saveCalendarId(showing:JSON) {
+    func saveCalendarId(_ showing:JSON) {
         let params = "id=\(showing["id"].stringValue)&buyer_calendar_id=\(self.savedEventId)"
         let url = AppConfig.APP_URL+"/showings/\(showing["id"].stringValue)"
         Request().put(url,params: params, controller:self,successHandler: {(response) in })
     }
     
-    func gotoAppleCalendar(date: NSDate) {
+    func gotoAppleCalendar(_ date: Date) {
         let interval = date.timeIntervalSinceReferenceDate
-        let url = NSURL(string: "calshow:\(interval)")!
-        UIApplication.sharedApplication().openURL(url)
+        let url = URL(string: "calshow:\(interval)")!
+        UIApplication.shared.openURL(url)
     }
 
 }

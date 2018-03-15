@@ -16,14 +16,14 @@ class BuyerForm4ViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -32,19 +32,19 @@ class BuyerForm4ViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnYes(sender: AnyObject) {
+    @IBAction func btnYes(_ sender: AnyObject) {
         User().updateField("is_login", value: "1")
         Utility().performSegue(self, performSegue: "FormBuyer4")
     }
     
-    @IBAction func btnSkip(sender: AnyObject) {
+    @IBAction func btnSkip(_ sender: AnyObject) {
         User().updateField("is_login", value: "1")
-        dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("FormBuyer4", sender: self)
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "FormBuyer4", sender: self)
         }
     }
 

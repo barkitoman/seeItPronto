@@ -20,7 +20,7 @@ class CurrentShowingViewController: UIViewController {
     @IBOutlet weak var btnCall: UIButton!
     @IBOutlet weak var btnStartEndShowing: UIButton!
     @IBOutlet weak var btnInstructions: UIButton!
-    var LocationTimer: NSTimer?
+    var LocationTimer: Timer?
     
     var manager: OneShotLocationManager?
     var showingId:String = ""
@@ -36,11 +36,11 @@ class CurrentShowingViewController: UIViewController {
     func showHideButtons() {
         let role = User().getField("role")
         if(role == "buyer") {
-            self.btnCall.hidden = true
-            self.btnStartEndShowing.hidden = true
-            self.btnPanicButton.hidden = true
-            dispatch_async(dispatch_get_main_queue()) {
-                self.btnShowingInstructionChat.setTitle("Chat With Agent", forState: .Normal)
+            self.btnCall.isHidden = true
+            self.btnStartEndShowing.isHidden = true
+            self.btnPanicButton.isHidden = true
+            DispatchQueue.main.async {
+                self.btnShowingInstructionChat.setTitle("Chat With Agent", for: UIControlState())
             }
         }
     }
@@ -49,20 +49,20 @@ class CurrentShowingViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
         self.stopShowingEnded();
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
     
-    @IBAction func btnHome(sender: AnyObject) {
+    @IBAction func btnHome(_ sender: AnyObject) {
         Utility().goHome(self)
     }
     
@@ -76,9 +76,9 @@ class CurrentShowingViewController: UIViewController {
         }
     }
     
-    func loadShowingData(let response: NSData) {
+    func loadShowingData(_ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.viewData = result
             if(self.viewData["showing"]["id"].stringValue.isEmpty) {
                 self.showingNotExistMessage()
@@ -108,43 +108,43 @@ class CurrentShowingViewController: UIViewController {
         }
     }
     
-    func showingPendingMessage(showingId:String) {
+    func showingPendingMessage(_ showingId:String) {
         let role = User().getField("role")
         if(role == "realtor") {
-            dispatch_async(dispatch_get_main_queue()) {
-                let alertController = UIAlertController(title:"Message", message: "This showing request is pending to be approved", preferredStyle: .Alert)
-                let goAction = UIAlertAction(title: "View Request", style: UIAlertActionStyle.Default) {
+            DispatchQueue.main.async {
+                let alertController = UIAlertController(title:"Message", message: "This showing request is pending to be approved", preferredStyle: .alert)
+                let goAction = UIAlertAction(title: "View Request", style: UIAlertActionStyle.default) {
                     UIAlertAction in
                 
-                    let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                    let vc : ShowingRequestViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ShowingRequestViewController") as! ShowingRequestViewController
+                    let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                    let vc : ShowingRequestViewController = mainStoryboard.instantiateViewController(withIdentifier: "ShowingRequestViewController") as! ShowingRequestViewController
                     vc.showingId = showingId
-                    self.navigationController?.showViewController(vc, sender: nil)
+                    self.navigationController?.show(vc, sender: nil)
                 }
-                let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+                let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.default) {
                     UIAlertAction in
                     Utility().goHome(self)
                 }
                 alertController.addAction(goAction)
                 alertController.addAction(homeAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                self.present(alertController, animated: true, completion: nil)
             }
         }
     }
     
     func showingNotExistMessage() {
-        dispatch_async(dispatch_get_main_queue()) {
-            let alertController = UIAlertController(title:"Message", message: "You don't have a current showing", preferredStyle: .Alert)
-            let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title:"Message", message: "You don't have a current showing", preferredStyle: .alert)
+            let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.default) {
                 UIAlertAction in
                 Utility().goHome(self)
             }
             alertController.addAction(homeAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     
-    @IBAction func btnGetDirections(sender: AnyObject) {
+    @IBAction func btnGetDirections(_ sender: AnyObject) {
         manager = OneShotLocationManager()
         manager!.fetchWithCompletion {location, error in
             // fetch location or an error
@@ -152,9 +152,9 @@ class CurrentShowingViewController: UIViewController {
                 let lat = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.latitude)" : AppConfig().develop_lat()
                 let lng = (AppConfig.MODE == "PROD") ? "\(loc.coordinate.longitude)": AppConfig().develop_lon()
                 var address = self.viewData["property"]["address"].stringValue
-                address = address.stringByReplacingOccurrencesOfString(" ", withString: "+", options: NSStringCompareOptions.LiteralSearch, range: nil)
+                address = address.replacingOccurrences(of: " ", with: "+", options: NSString.CompareOptions.literal, range: nil)
                 let fullAddress = "http://maps.apple.com/?saddr=\(lat),\(lng)&daddr=\(address)"
-                UIApplication.sharedApplication().openURL(NSURL(string: fullAddress)!)
+                UIApplication.shared.openURL(URL(string: fullAddress)!)
             } else if let _ = error {
                 print("ERROR GETTING LOCATION")
             }
@@ -163,17 +163,17 @@ class CurrentShowingViewController: UIViewController {
         }
     }
     
-    @IBAction func btnViewDetails(sender: AnyObject) {
+    @IBAction func btnViewDetails(_ sender: AnyObject) {
         Utility().goPropertyDetails(self,propertyId: self.viewData["showing"]["property_id"].stringValue, PropertyClass: self.viewData["showing"]["property_class"].stringValue)
     }
     
-    @IBAction func btnShowingInstrunctions(sender: AnyObject) {
+    @IBAction func btnShowingInstrunctions(_ sender: AnyObject) {
         if(User().getField("role") == "buyer") {
-            dispatch_async(dispatch_get_main_queue()) {
-                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+            DispatchQueue.main.async {
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                let vc : ChatViewController = mainStoryboard.instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
                 vc.to = self.viewData["realtor"]["id"].stringValue
-                self.navigationController?.showViewController(vc, sender: nil)
+                self.navigationController?.show(vc, sender: nil)
             }
         } else {
             if(!self.viewData["realtor_properties"]["showing_instruction"].stringValue.isEmpty) {
@@ -186,16 +186,16 @@ class CurrentShowingViewController: UIViewController {
         }
     }
     
-    @IBAction func btnCallCustomer(sender: AnyObject) {
-        dispatch_async(dispatch_get_main_queue()) {
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            let vc : ChatViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+    @IBAction func btnCallCustomer(_ sender: AnyObject) {
+        DispatchQueue.main.async {
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            let vc : ChatViewController = mainStoryboard.instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
             vc.to = self.viewData["buyer"]["id"].stringValue
-            self.navigationController?.showViewController(vc, sender: nil)
+            self.navigationController?.show(vc, sender: nil)
         }
     }
     
-    @IBAction func btnStartEndShowing(sender: AnyObject) {
+    @IBAction func btnStartEndShowing(_ sender: AnyObject) {
         if(self.startEndButtonAction == "start") {
             self.startShowing()
         } else {
@@ -205,8 +205,8 @@ class CurrentShowingViewController: UIViewController {
     
     func startShowing() {
         self.startEndButtonAction = "end"
-        dispatch_async(dispatch_get_main_queue()) {
-            self.btnStartEndShowing.setTitle("End showing", forState: .Normal)
+        DispatchQueue.main.async {
+            self.btnStartEndShowing.setTitle("End showing", for: UIControlState())
             self.btnStartEndShowing.backgroundColor = UIColor(rgba: "#45B5DC")
         }
     }
@@ -218,11 +218,11 @@ class CurrentShowingViewController: UIViewController {
         }
     }
     
-    func afterStartShowing(let response: NSData) {
+    func afterStartShowing(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true ) {
             self.startEndButtonAction = "end"
-            self.btnStartEndShowing.setTitle("End showing", forState: .Normal)
+            self.btnStartEndShowing.setTitle("End showing", for: UIControlState())
             self.btnStartEndShowing.backgroundColor = UIColor(rgba: "#45B5DC")
         } else {
             var msg = "Failed to start the showing request, please try later"
@@ -234,18 +234,18 @@ class CurrentShowingViewController: UIViewController {
     }
     
     func endShowing() {
-        dispatch_async(dispatch_get_main_queue()) {
-            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to end this showing?", preferredStyle: .Alert)
-            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to end this showing?", preferredStyle: .alert)
+            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.default) {
                 UIAlertAction in
                 self.sendEndShowingSaveRequest()
             }
-            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.default) {
                 UIAlertAction in
             }
             alertController.addAction(yesAction)
             alertController.addAction(noAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
 
@@ -256,7 +256,8 @@ class CurrentShowingViewController: UIViewController {
         Request().put(url, params:params,controller:self,successHandler: {(response) in self.afterCancelRequest(response)});
     }
     
-    func endNotificationParams(var params:String)->String {
+    func endNotificationParams(_ params:String)->String {
+        var params = params
         let fullUsername = User().getField("first_name")+" "+User().getField("last_name")
         params = params+"&notification=1&from_user_id="+User().getField("id")+"&to_user_id="+self.viewData["showing"]["buyer_id"].stringValue
         params = params+"&title=Showing Request Completed&property_id="+self.viewData["showing"]["property_id"].stringValue
@@ -265,10 +266,10 @@ class CurrentShowingViewController: UIViewController {
         return params
     }
     
-    func afterCancelRequest(let response: NSData) {
+    func afterCancelRequest(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true ) {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 Utility().goHome(self)
             }
         } else {
@@ -280,9 +281,9 @@ class CurrentShowingViewController: UIViewController {
         }
     }
     
-    @IBAction func CallPanic(sender: AnyObject) {
-        if let phoneCallURL:NSURL = NSURL(string: "tel://911") {
-            let application:UIApplication = UIApplication.sharedApplication()
+    @IBAction func CallPanic(_ sender: AnyObject) {
+        if let phoneCallURL:URL = URL(string: "tel://911") {
+            let application:UIApplication = UIApplication.shared
             if (application.canOpenURL(phoneCallURL)) {
                 application.openURL(phoneCallURL);
             }
@@ -295,9 +296,9 @@ class CurrentShowingViewController: UIViewController {
         Request().get(url, successHandler: {(response) in self.loadShowingEndData(response)})
     }
     
-    func loadShowingEndData(let response: NSData) {
+    func loadShowingEndData(_ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             if(!result["showing"]["id"].stringValue.isEmpty) {
                 if(result["showing"]["showing_status"].stringValue == "3") {
                      let title = "Showing Request Completed"
@@ -313,9 +314,9 @@ class CurrentShowingViewController: UIViewController {
     }
     
     func intervalShowingEnded() {
-        self.LocationTimer = NSTimer.scheduledTimerWithTimeInterval(4,
+        self.LocationTimer = Timer.scheduledTimer(timeInterval: 4,
             target:self,
-            selector:Selector("findShowingEnded"),
+            selector:#selector(CurrentShowingViewController.findShowingEnded),
             userInfo:nil,
             repeats:true
         )
@@ -327,9 +328,9 @@ class CurrentShowingViewController: UIViewController {
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "feedBackFromCurrentShowing") {
-            let view: FeedBack1ViewController = segue.destinationViewController as! FeedBack1ViewController
+            let view: FeedBack1ViewController = segue.destination as! FeedBack1ViewController
             view.viewData  = self.viewData
         }
     }

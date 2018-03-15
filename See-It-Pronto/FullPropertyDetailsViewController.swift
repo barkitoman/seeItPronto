@@ -35,9 +35,9 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.scrollImages.frame = CGRectMake(0, 0, self.view.frame.width, self.scrollImages.frame.height)
+        self.scrollImages.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.scrollImages.frame.height)
         self.findPropertyDetails()
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         self.showHideButtons()
@@ -47,19 +47,19 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     func showHideButtons() {
         let role = User().getField("role")
         if(role == "realtor" || User().getField("id") == "") {
-            btnSeeItLater.hidden  = true
-            btnSeeItNow.hidden    = true
+            btnSeeItLater.isHidden  = true
+            btnSeeItNow.isHidden    = true
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -68,17 +68,17 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnSeeitPronto(sender: AnyObject) {
+    @IBAction func btnSeeitPronto(_ sender: AnyObject) {
         if(self.viewData["user"]["current_zip_code"].stringValue == self.viewData["zipcode"].stringValue) {
             if(self.viewData["have_beacon"].stringValue == "1") {
-                let propertyActionData: JSON =  ["type":"see_it_pronto"]
+                let propertyActionData: JSON =  ["type":"see_it_pronto" as AnyObject]
                 PropertyAction().saveOne(propertyActionData)
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "selectAgentForProperty", sender: self)
                 }
             } else {
                 Utility().displayAlert(self, title: "Message", message: " \"See It Pronto!\" is not available for this property.", performSegue: "")
@@ -88,11 +88,11 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
         }
     }
     
-    @IBAction func btnSeeItLater(sender: AnyObject) {
-        let propertyActionData: JSON =  ["type":"see_it_later"]
+    @IBAction func btnSeeItLater(_ sender: AnyObject) {
+        let propertyActionData: JSON =  ["type":"see_it_later" as AnyObject]
         PropertyAction().saveOne(propertyActionData)
-        dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("selectAgentForProperty", sender: self)
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "selectAgentForProperty", sender: self)
         }
     }
     
@@ -103,9 +103,9 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     
     var sections = [String]()
     var dataSection:NSMutableArray = NSMutableArray()
-    func loadPropertyDetails(let response: NSData) {
+    func loadPropertyDetails(_ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.viewData = result
             let propertyId = result["id"].stringValue
             BProgressHUD.dismissHUD(3)
@@ -114,10 +114,10 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
             }
             for (_,category):(String, JSON) in result["order"] {
                 self.sections.append(category.stringValue)
-                self.dataSection.addObject(result["extra_fields"][category.stringValue].object)
+                self.dataSection.add(result["extra_fields"][category.stringValue].object)
             }
             if(result["have_beacon"].stringValue != "1"){
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self.btnSeeItNow.backgroundColor = UIColor(rgba: "#DCDCDC")
                 }
             }
@@ -128,19 +128,19 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
     }
     
     func propertyNoExistMessage() {
-        dispatch_async(dispatch_get_main_queue()) {
-            let alertController = UIAlertController(title:"Message", message: "The property is not available at this time", preferredStyle: .Alert)
-            let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.Default) {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title:"Message", message: "The property is not available at this time", preferredStyle: .alert)
+            let homeAction = UIAlertAction(title: "Home", style: UIAlertActionStyle.default) {
                 UIAlertAction in
                 Utility().goHome(self)
             }
             alertController.addAction(homeAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     
     func showPropertydetails() {
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             let scrollViewWidth:CGFloat = self.scrollImages.frame.width
             let scrollViewHeight:CGFloat = self.scrollImages.frame.height
     
@@ -148,7 +148,7 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
                 self.cont = images.count
                 var numberImage:CGFloat = 0
                 for img in images {
-                    let imgView = UIImageView(frame: CGRectMake(scrollViewWidth * numberImage, 0,scrollViewWidth, scrollViewHeight))
+                    let imgView = UIImageView(frame: CGRect(x: scrollViewWidth * numberImage, y: 0,width: scrollViewWidth, height: scrollViewHeight))
                     let property = JSON(img)
                 
                     Utility().showPhoto(imgView, imgPath: property.stringValue, defaultImg: "default_user_photo")
@@ -158,7 +158,7 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
             }
             
             self.lbContImage.text          = "1 of \(self.cont)"
-            self.scrollImages.contentSize  = CGSizeMake(self.scrollImages.frame.width * CGFloat(self.cont), self.scrollImages.frame.height)
+            self.scrollImages.contentSize  = CGSize(width: self.scrollImages.frame.width * CGFloat(self.cont), height: self.scrollImages.frame.height)
             self.scrollImages.delegate     = self
             self.pageControl.numberOfPages = self.cont
             self.pageControl.currentPage   = 0
@@ -180,9 +180,9 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
         }
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView){
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView){
         // Test the offset and calculate the current page after scrolling ends
-        let pageWidth:CGFloat = CGRectGetWidth(scrollView.frame)
+        let pageWidth:CGFloat = scrollView.frame.width
         let currentPage:CGFloat = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
         // Change the indicator
         self.pageControl.currentPage = Int(currentPage);
@@ -191,14 +191,14 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
         
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dataSection[section].count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (self.dataSection[section] as AnyObject).count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell   = UITableViewCell.init(style: UITableViewCellStyle.Value1, reuseIdentifier: "Cell")
-        cell.textLabel?.font = UIFont.systemFontOfSize(14, weight: UIFontWeightRegular)
-        cell.detailTextLabel?.font = UIFont.systemFontOfSize(14, weight: UIFontWeightRegular)
+    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+        let cell   = UITableViewCell.init(style: UITableViewCellStyle.value1, reuseIdentifier: "Cell")
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightRegular)
+        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightRegular)
         let dat = JSON(self.dataSection[indexPath.section][indexPath.row])
         
         cell.textLabel?.text = dat["label"].stringValue
@@ -206,34 +206,34 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
         return cell
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.sections[section]
         
     }
     
-    @IBAction func btnMoreImage(sender: AnyObject) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("showImages", sender: self)
+    @IBAction func btnMoreImage(_ sender: AnyObject) {
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "showImages", sender: self)
         }
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return self.sections.count
     }
 
-    func goHomeView(role:String) {
-        dispatch_async(dispatch_get_main_queue()) {
+    func goHomeView(_ role:String) {
+        DispatchQueue.main.async {
             if(role == "realtor") {
-                self.performSegueWithIdentifier("LoginRealtor", sender: self)
+                self.performSegue(withIdentifier: "LoginRealtor", sender: self)
             } else {
-                self.performSegueWithIdentifier("LoginBuyer", sender: self)
+                self.performSegue(withIdentifier: "LoginBuyer", sender: self)
             }
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showImages") {
-            let view = segue.destinationViewController as! MoreImageViewController
+            let view = segue.destination as! MoreImageViewController
             let controller = view.popoverPresentationController
             view.viewData  = self.viewData
             if controller != nil {
@@ -242,8 +242,8 @@ class FullPropertyDetailsViewController: UIViewController, UIScrollViewDelegate,
         }
     }
     
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .None
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
 
 }

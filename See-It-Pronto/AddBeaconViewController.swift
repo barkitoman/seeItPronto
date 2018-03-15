@@ -25,7 +25,7 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.btnRemoveBeacon.hidden = true
+        self.btnRemoveBeacon.isHidden = true
         self.propertyId = self.viewData["property"]["id"].stringValue
         self.viewData["id"] = JSON("")
         self.selfDelegate()
@@ -33,19 +33,19 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     }
     
     func reloadButtonTitle() {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.btnSelectBeacon.setTitle(self.beaconId, forState: .Normal)
+        DispatchQueue.main.async {
+            self.btnSelectBeacon.setTitle(self.beaconId, for: UIControlState())
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -61,20 +61,20 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
         self.txtLocation.delegate = self
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
 
-    @IBAction func btnCancel(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnCancel(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnSave(sender: AnyObject) {
+    @IBAction func btnSave(_ sender: AnyObject) {
         if(!self.beaconId.isEmpty) {
             self.save()
         } else {
@@ -101,11 +101,11 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
         }
     }
     
-    func afterPost(let response: NSData) {
+    func afterPost(_ response: Data) {
         let result = JSON(data: response)
         if(result["result"].bool == true ) {
             self.viewData = result
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.uploadImage()
             }
             Utility().displayAlert(self,title: "Success", message:"The data has been saved successfully.", performSegue:"")
@@ -118,16 +118,16 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
         }
     }
     
-    @IBAction func btnTakePhoto(sender: AnyObject) {
+    @IBAction func btnTakePhoto(_ sender: AnyObject) {
         self.isTakenPhoto = true
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
-            if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            if UIImagePickerController.availableCaptureModes(for: .rear) != nil {
                 let imagePicker = UIImagePickerController()
                 imagePicker.delegate = self
-                imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
+                imagePicker.sourceType = UIImagePickerControllerSourceType.camera;
                 imagePicker.allowsEditing = false
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.presentViewController(imagePicker, animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    self.present(imagePicker, animated: true, completion: nil)
                 }
             } else {
                 Utility().displayAlert(self, title: "Rear camera doesn't exist", message:  "Application cannot access the camera.", performSegue: "")
@@ -137,29 +137,29 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
         }
     }
 
-    @IBAction func btnChoosePicture(sender: AnyObject) {
+    @IBAction func btnChoosePicture(_ sender: AnyObject) {
         self.isTakenPhoto = false
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
-            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
+            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary;
             imagePicker.allowsEditing = true
-            dispatch_async(dispatch_get_main_queue()) {
-                self.presentViewController(imagePicker, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self.present(imagePicker, animated: true, completion: nil)
             }
         }
     }
     
     //display image after select
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [AnyHashable: Any]!) {
         self.haveImage = true
         var takedPhoto = image
-        takedPhoto = takedPhoto.correctlyOrientedImage()
+        takedPhoto = takedPhoto?.correctlyOrientedImage()
         self.previewImage.image = takedPhoto
         if(self.isTakenPhoto == true) {
             self.saveTakenPhoto()
         }
-        self.dismissViewControllerAnimated(true, completion: nil);
+        self.dismiss(animated: true, completion: nil);
     }
     
     func saveTakenPhoto() {
@@ -173,7 +173,7 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
     //upload photo to server
     func uploadImage() {
         if (self.previewImage.image != nil && self.haveImage == true) {
-            let imageData:NSData = UIImageJPEGRepresentation(self.previewImage.image!, 1)!
+            let imageData:Data = UIImageJPEGRepresentation(self.previewImage.image!, 1)!
             SRWebClient.POST(AppConfig.APP_URL+"/beacons/"+self.viewData["id"].stringValue)
                 .data(imageData, fieldName:"image", data:["id":self.viewData["id"].stringValue,"_method":"PUT"])
                 .send({(response:AnyObject!, status:Int) -> Void in
@@ -188,15 +188,15 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
         Request().get(url, successHandler: {(response) in self.loadDataToEdit(response)})
     }
     
-    func loadDataToEdit(let response: NSData) {
+    func loadDataToEdit(_ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             if(!result["id"].stringValue.isEmpty) {
-                self.btnRemoveBeacon.hidden = false
+                self.btnRemoveBeacon.isHidden = false
                 self.viewData = result
                 self.beaconId = result["beacon_id"].stringValue
                 if(!result["beacon_id"].stringValue.isEmpty) {
-                    self.btnSelectBeacon.setTitle(result["beacon_id"].stringValue, forState: .Normal)
+                    self.btnSelectBeacon.setTitle(result["beacon_id"].stringValue, for: UIControlState())
                 }
                 self.txtLocation.text = result["location"].stringValue
                 if(!result["url_image"].stringValue.isEmpty) {
@@ -206,20 +206,20 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "chowSelectBeacon" {
-            let vc = segue.destinationViewController as! SelectBeaconViewController
+            let vc = segue.destination as! SelectBeaconViewController
             vc.canSelectBeacon = true
             vc.addBeaconVC = self
         }
     }
     
-    @IBAction func actionRemoveBeacon(sender: UIButton) {
-        dispatch_async(dispatch_get_main_queue()) {
-            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to remove this beacon?", preferredStyle: .Alert)
-            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+    @IBAction func actionRemoveBeacon(_ sender: UIButton) {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title:"Confirmation", message: "Do you really want to remove this beacon?", preferredStyle: .alert)
+            let yesAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.default) {
                 UIAlertAction in
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     let url = AppConfig.APP_URL+"/remove_beacon_property/\(self.self.viewData["id"].stringValue)"
                     print(url)
                     Request().delete(url, params: "", successHandler: { (response) -> Void in
@@ -227,22 +227,22 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
                     })
                 }
             }
-            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default) {
+            let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.default) {
                 UIAlertAction in
             }
             alertController.addAction(yesAction)
             alertController.addAction(noAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     
-    func afterDeleteBeacon(let response: NSData) {
+    func afterDeleteBeacon(_ response: Data) {
             let result = JSON(data: response)
             if(result["result"].bool == true) {
-                dispatch_async(dispatch_get_main_queue()) {
-                    let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                    let viewController : MyListingsRealtorViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MyListingsRealtorViewController") as! MyListingsRealtorViewController
-                    self.navigationController?.showViewController(viewController, sender: nil)
+                DispatchQueue.main.async {
+                    let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                    let viewController : MyListingsRealtorViewController = mainStoryboard.instantiateViewController(withIdentifier: "MyListingsRealtorViewController") as! MyListingsRealtorViewController
+                    self.navigationController?.show(viewController, sender: nil)
                 }
             } else {
                 var msg = "Error saving, please try later"
@@ -253,9 +253,9 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
             }
         }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        let textFieldRect : CGRect = self.view.window!.convertRect(textField.bounds, fromView: textField)
-        let viewRect : CGRect = self.view.window!.convertRect(self.view.bounds, fromView: self.view)
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let textFieldRect : CGRect = self.view.window!.convert(textField.bounds, from: textField)
+        let viewRect : CGRect = self.view.window!.convert(self.view.bounds, from: self.view)
         let midline : CGFloat = textFieldRect.origin.y + 0.5 * textFieldRect.size.height
         let numerator : CGFloat = midline - viewRect.origin.y - MoveKeyboard.MINIMUM_SCROLL_FRACTION * viewRect.size.height
         let denominator : CGFloat = (MoveKeyboard.MAXIMUM_SCROLL_FRACTION - MoveKeyboard.MINIMUM_SCROLL_FRACTION) * viewRect.size.height
@@ -265,8 +265,8 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
         } else if heightFraction > 1.0 {
             heightFraction = 1.0
         }
-        let orientation : UIInterfaceOrientation = UIApplication.sharedApplication().statusBarOrientation
-        if (orientation == UIInterfaceOrientation.Portrait || orientation == UIInterfaceOrientation.PortraitUpsideDown) {
+        let orientation : UIInterfaceOrientation = UIApplication.shared.statusBarOrientation
+        if (orientation == UIInterfaceOrientation.portrait || orientation == UIInterfaceOrientation.portraitUpsideDown) {
             animateDistance = floor(MoveKeyboard.PORTRAIT_KEYBOARD_HEIGHT * heightFraction)
         } else {
             animateDistance = floor(MoveKeyboard.LANDSCAPE_KEYBOARD_HEIGHT * heightFraction)
@@ -275,18 +275,18 @@ class AddBeaconViewController: UIViewController,UITextFieldDelegate, UITextViewD
         viewFrame.origin.y -= animateDistance
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(NSTimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
+        UIView.setAnimationDuration(TimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
         self.view.frame = viewFrame
         UIView.commitAnimations()
     }
     
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         var viewFrame : CGRect = self.view.frame
         viewFrame.origin.y += animateDistance
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(NSTimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
+        UIView.setAnimationDuration(TimeInterval(MoveKeyboard.KEYBOARD_ANIMATION_DURATION))
         self.view.frame = viewFrame
         UIView.commitAnimations()
     }

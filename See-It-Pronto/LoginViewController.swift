@@ -24,15 +24,15 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
         
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if (navigationController?.topViewController != self) {
-            navigationController?.navigationBarHidden = false
+            navigationController?.isNavigationBarHidden = false
         }
         super.viewWillDisappear(animated)
     }
@@ -42,17 +42,17 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
         self.txtPassword.delegate = self
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
-    @IBAction func btnMap(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func btnMap(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func btnLogin(sender: AnyObject) {
-        dispatch_async(dispatch_get_main_queue()) {
+    @IBAction func btnLogin(_ sender: AnyObject) {
+        DispatchQueue.main.async {
             BProgressHUD.showLoadingViewWithMessage("Loading...")
         }
         self.login()
@@ -65,9 +65,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
         Request().post(url, params:params, controller: self, successHandler: {(response) in self.afterLoginRequest(response)});
     }
     
-    func afterLoginRequest(let response: NSData) {
+    func afterLoginRequest(_ response: Data) {
         let result = JSON(data: response)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             BProgressHUD.dismissHUD(0)
         }
         if(result["user"]["result"].bool == true) {
@@ -81,23 +81,23 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UITextViewDeleg
         }
     }
     
-    func goHomeView(role:String) {
-        dispatch_async(dispatch_get_main_queue()) {
+    func goHomeView(_ role:String) {
+        DispatchQueue.main.async {
             if(role == "realtor") {
-                self.performSegueWithIdentifier("LoginRealtor", sender: self)
+                self.performSegue(withIdentifier: "LoginRealtor", sender: self)
             } else {
-                self.performSegueWithIdentifier("LoginBuyer", sender: self)
+                self.performSegue(withIdentifier: "LoginBuyer", sender: self)
             }
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "LoginBuyer") {
-            let view: BuyerHomeViewController = segue.destinationViewController as! BuyerHomeViewController
+            let view: BuyerHomeViewController = segue.destination as! BuyerHomeViewController
             view.viewData  = self.viewData
             
         }else if(segue.identifier == "LoginRealtor") {
-            let view: ReadyToWorkViewController = segue.destinationViewController as! ReadyToWorkViewController
+            let view: ReadyToWorkViewController = segue.destination as! ReadyToWorkViewController
             view.viewData  = self.viewData
         }
     }

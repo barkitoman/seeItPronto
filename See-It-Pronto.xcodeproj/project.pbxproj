@@ -592,6 +592,7 @@
 					6897A1231C244B5F00AB3A0A = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = CWV23TUPF4;
+						LastSwiftMigration = 0820;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -603,10 +604,12 @@
 					};
 					6897A13A1C244B6000AB3A0A = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0820;
 						TestTargetID = 6897A1231C244B5F00AB3A0A;
 					};
 					6897A1451C244B6000AB3A0A = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0820;
 						TestTargetID = 6897A1231C244B5F00AB3A0A;
 					};
 				};
@@ -1049,6 +1052,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "NyxentCorp.See-It-Pronto";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "4d920cc5-04a4-4c1b-a7de-2bf09bd6324d";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1068,6 +1072,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "NyxentCorp.See-It-Pronto";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "4d920cc5-04a4-4c1b-a7de-2bf09bd6324d";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1080,6 +1085,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "NyxentCorp.See-It-ProntoTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/See-It-Pronto.app/See-It-Pronto";
 			};
 			name = Debug;
@@ -1093,6 +1099,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "NyxentCorp.See-It-ProntoTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/See-It-Pronto.app/See-It-Pronto";
 			};
 			name = Release;
@@ -1105,6 +1112,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "NyxentCorp.See-It-ProntoUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = "See-It-Pronto";
 				USES_XCTRUNNER = YES;
 			};
@@ -1118,6 +1126,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "NyxentCorp.See-It-ProntoUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = "See-It-Pronto";
 				USES_XCTRUNNER = YES;
 			};
